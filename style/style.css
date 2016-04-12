@@ -44,10 +44,6 @@ a:active {
   margin-left: 25px;
   margin-right: 25px;
   padding: 20px;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
   -webkit-flex-flow: row wrap;
   justify-content: center;
@@ -61,10 +57,6 @@ a:active {
   border-radius: 5px;
   margin-right: 20px;
   background: #000;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
   -webkit-flex-flow: row wrap;
   justify-content: center;
@@ -90,16 +82,13 @@ a:active {
   margin-left: 25px;
   margin-right: 25px;
   padding: 15px 0 15px 5px;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
   -webkit-flex-flow: row wrap;
   justify-content: center;
 }
-.big.blue.ui.button {
+.button {
   margin: 2px;
+  display: flex;
 }
 .action_area {
   background: #808080;
