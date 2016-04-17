@@ -10,7 +10,7 @@ color: black,
 margin: 20px auto {
   padding: 0;
   background: #d3d3d3;
-  width: 1300px;
+  width: 100px;
 }
 h1 {
   color: #fff;
@@ -38,61 +38,72 @@ a:active {
   color: #fff;
 }
 .top_banner {
-  border-radius: 5px;
+  display: flex;
+  border-radius: 0.5em;
   background: #000;
   margin-top: 20px;
   margin-left: 25px;
   margin-right: 25px;
   padding: 20px;
-  display: flex;
-  -webkit-flex-flow: row wrap;
-  justify-content: center;
+  flex-wrap: wrap;
 }
 .logo_top_banner {
+  display: flex;
 /*background: gray*/
   padding-top: 5px;
-  margin-right: 55px;
+  margin-right: 1em;
+  flex: 1 1 2%;
 }
 .button_top_banner {
-  border-radius: 5px;
-  margin-right: 20px;
-  background: #000;
   display: flex;
-  -webkit-flex-flow: row wrap;
+  border-radius: 0.5em;
+  margin-right: 1em;
+  background: #000;
+  flex: 1 1 25%;
+  flex-wrap: row wrap;
   justify-content: center;
 }
+.right_container_top_banner {
+  display: flex;
+  flex: 1 1 25%;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+}
 .search_bar_top_banner {
+  display: flex;
 /*background: gray*/
   padding-top: 5px;
-  margin-right: 20px;
+  margin-right: 1em;
 }
 .user_top_banner {
+  display: flex;
 /*background: gray*/
-  padding-top: 15px;
-  margin-right: 20px;
+  align-items: center;
 }
 .exit_button_top_banner {
-/*background: gray*/
+  display: flex;
+  margin-left: 1em;
   padding-top: 5px;
 }
 .button_area {
-  border-radius: 5px;
+  display: flex;
+  border-radius: 0.5em;
   background: #000;
   margin-top: 10px;
   margin-left: 25px;
   margin-right: 25px;
   padding: 15px 0 15px 5px;
-  display: flex;
-  -webkit-flex-flow: row wrap;
+  flex-wrap: wrap;
   justify-content: center;
 }
-.button {
-  margin: 2px;
+.big.blue.ui.button {
   display: flex;
+  margin: 0.1em;
 }
 .action_area {
   background: #808080;
-  border-radius: 5px;
+  border-radius: 0.5em;
   margin-top: 10px;
   margin-left: 25px;
   margin-right: 25px;
@@ -102,4 +113,41 @@ a:active {
 .ui.segment {
   margin: 2px;
   width: 150px;
+}
+@media all and (max-width: 82em) {
+  .logo_top_banner {
+    flex: 1 1 100%;
+  }
+  .button_top_banner {
+    align-items: center;
+  }
+}
+@media all and (max-width: 55em) {
+  .right_container_top_banner {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+@media all and (max-width: 38em) {
+  .button_top_banner {
+    align-items: flex-start;
+    width: 50%;
+    flex-direction: column;
+  }
+  .big.blue.ui.button {
+    width: 100%;
+  }
+  .right_container_top_banner {
+    flex-direction: column;
+  }
+  .search_bar_top_banner {
+    justify-content: center;
+  }
+  .user_top_banner {
+    justify-content: center;
+  }
+  .button_area {
+    flex: 1 1 90%;
+    flex-direction: column;
+  }
 }
