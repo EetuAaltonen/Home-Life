@@ -90,10 +90,9 @@ namespace Home_n_Life
 
         private void button_clear_item_Click(object sender, EventArgs e)
         {
-            string connetionString = null;
-            SqlConnection cnn;
-            connetionString = "Data Source=ServerName;Initial Catalog=DatabaseName;User ID=UserName;Password=Password";
-            cnn = new SqlConnection(connetionString);
+            string str = " CREATE DATABASE My_Database_Test";
+            SqlConnection cnn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            SqlCommand myCommand = new SqlCommand(str, cnn);
             try
             {
                 cnn.Open();
@@ -104,6 +103,25 @@ namespace Home_n_Life
             {
                 MessageBox.Show("Can not open connection ! ");
             }
+            try
+            {
+                cnn.Open();
+                myCommand.ExecuteNonQuery();
+                MessageBox.Show("Database has been created successfully!",
+                                  "Create Database", MessageBoxButtons.OK,
+                                              MessageBoxIcon.Information);
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Create Database",
+                                            MessageBoxButtons.OK,
+                                     MessageBoxIcon.Information);
+            }
+            finally
+            {
+                cnn.Close();
+            }
+            return;
         }
     }
 }

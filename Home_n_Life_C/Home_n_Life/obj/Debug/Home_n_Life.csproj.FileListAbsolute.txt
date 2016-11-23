@@ -9,3 +9,5 @@ C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\obj\Debug\Home_
 C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.csproj.GenerateResource.Cache
 C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.exe
 C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.pdb
+C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\bin\Debug\Database1.mdf
+C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\bin\Debug\Database1_log.ldf
