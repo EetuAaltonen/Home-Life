@@ -1,2 +1,11 @@
 C:\Users\eetua_000\Desktop\Home&Life\Home_n_Life_C\Home_n_Life\Home_n_Life\bin\Debug\Home_n_Life.exe.config
 C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\bin\Debug\Home_n_Life.exe.config
+C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\bin\Debug\Home_n_Life.exe
+C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\bin\Debug\Home_n_Life.pdb
+C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.csprojResolveAssemblyReference.cache
+C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.Etusivu.resources
+C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.Kirjautuminen.resources
+C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.Properties.Resources.resources
+C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.csproj.GenerateResource.Cache
+C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.exe
+C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.pdb
