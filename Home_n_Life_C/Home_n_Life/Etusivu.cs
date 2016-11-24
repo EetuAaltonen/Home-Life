@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 
 namespace Home_n_Life
 {
@@ -23,11 +24,6 @@ namespace Home_n_Life
         //---Shopping-List-----------
         string item_info;
         //---------------------------
-
-        private void button_exit_Click_1(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
 
         private void viewChange(GroupBox current_groupBox_) 
         {
@@ -90,38 +86,58 @@ namespace Home_n_Life
 
         private void button_clear_item_Click(object sender, EventArgs e)
         {
-            string str = " CREATE DATABASE My_Database_Test";
-            SqlConnection cnn = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-            SqlCommand myCommand = new SqlCommand(str, cnn);
+            string connetionString = "server=localhost;database=home&life;uid=root;pwd=;";
+            string deleteTableQuery = string.Format(@"DROP TABLE MyGuests;");
+            string createTableQuery = string.Format(@"CREATE TABLE MyGuests (
+                                                    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                                    firstname VARCHAR(30) NOT NULL,
+                                                    lastname VARCHAR(30) NOT NULL);");
+            string insertTableQuery = string.Format(@"INSERT INTO MyGuests (id,firstname, lastname)
+                                                    VALUES (5,'John', 'Doe');");
+            string selectTableQuery = string.Format(@"SELECT id, firstname, lastname FROM MyGuests ;");
+            MySqlConnection conn = new MySqlConnection(connetionString);
             try
             {
-                cnn.Open();
-                MessageBox.Show("Connection Open ! ");
-                cnn.Close();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(deleteTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(createTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(insertTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(selectTableQuery, conn);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    MessageBox.Show(Convert.ToString(dataReader["firstname"]) + "," + Convert.ToString(dataReader["lastname"]));
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Can not open connection ! ");
-            }
-            try
-            {
-                cnn.Open();
-                myCommand.ExecuteNonQuery();
-                MessageBox.Show("Database has been created successfully!",
-                                  "Create Database", MessageBoxButtons.OK,
-                                              MessageBoxIcon.Information);
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Create Database",
-                                            MessageBoxButtons.OK,
-                                     MessageBoxIcon.Information);
+                MessageBox.Show(Convert.ToString(ex));
             }
             finally
             {
-                cnn.Close();
+                conn.Close();
             }
-            return;
+        }
+
+        private void button_logout_Click_1(object sender, EventArgs e)
+        {
+            Kirjautuminen Kirjautuminen = new Kirjautuminen();
+            Kirjautuminen.Show();
+            this.Close();
+        }
+
+        private void button_minimize_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void Etusivu_Load(object sender, EventArgs e)
+        {
+            view_change = "home";
+            viewChange(groupBox_home);
         }
     }
 }

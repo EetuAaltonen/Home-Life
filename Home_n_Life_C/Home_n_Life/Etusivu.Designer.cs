@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox_top_banner = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel_username = new System.Windows.Forms.FlowLayoutPanel();
-            this.button_exit = new System.Windows.Forms.Button();
+            this.button_logout = new System.Windows.Forms.Button();
+            this.button_minimize = new System.Windows.Forms.Button();
             this.linkLabel_user = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox_search = new System.Windows.Forms.TextBox();
@@ -57,11 +59,13 @@
             this.textBox_item_name = new System.Windows.Forms.TextBox();
             this.button_add_item = new System.Windows.Forms.Button();
             this.groupBox_home = new System.Windows.Forms.GroupBox();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_username.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox_shopping_list.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox_top_banner
@@ -69,37 +73,51 @@
             this.groupBox_top_banner.BackColor = System.Drawing.Color.Black;
             this.groupBox_top_banner.Controls.Add(this.flowLayoutPanel_username);
             this.groupBox_top_banner.Controls.Add(this.label_logo);
-            this.groupBox_top_banner.Location = new System.Drawing.Point(12, 12);
+            this.groupBox_top_banner.Location = new System.Drawing.Point(0, -2);
             this.groupBox_top_banner.Name = "groupBox_top_banner";
-            this.groupBox_top_banner.Size = new System.Drawing.Size(967, 68);
+            this.groupBox_top_banner.Size = new System.Drawing.Size(996, 82);
             this.groupBox_top_banner.TabIndex = 0;
             this.groupBox_top_banner.TabStop = false;
             // 
             // flowLayoutPanel_username
             // 
-            this.flowLayoutPanel_username.Controls.Add(this.button_exit);
+            this.flowLayoutPanel_username.Controls.Add(this.button_logout);
+            this.flowLayoutPanel_username.Controls.Add(this.button_minimize);
             this.flowLayoutPanel_username.Controls.Add(this.linkLabel_user);
             this.flowLayoutPanel_username.Controls.Add(this.label1);
             this.flowLayoutPanel_username.Controls.Add(this.textBox_search);
             this.flowLayoutPanel_username.Controls.Add(this.button_search);
             this.flowLayoutPanel_username.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel_username.Location = new System.Drawing.Point(203, 16);
+            this.flowLayoutPanel_username.Location = new System.Drawing.Point(228, 19);
             this.flowLayoutPanel_username.Name = "flowLayoutPanel_username";
             this.flowLayoutPanel_username.Size = new System.Drawing.Size(750, 46);
             this.flowLayoutPanel_username.TabIndex = 3;
             // 
-            // button_exit
+            // button_logout
             // 
-            this.button_exit.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_exit.ForeColor = System.Drawing.Color.White;
-            this.button_exit.Location = new System.Drawing.Point(647, 8);
-            this.button_exit.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.button_exit.Name = "button_exit";
-            this.button_exit.Size = new System.Drawing.Size(100, 30);
-            this.button_exit.TabIndex = 1;
-            this.button_exit.Text = "Exit";
-            this.button_exit.UseVisualStyleBackColor = false;
-            this.button_exit.Click += new System.EventHandler(this.button_exit_Click_1);
+            this.button_logout.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_logout.ForeColor = System.Drawing.Color.White;
+            this.button_logout.Location = new System.Drawing.Point(647, 8);
+            this.button_logout.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_logout.Name = "button_logout";
+            this.button_logout.Size = new System.Drawing.Size(100, 30);
+            this.button_logout.TabIndex = 1;
+            this.button_logout.Text = "Kirjaudu ulos";
+            this.button_logout.UseVisualStyleBackColor = false;
+            this.button_logout.Click += new System.EventHandler(this.button_logout_Click_1);
+            // 
+            // button_minimize
+            // 
+            this.button_minimize.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_minimize.ForeColor = System.Drawing.Color.White;
+            this.button_minimize.Location = new System.Drawing.Point(581, 8);
+            this.button_minimize.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_minimize.Name = "button_minimize";
+            this.button_minimize.Size = new System.Drawing.Size(60, 30);
+            this.button_minimize.TabIndex = 12;
+            this.button_minimize.Text = "Pienennä";
+            this.button_minimize.UseVisualStyleBackColor = false;
+            this.button_minimize.Click += new System.EventHandler(this.button_minimize_Click);
             // 
             // linkLabel_user
             // 
@@ -107,7 +125,7 @@
             this.linkLabel_user.AutoSize = true;
             this.linkLabel_user.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel_user.LinkColor = System.Drawing.Color.White;
-            this.linkLabel_user.Location = new System.Drawing.Point(549, 12);
+            this.linkLabel_user.Location = new System.Drawing.Point(483, 12);
             this.linkLabel_user.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.linkLabel_user.Name = "linkLabel_user";
             this.linkLabel_user.Size = new System.Drawing.Size(92, 20);
@@ -121,7 +139,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(473, 12);
+            this.label1.Location = new System.Drawing.Point(407, 12);
             this.label1.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(70, 20);
@@ -131,7 +149,7 @@
             // textBox_search
             // 
             this.textBox_search.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_search.Location = new System.Drawing.Point(305, 10);
+            this.textBox_search.Location = new System.Drawing.Point(239, 10);
             this.textBox_search.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.textBox_search.Name = "textBox_search";
             this.textBox_search.Size = new System.Drawing.Size(162, 26);
@@ -142,7 +160,7 @@
             this.button_search.BackColor = System.Drawing.Color.DodgerBlue;
             this.button_search.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_search.ForeColor = System.Drawing.Color.White;
-            this.button_search.Location = new System.Drawing.Point(242, 8);
+            this.button_search.Location = new System.Drawing.Point(176, 8);
             this.button_search.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_search.Name = "button_search";
             this.button_search.Size = new System.Drawing.Size(57, 30);
@@ -155,7 +173,7 @@
             this.label_logo.AutoSize = true;
             this.label_logo.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_logo.ForeColor = System.Drawing.Color.White;
-            this.label_logo.Location = new System.Drawing.Point(6, 16);
+            this.label_logo.Location = new System.Drawing.Point(8, 23);
             this.label_logo.Name = "label_logo";
             this.label_logo.Size = new System.Drawing.Size(191, 37);
             this.label_logo.TabIndex = 0;
@@ -428,6 +446,7 @@
             this.Name = "Etusivu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Home&Life - Etusivu";
+            this.Load += new System.EventHandler(this.Etusivu_Load);
             this.groupBox_top_banner.ResumeLayout(false);
             this.groupBox_top_banner.PerformLayout();
             this.flowLayoutPanel_username.ResumeLayout(false);
@@ -436,6 +455,7 @@
             this.flowLayoutPanel1.ResumeLayout(false);
             this.groupBox_shopping_list.ResumeLayout(false);
             this.groupBox_shopping_list.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -446,7 +466,7 @@
         private System.Windows.Forms.Label label_logo;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel_username;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button_exit;
+        private System.Windows.Forms.Button button_logout;
         public System.Windows.Forms.LinkLabel linkLabel_user;
         private System.Windows.Forms.TextBox textBox_search;
         private System.Windows.Forms.Button button_search;
@@ -471,5 +491,7 @@
         private System.Windows.Forms.Button button_clear_item;
         private System.Windows.Forms.Button button_add_item;
         private System.Windows.Forms.GroupBox groupBox_home;
+        private System.Windows.Forms.Button button_minimize;
+        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }
