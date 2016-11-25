@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.groupBox_top_banner = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel_username = new System.Windows.Forms.FlowLayoutPanel();
             this.button_logout = new System.Windows.Forms.Button();
@@ -37,6 +36,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox_search = new System.Windows.Forms.TextBox();
             this.button_search = new System.Windows.Forms.Button();
+            this.progressBar_database_connection = new System.Windows.Forms.ProgressBar();
             this.label_logo = new System.Windows.Forms.Label();
             this.groupBox_navigation = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -49,23 +49,30 @@
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.groupBox_shopping_list = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.textBox_text_length = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox_list_name = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.button_list_delete = new System.Windows.Forms.Button();
+            this.button_list_save = new System.Windows.Forms.Button();
+            this.textBox_shopping_list = new System.Windows.Forms.TextBox();
             this.textBox_item_amount = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.button_clear_item = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.listBox_shopping_list = new System.Windows.Forms.ListBox();
+            this.comboBox_shopping_lists = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox_item_name = new System.Windows.Forms.TextBox();
             this.button_add_item = new System.Windows.Forms.Button();
             this.groupBox_home = new System.Windows.Forms.GroupBox();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.comboBox_amount_type = new System.Windows.Forms.ComboBox();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_username.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox_shopping_list.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox_top_banner
@@ -87,6 +94,7 @@
             this.flowLayoutPanel_username.Controls.Add(this.label1);
             this.flowLayoutPanel_username.Controls.Add(this.textBox_search);
             this.flowLayoutPanel_username.Controls.Add(this.button_search);
+            this.flowLayoutPanel_username.Controls.Add(this.progressBar_database_connection);
             this.flowLayoutPanel_username.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel_username.Location = new System.Drawing.Point(228, 19);
             this.flowLayoutPanel_username.Name = "flowLayoutPanel_username";
@@ -167,6 +175,17 @@
             this.button_search.TabIndex = 7;
             this.button_search.Text = "Etsi";
             this.button_search.UseVisualStyleBackColor = false;
+            // 
+            // progressBar_database_connection
+            // 
+            this.progressBar_database_connection.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.progressBar_database_connection.Location = new System.Drawing.Point(121, 12);
+            this.progressBar_database_connection.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
+            this.progressBar_database_connection.Maximum = 2;
+            this.progressBar_database_connection.Name = "progressBar_database_connection";
+            this.progressBar_database_connection.Size = new System.Drawing.Size(49, 23);
+            this.progressBar_database_connection.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBar_database_connection.TabIndex = 13;
             // 
             // label_logo
             // 
@@ -298,7 +317,7 @@
             this.button9.ForeColor = System.Drawing.Color.White;
             this.button9.Location = new System.Drawing.Point(801, 3);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(149, 46);
+            this.button9.Size = new System.Drawing.Size(152, 46);
             this.button9.TabIndex = 8;
             this.button9.Text = "Muutosseuranta";
             this.button9.UseVisualStyleBackColor = false;
@@ -306,12 +325,21 @@
             // groupBox_shopping_list
             // 
             this.groupBox_shopping_list.BackColor = System.Drawing.Color.Black;
+            this.groupBox_shopping_list.Controls.Add(this.comboBox_amount_type);
+            this.groupBox_shopping_list.Controls.Add(this.label9);
+            this.groupBox_shopping_list.Controls.Add(this.textBox_text_length);
+            this.groupBox_shopping_list.Controls.Add(this.label8);
+            this.groupBox_shopping_list.Controls.Add(this.label7);
+            this.groupBox_shopping_list.Controls.Add(this.label6);
+            this.groupBox_shopping_list.Controls.Add(this.textBox_list_name);
+            this.groupBox_shopping_list.Controls.Add(this.label5);
+            this.groupBox_shopping_list.Controls.Add(this.button_list_delete);
+            this.groupBox_shopping_list.Controls.Add(this.button_list_save);
+            this.groupBox_shopping_list.Controls.Add(this.textBox_shopping_list);
             this.groupBox_shopping_list.Controls.Add(this.textBox_item_amount);
             this.groupBox_shopping_list.Controls.Add(this.label4);
-            this.groupBox_shopping_list.Controls.Add(this.button_clear_item);
             this.groupBox_shopping_list.Controls.Add(this.label3);
-            this.groupBox_shopping_list.Controls.Add(this.comboBox1);
-            this.groupBox_shopping_list.Controls.Add(this.listBox_shopping_list);
+            this.groupBox_shopping_list.Controls.Add(this.comboBox_shopping_lists);
             this.groupBox_shopping_list.Controls.Add(this.label2);
             this.groupBox_shopping_list.Controls.Add(this.textBox_item_name);
             this.groupBox_shopping_list.Controls.Add(this.button_add_item);
@@ -323,13 +351,132 @@
             this.groupBox_shopping_list.TabStop = false;
             this.groupBox_shopping_list.Visible = false;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.Color.White;
+            this.label9.Location = new System.Drawing.Point(148, 271);
+            this.label9.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(54, 20);
+            this.label9.TabIndex = 22;
+            this.label9.Text = "/  500";
+            // 
+            // textBox_text_length
+            // 
+            this.textBox_text_length.Enabled = false;
+            this.textBox_text_length.Location = new System.Drawing.Point(85, 271);
+            this.textBox_text_length.Name = "textBox_text_length";
+            this.textBox_text_length.Size = new System.Drawing.Size(57, 20);
+            this.textBox_text_length.TabIndex = 21;
+            this.textBox_text_length.Text = "0";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(6, 269);
+            this.label8.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(73, 20);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "Merkkejä";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(296, 19);
+            this.label7.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(195, 20);
+            this.label7.TabIndex = 19;
+            this.label7.Text = "Tai käsin manuaalisesti";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(6, 19);
+            this.label6.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(138, 40);
+            this.label6.TabIndex = 18;
+            this.label6.Text = "Muotoile ja lisää\r\nautomaattisesti";
+            // 
+            // textBox_list_name
+            // 
+            this.textBox_list_name.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_list_name.Location = new System.Drawing.Point(699, 150);
+            this.textBox_list_name.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_list_name.MaxLength = 30;
+            this.textBox_list_name.Name = "textBox_list_name";
+            this.textBox_list_name.Size = new System.Drawing.Size(260, 26);
+            this.textBox_list_name.TabIndex = 17;
+            this.textBox_list_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(699, 120);
+            this.label5.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(133, 20);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "Kauppalistan nimi";
+            // 
+            // button_list_delete
+            // 
+            this.button_list_delete.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_list_delete.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_list_delete.ForeColor = System.Drawing.Color.White;
+            this.button_list_delete.Location = new System.Drawing.Point(699, 229);
+            this.button_list_delete.Name = "button_list_delete";
+            this.button_list_delete.Size = new System.Drawing.Size(132, 28);
+            this.button_list_delete.TabIndex = 15;
+            this.button_list_delete.Text = "Poista";
+            this.button_list_delete.UseVisualStyleBackColor = false;
+            this.button_list_delete.Click += new System.EventHandler(this.button_list_delete_Click);
+            // 
+            // button_list_save
+            // 
+            this.button_list_save.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_list_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_list_save.ForeColor = System.Drawing.Color.White;
+            this.button_list_save.Location = new System.Drawing.Point(699, 195);
+            this.button_list_save.Name = "button_list_save";
+            this.button_list_save.Size = new System.Drawing.Size(132, 28);
+            this.button_list_save.TabIndex = 14;
+            this.button_list_save.Text = "Tallenna";
+            this.button_list_save.UseVisualStyleBackColor = false;
+            this.button_list_save.Click += new System.EventHandler(this.button_list_save_Click);
+            // 
+            // textBox_shopping_list
+            // 
+            this.textBox_shopping_list.Location = new System.Drawing.Point(300, 49);
+            this.textBox_shopping_list.Multiline = true;
+            this.textBox_shopping_list.Name = "textBox_shopping_list";
+            this.textBox_shopping_list.Size = new System.Drawing.Size(387, 456);
+            this.textBox_shopping_list.TabIndex = 13;
+            this.textBox_shopping_list.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_shopping_list_KeyDown);
+            this.textBox_shopping_list.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox_shopping_list_KeyUp);
+            this.textBox_shopping_list.MouseEnter += new System.EventHandler(this.textBox_shopping_list_MouseEnter);
+            this.textBox_shopping_list.MouseLeave += new System.EventHandler(this.textBox_shopping_list_MouseLeave);
+            // 
             // textBox_item_amount
             // 
             this.textBox_item_amount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_item_amount.Location = new System.Drawing.Point(13, 120);
+            this.textBox_item_amount.Location = new System.Drawing.Point(10, 172);
             this.textBox_item_amount.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_item_amount.MaxLength = 10;
             this.textBox_item_amount.Name = "textBox_item_amount";
-            this.textBox_item_amount.Size = new System.Drawing.Size(272, 26);
+            this.textBox_item_amount.Size = new System.Drawing.Size(200, 26);
             this.textBox_item_amount.TabIndex = 12;
             this.textBox_item_amount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -338,71 +485,53 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(9, 90);
+            this.label4.Location = new System.Drawing.Point(6, 142);
             this.label4.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(54, 20);
             this.label4.TabIndex = 11;
             this.label4.Text = "Määrä";
             // 
-            // button_clear_item
-            // 
-            this.button_clear_item.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_clear_item.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_clear_item.ForeColor = System.Drawing.Color.White;
-            this.button_clear_item.Location = new System.Drawing.Point(13, 199);
-            this.button_clear_item.Name = "button_clear_item";
-            this.button_clear_item.Size = new System.Drawing.Size(174, 28);
-            this.button_clear_item.TabIndex = 10;
-            this.button_clear_item.Text = "Poista valittu tuote";
-            this.button_clear_item.UseVisualStyleBackColor = false;
-            this.button_clear_item.Click += new System.EventHandler(this.button_clear_item_Click);
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(9, 19);
+            this.label3.Location = new System.Drawing.Point(6, 71);
             this.label3.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(105, 20);
             this.label3.TabIndex = 9;
             this.label3.Text = "Tuotteen nimi";
             // 
-            // comboBox1
+            // comboBox_shopping_lists
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(693, 42);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(257, 21);
-            this.comboBox1.TabIndex = 1;
-            // 
-            // listBox_shopping_list
-            // 
-            this.listBox_shopping_list.FormattingEnabled = true;
-            this.listBox_shopping_list.Location = new System.Drawing.Point(291, 19);
-            this.listBox_shopping_list.Name = "listBox_shopping_list";
-            this.listBox_shopping_list.Size = new System.Drawing.Size(396, 485);
-            this.listBox_shopping_list.TabIndex = 0;
+            this.comboBox_shopping_lists.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_shopping_lists.FormattingEnabled = true;
+            this.comboBox_shopping_lists.Location = new System.Drawing.Point(699, 72);
+            this.comboBox_shopping_lists.Name = "comboBox_shopping_lists";
+            this.comboBox_shopping_lists.Size = new System.Drawing.Size(257, 21);
+            this.comboBox_shopping_lists.TabIndex = 1;
+            this.comboBox_shopping_lists.SelectedIndexChanged += new System.EventHandler(this.comboBox_shopping_lists_SelectedIndexChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(693, 19);
+            this.label2.Location = new System.Drawing.Point(699, 49);
             this.label2.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(129, 20);
+            this.label2.Size = new System.Drawing.Size(142, 20);
             this.label2.TabIndex = 8;
-            this.label2.Text = "Valitse ruokalista";
+            this.label2.Text = "Valitse kauppalista";
             // 
             // textBox_item_name
             // 
             this.textBox_item_name.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_item_name.Location = new System.Drawing.Point(13, 49);
+            this.textBox_item_name.Location = new System.Drawing.Point(10, 101);
             this.textBox_item_name.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_item_name.MaxLength = 25;
             this.textBox_item_name.Name = "textBox_item_name";
             this.textBox_item_name.Size = new System.Drawing.Size(272, 26);
             this.textBox_item_name.TabIndex = 8;
@@ -413,7 +542,7 @@
             this.button_add_item.BackColor = System.Drawing.Color.DodgerBlue;
             this.button_add_item.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_add_item.ForeColor = System.Drawing.Color.White;
-            this.button_add_item.Location = new System.Drawing.Point(13, 165);
+            this.button_add_item.Location = new System.Drawing.Point(10, 217);
             this.button_add_item.Name = "button_add_item";
             this.button_add_item.Size = new System.Drawing.Size(132, 28);
             this.button_add_item.TabIndex = 9;
@@ -425,18 +554,42 @@
             // 
             this.groupBox_home.BackColor = System.Drawing.Color.Black;
             this.groupBox_home.Enabled = false;
-            this.groupBox_home.Location = new System.Drawing.Point(12, 434);
+            this.groupBox_home.Location = new System.Drawing.Point(0, 559);
             this.groupBox_home.Name = "groupBox_home";
             this.groupBox_home.Size = new System.Drawing.Size(180, 100);
             this.groupBox_home.TabIndex = 3;
             this.groupBox_home.TabStop = false;
             this.groupBox_home.Visible = false;
             // 
+            // comboBox_amount_type
+            // 
+            this.comboBox_amount_type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_amount_type.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox_amount_type.FormattingEnabled = true;
+            this.comboBox_amount_type.Items.AddRange(new object[] {
+            "",
+            "kpl",
+            "pkt",
+            "ps",
+            "g",
+            "kg",
+            "dl",
+            "litraa",
+            "mm",
+            "cm",
+            "m",
+            "cm2",
+            "m2"});
+            this.comboBox_amount_type.Location = new System.Drawing.Point(216, 172);
+            this.comboBox_amount_type.Name = "comboBox_amount_type";
+            this.comboBox_amount_type.Size = new System.Drawing.Size(66, 26);
+            this.comboBox_amount_type.TabIndex = 23;
+            // 
             // Etusivu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(990, 700);
             this.Controls.Add(this.groupBox_home);
             this.Controls.Add(this.groupBox_shopping_list);
@@ -455,7 +608,6 @@
             this.flowLayoutPanel1.ResumeLayout(false);
             this.groupBox_shopping_list.ResumeLayout(false);
             this.groupBox_shopping_list.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -481,17 +633,26 @@
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.GroupBox groupBox_shopping_list;
-        private System.Windows.Forms.ListBox listBox_shopping_list;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox_shopping_lists;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox_item_name;
         private System.Windows.Forms.TextBox textBox_item_amount;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button_clear_item;
         private System.Windows.Forms.Button button_add_item;
         private System.Windows.Forms.GroupBox groupBox_home;
         private System.Windows.Forms.Button button_minimize;
-        private System.Windows.Forms.BindingSource bindingSource1;
+        private System.Windows.Forms.ProgressBar progressBar_database_connection;
+        private System.Windows.Forms.TextBox textBox_shopping_list;
+        private System.Windows.Forms.Button button_list_delete;
+        private System.Windows.Forms.Button button_list_save;
+        private System.Windows.Forms.TextBox textBox_list_name;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox textBox_text_length;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox comboBox_amount_type;
     }
 }

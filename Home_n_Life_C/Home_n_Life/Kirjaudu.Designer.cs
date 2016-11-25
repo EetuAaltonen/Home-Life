@@ -35,11 +35,11 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox_login = new System.Windows.Forms.GroupBox();
-            this.button_login = new System.Windows.Forms.Button();
-            this.button_sign_up = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.textBox_password = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button_sign_up = new System.Windows.Forms.Button();
+            this.button_login = new System.Windows.Forms.Button();
             this.groupBox_registration = new System.Windows.Forms.GroupBox();
             this.textBox_account_password = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -138,18 +138,38 @@
             this.groupBox_login.TabStop = false;
             this.groupBox_login.Visible = false;
             // 
-            // button_login
+            // textBox_password
             // 
-            this.button_login.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_login.ForeColor = System.Drawing.Color.White;
-            this.button_login.Location = new System.Drawing.Point(231, 274);
-            this.button_login.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.button_login.Name = "button_login";
-            this.button_login.Size = new System.Drawing.Size(101, 30);
-            this.button_login.TabIndex = 12;
-            this.button_login.Text = "Kirjaudu";
-            this.button_login.UseVisualStyleBackColor = false;
-            this.button_login.Click += new System.EventHandler(this.button_login_Click);
+            this.textBox_password.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_password.Location = new System.Drawing.Point(99, 179);
+            this.textBox_password.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_password.MaxLength = 20;
+            this.textBox_password.Name = "textBox_password";
+            this.textBox_password.Size = new System.Drawing.Size(272, 26);
+            this.textBox_password.TabIndex = 16;
+            this.textBox_password.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(94, 140);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(112, 29);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Salasana";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(94, 44);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(142, 29);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Käyttäjänimi";
             // 
             // button_sign_up
             // 
@@ -164,38 +184,18 @@
             this.button_sign_up.UseVisualStyleBackColor = false;
             this.button_sign_up.Click += new System.EventHandler(this.button_sign_up_Click);
             // 
-            // label1
+            // button_login
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(94, 44);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(142, 29);
-            this.label1.TabIndex = 14;
-            this.label1.Text = "Käyttäjänimi";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(94, 140);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(112, 29);
-            this.label2.TabIndex = 15;
-            this.label2.Text = "Salasana";
-            // 
-            // textBox_password
-            // 
-            this.textBox_password.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_password.Location = new System.Drawing.Point(99, 179);
-            this.textBox_password.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.textBox_password.MaxLength = 20;
-            this.textBox_password.Name = "textBox_password";
-            this.textBox_password.Size = new System.Drawing.Size(272, 26);
-            this.textBox_password.TabIndex = 16;
-            this.textBox_password.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.button_login.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_login.ForeColor = System.Drawing.Color.White;
+            this.button_login.Location = new System.Drawing.Point(231, 274);
+            this.button_login.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_login.Name = "button_login";
+            this.button_login.Size = new System.Drawing.Size(101, 30);
+            this.button_login.TabIndex = 12;
+            this.button_login.Text = "Kirjaudu";
+            this.button_login.UseVisualStyleBackColor = false;
+            this.button_login.Click += new System.EventHandler(this.button_login_Click);
             // 
             // groupBox_registration
             // 
@@ -274,7 +274,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(503, 414);
             this.Controls.Add(this.groupBox_registration);
             this.Controls.Add(this.groupBox_login);
