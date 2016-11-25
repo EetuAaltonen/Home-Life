@@ -49,6 +49,7 @@
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.groupBox_shopping_list = new System.Windows.Forms.GroupBox();
+            this.comboBox_amount_type = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox_text_length = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -67,7 +68,6 @@
             this.textBox_item_name = new System.Windows.Forms.TextBox();
             this.button_add_item = new System.Windows.Forms.Button();
             this.groupBox_home = new System.Windows.Forms.GroupBox();
-            this.comboBox_amount_type = new System.Windows.Forms.ComboBox();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_username.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
@@ -351,6 +351,30 @@
             this.groupBox_shopping_list.TabStop = false;
             this.groupBox_shopping_list.Visible = false;
             // 
+            // comboBox_amount_type
+            // 
+            this.comboBox_amount_type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_amount_type.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox_amount_type.FormattingEnabled = true;
+            this.comboBox_amount_type.Items.AddRange(new object[] {
+            "",
+            "kpl",
+            "pkt",
+            "ps",
+            "g",
+            "kg",
+            "dl",
+            "litraa",
+            "mm",
+            "cm",
+            "m",
+            "cm2",
+            "m2"});
+            this.comboBox_amount_type.Location = new System.Drawing.Point(216, 172);
+            this.comboBox_amount_type.Name = "comboBox_amount_type";
+            this.comboBox_amount_type.Size = new System.Drawing.Size(66, 26);
+            this.comboBox_amount_type.TabIndex = 23;
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -404,9 +428,9 @@
             this.label6.Location = new System.Drawing.Point(6, 19);
             this.label6.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(138, 40);
+            this.label6.Size = new System.Drawing.Size(149, 40);
             this.label6.TabIndex = 18;
-            this.label6.Text = "Muotoile ja lisää\r\nautomaattisesti";
+            this.label6.Text = "Lisää ja muotoile \r\nautomaattisesti";
             // 
             // textBox_list_name
             // 
@@ -424,7 +448,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(699, 120);
+            this.label5.Location = new System.Drawing.Point(695, 120);
             this.label5.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(133, 20);
@@ -519,7 +543,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(699, 49);
+            this.label2.Location = new System.Drawing.Point(695, 47);
             this.label2.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(142, 20);
@@ -560,30 +584,6 @@
             this.groupBox_home.TabIndex = 3;
             this.groupBox_home.TabStop = false;
             this.groupBox_home.Visible = false;
-            // 
-            // comboBox_amount_type
-            // 
-            this.comboBox_amount_type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_amount_type.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox_amount_type.FormattingEnabled = true;
-            this.comboBox_amount_type.Items.AddRange(new object[] {
-            "",
-            "kpl",
-            "pkt",
-            "ps",
-            "g",
-            "kg",
-            "dl",
-            "litraa",
-            "mm",
-            "cm",
-            "m",
-            "cm2",
-            "m2"});
-            this.comboBox_amount_type.Location = new System.Drawing.Point(216, 172);
-            this.comboBox_amount_type.Name = "comboBox_amount_type";
-            this.comboBox_amount_type.Size = new System.Drawing.Size(66, 26);
-            this.comboBox_amount_type.TabIndex = 23;
             // 
             // Etusivu
             // 

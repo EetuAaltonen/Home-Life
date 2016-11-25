@@ -18,17 +18,19 @@ namespace Home_n_Life
         {
             InitializeComponent();
         }
+//----- Attributes --------------------------------------------------------------------------------------
         //---Database----------------
         string connetionString = "server=localhost;database=home&life;uid=root;pwd=;";
         MySqlConnection conn;
         MySqlCommand cmd;
-        string deleteTableQuery, createTableQuery, insertTableQuery, selectTableQuery, updateTableQuery;
+        string dropTableQuery, createTableQuery, insertTableQuery, selectTableQuery, updateTableQuery, deleteTableQuery;
         //---View-Change-------------
         string view_change;
         GroupBox current_groupBox;
         //---Shopping-List-----------
-        string item_info, added_item;
-
+        string info_text, added_item;
+        bool list_progressing;
+//----- Database --------------------------------------------------------------------------------------
         private void checkDatabaseConnection()
         {
             progressBar_database_connection.Value = 1;
@@ -39,6 +41,7 @@ namespace Home_n_Life
                 conn.Open();
                 progressBar_database_connection.Value = 2;
                 progressBar_database_connection.ForeColor = Color.LimeGreen;
+                conn.Close();
             }
             catch
             {
@@ -46,11 +49,8 @@ namespace Home_n_Life
                 progressBar_database_connection.Value = 1;
                 progressBar_database_connection.ForeColor = Color.Red;
             }
-            finally
-            {
-                conn.Close();
-            }
         }
+//----- Shopping list --------------------------------------------------------------------------------------
         private void viewChange(GroupBox current_groupBox_) 
         {
             if (current_groupBox != null)
@@ -70,7 +70,7 @@ namespace Home_n_Life
                 case "shopping_list":
                     textBox_shopping_list.Text = "";
                     textBox_shopping_list.ForeColor = Color.Gray;
-                    item_info = "Kirjoita tähän tuotteet, esim näin:" +
+                    info_text = "Kirjoita tähän tuotteet, esim näin:" +
                                 System.Environment.NewLine +
                                 "   - Tuote1" +
                                 System.Environment.NewLine +
@@ -81,24 +81,20 @@ namespace Home_n_Life
                                 "   - Tuote4" +
                                 System.Environment.NewLine +
                                 "   - Tuote5";
-                    textBox_shopping_list.Text += item_info;
+                    textBox_shopping_list.Text += info_text;
                     break; 
             }
         }
 
-        private void button_shopping_list_Click(object sender, EventArgs e)
+        private void readShoppingLists()
         {
-            checkDatabaseConnection();
-            view_change = "shopping_list";
-            viewChange(groupBox_shopping_list);
-            textBox_list_name.Text = Convert.ToString(comboBox_shopping_lists.SelectedItem);
             comboBox_shopping_lists.Items.Clear();
             createTableQuery = @"CREATE TABLE IF NOT EXISTS shoppinglist (
                                         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                         username VARCHAR(30) NOT NULL,
                                         listname VARCHAR(30) NOT NULL,
                                         text TEXT(500) NOT NULL);";
-            selectTableQuery = @"SELECT id, username, listname, text " + 
+            selectTableQuery = @"SELECT id, username, listname, text " +
                                 " FROM shoppinglist " +
                                 " WHERE username='" + linkLabel_user.Text + "' ;";
             try
@@ -113,26 +109,31 @@ namespace Home_n_Life
                     comboBox_shopping_lists.Items.Add(Convert.ToString(dataReader["listname"]));
                 }
                 dataReader.Close();
+                conn.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(Convert.ToString(ex));
             }
-            finally
-            {
-                conn.Close();
-            }
+        }
+
+        private void button_shopping_list_Click(object sender, EventArgs e)
+        {
+            checkDatabaseConnection();
+            view_change = "shopping_list";
+            viewChange(groupBox_shopping_list);
+            readShoppingLists();
         }
 
         private void button_add_item_Click(object sender, EventArgs e)
         {
-            if (textBox_shopping_list.Text == item_info)
+            if (textBox_shopping_list.Text == info_text)
             {
                 textBox_shopping_list.ForeColor = Color.Black;
                 textBox_shopping_list.Text = "";
             }
             added_item = "> " + textBox_item_name.Text + "  ";
-            added_item += textBox_item_amount.Text + comboBox_amount_type.SelectedItem;
+            added_item += textBox_item_amount.Text + " " + comboBox_amount_type.SelectedItem;
             added_item += System.Environment.NewLine;
             textBox_shopping_list.Text += added_item;
             textBox_text_length.Text = Convert.ToString(textBox_shopping_list.Text.Length);
@@ -146,30 +147,31 @@ namespace Home_n_Life
 
         private void comboBox_shopping_lists_SelectedIndexChanged(object sender, EventArgs e)
         {
-            textBox_shopping_list.ForeColor = Color.Black;
-            textBox_list_name.Text = Convert.ToString(comboBox_shopping_lists.SelectedItem);
-            selectTableQuery = @"SELECT id, username, listname, text " +
-                                "FROM shoppinglist WHERE username='" + linkLabel_user.Text + "' " +
-                                "AND listname='" + comboBox_shopping_lists.SelectedItem + "' ;";
-            try
+            if (!list_progressing)
             {
-                conn.Open();
-                cmd = new MySqlCommand(selectTableQuery, conn);
-                MySqlDataReader dataReader = cmd.ExecuteReader();
-                while (dataReader.Read())
+                textBox_shopping_list.ForeColor = Color.Black;
+                textBox_shopping_list.Text = "";
+                textBox_list_name.Text = Convert.ToString(comboBox_shopping_lists.SelectedItem);
+                selectTableQuery = @"SELECT id, username, listname, text " +
+                                    "FROM shoppinglist WHERE username='" + linkLabel_user.Text + "' " +
+                                    "AND listname='" + comboBox_shopping_lists.SelectedItem + "' ;";
+                try
                 {
-                    textBox_list_name.Text = Convert.ToString(dataReader["listname"]);
-                    textBox_shopping_list.Text = Convert.ToString(dataReader["text"]);
+                    conn.Open();
+                    cmd = new MySqlCommand(selectTableQuery, conn);
+                    MySqlDataReader dataReader = cmd.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        textBox_list_name.Text = Convert.ToString(dataReader["listname"]);
+                        textBox_shopping_list.Text = Convert.ToString(dataReader["text"]);
+                    }
+                    dataReader.Close();
+                    conn.Close();
                 }
-                dataReader.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(Convert.ToString(ex));
-            }
-            finally
-            {
-                conn.Close();
+                catch (Exception ex)
+                {
+                    MessageBox.Show(Convert.ToString(ex));
+                }
             }
         }
 
@@ -191,21 +193,22 @@ namespace Home_n_Life
                 cmd.ExecuteNonQuery();
                 cmd = new MySqlCommand(updateTableQuery, conn);
                 cmd.ExecuteNonQuery();
+                conn.Close();
+                readShoppingLists();
+                list_progressing = true;
+                comboBox_shopping_lists.SelectedItem = textBox_list_name.Text;
+                list_progressing = false;
                 MessageBox.Show("Kauppalista tallennettu", "Tallenna");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(Convert.ToString(ex));
             }
-            finally
-            {
-                conn.Close();
-            }
         }
 
         private void textBox_shopping_list_MouseEnter(object sender, EventArgs e)
         {
-            if (textBox_shopping_list.Text == item_info)
+            if (textBox_shopping_list.Text == info_text)
             {
                 textBox_shopping_list.ForeColor = Color.Black;
                 textBox_shopping_list.Text = "";
@@ -217,13 +220,13 @@ namespace Home_n_Life
             if (textBox_shopping_list.Text == "")
             {
                 textBox_shopping_list.ForeColor = Color.Gray;
-                textBox_shopping_list.Text = item_info;
+                textBox_shopping_list.Text = info_text;
             }
         }
 
         private void textBox_shopping_list_KeyDown(object sender, KeyEventArgs e)
         {
-            if (textBox_shopping_list.Text == item_info)
+            if (textBox_shopping_list.Text == info_text)
             {
                 textBox_shopping_list.ForeColor = Color.Black;
                 textBox_shopping_list.Text = "";
@@ -236,16 +239,37 @@ namespace Home_n_Life
             if (textBox_shopping_list.Text == "")
             {
                 textBox_shopping_list.ForeColor = Color.Gray;
-                textBox_shopping_list.Text = item_info;
+                textBox_shopping_list.Text = info_text;
             }
             textBox_text_length.Text = Convert.ToString(textBox_shopping_list.Text.Length);
         }
 
         private void button_list_delete_Click(object sender, EventArgs e)
         {
-
+            DialogResult dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen kauppalistan?", "Poista", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                deleteTableQuery = @"DELETE FROM shoppinglist WHERE username='" + linkLabel_user.Text +
+                                "' AND listname='" + textBox_list_name.Text + "' ;";
+                try
+                {
+                    conn.Open();
+                    cmd = new MySqlCommand(deleteTableQuery, conn);
+                    cmd.ExecuteNonQuery();
+                    textBox_list_name.Text = "";
+                    textBox_shopping_list.Text = "";
+                    conn.Close();
+                    readShoppingLists();
+                    comboBox_shopping_lists.SelectedItem = null;
+                    MessageBox.Show("Kauppalista on poistettu", "Poista");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(Convert.ToString(ex));
+                }
+            }   
         }
-
+//----- Top Banner Buttons --------------------------------------------------------------------------------------
         private void button_logout_Click_1(object sender, EventArgs e)
         {
             Kirjautuminen Kirjautuminen = new Kirjautuminen();
@@ -257,7 +281,7 @@ namespace Home_n_Life
         {
             this.WindowState = FormWindowState.Minimized;
         }
-
+//----- Etusivu Load --------------------------------------------------------------------------------------
         private void Etusivu_Load(object sender, EventArgs e)
         {
             view_change = "home";
