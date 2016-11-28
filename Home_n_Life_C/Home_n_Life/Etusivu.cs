@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
 
 namespace Home_n_Life
@@ -27,6 +26,7 @@ namespace Home_n_Life
         //---View-Change-------------
         string view_change;
         GroupBox current_groupBox;
+        Button current_button;
         //---Shopping-List-----------
         string info_text, added_item;
         bool list_progressing;
@@ -51,38 +51,52 @@ namespace Home_n_Life
             }
         }
 //----- Shopping list --------------------------------------------------------------------------------------
-        private void viewChange(GroupBox current_groupBox_) 
+        private void viewChange(GroupBox current_groupBox_, Button current_button_) 
         {
-            if (current_groupBox != null)
+            if (current_groupBox_ != current_groupBox)
             {
-                current_groupBox.Enabled = false;
-                current_groupBox.Visible = false;
-            }
-            current_groupBox = current_groupBox_;
-            current_groupBox.Location = new Point(12, 170);
-            current_groupBox.Size = new Size(964, 518);
-            current_groupBox.Visible = true;
-            current_groupBox.Enabled = true;
-            switch (view_change)
-            {
-                case "home":
-                    break;
-                case "shopping_list":
-                    textBox_shopping_list.Text = "";
-                    textBox_shopping_list.ForeColor = Color.Gray;
-                    info_text = "Kirjoita tähän tuotteet, esim näin:" +
-                                System.Environment.NewLine +
-                                "   - Tuote1" +
-                                System.Environment.NewLine +
-                                "   - Tuote2" +
-                                System.Environment.NewLine +
-                                "   - Tuote3" +
-                                System.Environment.NewLine +
-                                "   - Tuote4" +
-                                System.Environment.NewLine +
-                                "   - Tuote5";
-                    textBox_shopping_list.Text += info_text;
-                    break; 
+                if (current_button != button_logo)
+                {
+                    current_button.BackColor = Color.DodgerBlue;
+                }
+                if (current_button_ != button_logo)
+                {
+                    current_button = current_button_;
+                    current_button.BackColor = Color.CadetBlue;
+                }
+                if (current_groupBox != null)
+                {
+                    current_groupBox.Enabled = false;
+                    current_groupBox.Visible = false;
+                }
+                current_groupBox = current_groupBox_;
+                current_groupBox.Location = new Point(12, 170);
+                current_groupBox.Size = new Size(964, 518);
+                current_groupBox.Visible = true;
+                current_groupBox.Enabled = true;
+                switch (view_change)
+                {
+                    case "home":
+                        break;
+                    case "shopping_list":
+                        textBox_shopping_list.Text = "";
+                        textBox_shopping_list.ForeColor = Color.Gray;
+                        info_text = "Kirjoita tähän tuotteet, esim näin:" +
+                                    System.Environment.NewLine +
+                                    "   - Tuote1" +
+                                    System.Environment.NewLine +
+                                    "   - Tuote2" +
+                                    System.Environment.NewLine +
+                                    "   - Tuote3" +
+                                    System.Environment.NewLine +
+                                    "   - Tuote4" +
+                                    System.Environment.NewLine +
+                                    "   - Tuote5";
+                        textBox_shopping_list.Text += info_text;
+                        break;
+                    case "change_tracking":
+                        break;
+                }
             }
         }
 
@@ -121,28 +135,33 @@ namespace Home_n_Life
         {
             checkDatabaseConnection();
             view_change = "shopping_list";
-            viewChange(groupBox_shopping_list);
+            viewChange(groupBox_shopping_list, button_shopping_list);
             readShoppingLists();
         }
 
         private void button_add_item_Click(object sender, EventArgs e)
         {
-            if (textBox_shopping_list.Text == info_text)
+            if (textBox_item_name.Text.Length > 0)
             {
-                textBox_shopping_list.ForeColor = Color.Black;
-                textBox_shopping_list.Text = "";
+                if (textBox_shopping_list.Text == info_text)
+                {
+                    textBox_shopping_list.ForeColor = Color.Black;
+                    textBox_shopping_list.Text = "";
+                }
+                added_item = "> " + textBox_item_name.Text + "  ";
+                added_item += textBox_item_amount.Text + " " + comboBox_amount_type.SelectedItem;
+                added_item += System.Environment.NewLine;
+                textBox_shopping_list.Text += added_item;
+                textBox_text_length.Text = Convert.ToString(textBox_shopping_list.Text.Length);
             }
-            added_item = "> " + textBox_item_name.Text + "  ";
-            added_item += textBox_item_amount.Text + " " + comboBox_amount_type.SelectedItem;
-            added_item += System.Environment.NewLine;
-            textBox_shopping_list.Text += added_item;
-            textBox_text_length.Text = Convert.ToString(textBox_shopping_list.Text.Length);
+            else
+            {
+                MessageBox.Show("Syötä tuotteen nimi", "Tuotteen lisääminen");
+            }
         }
 
         private void label_logo_Click(object sender, EventArgs e)
         {
-            view_change = "home";
-            viewChange(groupBox_home);
         }
 
         private void comboBox_shopping_lists_SelectedIndexChanged(object sender, EventArgs e)
@@ -177,32 +196,40 @@ namespace Home_n_Life
 
         private void button_list_save_Click(object sender, EventArgs e)
         {
-            insertTableQuery = @"INSERT INTO shoppinglist (id, username, listname, text) " +
-                                "SELECT * FROM(SELECT 0, '" + linkLabel_user.Text + "', '" + textBox_list_name.Text + "', 'null') AS tmp " +
-                                "WHERE NOT EXISTS( " +
-                                "SELECT listname FROM shoppinglist WHERE listname = '" + textBox_list_name.Text + "' " +
-                                ") LIMIT 2 ;";
-            updateTableQuery = @"UPDATE shoppinglist " +
-                                 "SET text='" + textBox_shopping_list.Text + "' " +
-                                 "WHERE listname='" + textBox_list_name.Text + "' ;";
+            textBox_list_name.Text = textBox_list_name.Text.Replace(" ", "_");
+            if (textBox_list_name.Text.Length > 0)
+            {
+                insertTableQuery = @"INSERT INTO shoppinglist (id, username, listname, text) " +
+                                    "SELECT * FROM(SELECT 0, '" + linkLabel_user.Text + "', '" + textBox_list_name.Text + "', 'null') AS tmp " +
+                                    "WHERE NOT EXISTS( " +
+                                    "SELECT listname FROM shoppinglist WHERE listname = '" + textBox_list_name.Text + "' " +
+                                    ") LIMIT 2 ;";
+                updateTableQuery = @"UPDATE shoppinglist " +
+                                     "SET text='" + textBox_shopping_list.Text + "' " +
+                                     "WHERE listname='" + textBox_list_name.Text + "' ;";
 
-            try
-            {
-                conn.Open();
-                cmd = new MySqlCommand(insertTableQuery, conn);
-                cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand(updateTableQuery, conn);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                readShoppingLists();
-                list_progressing = true;
-                comboBox_shopping_lists.SelectedItem = textBox_list_name.Text;
-                list_progressing = false;
-                MessageBox.Show("Kauppalista tallennettu", "Tallenna");
+                try
+                {
+                    conn.Open();
+                    cmd = new MySqlCommand(insertTableQuery, conn);
+                    cmd.ExecuteNonQuery();
+                    cmd = new MySqlCommand(updateTableQuery, conn);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    readShoppingLists();
+                    list_progressing = true;
+                    comboBox_shopping_lists.SelectedItem = textBox_list_name.Text;
+                    list_progressing = false;
+                    MessageBox.Show("Kauppalista tallennettu", "Tallenna");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(Convert.ToString(ex));
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(Convert.ToString(ex));
+                MessageBox.Show("Kauppalistan nimi on virheellinen tai sisältää!", "Tallenna");
             }
         }
 
@@ -222,6 +249,19 @@ namespace Home_n_Life
                 textBox_shopping_list.ForeColor = Color.Gray;
                 textBox_shopping_list.Text = info_text;
             }
+        }
+
+        private void button_change_tracking_Click(object sender, EventArgs e)
+        {
+            checkDatabaseConnection();
+            view_change = "change_tracking";
+            viewChange(groupBox_change_tracking, button_change_tracking);
+        }
+
+        private void button_logo_Click(object sender, EventArgs e)
+        {
+            view_change = "home";
+            viewChange(groupBox_home, button_logo);
         }
 
         private void textBox_shopping_list_KeyDown(object sender, KeyEventArgs e)
@@ -286,7 +326,8 @@ namespace Home_n_Life
         {
             view_change = "home";
             conn = new MySqlConnection(connetionString);
-            viewChange(groupBox_home);
+            current_button = button_logo;
+            viewChange(groupBox_home, button_logo);
         }
     }
 }

@@ -46,6 +46,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.button_create_account = new System.Windows.Forms.Button();
             this.textBox_account_name = new System.Windows.Forms.TextBox();
+            this.button_show_password = new System.Windows.Forms.Button();
+            this.button_return = new System.Windows.Forms.Button();
             this.groupBox_navigation.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox_login.SuspendLayout();
@@ -126,14 +128,15 @@
             this.groupBox_login.BackColor = System.Drawing.Color.Black;
             this.groupBox_login.Controls.Add(this.textBox_password);
             this.groupBox_login.Controls.Add(this.label2);
+            this.groupBox_login.Controls.Add(this.button_show_password);
             this.groupBox_login.Controls.Add(this.label1);
             this.groupBox_login.Controls.Add(this.button_sign_up);
             this.groupBox_login.Controls.Add(this.textBox_username);
             this.groupBox_login.Controls.Add(this.button_login);
             this.groupBox_login.Enabled = false;
-            this.groupBox_login.Location = new System.Drawing.Point(12, 65);
+            this.groupBox_login.Location = new System.Drawing.Point(12, 109);
             this.groupBox_login.Name = "groupBox_login";
-            this.groupBox_login.Size = new System.Drawing.Size(476, 328);
+            this.groupBox_login.Size = new System.Drawing.Size(34, 29);
             this.groupBox_login.TabIndex = 13;
             this.groupBox_login.TabStop = false;
             this.groupBox_login.Visible = false;
@@ -145,6 +148,7 @@
             this.textBox_password.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.textBox_password.MaxLength = 20;
             this.textBox_password.Name = "textBox_password";
+            this.textBox_password.PasswordChar = '*';
             this.textBox_password.Size = new System.Drawing.Size(272, 26);
             this.textBox_password.TabIndex = 16;
             this.textBox_password.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -200,15 +204,16 @@
             // groupBox_registration
             // 
             this.groupBox_registration.BackColor = System.Drawing.Color.Black;
+            this.groupBox_registration.Controls.Add(this.button_return);
             this.groupBox_registration.Controls.Add(this.textBox_account_password);
             this.groupBox_registration.Controls.Add(this.label3);
             this.groupBox_registration.Controls.Add(this.label4);
             this.groupBox_registration.Controls.Add(this.button_create_account);
             this.groupBox_registration.Controls.Add(this.textBox_account_name);
             this.groupBox_registration.Enabled = false;
-            this.groupBox_registration.Location = new System.Drawing.Point(12, 124);
+            this.groupBox_registration.Location = new System.Drawing.Point(12, 65);
             this.groupBox_registration.Name = "groupBox_registration";
-            this.groupBox_registration.Size = new System.Drawing.Size(52, 48);
+            this.groupBox_registration.Size = new System.Drawing.Size(34, 38);
             this.groupBox_registration.TabIndex = 17;
             this.groupBox_registration.TabStop = false;
             this.groupBox_registration.Visible = false;
@@ -250,7 +255,7 @@
             // 
             this.button_create_account.BackColor = System.Drawing.Color.DodgerBlue;
             this.button_create_account.ForeColor = System.Drawing.Color.White;
-            this.button_create_account.Location = new System.Drawing.Point(178, 280);
+            this.button_create_account.Location = new System.Drawing.Point(231, 274);
             this.button_create_account.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_create_account.Name = "button_create_account";
             this.button_create_account.Size = new System.Drawing.Size(101, 30);
@@ -269,6 +274,32 @@
             this.textBox_account_name.Size = new System.Drawing.Size(272, 26);
             this.textBox_account_name.TabIndex = 9;
             this.textBox_account_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // button_show_password
+            // 
+            this.button_show_password.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_show_password.ForeColor = System.Drawing.Color.White;
+            this.button_show_password.Location = new System.Drawing.Point(377, 179);
+            this.button_show_password.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_show_password.Name = "button_show_password";
+            this.button_show_password.Size = new System.Drawing.Size(49, 26);
+            this.button_show_password.TabIndex = 12;
+            this.button_show_password.Text = "Näytä";
+            this.button_show_password.UseVisualStyleBackColor = false;
+            this.button_show_password.Click += new System.EventHandler(this.button_show_password_Click);
+            // 
+            // button_return
+            // 
+            this.button_return.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_return.ForeColor = System.Drawing.Color.White;
+            this.button_return.Location = new System.Drawing.Point(124, 274);
+            this.button_return.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_return.Name = "button_return";
+            this.button_return.Size = new System.Drawing.Size(101, 30);
+            this.button_return.TabIndex = 17;
+            this.button_return.Text = "Takaisin";
+            this.button_return.UseVisualStyleBackColor = false;
+            this.button_return.Click += new System.EventHandler(this.button_return_Click);
             // 
             // Kirjautuminen
             // 
@@ -314,6 +345,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button_create_account;
         private System.Windows.Forms.TextBox textBox_account_name;
+        private System.Windows.Forms.Button button_show_password;
+        private System.Windows.Forms.Button button_return;
     }
 }
 
