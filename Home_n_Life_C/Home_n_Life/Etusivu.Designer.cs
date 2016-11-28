@@ -70,7 +70,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.groupBox_change_tracking = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridView_change_tracking = new System.Windows.Forms.DataGridView();
             this.button_logo = new System.Windows.Forms.Button();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_username.SuspendLayout();
@@ -79,7 +79,7 @@
             this.groupBox_shopping_list.SuspendLayout();
             this.groupBox_home.SuspendLayout();
             this.groupBox_change_tracking.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_change_tracking)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox_top_banner
@@ -611,7 +611,7 @@
             // groupBox_change_tracking
             // 
             this.groupBox_change_tracking.BackColor = System.Drawing.Color.Black;
-            this.groupBox_change_tracking.Controls.Add(this.dataGridView1);
+            this.groupBox_change_tracking.Controls.Add(this.dataGridView_change_tracking);
             this.groupBox_change_tracking.Enabled = false;
             this.groupBox_change_tracking.Location = new System.Drawing.Point(12, 170);
             this.groupBox_change_tracking.Name = "groupBox_change_tracking";
@@ -620,13 +620,13 @@
             this.groupBox_change_tracking.TabStop = false;
             this.groupBox_change_tracking.Visible = false;
             // 
-            // dataGridView1
+            // dataGridView_change_tracking
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(10, 19);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(949, 493);
-            this.dataGridView1.TabIndex = 0;
+            this.dataGridView_change_tracking.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_change_tracking.Location = new System.Drawing.Point(10, 19);
+            this.dataGridView_change_tracking.Name = "dataGridView_change_tracking";
+            this.dataGridView_change_tracking.Size = new System.Drawing.Size(949, 493);
+            this.dataGridView_change_tracking.TabIndex = 0;
             // 
             // button_logo
             // 
@@ -667,7 +667,7 @@
             this.groupBox_home.ResumeLayout(false);
             this.groupBox_home.PerformLayout();
             this.groupBox_change_tracking.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_change_tracking)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -716,7 +716,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.GroupBox groupBox_change_tracking;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridView_change_tracking;
         private System.Windows.Forms.Button button_logo;
     }
 }

@@ -71,7 +71,7 @@ namespace Home_n_Life
                 }
                 current_groupBox = current_groupBox_;
                 current_groupBox.Location = new Point(12, 170);
-                current_groupBox.Size = new Size(964, 518);
+                current_groupBox.Size = new Size(967, 518);
                 current_groupBox.Visible = true;
                 current_groupBox.Enabled = true;
                 switch (view_change)
@@ -251,13 +251,6 @@ namespace Home_n_Life
             }
         }
 
-        private void button_change_tracking_Click(object sender, EventArgs e)
-        {
-            checkDatabaseConnection();
-            view_change = "change_tracking";
-            viewChange(groupBox_change_tracking, button_change_tracking);
-        }
-
         private void button_logo_Click(object sender, EventArgs e)
         {
             view_change = "home";
@@ -308,6 +301,50 @@ namespace Home_n_Life
                     MessageBox.Show(Convert.ToString(ex));
                 }
             }   
+        }
+//----- Change tracking --------------------------------------------------------------------------------------
+        private void readChangeTracking()
+        {
+            comboBox_shopping_lists.Items.Clear();
+            createTableQuery = @"CREATE TABLE IF NOT EXISTS shoppinglist (
+                                        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                        username VARCHAR(30) NOT NULL,
+                                        listname VARCHAR(30) NOT NULL,
+                                        text TEXT(500) NOT NULL);";
+            selectTableQuery = @"SELECT id, username, listname, text " +
+                                " FROM shoppinglist " +
+                                " WHERE username='" + linkLabel_user.Text + "' ;";
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(createTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(selectTableQuery, conn);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    comboBox_shopping_lists.Items.Add(Convert.ToString(dataReader["listname"]));
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+        }
+        private void button_change_tracking_Click(object sender, EventArgs e)
+        {
+            checkDatabaseConnection();
+            view_change = "change_tracking";
+            viewChange(groupBox_change_tracking, button_change_tracking);
+            DataTable dt = new DataTable();
+            dt.Columns.Add(new DataColumn("Id", typeof(int)));
+            dt.Columns.Add(new DataColumn("Käyttäjänimi", typeof(string)));
+            dt.Columns.Add(new DataColumn("Päivä", typeof(DateTime)));
+            dt.Columns.Add(new DataColumn("Muutos", typeof(string)));
+            dataGridView_change_tracking.DataSource = dt;
+            dataGridView_change_tracking.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 //----- Top Banner Buttons --------------------------------------------------------------------------------------
         private void button_logout_Click_1(object sender, EventArgs e)
