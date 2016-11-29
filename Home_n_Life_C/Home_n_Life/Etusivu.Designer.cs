@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox_top_banner = new System.Windows.Forms.GroupBox();
+            this.button_logo = new System.Windows.Forms.Button();
             this.flowLayoutPanel_username = new System.Windows.Forms.FlowLayoutPanel();
             this.button_logout = new System.Windows.Forms.Button();
             this.button_minimize = new System.Windows.Forms.Button();
@@ -39,13 +40,13 @@
             this.progressBar_database_connection = new System.Windows.Forms.ProgressBar();
             this.groupBox_navigation = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.button_economic = new System.Windows.Forms.Button();
+            this.button_menu = new System.Windows.Forms.Button();
+            this.button_cleaning = new System.Windows.Forms.Button();
             this.button_shopping_list = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
+            this.button_calendar = new System.Windows.Forms.Button();
+            this.button_exercise_meter = new System.Windows.Forms.Button();
+            this.button_checklist = new System.Windows.Forms.Button();
             this.button_change_tracking = new System.Windows.Forms.Button();
             this.groupBox_shopping_list = new System.Windows.Forms.GroupBox();
             this.comboBox_amount_type = new System.Windows.Forms.ComboBox();
@@ -67,11 +68,11 @@
             this.textBox_item_name = new System.Windows.Forms.TextBox();
             this.button_add_item = new System.Windows.Forms.Button();
             this.groupBox_home = new System.Windows.Forms.GroupBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.groupBox_change_tracking = new System.Windows.Forms.GroupBox();
-            this.dataGridView_change_tracking = new System.Windows.Forms.DataGridView();
-            this.button_logo = new System.Windows.Forms.Button();
+            this.listView_change_tracking = new System.Windows.Forms.ListView();
+            this.groupBox_economic = new System.Windows.Forms.GroupBox();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_username.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
@@ -79,7 +80,6 @@
             this.groupBox_shopping_list.SuspendLayout();
             this.groupBox_home.SuspendLayout();
             this.groupBox_change_tracking.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_change_tracking)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox_top_banner
@@ -92,6 +92,19 @@
             this.groupBox_top_banner.Size = new System.Drawing.Size(996, 82);
             this.groupBox_top_banner.TabIndex = 0;
             this.groupBox_top_banner.TabStop = false;
+            // 
+            // button_logo
+            // 
+            this.button_logo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_logo.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_logo.ForeColor = System.Drawing.Color.White;
+            this.button_logo.Location = new System.Drawing.Point(12, 19);
+            this.button_logo.Name = "button_logo";
+            this.button_logo.Size = new System.Drawing.Size(202, 46);
+            this.button_logo.TabIndex = 4;
+            this.button_logo.Text = "Home\'N\'Life";
+            this.button_logo.UseVisualStyleBackColor = true;
+            this.button_logo.Click += new System.EventHandler(this.button_logo_Click);
             // 
             // flowLayoutPanel_username
             // 
@@ -206,13 +219,13 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.button1);
-            this.flowLayoutPanel1.Controls.Add(this.button3);
-            this.flowLayoutPanel1.Controls.Add(this.button4);
+            this.flowLayoutPanel1.Controls.Add(this.button_economic);
+            this.flowLayoutPanel1.Controls.Add(this.button_menu);
+            this.flowLayoutPanel1.Controls.Add(this.button_cleaning);
             this.flowLayoutPanel1.Controls.Add(this.button_shopping_list);
-            this.flowLayoutPanel1.Controls.Add(this.button6);
-            this.flowLayoutPanel1.Controls.Add(this.button7);
-            this.flowLayoutPanel1.Controls.Add(this.button8);
+            this.flowLayoutPanel1.Controls.Add(this.button_calendar);
+            this.flowLayoutPanel1.Controls.Add(this.button_exercise_meter);
+            this.flowLayoutPanel1.Controls.Add(this.button_checklist);
             this.flowLayoutPanel1.Controls.Add(this.button_change_tracking);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 16);
@@ -220,41 +233,42 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(961, 59);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
-            // button1
+            // button_economic
             // 
-            this.button1.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(3, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(79, 46);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Talous";
-            this.button1.UseVisualStyleBackColor = false;
+            this.button_economic.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_economic.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_economic.ForeColor = System.Drawing.Color.White;
+            this.button_economic.Location = new System.Drawing.Point(3, 3);
+            this.button_economic.Name = "button_economic";
+            this.button_economic.Size = new System.Drawing.Size(79, 46);
+            this.button_economic.TabIndex = 1;
+            this.button_economic.Text = "Talous";
+            this.button_economic.UseVisualStyleBackColor = false;
+            this.button_economic.Click += new System.EventHandler(this.button_economic_Click);
             // 
-            // button3
+            // button_menu
             // 
-            this.button3.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(88, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(106, 46);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Ruokalista";
-            this.button3.UseVisualStyleBackColor = false;
+            this.button_menu.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_menu.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_menu.ForeColor = System.Drawing.Color.White;
+            this.button_menu.Location = new System.Drawing.Point(88, 3);
+            this.button_menu.Name = "button_menu";
+            this.button_menu.Size = new System.Drawing.Size(106, 46);
+            this.button_menu.TabIndex = 2;
+            this.button_menu.Text = "Ruokalista";
+            this.button_menu.UseVisualStyleBackColor = false;
             // 
-            // button4
+            // button_cleaning
             // 
-            this.button4.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.ForeColor = System.Drawing.Color.White;
-            this.button4.Location = new System.Drawing.Point(200, 3);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(128, 46);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "Siivousvuorot";
-            this.button4.UseVisualStyleBackColor = false;
+            this.button_cleaning.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_cleaning.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_cleaning.ForeColor = System.Drawing.Color.White;
+            this.button_cleaning.Location = new System.Drawing.Point(200, 3);
+            this.button_cleaning.Name = "button_cleaning";
+            this.button_cleaning.Size = new System.Drawing.Size(128, 46);
+            this.button_cleaning.TabIndex = 3;
+            this.button_cleaning.Text = "Siivousvuorot";
+            this.button_cleaning.UseVisualStyleBackColor = false;
             // 
             // button_shopping_list
             // 
@@ -269,41 +283,41 @@
             this.button_shopping_list.UseVisualStyleBackColor = false;
             this.button_shopping_list.Click += new System.EventHandler(this.button_shopping_list_Click);
             // 
-            // button6
+            // button_calendar
             // 
-            this.button6.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.ForeColor = System.Drawing.Color.White;
-            this.button6.Location = new System.Drawing.Point(453, 3);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(95, 46);
-            this.button6.TabIndex = 5;
-            this.button6.Text = "Kalenteri";
-            this.button6.UseVisualStyleBackColor = false;
+            this.button_calendar.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_calendar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_calendar.ForeColor = System.Drawing.Color.White;
+            this.button_calendar.Location = new System.Drawing.Point(453, 3);
+            this.button_calendar.Name = "button_calendar";
+            this.button_calendar.Size = new System.Drawing.Size(95, 46);
+            this.button_calendar.TabIndex = 5;
+            this.button_calendar.Text = "Kalenteri";
+            this.button_calendar.UseVisualStyleBackColor = false;
             // 
-            // button7
+            // button_exercise_meter
             // 
-            this.button7.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button7.ForeColor = System.Drawing.Color.White;
-            this.button7.Location = new System.Drawing.Point(554, 3);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(130, 46);
-            this.button7.TabIndex = 6;
-            this.button7.Text = "Liikuntamittari";
-            this.button7.UseVisualStyleBackColor = false;
+            this.button_exercise_meter.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_exercise_meter.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_exercise_meter.ForeColor = System.Drawing.Color.White;
+            this.button_exercise_meter.Location = new System.Drawing.Point(554, 3);
+            this.button_exercise_meter.Name = "button_exercise_meter";
+            this.button_exercise_meter.Size = new System.Drawing.Size(130, 46);
+            this.button_exercise_meter.TabIndex = 6;
+            this.button_exercise_meter.Text = "Liikuntamittari";
+            this.button_exercise_meter.UseVisualStyleBackColor = false;
             // 
-            // button8
+            // button_checklist
             // 
-            this.button8.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button8.ForeColor = System.Drawing.Color.White;
-            this.button8.Location = new System.Drawing.Point(690, 3);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(105, 46);
-            this.button8.TabIndex = 7;
-            this.button8.Text = "Muistilistat";
-            this.button8.UseVisualStyleBackColor = false;
+            this.button_checklist.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_checklist.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_checklist.ForeColor = System.Drawing.Color.White;
+            this.button_checklist.Location = new System.Drawing.Point(690, 3);
+            this.button_checklist.Name = "button_checklist";
+            this.button_checklist.Size = new System.Drawing.Size(105, 46);
+            this.button_checklist.TabIndex = 7;
+            this.button_checklist.Text = "Muistilistat";
+            this.button_checklist.UseVisualStyleBackColor = false;
             // 
             // button_change_tracking
             // 
@@ -340,9 +354,9 @@
             this.groupBox_shopping_list.Controls.Add(this.textBox_item_name);
             this.groupBox_shopping_list.Controls.Add(this.button_add_item);
             this.groupBox_shopping_list.Enabled = false;
-            this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 216);
+            this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 234);
             this.groupBox_shopping_list.Name = "groupBox_shopping_list";
-            this.groupBox_shopping_list.Size = new System.Drawing.Size(50, 46);
+            this.groupBox_shopping_list.Size = new System.Drawing.Size(50, 47);
             this.groupBox_shopping_list.TabIndex = 2;
             this.groupBox_shopping_list.TabStop = false;
             this.groupBox_shopping_list.Visible = false;
@@ -576,24 +590,12 @@
             this.groupBox_home.Controls.Add(this.label11);
             this.groupBox_home.Controls.Add(this.label10);
             this.groupBox_home.Enabled = false;
-            this.groupBox_home.Location = new System.Drawing.Point(12, 269);
+            this.groupBox_home.Location = new System.Drawing.Point(12, 303);
             this.groupBox_home.Name = "groupBox_home";
             this.groupBox_home.Size = new System.Drawing.Size(50, 40);
             this.groupBox_home.TabIndex = 3;
             this.groupBox_home.TabStop = false;
             this.groupBox_home.Visible = false;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(45, 35);
-            this.label10.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(187, 37);
-            this.label10.TabIndex = 20;
-            this.label10.Text = "Tervetuloa!\r\n";
             // 
             // label11
             // 
@@ -608,38 +610,48 @@
             this.label11.Text = "\'Home and Life\' on elämäsi seuranta ja suunnittelu työkalu,\r\njonka avulla helpota" +
     "t huomattavasti arkeasi.";
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.White;
+            this.label10.Location = new System.Drawing.Point(45, 35);
+            this.label10.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(187, 37);
+            this.label10.TabIndex = 20;
+            this.label10.Text = "Tervetuloa!\r\n";
+            // 
             // groupBox_change_tracking
             // 
             this.groupBox_change_tracking.BackColor = System.Drawing.Color.Black;
-            this.groupBox_change_tracking.Controls.Add(this.dataGridView_change_tracking);
+            this.groupBox_change_tracking.Controls.Add(this.listView_change_tracking);
             this.groupBox_change_tracking.Enabled = false;
-            this.groupBox_change_tracking.Location = new System.Drawing.Point(12, 170);
+            this.groupBox_change_tracking.Location = new System.Drawing.Point(12, 358);
             this.groupBox_change_tracking.Name = "groupBox_change_tracking";
-            this.groupBox_change_tracking.Size = new System.Drawing.Size(967, 518);
+            this.groupBox_change_tracking.Size = new System.Drawing.Size(50, 40);
             this.groupBox_change_tracking.TabIndex = 4;
             this.groupBox_change_tracking.TabStop = false;
             this.groupBox_change_tracking.Visible = false;
             // 
-            // dataGridView_change_tracking
+            // listView_change_tracking
             // 
-            this.dataGridView_change_tracking.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_change_tracking.Location = new System.Drawing.Point(10, 19);
-            this.dataGridView_change_tracking.Name = "dataGridView_change_tracking";
-            this.dataGridView_change_tracking.Size = new System.Drawing.Size(949, 493);
-            this.dataGridView_change_tracking.TabIndex = 0;
+            this.listView_change_tracking.Location = new System.Drawing.Point(10, 19);
+            this.listView_change_tracking.Name = "listView_change_tracking";
+            this.listView_change_tracking.Size = new System.Drawing.Size(946, 482);
+            this.listView_change_tracking.TabIndex = 0;
+            this.listView_change_tracking.UseCompatibleStateImageBehavior = false;
             // 
-            // button_logo
+            // groupBox_economic
             // 
-            this.button_logo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_logo.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_logo.ForeColor = System.Drawing.Color.White;
-            this.button_logo.Location = new System.Drawing.Point(12, 19);
-            this.button_logo.Name = "button_logo";
-            this.button_logo.Size = new System.Drawing.Size(202, 46);
-            this.button_logo.TabIndex = 4;
-            this.button_logo.Text = "Home\'N\'Life";
-            this.button_logo.UseVisualStyleBackColor = true;
-            this.button_logo.Click += new System.EventHandler(this.button_logo_Click);
+            this.groupBox_economic.BackColor = System.Drawing.Color.Black;
+            this.groupBox_economic.Enabled = false;
+            this.groupBox_economic.Location = new System.Drawing.Point(12, 175);
+            this.groupBox_economic.Name = "groupBox_economic";
+            this.groupBox_economic.Size = new System.Drawing.Size(967, 513);
+            this.groupBox_economic.TabIndex = 5;
+            this.groupBox_economic.TabStop = false;
+            this.groupBox_economic.Visible = false;
             // 
             // Etusivu
             // 
@@ -647,6 +659,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(990, 700);
+            this.Controls.Add(this.groupBox_economic);
             this.Controls.Add(this.groupBox_change_tracking);
             this.Controls.Add(this.groupBox_home);
             this.Controls.Add(this.groupBox_shopping_list);
@@ -667,7 +680,6 @@
             this.groupBox_home.ResumeLayout(false);
             this.groupBox_home.PerformLayout();
             this.groupBox_change_tracking.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_change_tracking)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -683,13 +695,13 @@
         private System.Windows.Forms.Button button_search;
         private System.Windows.Forms.GroupBox groupBox_navigation;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button_economic;
+        private System.Windows.Forms.Button button_menu;
+        private System.Windows.Forms.Button button_cleaning;
         private System.Windows.Forms.Button button_shopping_list;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button_calendar;
+        private System.Windows.Forms.Button button_exercise_meter;
+        private System.Windows.Forms.Button button_checklist;
         private System.Windows.Forms.Button button_change_tracking;
         private System.Windows.Forms.GroupBox groupBox_shopping_list;
         private System.Windows.Forms.Label label3;
@@ -716,7 +728,8 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.GroupBox groupBox_change_tracking;
-        private System.Windows.Forms.DataGridView dataGridView_change_tracking;
         private System.Windows.Forms.Button button_logo;
+        private System.Windows.Forms.ListView listView_change_tracking;
+        private System.Windows.Forms.GroupBox groupBox_economic;
     }
 }

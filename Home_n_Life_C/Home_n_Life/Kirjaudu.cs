@@ -22,6 +22,27 @@ namespace Home_n_Life
         MySqlCommand cmd;
         string dropTableQuery, createTableQuery, insertTableQuery, selectTableQuery, updateTableQuery, deleteTableQuery;
 
+//----- Database --------------------------------------------------------------------------------------
+        private void checkDatabaseConnection()
+        {
+            progressBar_database_connection.Value = 1;
+            progressBar_database_connection.ForeColor = Color.Yellow;
+            try
+            {
+                conn = new MySqlConnection(connetionString);
+                conn.Open();
+                progressBar_database_connection.Value = 2;
+                progressBar_database_connection.ForeColor = Color.LimeGreen;
+                conn.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Tietokantaan ei saatu yhteyttä.", "Error");
+                progressBar_database_connection.Value = 1;
+                progressBar_database_connection.ForeColor = Color.Red;
+            }
+        }
+
         private void button_return_Click(object sender, EventArgs e)
         {
             groupBox_login.Location = new Point(13, 65);
@@ -146,6 +167,7 @@ namespace Home_n_Life
 
         private void Kirjautuminen_Load(object sender, EventArgs e)
         {
+            checkDatabaseConnection();
             groupBox_login.Location = new Point(13,65);
             groupBox_login.Size = new Size(478,337);
             groupBox_login.Enabled = true;

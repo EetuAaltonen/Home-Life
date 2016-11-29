@@ -37,17 +37,18 @@
             this.groupBox_login = new System.Windows.Forms.GroupBox();
             this.textBox_password = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.button_show_password = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.button_sign_up = new System.Windows.Forms.Button();
             this.button_login = new System.Windows.Forms.Button();
             this.groupBox_registration = new System.Windows.Forms.GroupBox();
+            this.button_return = new System.Windows.Forms.Button();
             this.textBox_account_password = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.button_create_account = new System.Windows.Forms.Button();
             this.textBox_account_name = new System.Windows.Forms.TextBox();
-            this.button_show_password = new System.Windows.Forms.Button();
-            this.button_return = new System.Windows.Forms.Button();
+            this.progressBar_database_connection = new System.Windows.Forms.ProgressBar();
             this.groupBox_navigation.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox_login.SuspendLayout();
@@ -106,6 +107,7 @@
             // 
             this.flowLayoutPanel1.Controls.Add(this.button_exit);
             this.flowLayoutPanel1.Controls.Add(this.button_minimize);
+            this.flowLayoutPanel1.Controls.Add(this.progressBar_database_connection);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(217, 9);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -136,7 +138,7 @@
             this.groupBox_login.Enabled = false;
             this.groupBox_login.Location = new System.Drawing.Point(12, 109);
             this.groupBox_login.Name = "groupBox_login";
-            this.groupBox_login.Size = new System.Drawing.Size(34, 47);
+            this.groupBox_login.Size = new System.Drawing.Size(45, 42);
             this.groupBox_login.TabIndex = 13;
             this.groupBox_login.TabStop = false;
             this.groupBox_login.Visible = false;
@@ -163,6 +165,19 @@
             this.label2.Size = new System.Drawing.Size(112, 29);
             this.label2.TabIndex = 15;
             this.label2.Text = "Salasana";
+            // 
+            // button_show_password
+            // 
+            this.button_show_password.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_show_password.ForeColor = System.Drawing.Color.White;
+            this.button_show_password.Location = new System.Drawing.Point(377, 179);
+            this.button_show_password.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_show_password.Name = "button_show_password";
+            this.button_show_password.Size = new System.Drawing.Size(49, 26);
+            this.button_show_password.TabIndex = 5;
+            this.button_show_password.Text = "Näytä";
+            this.button_show_password.UseVisualStyleBackColor = false;
+            this.button_show_password.Click += new System.EventHandler(this.button_show_password_Click);
             // 
             // label1
             // 
@@ -213,10 +228,23 @@
             this.groupBox_registration.Enabled = false;
             this.groupBox_registration.Location = new System.Drawing.Point(12, 65);
             this.groupBox_registration.Name = "groupBox_registration";
-            this.groupBox_registration.Size = new System.Drawing.Size(34, 38);
+            this.groupBox_registration.Size = new System.Drawing.Size(45, 38);
             this.groupBox_registration.TabIndex = 17;
             this.groupBox_registration.TabStop = false;
             this.groupBox_registration.Visible = false;
+            // 
+            // button_return
+            // 
+            this.button_return.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_return.ForeColor = System.Drawing.Color.White;
+            this.button_return.Location = new System.Drawing.Point(124, 274);
+            this.button_return.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_return.Name = "button_return";
+            this.button_return.Size = new System.Drawing.Size(101, 30);
+            this.button_return.TabIndex = 4;
+            this.button_return.Text = "Takaisin";
+            this.button_return.UseVisualStyleBackColor = false;
+            this.button_return.Click += new System.EventHandler(this.button_return_Click);
             // 
             // textBox_account_password
             // 
@@ -275,31 +303,16 @@
             this.textBox_account_name.TabIndex = 1;
             this.textBox_account_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // button_show_password
+            // progressBar_database_connection
             // 
-            this.button_show_password.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_show_password.ForeColor = System.Drawing.Color.White;
-            this.button_show_password.Location = new System.Drawing.Point(377, 179);
-            this.button_show_password.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.button_show_password.Name = "button_show_password";
-            this.button_show_password.Size = new System.Drawing.Size(49, 26);
-            this.button_show_password.TabIndex = 5;
-            this.button_show_password.Text = "Näytä";
-            this.button_show_password.UseVisualStyleBackColor = false;
-            this.button_show_password.Click += new System.EventHandler(this.button_show_password_Click);
-            // 
-            // button_return
-            // 
-            this.button_return.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_return.ForeColor = System.Drawing.Color.White;
-            this.button_return.Location = new System.Drawing.Point(124, 274);
-            this.button_return.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.button_return.Name = "button_return";
-            this.button_return.Size = new System.Drawing.Size(101, 30);
-            this.button_return.TabIndex = 4;
-            this.button_return.Text = "Takaisin";
-            this.button_return.UseVisualStyleBackColor = false;
-            this.button_return.Click += new System.EventHandler(this.button_return_Click);
+            this.progressBar_database_connection.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.progressBar_database_connection.Location = new System.Drawing.Point(93, 12);
+            this.progressBar_database_connection.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
+            this.progressBar_database_connection.Maximum = 2;
+            this.progressBar_database_connection.Name = "progressBar_database_connection";
+            this.progressBar_database_connection.Size = new System.Drawing.Size(49, 23);
+            this.progressBar_database_connection.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBar_database_connection.TabIndex = 14;
             // 
             // Kirjautuminen
             // 
@@ -347,6 +360,7 @@
         private System.Windows.Forms.TextBox textBox_account_name;
         private System.Windows.Forms.Button button_show_password;
         private System.Windows.Forms.Button button_return;
+        private System.Windows.Forms.ProgressBar progressBar_database_connection;
     }
 }
 

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using System.Globalization;
 
 namespace Home_n_Life
 {
@@ -30,28 +31,18 @@ namespace Home_n_Life
         //---Shopping-List-----------
         string info_text, added_item;
         bool list_progressing;
-//----- Database --------------------------------------------------------------------------------------
-        private void checkDatabaseConnection()
+        //---Change_tracking---------
+        string change;
+//----- Etusivu Load --------------------------------------------------------------------------------------
+        private void Etusivu_Load(object sender, EventArgs e)
         {
-            progressBar_database_connection.Value = 1;
-            progressBar_database_connection.ForeColor = Color.Yellow;
-            try
-            {
-                conn = new MySqlConnection(connetionString);
-                conn.Open();
-                progressBar_database_connection.Value = 2;
-                progressBar_database_connection.ForeColor = Color.LimeGreen;
-                conn.Close();
-            }
-            catch
-            {
-                MessageBox.Show("Tietokantaan ei saatu yhteyttä.", "Error");
-                progressBar_database_connection.Value = 1;
-                progressBar_database_connection.ForeColor = Color.Red;
-            }
+            view_change = "home";
+            conn = new MySqlConnection(connetionString);
+            current_button = button_logo;
+            viewChange(groupBox_home, button_logo);
         }
-//----- Shopping list --------------------------------------------------------------------------------------
-        private void viewChange(GroupBox current_groupBox_, Button current_button_) 
+//----- Change View --------------------------------------------------------------------------------------
+        private void viewChange(GroupBox current_groupBox_, Button current_button_)
         {
             if (current_groupBox_ != current_groupBox)
             {
@@ -99,7 +90,80 @@ namespace Home_n_Life
                 }
             }
         }
-
+//----- Database --------------------------------------------------------------------------------------
+        private void checkDatabaseConnection()
+        {
+            progressBar_database_connection.Value = 1;
+            progressBar_database_connection.ForeColor = Color.Yellow;
+            try
+            {
+                conn = new MySqlConnection(connetionString);
+                conn.Open();
+                progressBar_database_connection.Value = 2;
+                progressBar_database_connection.ForeColor = Color.LimeGreen;
+                conn.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Tietokantaan ei saatu yhteyttä.", "Error");
+                progressBar_database_connection.Value = 1;
+                progressBar_database_connection.ForeColor = Color.Red;
+            }
+        }
+//----- Economic --------------------------------------------------------------------------------------
+        private void button_economic_Click(object sender, EventArgs e)
+        {
+            checkDatabaseConnection();
+            view_change = "economic";
+            viewChange(groupBox_economic, button_economic);
+            createTableQuery = @"CREATE TABLE IF NOT EXISTS economic_primary (
+                                        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                        username VARCHAR(30) NOT NULL,
+                                        balance INT(6) NOT NULL;";
+            selectTableQuery = @"SELECT id, username, date, changes " +
+                                " FROM change_tracking " +
+                                " WHERE username='" + linkLabel_user.Text + "' ;";
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(createTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                createTableQuery = @"CREATE TABLE IF NOT EXISTS economic_secondary (
+                                        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                        username VARCHAR(30) NOT NULL,
+                                        type DATETIME NOT NULL,
+                                        amount VARCHAR(100) NOT NULL);";
+                cmd = new MySqlCommand(createTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                createTableQuery = @"CREATE TABLE IF NOT EXISTS economic_tertiary (
+                                        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                        username VARCHAR(30) NOT NULL,
+                                        type DATETIME NOT NULL,
+                                        amount VARCHAR(100) NOT NULL);";
+                cmd = new MySqlCommand(createTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                /*cmd = new MySqlCommand(selectTableQuery, conn);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    ListViewItem item = new ListViewItem(new string[]
+                    {
+                        Convert.ToString(dataReader["id"]),
+                        Convert.ToString(dataReader["username"]),
+                        Convert.ToString(dataReader["date"]),
+                        Convert.ToString(dataReader["changes"])
+                    });
+                    listView_change_tracking.Items.Add(item);
+                }
+                dataReader.Close();*/
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+        }
+//----- Shopping list --------------------------------------------------------------------------------------
         private void readShoppingLists()
         {
             comboBox_shopping_lists.Items.Clear();
@@ -136,6 +200,7 @@ namespace Home_n_Life
             checkDatabaseConnection();
             view_change = "shopping_list";
             viewChange(groupBox_shopping_list, button_shopping_list);
+            textBox_list_name.Text = "";
             readShoppingLists();
         }
 
@@ -221,6 +286,8 @@ namespace Home_n_Life
                     comboBox_shopping_lists.SelectedItem = textBox_list_name.Text;
                     list_progressing = false;
                     MessageBox.Show("Kauppalista tallennettu", "Tallenna");
+                    change = "Kauppalista " + textBox_list_name.Text + " tallennettu";
+                    addChangeTracking(change);
                 }
                 catch (Exception ex)
                 {
@@ -295,6 +362,8 @@ namespace Home_n_Life
                     readShoppingLists();
                     comboBox_shopping_lists.SelectedItem = null;
                     MessageBox.Show("Kauppalista on poistettu", "Poista");
+                    change = "Kauppalista " + textBox_list_name.Text + " poistettu";
+                    addChangeTracking(change);
                 }
                 catch (Exception ex)
                 {
@@ -303,30 +372,28 @@ namespace Home_n_Life
             }   
         }
 //----- Change tracking --------------------------------------------------------------------------------------
-        private void readChangeTracking()
+        private void addChangeTracking(string change)
         {
-            comboBox_shopping_lists.Items.Clear();
-            createTableQuery = @"CREATE TABLE IF NOT EXISTS shoppinglist (
+            DateTime dateValue = DateTime.Now;
+            // "2000-01-12 20:10:00Z"    
+            dateValue.ToString(CultureInfo.InvariantCulture.DateTimeFormat.UniversalSortableDateTimePattern);
+            string formatForMySql = dateValue.ToString("yyyy-MM-dd HH:mm:ss");
+            createTableQuery = @"CREATE TABLE IF NOT EXISTS change_tracking (
                                         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                         username VARCHAR(30) NOT NULL,
-                                        listname VARCHAR(30) NOT NULL,
-                                        text TEXT(500) NOT NULL);";
-            selectTableQuery = @"SELECT id, username, listname, text " +
-                                " FROM shoppinglist " +
-                                " WHERE username='" + linkLabel_user.Text + "' ;";
+                                        date DATETIME NOT NULL,
+                                        changes VARCHAR(100) NOT NULL);";
+            insertTableQuery = @"INSERT INTO change_tracking (id, username, date, changes)" +
+                                "VALUES(null, '" + linkLabel_user.Text + "', '" + formatForMySql + "', '" + change + "');";
+
             try
             {
                 conn.Open();
                 cmd = new MySqlCommand(createTableQuery, conn);
                 cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand(selectTableQuery, conn);
-                MySqlDataReader dataReader = cmd.ExecuteReader();
-                while (dataReader.Read())
-                {
-                    comboBox_shopping_lists.Items.Add(Convert.ToString(dataReader["listname"]));
-                }
-                dataReader.Close();
-                conn.Close();
+                cmd = new MySqlCommand(insertTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                conn.Close(); 
             }
             catch (Exception ex)
             {
@@ -338,13 +405,48 @@ namespace Home_n_Life
             checkDatabaseConnection();
             view_change = "change_tracking";
             viewChange(groupBox_change_tracking, button_change_tracking);
-            DataTable dt = new DataTable();
-            dt.Columns.Add(new DataColumn("Id", typeof(int)));
-            dt.Columns.Add(new DataColumn("Käyttäjänimi", typeof(string)));
-            dt.Columns.Add(new DataColumn("Päivä", typeof(DateTime)));
-            dt.Columns.Add(new DataColumn("Muutos", typeof(string)));
-            dataGridView_change_tracking.DataSource = dt;
-            dataGridView_change_tracking.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            listView_change_tracking.Clear();
+            listView_change_tracking.View = View.Details;
+            listView_change_tracking.Columns.Add("Id", 20, HorizontalAlignment.Left);
+            listView_change_tracking.Columns.Add("Käyttäjänimi", 20, HorizontalAlignment.Left);
+            listView_change_tracking.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
+            listView_change_tracking.Columns.Add("Muutos", 20, HorizontalAlignment.Left);
+            createTableQuery = @"CREATE TABLE IF NOT EXISTS change_tracking (
+                                        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                        username VARCHAR(30) NOT NULL,
+                                        date DATETIME NOT NULL,
+                                        changes VARCHAR(100) NOT NULL);";
+            selectTableQuery = @"SELECT id, username, date, changes " +
+                                " FROM change_tracking " +
+                                " WHERE username='" + linkLabel_user.Text + "' ;";
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(createTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(selectTableQuery, conn);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    ListViewItem item = new ListViewItem(new string[]
+                    {
+                        Convert.ToString(dataReader["id"]),
+                        Convert.ToString(dataReader["username"]),
+                        Convert.ToString(dataReader["date"]),
+                        Convert.ToString(dataReader["changes"])
+                    });
+                    listView_change_tracking.Items.Add(item);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+            listView_change_tracking.GridLines = true;
+            listView_change_tracking.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView_change_tracking.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 //----- Top Banner Buttons --------------------------------------------------------------------------------------
         private void button_logout_Click_1(object sender, EventArgs e)
@@ -357,14 +459,6 @@ namespace Home_n_Life
         private void button_minimize_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
-        }
-//----- Etusivu Load --------------------------------------------------------------------------------------
-        private void Etusivu_Load(object sender, EventArgs e)
-        {
-            view_change = "home";
-            conn = new MySqlConnection(connetionString);
-            current_button = button_logo;
-            viewChange(groupBox_home, button_logo);
         }
     }
 }
