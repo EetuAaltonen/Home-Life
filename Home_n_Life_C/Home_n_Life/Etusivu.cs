@@ -119,14 +119,14 @@ namespace Home_n_Life
             createTableQuery = @"CREATE TABLE IF NOT EXISTS economic_primary (
                                         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                         username VARCHAR(30) NOT NULL,
-                                        balance DOUBLE(6) NOT NULL);";
+                                        balance DOUBLE(10,2) NOT NULL);";
             insertTableQuery = @"INSERT INTO economic_primary (id, username, balance) " +
                                     "SELECT * FROM(SELECT 0, '" + linkLabel_user.Text + "', 'null') AS tmp " +
                                     "WHERE NOT EXISTS( " +
                                     "SELECT username FROM economic_primary WHERE username = '" + linkLabel_user.Text + "' " +
                                     ") LIMIT 1 ;";
-            selectTableQuery = @"SELECT id, username, date, changes " +
-                                " FROM change_tracking " +
+            selectTableQuery = @"SELECT id, username, balance " +
+                                " FROM economic_primary " +
                                 " WHERE username='" + linkLabel_user.Text + "' ;";
             try
             {
@@ -149,20 +149,13 @@ namespace Home_n_Life
                 cmd.ExecuteNonQuery();
                 cmd = new MySqlCommand(insertTableQuery, conn);
                 cmd.ExecuteNonQuery();
-                /*cmd = new MySqlCommand(selectTableQuery, conn);
+                cmd = new MySqlCommand(selectTableQuery, conn);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
-                    ListViewItem item = new ListViewItem(new string[]
-                    {
-                        Convert.ToString(dataReader["id"]),
-                        Convert.ToString(dataReader["username"]),
-                        Convert.ToString(dataReader["date"]),
-                        Convert.ToString(dataReader["changes"])
-                    });
-                    listView_change_tracking.Items.Add(item);
+                    textBox_deposit_amount.Text = Convert.ToString(dataReader["balance"]);
                 }
-                dataReader.Close();*/
+                dataReader.Close();
                 conn.Close();
             }
             catch (Exception ex)
@@ -172,25 +165,28 @@ namespace Home_n_Life
         }
         private void button_deposit_Click(object sender, EventArgs e)
         {
+            double added_amount = 0;
             selectTableQuery = @"SELECT id, username, balance " +
-                                " FROM change_tracking " +
+                                " FROM economic_primary " +
                                 " WHERE username='" + linkLabel_user.Text + "' ;";
-            updateTableQuery = @"UPDATE economic_primary " +
-                                 "SET text='" + textBox_shopping_list.Text + "' " +
-                                 "WHERE listname='" + textBox_list_name.Text + "' ;";
             try
             {
+                
                 conn.Open();
-
                 cmd = new MySqlCommand(selectTableQuery, conn);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
-                    cmd = new MySqlCommand(updateTableQuery, conn);
-                    cmd.ExecuteNonQuery();
+                    added_amount = (double.Parse(Convert.ToString(dataReader["balance"])) + double.Parse(textBox_deposit_amount.Text));
                 }
                 dataReader.Close();
+                updateTableQuery = @"UPDATE economic_primary " +
+                                     "SET balance='" + Convert.ToString(added_amount) + "' " +
+                                     "WHERE username='" + linkLabel_user.Text + "' ;";
+                cmd = new MySqlCommand(updateTableQuery, conn);
+                cmd.ExecuteNonQuery();
                 conn.Close();
+                MessageBox.Show("Talletettu");
             }
             catch (Exception ex)
             {
