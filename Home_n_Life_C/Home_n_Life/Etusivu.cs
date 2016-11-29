@@ -119,7 +119,12 @@ namespace Home_n_Life
             createTableQuery = @"CREATE TABLE IF NOT EXISTS economic_primary (
                                         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                         username VARCHAR(30) NOT NULL,
-                                        balance INT(6) NOT NULL;";
+                                        balance DOUBLE(6) NOT NULL);";
+            insertTableQuery = @"INSERT INTO economic_primary (id, username, balance) " +
+                                    "SELECT * FROM(SELECT 0, '" + linkLabel_user.Text + "', 'null') AS tmp " +
+                                    "WHERE NOT EXISTS( " +
+                                    "SELECT username FROM economic_primary WHERE username = '" + linkLabel_user.Text + "' " +
+                                    ") LIMIT 1 ;";
             selectTableQuery = @"SELECT id, username, date, changes " +
                                 " FROM change_tracking " +
                                 " WHERE username='" + linkLabel_user.Text + "' ;";
@@ -142,6 +147,8 @@ namespace Home_n_Life
                                         amount VARCHAR(100) NOT NULL);";
                 cmd = new MySqlCommand(createTableQuery, conn);
                 cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(insertTableQuery, conn);
+                cmd.ExecuteNonQuery();
                 /*cmd = new MySqlCommand(selectTableQuery, conn);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
@@ -156,6 +163,33 @@ namespace Home_n_Life
                     listView_change_tracking.Items.Add(item);
                 }
                 dataReader.Close();*/
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+        }
+        private void button_deposit_Click(object sender, EventArgs e)
+        {
+            selectTableQuery = @"SELECT id, username, balance " +
+                                " FROM change_tracking " +
+                                " WHERE username='" + linkLabel_user.Text + "' ;";
+            updateTableQuery = @"UPDATE economic_primary " +
+                                 "SET text='" + textBox_shopping_list.Text + "' " +
+                                 "WHERE listname='" + textBox_list_name.Text + "' ;";
+            try
+            {
+                conn.Open();
+
+                cmd = new MySqlCommand(selectTableQuery, conn);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    cmd = new MySqlCommand(updateTableQuery, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                dataReader.Close();
                 conn.Close();
             }
             catch (Exception ex)

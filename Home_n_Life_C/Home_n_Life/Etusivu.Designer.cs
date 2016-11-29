@@ -73,6 +73,8 @@
             this.groupBox_change_tracking = new System.Windows.Forms.GroupBox();
             this.listView_change_tracking = new System.Windows.Forms.ListView();
             this.groupBox_economic = new System.Windows.Forms.GroupBox();
+            this.button_deposit = new System.Windows.Forms.Button();
+            this.textBox_deposit_amount = new System.Windows.Forms.TextBox();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_username.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
@@ -80,6 +82,7 @@
             this.groupBox_shopping_list.SuspendLayout();
             this.groupBox_home.SuspendLayout();
             this.groupBox_change_tracking.SuspendLayout();
+            this.groupBox_economic.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox_top_banner
@@ -645,13 +648,37 @@
             // groupBox_economic
             // 
             this.groupBox_economic.BackColor = System.Drawing.Color.Black;
+            this.groupBox_economic.Controls.Add(this.textBox_deposit_amount);
+            this.groupBox_economic.Controls.Add(this.button_deposit);
             this.groupBox_economic.Enabled = false;
             this.groupBox_economic.Location = new System.Drawing.Point(12, 175);
             this.groupBox_economic.Name = "groupBox_economic";
-            this.groupBox_economic.Size = new System.Drawing.Size(967, 513);
+            this.groupBox_economic.Size = new System.Drawing.Size(967, 524);
             this.groupBox_economic.TabIndex = 5;
             this.groupBox_economic.TabStop = false;
             this.groupBox_economic.Visible = false;
+            // 
+            // button_deposit
+            // 
+            this.button_deposit.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_deposit.ForeColor = System.Drawing.Color.White;
+            this.button_deposit.Location = new System.Drawing.Point(51, 183);
+            this.button_deposit.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_deposit.Name = "button_deposit";
+            this.button_deposit.Size = new System.Drawing.Size(60, 30);
+            this.button_deposit.TabIndex = 14;
+            this.button_deposit.Text = "Talleta";
+            this.button_deposit.UseVisualStyleBackColor = false;
+            this.button_deposit.Click += new System.EventHandler(this.button_deposit_Click);
+            // 
+            // textBox_deposit_amount
+            // 
+            this.textBox_deposit_amount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_deposit_amount.Location = new System.Drawing.Point(51, 108);
+            this.textBox_deposit_amount.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_deposit_amount.Name = "textBox_deposit_amount";
+            this.textBox_deposit_amount.Size = new System.Drawing.Size(162, 26);
+            this.textBox_deposit_amount.TabIndex = 15;
             // 
             // Etusivu
             // 
@@ -680,6 +707,8 @@
             this.groupBox_home.ResumeLayout(false);
             this.groupBox_home.PerformLayout();
             this.groupBox_change_tracking.ResumeLayout(false);
+            this.groupBox_economic.ResumeLayout(false);
+            this.groupBox_economic.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -731,5 +760,7 @@
         private System.Windows.Forms.Button button_logo;
         private System.Windows.Forms.ListView listView_change_tracking;
         private System.Windows.Forms.GroupBox groupBox_economic;
+        private System.Windows.Forms.TextBox textBox_deposit_amount;
+        private System.Windows.Forms.Button button_deposit;
     }
 }
