@@ -23,7 +23,7 @@ namespace Home_n_Life
         string connetionString = "server=localhost;database=home&life;uid=root;pwd=;";
         MySqlConnection conn;
         MySqlCommand cmd;
-        string dropTableQuery, createTableQuery, insertTableQuery, selectTableQuery, updateTableQuery, deleteTableQuery;
+        string dropTableQuery, createTableQuery, insertTableQuery, selectTableQuery, updateTableQuery, deleteTableQuery, alterTableQuery;
         //---View-Change-------------
         string view_change;
         GroupBox current_groupBox;
@@ -33,6 +33,10 @@ namespace Home_n_Life
         bool list_progressing;
         //---Change_tracking---------
         string change;
+        //---Economic----------------
+        double income, outlay;
+        bool same_name = true;
+
 //----- Etusivu Load --------------------------------------------------------------------------------------
         private void Etusivu_Load(object sender, EventArgs e)
         {
@@ -84,8 +88,44 @@ namespace Home_n_Life
                                     System.Environment.NewLine +
                                     "   - Tuote5";
                         textBox_shopping_list.Text += info_text;
+                        readShoppingLists();
                         break;
                     case "change_tracking":
+                        listView_change_tracking.Clear();
+                        listView_change_tracking.View = View.Details;
+                        listView_change_tracking.Columns.Add("Id", 20, HorizontalAlignment.Left);
+                        listView_change_tracking.Columns.Add("Käyttäjänimi", 20, HorizontalAlignment.Left);
+                        listView_change_tracking.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
+                        listView_change_tracking.Columns.Add("Muutos", 20, HorizontalAlignment.Left);
+                        break;
+                    case "economic":
+                        listView_income.Clear();
+                        listView_income.View = View.Details;
+                        listView_income.Columns.Add("Id", 20, HorizontalAlignment.Left);
+                        listView_income.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
+                        listView_income.Columns.Add("Summa", 20, HorizontalAlignment.Left);
+                        listView_income.Columns.Add("Type", 20, HorizontalAlignment.Left);
+                        listView_income.GridLines = true;
+                        listView_income.FullRowSelect = true;
+
+                        listView_outlay.Clear();
+                        listView_outlay.View = View.Details;
+                        listView_outlay.Columns.Add("Id", 20, HorizontalAlignment.Left);
+                        listView_outlay.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
+                        listView_outlay.Columns.Add("Summa", 20, HorizontalAlignment.Left);
+                        listView_outlay.Columns.Add("Type", 20, HorizontalAlignment.Left);
+                        listView_outlay.GridLines = true;
+                        listView_outlay.FullRowSelect = true;
+
+                        textBox_economic_name.Text = "";
+                        textBox_economic_amount.Text = "";
+                        comboBox_economic_type.SelectedIndex = -1;
+                        textBox_all_income.Text = "";
+                        textBox_all_outlay.Text = "";
+                        textBox_balance.Text = "";
+                        break;
+                    case "calendar":
+                        readCalendarLists();
                         break;
                 }
             }
@@ -111,86 +151,249 @@ namespace Home_n_Life
             }
         }
 //----- Economic --------------------------------------------------------------------------------------
+        private void readEconomicLists()
+        {
+            income = 0;
+            outlay = 0;
+            listView_income.Items.Clear();
+            listView_outlay.Items.Clear();
+            createTableQuery = @"CREATE TABLE IF NOT EXISTS economic (
+                                            id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                            username VARCHAR(30) NOT NULL,
+                                            description VARCHAR(100) NOT NULL,
+                                            type VARCHAR(5) NOT NULL,
+                                            amount DOUBLE(10,2) NOT NULL);";
+            selectTableQuery = @"SELECT id, username, description, type, amount " +
+                                " FROM economic " +
+                                " WHERE username='" + linkLabel_user.Text + "' ;";
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(createTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(selectTableQuery, conn);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    ListViewItem item = new ListViewItem(new string[]
+                    {
+                            Convert.ToString(dataReader["id"]),
+                            Convert.ToString(dataReader["description"]),
+                            Convert.ToString(dataReader["amount"]),
+                            Convert.ToString(dataReader["type"])
+                    });
+                    if (Convert.ToString(dataReader["type"]) == "Tulo")
+                    {
+                        income += double.Parse(Convert.ToString(dataReader["amount"]));
+                        listView_income.Items.Add(item);
+                    }
+                    else if (Convert.ToString(dataReader["type"]) == "Meno")
+                    {
+                        outlay += double.Parse(Convert.ToString(dataReader["amount"]));
+                        listView_outlay.Items.Add(item);
+                    }
+                    string euro = Encoding.Default.GetString(new byte[] { 128 }); //€
+                    textBox_all_income.Text = Convert.ToString(income) + " " + euro;
+                    textBox_all_outlay.Text = Convert.ToString(outlay) + " " + euro;
+                    textBox_balance.Text = Convert.ToString((income - outlay) + " " + euro);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+            listView_income.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView_income.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            listView_income.Columns[0].Width = 0; //Hide id
+            listView_income.Columns[3].Width = 0; //Hide type
+
+            listView_outlay.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView_outlay.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            listView_outlay.Columns[0].Width = 0; //Hide id
+            listView_outlay.Columns[3].Width = 0; //Hide type
+        }
+
         private void button_economic_Click(object sender, EventArgs e)
         {
-            checkDatabaseConnection();
-            view_change = "economic";
-            viewChange(groupBox_economic, button_economic);
-            createTableQuery = @"CREATE TABLE IF NOT EXISTS economic_primary (
-                                        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                                        username VARCHAR(30) NOT NULL,
-                                        balance DOUBLE(10,2) NOT NULL);";
-            insertTableQuery = @"INSERT INTO economic_primary (id, username, balance) " +
-                                    "SELECT * FROM(SELECT 0, '" + linkLabel_user.Text + "', 'null') AS tmp " +
-                                    "WHERE NOT EXISTS( " +
-                                    "SELECT username FROM economic_primary WHERE username = '" + linkLabel_user.Text + "' " +
-                                    ") LIMIT 1 ;";
-            selectTableQuery = @"SELECT id, username, balance " +
-                                " FROM economic_primary " +
-                                " WHERE username='" + linkLabel_user.Text + "' ;";
-            try
+            if (view_change != "economic")
             {
-                conn.Open();
-                cmd = new MySqlCommand(createTableQuery, conn);
-                cmd.ExecuteNonQuery();
-                createTableQuery = @"CREATE TABLE IF NOT EXISTS economic_secondary (
-                                        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                                        username VARCHAR(30) NOT NULL,
-                                        type DATETIME NOT NULL,
-                                        amount VARCHAR(100) NOT NULL);";
-                cmd = new MySqlCommand(createTableQuery, conn);
-                cmd.ExecuteNonQuery();
-                createTableQuery = @"CREATE TABLE IF NOT EXISTS economic_tertiary (
-                                        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                                        username VARCHAR(30) NOT NULL,
-                                        type DATETIME NOT NULL,
-                                        amount VARCHAR(100) NOT NULL);";
-                cmd = new MySqlCommand(createTableQuery, conn);
-                cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand(insertTableQuery, conn);
-                cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand(selectTableQuery, conn);
-                MySqlDataReader dataReader = cmd.ExecuteReader();
-                while (dataReader.Read())
-                {
-                    textBox_deposit_amount.Text = Convert.ToString(dataReader["balance"]);
-                }
-                dataReader.Close();
-                conn.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(Convert.ToString(ex));
+                checkDatabaseConnection();
+                view_change = "economic";
+                viewChange(groupBox_economic, button_economic);
+                readEconomicLists();
             }
         }
-        private void button_deposit_Click(object sender, EventArgs e)
+
+        private void listView_income_Click(object sender, EventArgs e)
         {
-            double added_amount = 0;
-            selectTableQuery = @"SELECT id, username, balance " +
-                                " FROM economic_primary " +
-                                " WHERE username='" + linkLabel_user.Text + "' ;";
-            try
+            if (listView_outlay.SelectedIndices.Count > 0)
             {
-                
-                conn.Open();
-                cmd = new MySqlCommand(selectTableQuery, conn);
-                MySqlDataReader dataReader = cmd.ExecuteReader();
-                while (dataReader.Read())
-                {
-                    added_amount = (double.Parse(Convert.ToString(dataReader["balance"])) + double.Parse(textBox_deposit_amount.Text));
-                }
-                dataReader.Close();
-                updateTableQuery = @"UPDATE economic_primary " +
-                                     "SET balance='" + Convert.ToString(added_amount) + "' " +
-                                     "WHERE username='" + linkLabel_user.Text + "' ;";
-                cmd = new MySqlCommand(updateTableQuery, conn);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                MessageBox.Show("Talletettu");
+                listView_outlay.SelectedItems[0].Selected = false;
             }
-            catch (Exception ex)
+            if (listView_income.SelectedIndices.Count > 0)
             {
-                MessageBox.Show(Convert.ToString(ex));
+                if (listView_income.SelectedIndices.Count == 1)
+                {
+                    textBox_economic_name.Text = listView_income.SelectedItems[0].SubItems[1].Text;
+                    textBox_economic_amount.Text = listView_income.SelectedItems[0].SubItems[2].Text;
+                    if (listView_income.SelectedItems[0].SubItems[3].Text == "Tulo")
+                    {
+                        comboBox_economic_type.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        comboBox_economic_type.SelectedIndex = 1;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Valitse vain yksi kerrallaan", "Menot");
+                }
+            }
+        }
+
+        private void listView_outlay_Click(object sender, EventArgs e)
+        {
+            if (listView_income.SelectedIndices.Count > 0)
+            {
+                listView_income.SelectedItems[0].Selected = false;
+            }
+            if (listView_outlay.SelectedIndices.Count > 0)
+            {
+                if (listView_outlay.SelectedIndices.Count == 1)
+                {
+                    textBox_economic_name.Text = listView_outlay.SelectedItems[0].SubItems[1].Text;
+                    textBox_economic_amount.Text = listView_outlay.SelectedItems[0].SubItems[2].Text;
+                    if (listView_outlay.SelectedItems[0].SubItems[3].Text == "Tulo")
+                    {
+                        comboBox_economic_type.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        comboBox_economic_type.SelectedIndex = 1;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Valitse vain yksi kerrallaan", "Tulot");
+                }
+            }
+        }
+
+        private void button_economic_add_Click(object sender, EventArgs e)
+        {
+            if (textBox_economic_name.Text != "")
+            {
+                if (textBox_economic_amount.Text != "")
+                {
+                    if (Convert.ToString(comboBox_economic_type.SelectedItem) != "")
+                    {
+                        same_name = false;
+                        if (Convert.ToString(comboBox_economic_type.SelectedItem) == "Tulo")
+                        {
+                            for (int i = 0; i < listView_income.Items.Count; i++)
+                            {
+                                if (textBox_economic_name.Text == listView_income.Items[i].SubItems[1].Text)
+                                {
+                                    same_name = true;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < listView_outlay.Items.Count; i++)
+                            {
+                                if (textBox_economic_name.Text == listView_outlay.Items[i].SubItems[1].Text)
+                                {
+                                    same_name = true;
+                                }
+                            }
+                        }
+                        if (!same_name)
+                        {
+                            insertTableQuery = @"INSERT INTO economic(id, username, description, type, amount) " +
+                                                "VALUES('null', '" + linkLabel_user.Text + "', '" + textBox_economic_name.Text + "', '" + Convert.ToString(comboBox_economic_type.SelectedItem) + "', '" + textBox_economic_amount.Text + "');";
+                            try
+                            {
+                                conn.Open();
+                                cmd = new MySqlCommand(insertTableQuery, conn);
+                                cmd.ExecuteNonQuery();
+                                conn.Close();
+                                change = "Talouteen lisätty uusi " + Convert.ToString(comboBox_economic_type.SelectedItem).ToLower() + " " + textBox_economic_name.Text;
+                                addChangeTracking(change);
+                                textBox_economic_name.Text = "";
+                                textBox_economic_amount.Text = "";
+                                comboBox_economic_type.SelectedIndex = -1;
+                                listView_income.Sorting = SortOrder.Ascending;
+                                readEconomicLists();
+                                MessageBox.Show("Uusi listaus lisätty", "Lisää");
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(Convert.ToString(ex));
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nimi on jo olemassa", "Lisää");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Valitse tyyppi", "Lisää");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Syötä euro määrä", "Lisää");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Syötä nimi tai kuvaus", "Lisää");
+            }
+        }
+
+        private void button_economic_remove_Click(object sender, EventArgs e)
+        {
+            if ((listView_income.SelectedIndices.Count == 1 && listView_outlay.SelectedIndices.Count == 0) ||
+                (listView_outlay.SelectedIndices.Count == 1 && listView_income.SelectedIndices.Count == 0))
+            {
+                DialogResult dialogResult = MessageBox.Show("Haluatko varmasti poistaa tämän tiedon?", "Poista", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    deleteTableQuery = @"DELETE FROM economic WHERE username='" + linkLabel_user.Text +
+                                        "' AND description='" + textBox_economic_name.Text +
+                                        "' AND type='" + Convert.ToString(comboBox_economic_type.SelectedItem) + "' ;";
+                    alterTableQuery = @"ALTER TABLE economic DROP COLUMN id;
+                                        ALTER TABLE economic ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
+                    try
+                    {
+                        conn.Open();
+                        cmd = new MySqlCommand(deleteTableQuery, conn);
+                        cmd.ExecuteNonQuery();
+                        cmd = new MySqlCommand(alterTableQuery, conn);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        change = "Taloudesta poistettu " + Convert.ToString(comboBox_economic_type.SelectedItem).ToLower() + " " + textBox_economic_name.Text;
+                        addChangeTracking(change);
+                        textBox_economic_name.Text = "";
+                        textBox_economic_amount.Text = "";
+                        comboBox_economic_type.SelectedIndex = -1;
+                        readEconomicLists();
+                        MessageBox.Show("Listaus poistettu", "Poista");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(Convert.ToString(ex));
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Valitse yksi tulo tai meno", "Poista");
             }
         }
 //----- Shopping list --------------------------------------------------------------------------------------
@@ -227,11 +430,13 @@ namespace Home_n_Life
 
         private void button_shopping_list_Click(object sender, EventArgs e)
         {
-            checkDatabaseConnection();
-            view_change = "shopping_list";
-            viewChange(groupBox_shopping_list, button_shopping_list);
-            textBox_list_name.Text = "";
-            readShoppingLists();
+            if (view_change != "shopping_list");
+            {
+                checkDatabaseConnection();
+                view_change = "shopping_list";
+                viewChange(groupBox_shopping_list, button_shopping_list);
+                textBox_list_name.Text = "";
+            }
         }
 
         private void button_add_item_Click(object sender, EventArgs e)
@@ -326,7 +531,7 @@ namespace Home_n_Life
             }
             else
             {
-                MessageBox.Show("Kauppalistan nimi on virheellinen tai sisältää!", "Tallenna");
+                MessageBox.Show("Kauppalistan nimi on virheellinen tai sisältää", "Tallenna");
             }
         }
 
@@ -350,8 +555,11 @@ namespace Home_n_Life
 
         private void button_logo_Click(object sender, EventArgs e)
         {
-            view_change = "home";
-            viewChange(groupBox_home, button_logo);
+            if (view_change != "home")
+            {
+                view_change = "home";
+                viewChange(groupBox_home, button_logo);
+            }
         }
 
         private void textBox_shopping_list_KeyDown(object sender, KeyEventArgs e)
@@ -401,6 +609,99 @@ namespace Home_n_Life
                 }
             }   
         }
+
+//----- Calendar --------------------------------------------------------------------------------------
+        private void readCalendarLists()
+        {
+            income = 0;
+            outlay = 0;
+            listView_income.Items.Clear();
+            listView_outlay.Items.Clear();
+            createTableQuery = @"CREATE TABLE IF NOT EXISTS calendar (
+                                 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                 name VARCHAR(30) NOT NULL,
+                                 location VARCHAR(30) NOT NULL,
+                                 date VARCHAR(30) NOT NULL,
+                                 description VARCHAR(100) NOT NULL,
+                                 type VARCHAR(5) NOT NULL,
+                                 amount DOUBLE(10,2) NOT NULL);";
+            selectTableQuery = @"SELECT id, username, description, type, amount " +
+                                " FROM economic " +
+                                " WHERE username='" + linkLabel_user.Text + "' ;";
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(createTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(selectTableQuery, conn);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    ListViewItem item = new ListViewItem(new string[]
+                    {
+                            Convert.ToString(dataReader["id"]),
+                            Convert.ToString(dataReader["description"]),
+                            Convert.ToString(dataReader["amount"]),
+                            Convert.ToString(dataReader["type"])
+                    });
+                    if (Convert.ToString(dataReader["type"]) == "Tulo")
+                    {
+                        income += double.Parse(Convert.ToString(dataReader["amount"]));
+                        listView_income.Items.Add(item);
+                    }
+                    else if (Convert.ToString(dataReader["type"]) == "Meno")
+                    {
+                        outlay += double.Parse(Convert.ToString(dataReader["amount"]));
+                        listView_outlay.Items.Add(item);
+                    }
+                    string euro = Encoding.Default.GetString(new byte[] { 128 }); //€
+                    textBox_all_income.Text = Convert.ToString(income) + " " + euro;
+                    textBox_all_outlay.Text = Convert.ToString(outlay) + " " + euro;
+                    textBox_balance.Text = Convert.ToString((income - outlay) + " " + euro);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+            listView_income.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView_income.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            listView_income.Columns[0].Width = 0; //Hide id
+            listView_income.Columns[3].Width = 0; //Hide type
+
+            listView_outlay.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView_outlay.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            listView_outlay.Columns[0].Width = 0; //Hide id
+            listView_outlay.Columns[3].Width = 0; //Hide type
+        }
+
+        private void button_calendar_Click(object sender, EventArgs e)
+        {
+            if (view_change != "calendar")
+            {
+                checkDatabaseConnection();
+                view_change = "calendar";
+                viewChange(groupBox_calendar, button_economic);
+            }
+        }
+
+        private void button_event_add_Click(object sender, EventArgs e)
+        {
+            //
+        }
+
+        private void button_event_delete_Click(object sender, EventArgs e)
+        {
+            //
+        }
+
+        private void button_event_search_Click(object sender, EventArgs e)
+        {
+
+        }
+
 //----- Change tracking --------------------------------------------------------------------------------------
         private void addChangeTracking(string change)
         {
@@ -430,53 +731,51 @@ namespace Home_n_Life
                 MessageBox.Show(Convert.ToString(ex));
             }
         }
+
         private void button_change_tracking_Click(object sender, EventArgs e)
         {
-            checkDatabaseConnection();
-            view_change = "change_tracking";
-            viewChange(groupBox_change_tracking, button_change_tracking);
-            listView_change_tracking.Clear();
-            listView_change_tracking.View = View.Details;
-            listView_change_tracking.Columns.Add("Id", 20, HorizontalAlignment.Left);
-            listView_change_tracking.Columns.Add("Käyttäjänimi", 20, HorizontalAlignment.Left);
-            listView_change_tracking.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
-            listView_change_tracking.Columns.Add("Muutos", 20, HorizontalAlignment.Left);
-            createTableQuery = @"CREATE TABLE IF NOT EXISTS change_tracking (
-                                        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                                        username VARCHAR(30) NOT NULL,
-                                        date DATETIME NOT NULL,
-                                        changes VARCHAR(100) NOT NULL);";
-            selectTableQuery = @"SELECT id, username, date, changes " +
-                                " FROM change_tracking " +
-                                " WHERE username='" + linkLabel_user.Text + "' ;";
-            try
+            if (view_change != "change_tracking")
             {
-                conn.Open();
-                cmd = new MySqlCommand(createTableQuery, conn);
-                cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand(selectTableQuery, conn);
-                MySqlDataReader dataReader = cmd.ExecuteReader();
-                while (dataReader.Read())
+                checkDatabaseConnection();
+                view_change = "change_tracking";
+                viewChange(groupBox_change_tracking, button_change_tracking);
+                createTableQuery = @"CREATE TABLE IF NOT EXISTS change_tracking (
+                                            id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                            username VARCHAR(30) NOT NULL,
+                                            date DATETIME NOT NULL,
+                                            changes VARCHAR(100) NOT NULL);";
+                selectTableQuery = @"SELECT id, username, date, changes " +
+                                    " FROM change_tracking " +
+                                    " WHERE username='" + linkLabel_user.Text + "' ;";
+                try
                 {
-                    ListViewItem item = new ListViewItem(new string[]
+                    conn.Open();
+                    cmd = new MySqlCommand(createTableQuery, conn);
+                    cmd.ExecuteNonQuery();
+                    cmd = new MySqlCommand(selectTableQuery, conn);
+                    MySqlDataReader dataReader = cmd.ExecuteReader();
+                    while (dataReader.Read())
                     {
-                        Convert.ToString(dataReader["id"]),
-                        Convert.ToString(dataReader["username"]),
-                        Convert.ToString(dataReader["date"]),
-                        Convert.ToString(dataReader["changes"])
-                    });
-                    listView_change_tracking.Items.Add(item);
+                        ListViewItem item = new ListViewItem(new string[]
+                        {
+                            Convert.ToString(dataReader["id"]),
+                            Convert.ToString(dataReader["username"]),
+                            Convert.ToString(dataReader["date"]),
+                            Convert.ToString(dataReader["changes"])
+                        });
+                        listView_change_tracking.Items.Add(item);
+                    }
+                    dataReader.Close();
+                    conn.Close();
                 }
-                dataReader.Close();
-                conn.Close();
+                catch (Exception ex)
+                {
+                    MessageBox.Show(Convert.ToString(ex));
+                }
+                listView_change_tracking.GridLines = true;
+                listView_change_tracking.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                listView_change_tracking.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(Convert.ToString(ex));
-            }
-            listView_change_tracking.GridLines = true;
-            listView_change_tracking.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            listView_change_tracking.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 //----- Top Banner Buttons --------------------------------------------------------------------------------------
         private void button_logout_Click_1(object sender, EventArgs e)

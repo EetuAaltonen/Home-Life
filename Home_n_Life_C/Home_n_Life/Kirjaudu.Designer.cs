@@ -33,6 +33,7 @@
             this.button_minimize = new System.Windows.Forms.Button();
             this.groupBox_navigation = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.progressBar_database_connection = new System.Windows.Forms.ProgressBar();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox_login = new System.Windows.Forms.GroupBox();
             this.textBox_password = new System.Windows.Forms.TextBox();
@@ -48,7 +49,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.button_create_account = new System.Windows.Forms.Button();
             this.textBox_account_name = new System.Windows.Forms.TextBox();
-            this.progressBar_database_connection = new System.Windows.Forms.ProgressBar();
             this.groupBox_navigation.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox_login.SuspendLayout();
@@ -64,6 +64,7 @@
             this.textBox_username.Name = "textBox_username";
             this.textBox_username.Size = new System.Drawing.Size(272, 26);
             this.textBox_username.TabIndex = 1;
+            this.textBox_username.Text = "EetuA";
             this.textBox_username.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // button_exit
@@ -114,6 +115,17 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(277, 44);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
+            // progressBar_database_connection
+            // 
+            this.progressBar_database_connection.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.progressBar_database_connection.Location = new System.Drawing.Point(93, 12);
+            this.progressBar_database_connection.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
+            this.progressBar_database_connection.Maximum = 2;
+            this.progressBar_database_connection.Name = "progressBar_database_connection";
+            this.progressBar_database_connection.Size = new System.Drawing.Size(49, 23);
+            this.progressBar_database_connection.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBar_database_connection.TabIndex = 14;
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -136,7 +148,7 @@
             this.groupBox_login.Controls.Add(this.textBox_username);
             this.groupBox_login.Controls.Add(this.button_login);
             this.groupBox_login.Enabled = false;
-            this.groupBox_login.Location = new System.Drawing.Point(12, 109);
+            this.groupBox_login.Location = new System.Drawing.Point(12, 65);
             this.groupBox_login.Name = "groupBox_login";
             this.groupBox_login.Size = new System.Drawing.Size(45, 42);
             this.groupBox_login.TabIndex = 13;
@@ -153,6 +165,7 @@
             this.textBox_password.PasswordChar = '*';
             this.textBox_password.Size = new System.Drawing.Size(272, 26);
             this.textBox_password.TabIndex = 2;
+            this.textBox_password.Text = "admin";
             this.textBox_password.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label2
@@ -226,9 +239,9 @@
             this.groupBox_registration.Controls.Add(this.button_create_account);
             this.groupBox_registration.Controls.Add(this.textBox_account_name);
             this.groupBox_registration.Enabled = false;
-            this.groupBox_registration.Location = new System.Drawing.Point(12, 65);
+            this.groupBox_registration.Location = new System.Drawing.Point(12, 113);
             this.groupBox_registration.Name = "groupBox_registration";
-            this.groupBox_registration.Size = new System.Drawing.Size(45, 38);
+            this.groupBox_registration.Size = new System.Drawing.Size(496, 329);
             this.groupBox_registration.TabIndex = 17;
             this.groupBox_registration.TabStop = false;
             this.groupBox_registration.Visible = false;
@@ -302,17 +315,6 @@
             this.textBox_account_name.Size = new System.Drawing.Size(272, 26);
             this.textBox_account_name.TabIndex = 1;
             this.textBox_account_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // progressBar_database_connection
-            // 
-            this.progressBar_database_connection.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.progressBar_database_connection.Location = new System.Drawing.Point(93, 12);
-            this.progressBar_database_connection.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
-            this.progressBar_database_connection.Maximum = 2;
-            this.progressBar_database_connection.Name = "progressBar_database_connection";
-            this.progressBar_database_connection.Size = new System.Drawing.Size(49, 23);
-            this.progressBar_database_connection.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBar_database_connection.TabIndex = 14;
             // 
             // Kirjautuminen
             // 

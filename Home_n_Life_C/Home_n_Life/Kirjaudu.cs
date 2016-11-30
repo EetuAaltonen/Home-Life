@@ -42,15 +42,26 @@ namespace Home_n_Life
                 progressBar_database_connection.ForeColor = Color.Red;
             }
         }
-
-        private void button_return_Click(object sender, EventArgs e)
+//----- Login --------------------------------------------------------------------------------------
+        private void Kirjautuminen_Load(object sender, EventArgs e)
         {
+            checkDatabaseConnection();
             groupBox_login.Location = new Point(13, 65);
             groupBox_login.Size = new Size(478, 337);
             groupBox_login.Enabled = true;
             groupBox_login.Visible = true;
             groupBox_registration.Enabled = false;
             groupBox_registration.Visible = false;
+        }
+
+        private void button_minimize_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void button_exit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
 
         private void button_show_password_Click(object sender, EventArgs e)
@@ -63,16 +74,6 @@ namespace Home_n_Life
             {
                 textBox_password.PasswordChar = '*';
             }
-        }
-
-        private void button_minimize_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
-
-        private void button_exit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
         }
 
         private void button_login_Click(object sender, EventArgs e)
@@ -88,7 +89,8 @@ namespace Home_n_Life
                                         username VARCHAR(30) NOT NULL,
                                         password VARCHAR(30) NOT NULL);";
                     selectTableQuery = @"SELECT id, username, password " +
-                                        " FROM users ;";
+                                        "FROM users " +
+                                        "WHERE username='" + textBox_username.Text + "' ;";
                     try
                     {
                         conn.Open();
@@ -165,16 +167,17 @@ namespace Home_n_Life
             }
         }
 
-        private void Kirjautuminen_Load(object sender, EventArgs e)
+        private void button_sign_up_Click(object sender, EventArgs e)
         {
-            checkDatabaseConnection();
-            groupBox_login.Location = new Point(13,65);
-            groupBox_login.Size = new Size(478,337);
-            groupBox_login.Enabled = true;
-            groupBox_login.Visible = true;
-            groupBox_registration.Enabled = false;
-            groupBox_registration.Visible = false;
+            groupBox_registration.Location = new Point(13, 65);
+            groupBox_registration.Size = new Size(478, 337);
+            groupBox_registration.Enabled = true;
+            groupBox_registration.Visible = true;
+            groupBox_login.Enabled = false;
+            groupBox_login.Visible = false;
         }
+
+//----- Sign up --------------------------------------------------------------------------------------
 
         private void button_create_account_Click(object sender, EventArgs e)
         {
@@ -190,6 +193,8 @@ namespace Home_n_Life
                                         password VARCHAR(30) NOT NULL);";
                     selectTableQuery = @"SELECT id, username, password " +
                                         " FROM users ;";
+                    insertTableQuery = @"INSERT INTO users (id, username, password) " +
+                                        "VALUES('null', '" + textBox_account_name.Text + "', '" + textBox_account_password.Text + "');";
                     try
                     {
                         conn.Open();
@@ -205,24 +210,27 @@ namespace Home_n_Life
                             }
                         }
                         dataReader.Close();
+                        if (query_user != textBox_account_name.Text)
+                        {
+                            cmd = new MySqlCommand(insertTableQuery, conn);
+                            cmd.ExecuteNonQuery();
+                            MessageBox.Show("Uusi käyttäjä " + textBox_account_name.Text + " luotu", "Rekisteröityminen");
+                            groupBox_login.Location = new Point(13, 65);
+                            groupBox_login.Size = new Size(478, 337);
+                            groupBox_login.Enabled = true;
+                            groupBox_login.Visible = true;
+                            groupBox_registration.Enabled = false;
+                            groupBox_registration.Visible = false;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Käyttäjänimi on jo olemassa", "Rekisteröityminen");
+                        }
                         conn.Close();
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show(Convert.ToString(ex));
-                    }
-                    if (query_user != textBox_account_name.Text)
-                    {
-                        groupBox_login.Location = new Point(13, 65);
-                        groupBox_login.Size = new Size(478, 337);
-                        groupBox_login.Enabled = true;
-                        groupBox_login.Visible = true;
-                        groupBox_registration.Enabled = false;
-                        groupBox_registration.Visible = false;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Käyttäjänimi on jo olemassa","Rekisteröityminen");
                     }
                 }
                 else
@@ -236,14 +244,14 @@ namespace Home_n_Life
             }
         }
 
-        private void button_sign_up_Click(object sender, EventArgs e)
+        private void button_return_Click(object sender, EventArgs e)
         {
-            groupBox_registration.Location = new Point(13, 65);
-            groupBox_registration.Size = new Size(478, 337);
-            groupBox_registration.Enabled = true;
-            groupBox_registration.Visible = true;
-            groupBox_login.Enabled = false;
-            groupBox_login.Visible = false;
+            groupBox_login.Location = new Point(13, 65);
+            groupBox_login.Size = new Size(478, 337);
+            groupBox_login.Enabled = true;
+            groupBox_login.Visible = true;
+            groupBox_registration.Enabled = false;
+            groupBox_registration.Visible = false;
         }
     }
 }
