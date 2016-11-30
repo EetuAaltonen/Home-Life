@@ -73,6 +73,7 @@
             this.groupBox_change_tracking = new System.Windows.Forms.GroupBox();
             this.listView_change_tracking = new System.Windows.Forms.ListView();
             this.groupBox_economic = new System.Windows.Forms.GroupBox();
+            this.label21 = new System.Windows.Forms.Label();
             this.textBox_balance = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
@@ -92,27 +93,26 @@
             this.listView_income = new System.Windows.Forms.ListView();
             this.listView_outlay = new System.Windows.Forms.ListView();
             this.textBox_economic_name = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
             this.groupBox_calendar = new System.Windows.Forms.GroupBox();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.comboBox_event_search_month = new System.Windows.Forms.ComboBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.textBox_event_name = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.dateTimePicker_event_datetime = new System.Windows.Forms.DateTimePicker();
-            this.label27 = new System.Windows.Forms.Label();
-            this.textBox_event_location = new System.Windows.Forms.TextBox();
-            this.label28 = new System.Windows.Forms.Label();
-            this.textBox_event_search_year = new System.Windows.Forms.TextBox();
-            this.button_event_delete = new System.Windows.Forms.Button();
-            this.button_event_add = new System.Windows.Forms.Button();
-            this.button_event_search = new System.Windows.Forms.Button();
-            this.label29 = new System.Windows.Forms.Label();
-            this.dateTimePicker_event_search_datetime = new System.Windows.Forms.DateTimePicker();
             this.label30 = new System.Windows.Forms.Label();
+            this.dateTimePicker_event_search_datetime = new System.Windows.Forms.DateTimePicker();
+            this.label29 = new System.Windows.Forms.Label();
+            this.button_event_search = new System.Windows.Forms.Button();
+            this.button_event_add = new System.Windows.Forms.Button();
+            this.button_event_delete = new System.Windows.Forms.Button();
+            this.textBox_event_search_year = new System.Windows.Forms.TextBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.textBox_event_location = new System.Windows.Forms.TextBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.dateTimePicker_event_datetime = new System.Windows.Forms.DateTimePicker();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.textBox_event_name = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.comboBox_event_search_month = new System.Windows.Forms.ComboBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.listView_events = new System.Windows.Forms.ListView();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_username.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
@@ -716,6 +716,18 @@
             this.groupBox_economic.TabStop = false;
             this.groupBox_economic.Visible = false;
             // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.ForeColor = System.Drawing.Color.White;
+            this.label21.Location = new System.Drawing.Point(763, 420);
+            this.label21.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(37, 20);
+            this.label21.TabIndex = 36;
+            this.label21.Text = "/ kk";
+            // 
             // textBox_balance
             // 
             this.textBox_balance.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -937,18 +949,6 @@
             this.textBox_economic_name.Size = new System.Drawing.Size(270, 26);
             this.textBox_economic_name.TabIndex = 15;
             // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.ForeColor = System.Drawing.Color.White;
-            this.label21.Location = new System.Drawing.Point(763, 420);
-            this.label21.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(37, 20);
-            this.label21.TabIndex = 36;
-            this.label21.Text = "/ kk";
-            // 
             // groupBox_calendar
             // 
             this.groupBox_calendar.BackColor = System.Drawing.Color.Black;
@@ -970,44 +970,181 @@
             this.groupBox_calendar.Controls.Add(this.comboBox_event_search_month);
             this.groupBox_calendar.Controls.Add(this.label23);
             this.groupBox_calendar.Controls.Add(this.label22);
-            this.groupBox_calendar.Controls.Add(this.listView1);
+            this.groupBox_calendar.Controls.Add(this.listView_events);
+            this.groupBox_calendar.Enabled = false;
             this.groupBox_calendar.Location = new System.Drawing.Point(12, 170);
             this.groupBox_calendar.Name = "groupBox_calendar";
             this.groupBox_calendar.Size = new System.Drawing.Size(967, 518);
             this.groupBox_calendar.TabIndex = 6;
             this.groupBox_calendar.TabStop = false;
+            this.groupBox_calendar.Visible = false;
             // 
-            // listView1
+            // label30
             // 
-            this.listView1.Location = new System.Drawing.Point(627, 66);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(329, 434);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label30.ForeColor = System.Drawing.Color.White;
+            this.label30.Location = new System.Drawing.Point(313, 28);
+            this.label30.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(90, 40);
+            this.label30.TabIndex = 37;
+            this.label30.Text = "Lisää uusi\r\n\r\n";
             // 
-            // label22
+            // dateTimePicker_event_search_datetime
             // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.ForeColor = System.Drawing.Color.White;
-            this.label22.Location = new System.Drawing.Point(623, 28);
-            this.label22.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(105, 20);
-            this.label22.TabIndex = 19;
-            this.label22.Text = "Tapahtumat";
+            this.dateTimePicker_event_search_datetime.Location = new System.Drawing.Point(24, 285);
+            this.dateTimePicker_event_search_datetime.Name = "dateTimePicker_event_search_datetime";
+            this.dateTimePicker_event_search_datetime.Size = new System.Drawing.Size(188, 20);
+            this.dateTimePicker_event_search_datetime.TabIndex = 36;
             // 
-            // label23
+            // label29
             // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.ForeColor = System.Drawing.Color.White;
-            this.label23.Location = new System.Drawing.Point(18, 28);
-            this.label23.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(146, 40);
-            this.label23.TabIndex = 20;
-            this.label23.Text = "Hae ja tarkastele\r\n\r\n";
+            this.label29.AutoSize = true;
+            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label29.ForeColor = System.Drawing.Color.White;
+            this.label29.Location = new System.Drawing.Point(20, 255);
+            this.label29.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(166, 20);
+            this.label29.TabIndex = 35;
+            this.label29.Text = "Tai tapahtumapäivä";
+            // 
+            // button_event_search
+            // 
+            this.button_event_search.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_event_search.ForeColor = System.Drawing.Color.White;
+            this.button_event_search.Location = new System.Drawing.Point(22, 319);
+            this.button_event_search.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_event_search.Name = "button_event_search";
+            this.button_event_search.Size = new System.Drawing.Size(86, 30);
+            this.button_event_search.TabIndex = 34;
+            this.button_event_search.Text = "Hae";
+            this.button_event_search.UseVisualStyleBackColor = false;
+            this.button_event_search.Click += new System.EventHandler(this.button_event_search_Click);
+            // 
+            // button_event_add
+            // 
+            this.button_event_add.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_event_add.ForeColor = System.Drawing.Color.White;
+            this.button_event_add.Location = new System.Drawing.Point(419, 296);
+            this.button_event_add.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_event_add.Name = "button_event_add";
+            this.button_event_add.Size = new System.Drawing.Size(86, 30);
+            this.button_event_add.TabIndex = 33;
+            this.button_event_add.Text = "Lisää";
+            this.button_event_add.UseVisualStyleBackColor = false;
+            this.button_event_add.Click += new System.EventHandler(this.button_event_add_Click);
+            // 
+            // button_event_delete
+            // 
+            this.button_event_delete.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_event_delete.ForeColor = System.Drawing.Color.White;
+            this.button_event_delete.Location = new System.Drawing.Point(317, 296);
+            this.button_event_delete.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_event_delete.Name = "button_event_delete";
+            this.button_event_delete.Size = new System.Drawing.Size(86, 30);
+            this.button_event_delete.TabIndex = 32;
+            this.button_event_delete.Text = "Poista";
+            this.button_event_delete.UseVisualStyleBackColor = false;
+            this.button_event_delete.Click += new System.EventHandler(this.button_event_delete_Click);
+            // 
+            // textBox_event_search_year
+            // 
+            this.textBox_event_search_year.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_event_search_year.Location = new System.Drawing.Point(22, 191);
+            this.textBox_event_search_year.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_event_search_year.MaxLength = 20;
+            this.textBox_event_search_year.Name = "textBox_event_search_year";
+            this.textBox_event_search_year.Size = new System.Drawing.Size(188, 26);
+            this.textBox_event_search_year.TabIndex = 31;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.ForeColor = System.Drawing.Color.White;
+            this.label28.Location = new System.Drawing.Point(18, 162);
+            this.label28.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(54, 20);
+            this.label28.TabIndex = 30;
+            this.label28.Text = "Vuosi";
+            // 
+            // textBox_event_location
+            // 
+            this.textBox_event_location.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_event_location.Location = new System.Drawing.Point(317, 191);
+            this.textBox_event_location.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_event_location.MaxLength = 20;
+            this.textBox_event_location.Name = "textBox_event_location";
+            this.textBox_event_location.Size = new System.Drawing.Size(188, 26);
+            this.textBox_event_location.TabIndex = 29;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.ForeColor = System.Drawing.Color.White;
+            this.label27.Location = new System.Drawing.Point(313, 162);
+            this.label27.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(151, 20);
+            this.label27.TabIndex = 28;
+            this.label27.Text = "Tapahtumapaikka";
+            // 
+            // dateTimePicker_event_datetime
+            // 
+            this.dateTimePicker_event_datetime.Location = new System.Drawing.Point(317, 261);
+            this.dateTimePicker_event_datetime.Name = "dateTimePicker_event_datetime";
+            this.dateTimePicker_event_datetime.Size = new System.Drawing.Size(188, 20);
+            this.dateTimePicker_event_datetime.TabIndex = 27;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.ForeColor = System.Drawing.Color.White;
+            this.label26.Location = new System.Drawing.Point(313, 233);
+            this.label26.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(141, 20);
+            this.label26.TabIndex = 25;
+            this.label26.Text = "Tapahtumapäivä";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.ForeColor = System.Drawing.Color.White;
+            this.label25.Location = new System.Drawing.Point(313, 91);
+            this.label25.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(129, 20);
+            this.label25.TabIndex = 24;
+            this.label25.Text = "Nimi tai kuvaus";
+            // 
+            // textBox_event_name
+            // 
+            this.textBox_event_name.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_event_name.Location = new System.Drawing.Point(317, 121);
+            this.textBox_event_name.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_event_name.MaxLength = 20;
+            this.textBox_event_name.Name = "textBox_event_name";
+            this.textBox_event_name.Size = new System.Drawing.Size(188, 26);
+            this.textBox_event_name.TabIndex = 23;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.ForeColor = System.Drawing.Color.White;
+            this.label24.Location = new System.Drawing.Point(18, 91);
+            this.label24.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(82, 20);
+            this.label24.TabIndex = 22;
+            this.label24.Text = "Kuukausi";
             // 
             // comboBox_event_search_month
             // 
@@ -1032,172 +1169,38 @@
             this.comboBox_event_search_month.Size = new System.Drawing.Size(186, 21);
             this.comboBox_event_search_month.TabIndex = 21;
             // 
-            // label24
+            // label23
             // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.ForeColor = System.Drawing.Color.White;
-            this.label24.Location = new System.Drawing.Point(18, 91);
-            this.label24.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(82, 20);
-            this.label24.TabIndex = 22;
-            this.label24.Text = "Kuukausi";
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.ForeColor = System.Drawing.Color.White;
+            this.label23.Location = new System.Drawing.Point(18, 28);
+            this.label23.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(146, 40);
+            this.label23.TabIndex = 20;
+            this.label23.Text = "Hae ja tarkastele\r\n\r\n";
             // 
-            // textBox_event_name
+            // label22
             // 
-            this.textBox_event_name.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_event_name.Location = new System.Drawing.Point(317, 121);
-            this.textBox_event_name.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.textBox_event_name.MaxLength = 20;
-            this.textBox_event_name.Name = "textBox_event_name";
-            this.textBox_event_name.Size = new System.Drawing.Size(188, 26);
-            this.textBox_event_name.TabIndex = 23;
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.ForeColor = System.Drawing.Color.White;
+            this.label22.Location = new System.Drawing.Point(623, 28);
+            this.label22.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(105, 20);
+            this.label22.TabIndex = 19;
+            this.label22.Text = "Tapahtumat";
             // 
-            // label25
+            // listView_events
             // 
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.ForeColor = System.Drawing.Color.White;
-            this.label25.Location = new System.Drawing.Point(313, 91);
-            this.label25.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(146, 20);
-            this.label25.TabIndex = 24;
-            this.label25.Text = "Tapahtuman nimi";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.ForeColor = System.Drawing.Color.White;
-            this.label26.Location = new System.Drawing.Point(313, 233);
-            this.label26.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(141, 20);
-            this.label26.TabIndex = 25;
-            this.label26.Text = "Tapahtumapäivä";
-            // 
-            // dateTimePicker_event_datetime
-            // 
-            this.dateTimePicker_event_datetime.Location = new System.Drawing.Point(317, 261);
-            this.dateTimePicker_event_datetime.Name = "dateTimePicker_event_datetime";
-            this.dateTimePicker_event_datetime.Size = new System.Drawing.Size(188, 20);
-            this.dateTimePicker_event_datetime.TabIndex = 27;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.ForeColor = System.Drawing.Color.White;
-            this.label27.Location = new System.Drawing.Point(313, 162);
-            this.label27.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(151, 20);
-            this.label27.TabIndex = 28;
-            this.label27.Text = "Tapahtumapaikka";
-            // 
-            // textBox_event_location
-            // 
-            this.textBox_event_location.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_event_location.Location = new System.Drawing.Point(317, 191);
-            this.textBox_event_location.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.textBox_event_location.MaxLength = 20;
-            this.textBox_event_location.Name = "textBox_event_location";
-            this.textBox_event_location.Size = new System.Drawing.Size(188, 26);
-            this.textBox_event_location.TabIndex = 29;
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.ForeColor = System.Drawing.Color.White;
-            this.label28.Location = new System.Drawing.Point(18, 162);
-            this.label28.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(54, 20);
-            this.label28.TabIndex = 30;
-            this.label28.Text = "Vuosi";
-            // 
-            // textBox_event_search_year
-            // 
-            this.textBox_event_search_year.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_event_search_year.Location = new System.Drawing.Point(22, 191);
-            this.textBox_event_search_year.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.textBox_event_search_year.MaxLength = 20;
-            this.textBox_event_search_year.Name = "textBox_event_search_year";
-            this.textBox_event_search_year.Size = new System.Drawing.Size(188, 26);
-            this.textBox_event_search_year.TabIndex = 31;
-            // 
-            // button_event_delete
-            // 
-            this.button_event_delete.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_event_delete.ForeColor = System.Drawing.Color.White;
-            this.button_event_delete.Location = new System.Drawing.Point(317, 296);
-            this.button_event_delete.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.button_event_delete.Name = "button_event_delete";
-            this.button_event_delete.Size = new System.Drawing.Size(86, 30);
-            this.button_event_delete.TabIndex = 32;
-            this.button_event_delete.Text = "Poista";
-            this.button_event_delete.UseVisualStyleBackColor = false;
-            this.button_event_delete.Click += new System.EventHandler(this.button_event_delete_Click);
-            // 
-            // button_event_add
-            // 
-            this.button_event_add.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_event_add.ForeColor = System.Drawing.Color.White;
-            this.button_event_add.Location = new System.Drawing.Point(419, 296);
-            this.button_event_add.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.button_event_add.Name = "button_event_add";
-            this.button_event_add.Size = new System.Drawing.Size(86, 30);
-            this.button_event_add.TabIndex = 33;
-            this.button_event_add.Text = "Lisää";
-            this.button_event_add.UseVisualStyleBackColor = false;
-            this.button_event_add.Click += new System.EventHandler(this.button_event_add_Click);
-            // 
-            // button_event_search
-            // 
-            this.button_event_search.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_event_search.ForeColor = System.Drawing.Color.White;
-            this.button_event_search.Location = new System.Drawing.Point(22, 319);
-            this.button_event_search.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.button_event_search.Name = "button_event_search";
-            this.button_event_search.Size = new System.Drawing.Size(86, 30);
-            this.button_event_search.TabIndex = 34;
-            this.button_event_search.Text = "Hae";
-            this.button_event_search.UseVisualStyleBackColor = false;
-            this.button_event_search.Click += new System.EventHandler(this.button_event_search_Click);
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label29.ForeColor = System.Drawing.Color.White;
-            this.label29.Location = new System.Drawing.Point(20, 255);
-            this.label29.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(166, 20);
-            this.label29.TabIndex = 35;
-            this.label29.Text = "Tai tapahtumapäivä";
-            // 
-            // dateTimePicker_event_search_datetime
-            // 
-            this.dateTimePicker_event_search_datetime.Location = new System.Drawing.Point(24, 285);
-            this.dateTimePicker_event_search_datetime.Name = "dateTimePicker_event_search_datetime";
-            this.dateTimePicker_event_search_datetime.Size = new System.Drawing.Size(188, 20);
-            this.dateTimePicker_event_search_datetime.TabIndex = 36;
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label30.ForeColor = System.Drawing.Color.White;
-            this.label30.Location = new System.Drawing.Point(313, 28);
-            this.label30.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(90, 40);
-            this.label30.TabIndex = 37;
-            this.label30.Text = "Lisää uusi\r\n\r\n";
+            this.listView_events.Location = new System.Drawing.Point(627, 66);
+            this.listView_events.Name = "listView_events";
+            this.listView_events.Size = new System.Drawing.Size(329, 434);
+            this.listView_events.TabIndex = 0;
+            this.listView_events.UseCompatibleStateImageBehavior = false;
+            this.listView_events.Click += new System.EventHandler(this.listView_events_Click);
             // 
             // Etusivu
             // 
@@ -1309,7 +1312,7 @@
         private System.Windows.Forms.ComboBox comboBox_event_search_month;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView listView_events;
         private System.Windows.Forms.Button button_event_search;
         private System.Windows.Forms.Button button_event_add;
         private System.Windows.Forms.Button button_event_delete;

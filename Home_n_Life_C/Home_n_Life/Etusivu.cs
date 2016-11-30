@@ -36,6 +36,8 @@ namespace Home_n_Life
         //---Economic----------------
         double income, outlay;
         bool same_name = true;
+        //---Calendar----------------
+        bool same_event = true;
 
 //----- Etusivu Load --------------------------------------------------------------------------------------
         private void Etusivu_Load(object sender, EventArgs e)
@@ -44,6 +46,15 @@ namespace Home_n_Life
             conn = new MySqlConnection(connetionString);
             current_button = button_logo;
             viewChange(groupBox_home, button_logo);
+        }
+
+        private void button_logo_Click(object sender, EventArgs e)
+        {
+            if (view_change != "home")
+            {
+                view_change = "home";
+                viewChange(groupBox_home, button_logo);
+            }
         }
 //----- Change View --------------------------------------------------------------------------------------
         private void viewChange(GroupBox current_groupBox_, Button current_button_)
@@ -125,6 +136,14 @@ namespace Home_n_Life
                         textBox_balance.Text = "";
                         break;
                     case "calendar":
+                        listView_events.Clear();
+                        listView_events.View = View.Details;
+                        listView_events.Columns.Add("Id", 20, HorizontalAlignment.Left);
+                        listView_events.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
+                        listView_events.Columns.Add("Paikka", 20, HorizontalAlignment.Left);
+                        listView_events.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
+                        listView_events.GridLines = true;
+                        listView_events.FullRowSelect = true;
                         readCalendarLists();
                         break;
                 }
@@ -553,15 +572,6 @@ namespace Home_n_Life
             }
         }
 
-        private void button_logo_Click(object sender, EventArgs e)
-        {
-            if (view_change != "home")
-            {
-                view_change = "home";
-                viewChange(groupBox_home, button_logo);
-            }
-        }
-
         private void textBox_shopping_list_KeyDown(object sender, KeyEventArgs e)
         {
             if (textBox_shopping_list.Text == info_text)
@@ -613,20 +623,15 @@ namespace Home_n_Life
 //----- Calendar --------------------------------------------------------------------------------------
         private void readCalendarLists()
         {
-            income = 0;
-            outlay = 0;
-            listView_income.Items.Clear();
-            listView_outlay.Items.Clear();
+            listView_events.Items.Clear();
             createTableQuery = @"CREATE TABLE IF NOT EXISTS calendar (
                                  id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                                 name VARCHAR(30) NOT NULL,
+                                 username VARCHAR(30) NOT NULL,
+                                 event_name VARCHAR(30) NOT NULL,
                                  location VARCHAR(30) NOT NULL,
-                                 date VARCHAR(30) NOT NULL,
-                                 description VARCHAR(100) NOT NULL,
-                                 type VARCHAR(5) NOT NULL,
-                                 amount DOUBLE(10,2) NOT NULL);";
-            selectTableQuery = @"SELECT id, username, description, type, amount " +
-                                " FROM economic " +
+                                 date DATETIME NOT NULL) ;";
+            selectTableQuery = @"SELECT id, username, event_name, location, date " +
+                                " FROM calendar " +
                                 " WHERE username='" + linkLabel_user.Text + "' ;";
             try
             {
@@ -640,24 +645,11 @@ namespace Home_n_Life
                     ListViewItem item = new ListViewItem(new string[]
                     {
                             Convert.ToString(dataReader["id"]),
-                            Convert.ToString(dataReader["description"]),
-                            Convert.ToString(dataReader["amount"]),
-                            Convert.ToString(dataReader["type"])
+                            Convert.ToString(dataReader["event_name"]),
+                            Convert.ToString(dataReader["location"]),
+                            Convert.ToString(dataReader["date"])
                     });
-                    if (Convert.ToString(dataReader["type"]) == "Tulo")
-                    {
-                        income += double.Parse(Convert.ToString(dataReader["amount"]));
-                        listView_income.Items.Add(item);
-                    }
-                    else if (Convert.ToString(dataReader["type"]) == "Meno")
-                    {
-                        outlay += double.Parse(Convert.ToString(dataReader["amount"]));
-                        listView_outlay.Items.Add(item);
-                    }
-                    string euro = Encoding.Default.GetString(new byte[] { 128 }); //€
-                    textBox_all_income.Text = Convert.ToString(income) + " " + euro;
-                    textBox_all_outlay.Text = Convert.ToString(outlay) + " " + euro;
-                    textBox_balance.Text = Convert.ToString((income - outlay) + " " + euro);
+                    listView_events.Items.Add(item);
                 }
                 dataReader.Close();
                 conn.Close();
@@ -666,15 +658,26 @@ namespace Home_n_Life
             {
                 MessageBox.Show(Convert.ToString(ex));
             }
-            listView_income.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            listView_income.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            listView_income.Columns[0].Width = 0; //Hide id
-            listView_income.Columns[3].Width = 0; //Hide type
+            listView_events.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView_events.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            listView_events.Columns[0].Width = 0; //Hide id
+        }
 
-            listView_outlay.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            listView_outlay.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            listView_outlay.Columns[0].Width = 0; //Hide id
-            listView_outlay.Columns[3].Width = 0; //Hide type
+        private void listView_events_Click(object sender, EventArgs e)
+        {
+            if (listView_events.SelectedIndices.Count > 0)
+            {
+                if (listView_events.SelectedIndices.Count == 1)
+                {
+                    textBox_event_name.Text = listView_events.SelectedItems[0].SubItems[1].Text;
+                    textBox_event_location.Text = listView_events.SelectedItems[0].SubItems[2].Text;
+                    dateTimePicker_event_datetime.Value = DateTime.Parse(listView_events.SelectedItems[0].SubItems[3].Text);
+                }
+                else
+                {
+                    MessageBox.Show("Valitse vain yksi kerrallaan", "Tapahtumat");
+                }
+            }
         }
 
         private void button_calendar_Click(object sender, EventArgs e)
@@ -683,18 +686,93 @@ namespace Home_n_Life
             {
                 checkDatabaseConnection();
                 view_change = "calendar";
-                viewChange(groupBox_calendar, button_economic);
+                viewChange(groupBox_calendar, button_calendar);
             }
         }
 
         private void button_event_add_Click(object sender, EventArgs e)
         {
-            //
+            DateTime dateValue = dateTimePicker_event_datetime.Value;
+            // "2000-01-12 20:10:00Z"    
+            dateValue.ToString(CultureInfo.InvariantCulture.DateTimeFormat.UniversalSortableDateTimePattern);
+            string formatForMySql = dateTimePicker_event_datetime.Value.ToString("yyyy-MM-dd HH:mm:ss");
+            if (textBox_event_name.Text != "")
+            {
+                if (textBox_event_location.Text != "")
+                {
+                    if (Convert.ToString(dateTimePicker_event_datetime.Value) != "")
+                    {
+                        same_event = false;
+                        for (int i = 0; i < listView_events.Items.Count; i++)
+                        {
+                            if (textBox_event_name.Text == listView_events.Items[i].SubItems[1].Text &&
+                                formatForMySql == listView_events.Items[i].SubItems[3].Text)
+                            {
+                                same_event = true;
+                            }
+                        }
+                        if (!same_event)
+                        {
+                            insertTableQuery = @"INSERT INTO calendar (id, username, event_name, location, date)" +
+                                                "VALUES(null, '" + linkLabel_user.Text + "', '" + textBox_event_name.Text + "', '" + textBox_event_location.Text + "', '" + formatForMySql + "');";
+                            try
+                            {
+                                conn.Open();
+                                cmd = new MySqlCommand(insertTableQuery, conn);
+                                cmd.ExecuteNonQuery();
+                                conn.Close();
+                                MessageBox.Show("Uusi tapahtuma lisätty", "Lisää");
+                                //change = "Tapahtuma " + textBox_event_name.Text + " lisätty kalenteriin";
+                                //addChangeTracking(change);
+                                readCalendarLists();
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(Convert.ToString(ex));
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void button_event_delete_Click(object sender, EventArgs e)
         {
-            //
+            if (listView_events.SelectedIndices.Count == 1)
+            {
+                DateTime dateValue = dateTimePicker_event_datetime.Value;
+                // "2000-01-12 20:10:00Z"    
+                dateValue.ToString(CultureInfo.InvariantCulture.DateTimeFormat.UniversalSortableDateTimePattern);
+                string formatForMySql = dateTimePicker_event_datetime.Value.ToString("yyyy-MM-dd HH:mm:ss");
+                alterTableQuery = @"ALTER TABLE calendar DROP COLUMN id;
+                                            ALTER TABLE calendar ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
+                DialogResult dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen tapahtuman?", "Poista", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    deleteTableQuery = @"DELETE FROM calendar WHERE username='" + linkLabel_user.Text +
+                                        "' AND event_name='" + textBox_event_name.Text + "' ;";
+                                        //"' AND date='" + formatForMySql + "' ;";
+                    try
+                    {
+                        conn.Open();
+                        cmd = new MySqlCommand(deleteTableQuery, conn);
+                        cmd.ExecuteNonQuery();
+                        textBox_list_name.Text = "";
+                        textBox_shopping_list.Text = "";
+                        conn.Close();
+                        readShoppingLists();
+                        comboBox_shopping_lists.SelectedItem = null;
+                        MessageBox.Show("Tapahtuma on poistettu", "Poista");
+                        //change = "Kauppalista " + textBox_list_name.Text + " poistettu";
+                        //addChangeTracking(change);
+                        readCalendarLists();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(Convert.ToString(ex));
+                    }
+                }
+            }
         }
 
         private void button_event_search_Click(object sender, EventArgs e)

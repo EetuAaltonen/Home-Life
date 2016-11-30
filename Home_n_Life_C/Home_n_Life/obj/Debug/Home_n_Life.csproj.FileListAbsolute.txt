@@ -12,3 +12,15 @@ C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\obj\Debug\Home_
 C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\bin\Debug\Home_n_Life_Database.mdf
 C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\bin\Debug\Home_n_Life_Database_log.ldf
 C:\Users\eetua_000\Documents\Home-Life\Home_n_Life_C\Home_n_Life\bin\Debug\MySql.Data.dll
+E:\ATOM Projects\Home_n_Life Prototype\Home_n_Life_C\Home_n_Life\bin\Debug\Home_n_Life.exe.config
+E:\ATOM Projects\Home_n_Life Prototype\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.exe
+E:\ATOM Projects\Home_n_Life Prototype\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.pdb
+E:\ATOM Projects\Home_n_Life Prototype\Home_n_Life_C\Home_n_Life\bin\Debug\Home_n_Life_Database.mdf
+E:\ATOM Projects\Home_n_Life Prototype\Home_n_Life_C\Home_n_Life\bin\Debug\Home_n_Life_Database_log.ldf
+E:\ATOM Projects\Home_n_Life Prototype\Home_n_Life_C\Home_n_Life\bin\Debug\Home_n_Life.exe
+E:\ATOM Projects\Home_n_Life Prototype\Home_n_Life_C\Home_n_Life\bin\Debug\Home_n_Life.pdb
+E:\ATOM Projects\Home_n_Life Prototype\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.csprojResolveAssemblyReference.cache
+E:\ATOM Projects\Home_n_Life Prototype\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.Etusivu.resources
+E:\ATOM Projects\Home_n_Life Prototype\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.Kirjautuminen.resources
+E:\ATOM Projects\Home_n_Life Prototype\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.Properties.Resources.resources
+E:\ATOM Projects\Home_n_Life Prototype\Home_n_Life_C\Home_n_Life\obj\Debug\Home_n_Life.csproj.GenerateResource.Cache
