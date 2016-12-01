@@ -71,6 +71,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox_change_tracking = new System.Windows.Forms.GroupBox();
+            this.button_clear_change_tracking = new System.Windows.Forms.Button();
             this.listView_change_tracking = new System.Windows.Forms.ListView();
             this.groupBox_economic = new System.Windows.Forms.GroupBox();
             this.label21 = new System.Windows.Forms.Label();
@@ -94,10 +95,11 @@
             this.listView_outlay = new System.Windows.Forms.ListView();
             this.textBox_economic_name = new System.Windows.Forms.TextBox();
             this.groupBox_calendar = new System.Windows.Forms.GroupBox();
+            this.button_event_search_1 = new System.Windows.Forms.Button();
             this.label30 = new System.Windows.Forms.Label();
             this.dateTimePicker_event_search_datetime = new System.Windows.Forms.DateTimePicker();
             this.label29 = new System.Windows.Forms.Label();
-            this.button_event_search = new System.Windows.Forms.Button();
+            this.button_event_search_2 = new System.Windows.Forms.Button();
             this.button_event_add = new System.Windows.Forms.Button();
             this.button_event_delete = new System.Windows.Forms.Button();
             this.textBox_event_search_year = new System.Windows.Forms.TextBox();
@@ -113,6 +115,20 @@
             this.label23 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.listView_events = new System.Windows.Forms.ListView();
+            this.button_event_clear_search_settings = new System.Windows.Forms.Button();
+            this.button_event_search_set_today = new System.Windows.Forms.Button();
+            this.checkBox_event_show_past = new System.Windows.Forms.CheckBox();
+            this.button_event_set_today = new System.Windows.Forms.Button();
+            this.button_event_delete_past = new System.Windows.Forms.Button();
+            this.groupBox_checklist = new System.Windows.Forms.GroupBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label35 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label38 = new System.Windows.Forms.Label();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_username.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
@@ -122,6 +138,7 @@
             this.groupBox_change_tracking.SuspendLayout();
             this.groupBox_economic.SuspendLayout();
             this.groupBox_calendar.SuspendLayout();
+            this.groupBox_checklist.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox_top_banner
@@ -361,6 +378,7 @@
             this.button_checklist.TabIndex = 7;
             this.button_checklist.Text = "Muistilistat";
             this.button_checklist.UseVisualStyleBackColor = false;
+            this.button_checklist.Click += new System.EventHandler(this.button_checklist_Click);
             // 
             // button_change_tracking
             // 
@@ -397,9 +415,9 @@
             this.groupBox_shopping_list.Controls.Add(this.textBox_item_name);
             this.groupBox_shopping_list.Controls.Add(this.button_add_item);
             this.groupBox_shopping_list.Enabled = false;
-            this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 328);
+            this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 295);
             this.groupBox_shopping_list.Name = "groupBox_shopping_list";
-            this.groupBox_shopping_list.Size = new System.Drawing.Size(50, 39);
+            this.groupBox_shopping_list.Size = new System.Drawing.Size(50, 47);
             this.groupBox_shopping_list.TabIndex = 2;
             this.groupBox_shopping_list.TabStop = false;
             this.groupBox_shopping_list.Visible = false;
@@ -433,7 +451,7 @@
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(148, 271);
+            this.label9.Location = new System.Drawing.Point(156, 271);
             this.label9.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(54, 20);
@@ -443,7 +461,7 @@
             // textBox_text_length
             // 
             this.textBox_text_length.Enabled = false;
-            this.textBox_text_length.Location = new System.Drawing.Point(85, 271);
+            this.textBox_text_length.Location = new System.Drawing.Point(93, 271);
             this.textBox_text_length.Name = "textBox_text_length";
             this.textBox_text_length.Size = new System.Drawing.Size(57, 20);
             this.textBox_text_length.TabIndex = 21;
@@ -452,12 +470,12 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.White;
             this.label8.Location = new System.Drawing.Point(6, 269);
             this.label8.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(73, 20);
+            this.label8.Size = new System.Drawing.Size(81, 20);
             this.label8.TabIndex = 20;
             this.label8.Text = "Merkkejä";
             // 
@@ -499,12 +517,12 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(695, 120);
             this.label5.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(133, 20);
+            this.label5.Size = new System.Drawing.Size(150, 20);
             this.label5.TabIndex = 16;
             this.label5.Text = "Kauppalistan nimi";
             // 
@@ -560,24 +578,24 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(6, 142);
             this.label4.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(54, 20);
+            this.label4.Size = new System.Drawing.Size(59, 20);
             this.label4.TabIndex = 11;
             this.label4.Text = "Määrä";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(6, 71);
             this.label3.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(105, 20);
+            this.label3.Size = new System.Drawing.Size(118, 20);
             this.label3.TabIndex = 9;
             this.label3.Text = "Tuotteen nimi";
             // 
@@ -594,12 +612,12 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(695, 47);
             this.label2.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(142, 20);
+            this.label2.Size = new System.Drawing.Size(161, 20);
             this.label2.TabIndex = 8;
             this.label2.Text = "Valitse kauppalista";
             // 
@@ -633,7 +651,7 @@
             this.groupBox_home.Controls.Add(this.label11);
             this.groupBox_home.Controls.Add(this.label10);
             this.groupBox_home.Enabled = false;
-            this.groupBox_home.Location = new System.Drawing.Point(12, 397);
+            this.groupBox_home.Location = new System.Drawing.Point(12, 348);
             this.groupBox_home.Name = "groupBox_home";
             this.groupBox_home.Size = new System.Drawing.Size(50, 40);
             this.groupBox_home.TabIndex = 3;
@@ -668,20 +686,34 @@
             // groupBox_change_tracking
             // 
             this.groupBox_change_tracking.BackColor = System.Drawing.Color.Black;
+            this.groupBox_change_tracking.Controls.Add(this.button_clear_change_tracking);
             this.groupBox_change_tracking.Controls.Add(this.listView_change_tracking);
             this.groupBox_change_tracking.Enabled = false;
-            this.groupBox_change_tracking.Location = new System.Drawing.Point(12, 452);
+            this.groupBox_change_tracking.Location = new System.Drawing.Point(12, 406);
             this.groupBox_change_tracking.Name = "groupBox_change_tracking";
-            this.groupBox_change_tracking.Size = new System.Drawing.Size(50, 40);
+            this.groupBox_change_tracking.Size = new System.Drawing.Size(50, 48);
             this.groupBox_change_tracking.TabIndex = 4;
             this.groupBox_change_tracking.TabStop = false;
             this.groupBox_change_tracking.Visible = false;
+            // 
+            // button_clear_change_tracking
+            // 
+            this.button_clear_change_tracking.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_clear_change_tracking.ForeColor = System.Drawing.Color.White;
+            this.button_clear_change_tracking.Location = new System.Drawing.Point(896, 476);
+            this.button_clear_change_tracking.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_clear_change_tracking.Name = "button_clear_change_tracking";
+            this.button_clear_change_tracking.Size = new System.Drawing.Size(60, 30);
+            this.button_clear_change_tracking.TabIndex = 13;
+            this.button_clear_change_tracking.Text = "Tyhjennä";
+            this.button_clear_change_tracking.UseVisualStyleBackColor = false;
+            this.button_clear_change_tracking.Click += new System.EventHandler(this.button_clear_change_tracking_Click);
             // 
             // listView_change_tracking
             // 
             this.listView_change_tracking.Location = new System.Drawing.Point(10, 19);
             this.listView_change_tracking.Name = "listView_change_tracking";
-            this.listView_change_tracking.Size = new System.Drawing.Size(946, 482);
+            this.listView_change_tracking.Size = new System.Drawing.Size(946, 452);
             this.listView_change_tracking.TabIndex = 0;
             this.listView_change_tracking.UseCompatibleStateImageBehavior = false;
             // 
@@ -709,9 +741,9 @@
             this.groupBox_economic.Controls.Add(this.listView_outlay);
             this.groupBox_economic.Controls.Add(this.textBox_economic_name);
             this.groupBox_economic.Enabled = false;
-            this.groupBox_economic.Location = new System.Drawing.Point(12, 269);
+            this.groupBox_economic.Location = new System.Drawing.Point(12, 236);
             this.groupBox_economic.Name = "groupBox_economic";
-            this.groupBox_economic.Size = new System.Drawing.Size(50, 43);
+            this.groupBox_economic.Size = new System.Drawing.Size(50, 36);
             this.groupBox_economic.TabIndex = 5;
             this.groupBox_economic.TabStop = false;
             this.groupBox_economic.Visible = false;
@@ -924,6 +956,7 @@
             // listView_income
             // 
             this.listView_income.Location = new System.Drawing.Point(409, 59);
+            this.listView_income.MultiSelect = false;
             this.listView_income.Name = "listView_income";
             this.listView_income.Size = new System.Drawing.Size(263, 306);
             this.listView_income.TabIndex = 17;
@@ -933,6 +966,7 @@
             // listView_outlay
             // 
             this.listView_outlay.Location = new System.Drawing.Point(678, 59);
+            this.listView_outlay.MultiSelect = false;
             this.listView_outlay.Name = "listView_outlay";
             this.listView_outlay.Size = new System.Drawing.Size(263, 306);
             this.listView_outlay.TabIndex = 16;
@@ -952,10 +986,16 @@
             // groupBox_calendar
             // 
             this.groupBox_calendar.BackColor = System.Drawing.Color.Black;
+            this.groupBox_calendar.Controls.Add(this.button_event_delete_past);
+            this.groupBox_calendar.Controls.Add(this.button_event_set_today);
+            this.groupBox_calendar.Controls.Add(this.checkBox_event_show_past);
+            this.groupBox_calendar.Controls.Add(this.button_event_search_set_today);
+            this.groupBox_calendar.Controls.Add(this.button_event_clear_search_settings);
+            this.groupBox_calendar.Controls.Add(this.button_event_search_1);
             this.groupBox_calendar.Controls.Add(this.label30);
             this.groupBox_calendar.Controls.Add(this.dateTimePicker_event_search_datetime);
             this.groupBox_calendar.Controls.Add(this.label29);
-            this.groupBox_calendar.Controls.Add(this.button_event_search);
+            this.groupBox_calendar.Controls.Add(this.button_event_search_2);
             this.groupBox_calendar.Controls.Add(this.button_event_add);
             this.groupBox_calendar.Controls.Add(this.button_event_delete);
             this.groupBox_calendar.Controls.Add(this.textBox_event_search_year);
@@ -972,12 +1012,25 @@
             this.groupBox_calendar.Controls.Add(this.label22);
             this.groupBox_calendar.Controls.Add(this.listView_events);
             this.groupBox_calendar.Enabled = false;
-            this.groupBox_calendar.Location = new System.Drawing.Point(12, 170);
+            this.groupBox_calendar.Location = new System.Drawing.Point(12, 467);
             this.groupBox_calendar.Name = "groupBox_calendar";
-            this.groupBox_calendar.Size = new System.Drawing.Size(967, 518);
+            this.groupBox_calendar.Size = new System.Drawing.Size(50, 42);
             this.groupBox_calendar.TabIndex = 6;
             this.groupBox_calendar.TabStop = false;
             this.groupBox_calendar.Visible = false;
+            // 
+            // button_event_search_1
+            // 
+            this.button_event_search_1.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_event_search_1.ForeColor = System.Drawing.Color.White;
+            this.button_event_search_1.Location = new System.Drawing.Point(124, 268);
+            this.button_event_search_1.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_event_search_1.Name = "button_event_search_1";
+            this.button_event_search_1.Size = new System.Drawing.Size(86, 30);
+            this.button_event_search_1.TabIndex = 38;
+            this.button_event_search_1.Text = "Hae";
+            this.button_event_search_1.UseVisualStyleBackColor = false;
+            this.button_event_search_1.Click += new System.EventHandler(this.button_event_search_1_Click);
             // 
             // label30
             // 
@@ -993,7 +1046,7 @@
             // 
             // dateTimePicker_event_search_datetime
             // 
-            this.dateTimePicker_event_search_datetime.Location = new System.Drawing.Point(24, 285);
+            this.dateTimePicker_event_search_datetime.Location = new System.Drawing.Point(22, 358);
             this.dateTimePicker_event_search_datetime.Name = "dateTimePicker_event_search_datetime";
             this.dateTimePicker_event_search_datetime.Size = new System.Drawing.Size(188, 20);
             this.dateTimePicker_event_search_datetime.TabIndex = 36;
@@ -1003,25 +1056,25 @@
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label29.ForeColor = System.Drawing.Color.White;
-            this.label29.Location = new System.Drawing.Point(20, 255);
+            this.label29.Location = new System.Drawing.Point(18, 328);
             this.label29.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(166, 20);
             this.label29.TabIndex = 35;
             this.label29.Text = "Tai tapahtumapäivä";
             // 
-            // button_event_search
+            // button_event_search_2
             // 
-            this.button_event_search.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_event_search.ForeColor = System.Drawing.Color.White;
-            this.button_event_search.Location = new System.Drawing.Point(22, 319);
-            this.button_event_search.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.button_event_search.Name = "button_event_search";
-            this.button_event_search.Size = new System.Drawing.Size(86, 30);
-            this.button_event_search.TabIndex = 34;
-            this.button_event_search.Text = "Hae";
-            this.button_event_search.UseVisualStyleBackColor = false;
-            this.button_event_search.Click += new System.EventHandler(this.button_event_search_Click);
+            this.button_event_search_2.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_event_search_2.ForeColor = System.Drawing.Color.White;
+            this.button_event_search_2.Location = new System.Drawing.Point(22, 389);
+            this.button_event_search_2.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_event_search_2.Name = "button_event_search_2";
+            this.button_event_search_2.Size = new System.Drawing.Size(86, 30);
+            this.button_event_search_2.TabIndex = 34;
+            this.button_event_search_2.Text = "Hae";
+            this.button_event_search_2.UseVisualStyleBackColor = false;
+            this.button_event_search_2.Click += new System.EventHandler(this.button_event_search_2_Click);
             // 
             // button_event_add
             // 
@@ -1067,9 +1120,9 @@
             this.label28.Location = new System.Drawing.Point(18, 162);
             this.label28.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(54, 20);
+            this.label28.Size = new System.Drawing.Size(98, 20);
             this.label28.TabIndex = 30;
-            this.label28.Text = "Vuosi";
+            this.label28.Text = "ja/tai Vuosi";
             // 
             // textBox_event_location
             // 
@@ -1164,9 +1217,9 @@
             "Lokakuu",
             "Marraskuu",
             "Joulukuu"});
-            this.comboBox_event_search_month.Location = new System.Drawing.Point(24, 121);
+            this.comboBox_event_search_month.Location = new System.Drawing.Point(22, 121);
             this.comboBox_event_search_month.Name = "comboBox_event_search_month";
-            this.comboBox_event_search_month.Size = new System.Drawing.Size(186, 21);
+            this.comboBox_event_search_month.Size = new System.Drawing.Size(188, 21);
             this.comboBox_event_search_month.TabIndex = 21;
             // 
             // label23
@@ -1196,11 +1249,183 @@
             // listView_events
             // 
             this.listView_events.Location = new System.Drawing.Point(627, 66);
+            this.listView_events.MultiSelect = false;
             this.listView_events.Name = "listView_events";
             this.listView_events.Size = new System.Drawing.Size(329, 434);
             this.listView_events.TabIndex = 0;
             this.listView_events.UseCompatibleStateImageBehavior = false;
             this.listView_events.Click += new System.EventHandler(this.listView_events_Click);
+            // 
+            // button_event_clear_search_settings
+            // 
+            this.button_event_clear_search_settings.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_event_clear_search_settings.ForeColor = System.Drawing.Color.White;
+            this.button_event_clear_search_settings.Location = new System.Drawing.Point(22, 268);
+            this.button_event_clear_search_settings.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_event_clear_search_settings.Name = "button_event_clear_search_settings";
+            this.button_event_clear_search_settings.Size = new System.Drawing.Size(86, 30);
+            this.button_event_clear_search_settings.TabIndex = 39;
+            this.button_event_clear_search_settings.Text = "Tyhjennä";
+            this.button_event_clear_search_settings.UseVisualStyleBackColor = false;
+            this.button_event_clear_search_settings.Click += new System.EventHandler(this.button_clear_search_settings_Click);
+            // 
+            // button_event_search_set_today
+            // 
+            this.button_event_search_set_today.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_event_search_set_today.ForeColor = System.Drawing.Color.White;
+            this.button_event_search_set_today.Location = new System.Drawing.Point(216, 352);
+            this.button_event_search_set_today.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_event_search_set_today.Name = "button_event_search_set_today";
+            this.button_event_search_set_today.Size = new System.Drawing.Size(53, 30);
+            this.button_event_search_set_today.TabIndex = 40;
+            this.button_event_search_set_today.Text = "Tänään";
+            this.button_event_search_set_today.UseVisualStyleBackColor = false;
+            this.button_event_search_set_today.Click += new System.EventHandler(this.button_event_search_set_today_Click);
+            // 
+            // checkBox_event_show_past
+            // 
+            this.checkBox_event_show_past.AutoSize = true;
+            this.checkBox_event_show_past.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_event_show_past.ForeColor = System.Drawing.Color.White;
+            this.checkBox_event_show_past.Location = new System.Drawing.Point(22, 233);
+            this.checkBox_event_show_past.Name = "checkBox_event_show_past";
+            this.checkBox_event_show_past.Size = new System.Drawing.Size(149, 24);
+            this.checkBox_event_show_past.TabIndex = 41;
+            this.checkBox_event_show_past.Text = "Näytä menneet";
+            this.checkBox_event_show_past.UseVisualStyleBackColor = true;
+            // 
+            // button_event_set_today
+            // 
+            this.button_event_set_today.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_event_set_today.ForeColor = System.Drawing.Color.White;
+            this.button_event_set_today.Location = new System.Drawing.Point(511, 256);
+            this.button_event_set_today.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_event_set_today.Name = "button_event_set_today";
+            this.button_event_set_today.Size = new System.Drawing.Size(53, 30);
+            this.button_event_set_today.TabIndex = 42;
+            this.button_event_set_today.Text = "Tänään";
+            this.button_event_set_today.UseVisualStyleBackColor = false;
+            this.button_event_set_today.Click += new System.EventHandler(this.button_event_set_today_Click);
+            // 
+            // button_event_delete_past
+            // 
+            this.button_event_delete_past.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_event_delete_past.ForeColor = System.Drawing.Color.White;
+            this.button_event_delete_past.Location = new System.Drawing.Point(317, 389);
+            this.button_event_delete_past.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_event_delete_past.Name = "button_event_delete_past";
+            this.button_event_delete_past.Size = new System.Drawing.Size(188, 30);
+            this.button_event_delete_past.TabIndex = 43;
+            this.button_event_delete_past.Text = "Poista menneet tapahtumat";
+            this.button_event_delete_past.UseVisualStyleBackColor = false;
+            this.button_event_delete_past.Click += new System.EventHandler(this.button_event_delete_past_Click);
+            // 
+            // groupBox_checklist
+            // 
+            this.groupBox_checklist.BackColor = System.Drawing.Color.Black;
+            this.groupBox_checklist.Controls.Add(this.label33);
+            this.groupBox_checklist.Controls.Add(this.textBox2);
+            this.groupBox_checklist.Controls.Add(this.label35);
+            this.groupBox_checklist.Controls.Add(this.button1);
+            this.groupBox_checklist.Controls.Add(this.button2);
+            this.groupBox_checklist.Controls.Add(this.textBox3);
+            this.groupBox_checklist.Controls.Add(this.comboBox2);
+            this.groupBox_checklist.Controls.Add(this.label38);
+            this.groupBox_checklist.Enabled = false;
+            this.groupBox_checklist.Location = new System.Drawing.Point(12, 191);
+            this.groupBox_checklist.Name = "groupBox_checklist";
+            this.groupBox_checklist.Size = new System.Drawing.Size(50, 39);
+            this.groupBox_checklist.TabIndex = 24;
+            this.groupBox_checklist.TabStop = false;
+            this.groupBox_checklist.Visible = false;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label33.ForeColor = System.Drawing.Color.White;
+            this.label33.Location = new System.Drawing.Point(20, 22);
+            this.label33.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(149, 20);
+            this.label33.TabIndex = 19;
+            this.label33.Text = "Kirjoita muistilista";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox2.Location = new System.Drawing.Point(699, 150);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox2.MaxLength = 30;
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(260, 26);
+            this.textBox2.TabIndex = 17;
+            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label35.ForeColor = System.Drawing.Color.White;
+            this.label35.Location = new System.Drawing.Point(695, 120);
+            this.label35.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(136, 20);
+            this.label35.TabIndex = 16;
+            this.label35.Text = "Muistilistan nimi";
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(699, 229);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(132, 28);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "Poista";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(699, 195);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(132, 28);
+            this.button2.TabIndex = 14;
+            this.button2.Text = "Tallenna";
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(22, 49);
+            this.textBox3.Multiline = true;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(665, 456);
+            this.textBox3.TabIndex = 13;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(699, 72);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(257, 21);
+            this.comboBox2.TabIndex = 1;
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label38.ForeColor = System.Drawing.Color.White;
+            this.label38.Location = new System.Drawing.Point(695, 47);
+            this.label38.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(149, 20);
+            this.label38.TabIndex = 8;
+            this.label38.Text = "Valitse muistilista";
             // 
             // Etusivu
             // 
@@ -1208,6 +1433,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(990, 700);
+            this.Controls.Add(this.groupBox_checklist);
             this.Controls.Add(this.groupBox_calendar);
             this.Controls.Add(this.groupBox_economic);
             this.Controls.Add(this.groupBox_change_tracking);
@@ -1234,6 +1460,8 @@
             this.groupBox_economic.PerformLayout();
             this.groupBox_calendar.ResumeLayout(false);
             this.groupBox_calendar.PerformLayout();
+            this.groupBox_checklist.ResumeLayout(false);
+            this.groupBox_checklist.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1313,7 +1541,7 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.ListView listView_events;
-        private System.Windows.Forms.Button button_event_search;
+        private System.Windows.Forms.Button button_event_search_2;
         private System.Windows.Forms.Button button_event_add;
         private System.Windows.Forms.Button button_event_delete;
         private System.Windows.Forms.TextBox textBox_event_search_year;
@@ -1325,5 +1553,21 @@
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.DateTimePicker dateTimePicker_event_search_datetime;
         private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Button button_clear_change_tracking;
+        private System.Windows.Forms.Button button_event_search_1;
+        private System.Windows.Forms.Button button_event_clear_search_settings;
+        private System.Windows.Forms.Button button_event_search_set_today;
+        private System.Windows.Forms.CheckBox checkBox_event_show_past;
+        private System.Windows.Forms.Button button_event_set_today;
+        private System.Windows.Forms.Button button_event_delete_past;
+        private System.Windows.Forms.GroupBox groupBox_checklist;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label38;
     }
 }

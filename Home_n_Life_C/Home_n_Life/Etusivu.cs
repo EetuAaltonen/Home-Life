@@ -24,6 +24,9 @@ namespace Home_n_Life
         MySqlConnection conn;
         MySqlCommand cmd;
         string dropTableQuery, createTableQuery, insertTableQuery, selectTableQuery, updateTableQuery, deleteTableQuery, alterTableQuery;
+        //---Check-If-Numeric--------
+        int n;
+        bool isNumeric;
         //---View-Change-------------
         string view_change;
         GroupBox current_groupBox;
@@ -38,10 +41,17 @@ namespace Home_n_Life
         bool same_name = true;
         //---Calendar----------------
         bool same_event = true;
+        string formatDateTimeForMySql, month, year;
+        string[] months = new string[122];
 
 //----- Etusivu Load --------------------------------------------------------------------------------------
         private void Etusivu_Load(object sender, EventArgs e)
         {
+            months[1] = "Tammikuu"; months[5] = "Toukokuu"; months[9] = "Syyskuu";
+            months[2] = "Helmikuu"; months[6] = "Kesäkuu"; months[10] = "Lokakuu";
+            months[3] = "Maaliskuu"; months[7] = "Heinäkuu"; months[11] = "Marraskuu";
+            months[4] = "Huhtikuu"; months[8] = "Elokuu"; months[12] = "Joulukuu";
+
             view_change = "home";
             conn = new MySqlConnection(connetionString);
             current_button = button_logo;
@@ -108,6 +118,7 @@ namespace Home_n_Life
                         listView_change_tracking.Columns.Add("Käyttäjänimi", 20, HorizontalAlignment.Left);
                         listView_change_tracking.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
                         listView_change_tracking.Columns.Add("Muutos", 20, HorizontalAlignment.Left);
+                        readChangeTrackingLists();
                         break;
                     case "economic":
                         listView_income.Clear();
@@ -138,13 +149,20 @@ namespace Home_n_Life
                     case "calendar":
                         listView_events.Clear();
                         listView_events.View = View.Details;
-                        listView_events.Columns.Add("Id", 20, HorizontalAlignment.Left);
+                        //listView_events.Columns.Add("Id", 20, HorizontalAlignment.Left);
                         listView_events.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
                         listView_events.Columns.Add("Paikka", 20, HorizontalAlignment.Left);
                         listView_events.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
                         listView_events.GridLines = true;
                         listView_events.FullRowSelect = true;
                         readCalendarLists();
+                        textBox_event_name.Text = "";
+                        textBox_event_location.Text = "";
+                        dateTimePicker_event_datetime.Value = DateTime.Now;
+
+                        comboBox_event_search_month.SelectedItem = "Koko vuosi";
+                        textBox_event_search_year.Text = "";
+                        dateTimePicker_event_search_datetime.Value = DateTime.Now;
                         break;
                 }
             }
@@ -619,8 +637,42 @@ namespace Home_n_Life
                 }
             }   
         }
-
 //----- Calendar --------------------------------------------------------------------------------------
+        private void dataReadCalendarList()
+        {
+            MySqlDataReader dataReader = cmd.ExecuteReader();
+            while (dataReader.Read())
+            {
+                DateTime temp_daytime = (DateTime)dataReader["date"];
+                if (checkBox_event_show_past.Checked)
+                {
+                    ListViewItem item = new ListViewItem(new string[]
+                    {
+                                //Convert.ToString(dataReader["id"]),
+                                Convert.ToString(dataReader["event_name"]),
+                                Convert.ToString(dataReader["location"]),
+                                temp_daytime.ToString("d/M/yyyy")
+                    });
+                    listView_events.Items.Add(item);
+                }
+                else
+                {
+                    if (temp_daytime.Date >= DateTime.Now.Date)
+                    {
+                        ListViewItem item = new ListViewItem(new string[]
+                        {
+                                    //Convert.ToString(dataReader["id"]),
+                                    Convert.ToString(dataReader["event_name"]),
+                                    Convert.ToString(dataReader["location"]),
+                                    temp_daytime.ToString("d/M/yyyy")
+                        });
+                        listView_events.Items.Add(item);
+                    }
+                }
+            }
+            dataReader.Close();
+        }
+
         private void readCalendarLists()
         {
             listView_events.Items.Clear();
@@ -629,8 +681,10 @@ namespace Home_n_Life
                                  username VARCHAR(30) NOT NULL,
                                  event_name VARCHAR(30) NOT NULL,
                                  location VARCHAR(30) NOT NULL,
-                                 date DATETIME NOT NULL) ;";
-            selectTableQuery = @"SELECT id, username, event_name, location, date " +
+                                 date DATE NOT NULL,
+                                 month VARCHAR(30) NOT NULL,
+                                 year INT(6) NOT NULL ) ;";
+            selectTableQuery = @"SELECT id, username, event_name, location, date, month, year " +
                                 " FROM calendar " +
                                 " WHERE username='" + linkLabel_user.Text + "' ;";
             try
@@ -639,19 +693,7 @@ namespace Home_n_Life
                 cmd = new MySqlCommand(createTableQuery, conn);
                 cmd.ExecuteNonQuery();
                 cmd = new MySqlCommand(selectTableQuery, conn);
-                MySqlDataReader dataReader = cmd.ExecuteReader();
-                while (dataReader.Read())
-                {
-                    ListViewItem item = new ListViewItem(new string[]
-                    {
-                            Convert.ToString(dataReader["id"]),
-                            Convert.ToString(dataReader["event_name"]),
-                            Convert.ToString(dataReader["location"]),
-                            Convert.ToString(dataReader["date"])
-                    });
-                    listView_events.Items.Add(item);
-                }
-                dataReader.Close();
+                dataReadCalendarList();
                 conn.Close();
             }
             catch (Exception ex)
@@ -660,7 +702,46 @@ namespace Home_n_Life
             }
             listView_events.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             listView_events.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            listView_events.Columns[0].Width = 0; //Hide id
+            //listView_events.Columns[0].Width = 0; //Hide id
+        }
+
+        private void searchCalendarLists(string selectTableQuery_)
+        {
+            listView_events.Items.Clear();
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(selectTableQuery_, conn);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                dataReadCalendarList();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+            listView_events.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView_events.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            //listView_events.Columns[0].Width = 0; //Hide id
+        }
+
+        private void setSearchMonth(ref string month)
+        {
+            switch (Convert.ToString(comboBox_event_search_month.SelectedItem))
+            {
+                case "Tammikuu": month = "1"; break;
+                case "Helmikuu": month = "2"; break;
+                case "Maaliskuu": month = "3"; break;
+                case "Huhtikuu": month = "4"; break;
+                case "Toukokuu": month = "5"; break;
+                case "Kesäkuu": month = "6"; break;
+                case "Heinäkuu": month = "7"; break;
+                case "Elokuu": month = "8"; break;
+                case "Syyskuu": month = "9"; break;
+                case "Lokakuu": month = "10"; break;
+                case "Marraskuu": month = "11"; break;
+                case "Joulukuu": month = "12"; break;
+            }
         }
 
         private void listView_events_Click(object sender, EventArgs e)
@@ -669,9 +750,9 @@ namespace Home_n_Life
             {
                 if (listView_events.SelectedIndices.Count == 1)
                 {
-                    textBox_event_name.Text = listView_events.SelectedItems[0].SubItems[1].Text;
-                    textBox_event_location.Text = listView_events.SelectedItems[0].SubItems[2].Text;
-                    dateTimePicker_event_datetime.Value = DateTime.Parse(listView_events.SelectedItems[0].SubItems[3].Text);
+                    textBox_event_name.Text = listView_events.SelectedItems[0].SubItems[0].Text;
+                    textBox_event_location.Text = listView_events.SelectedItems[0].SubItems[1].Text;
+                    dateTimePicker_event_datetime.Value = DateTime.Parse(listView_events.SelectedItems[0].SubItems[2].Text);
                 }
                 else
                 {
@@ -692,46 +773,106 @@ namespace Home_n_Life
 
         private void button_event_add_Click(object sender, EventArgs e)
         {
-            DateTime dateValue = dateTimePicker_event_datetime.Value;
-            // "2000-01-12 20:10:00Z"    
-            dateValue.ToString(CultureInfo.InvariantCulture.DateTimeFormat.UniversalSortableDateTimePattern);
-            string formatForMySql = dateTimePicker_event_datetime.Value.ToString("yyyy-MM-dd HH:mm:ss");
-            if (textBox_event_name.Text != "")
-            {
-                if (textBox_event_location.Text != "")
+            //if (dateTimePicker_event_datetime.Value.Date >= DateTime.Now.Date)
+            //{
+                formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("d/M/yyyy");
+                if (textBox_event_name.Text != "")
                 {
-                    if (Convert.ToString(dateTimePicker_event_datetime.Value) != "")
+                    if (textBox_event_location.Text != "")
                     {
-                        same_event = false;
-                        for (int i = 0; i < listView_events.Items.Count; i++)
+                        if (Convert.ToString(dateTimePicker_event_datetime.Value) != "")
                         {
-                            if (textBox_event_name.Text == listView_events.Items[i].SubItems[1].Text &&
-                                formatForMySql == listView_events.Items[i].SubItems[3].Text)
+                            same_event = false;
+                            for (int i = 0; i < listView_events.Items.Count; i++)
                             {
-                                same_event = true;
+                                if (textBox_event_name.Text == listView_events.Items[i].SubItems[0].Text &&
+                                    formatDateTimeForMySql == listView_events.Items[i].SubItems[2].Text)
+                                {
+                                    same_event = true;
+                                }
+                            }
+                            if (!same_event)
+                            {
+                                month = dateTimePicker_event_datetime.Value.ToString(" MM ");
+                                formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("yyyy-MM-dd");
+                                insertTableQuery = @"INSERT INTO calendar (id, username, event_name, location, date, month, year)" +
+                                                    "VALUES(null, '" + linkLabel_user.Text + "', '" + textBox_event_name.Text +
+                                                    "', '" + textBox_event_location.Text + "', '" + formatDateTimeForMySql +
+                                                    "', '" + months[Int32.Parse(month)] + "', '" + dateTimePicker_event_datetime.Value.ToString("yyyy") + "');";
+                                try
+                                {
+                                    conn.Open();
+                                    cmd = new MySqlCommand(insertTableQuery, conn);
+                                    cmd.ExecuteNonQuery();
+                                    conn.Close();
+                                    MessageBox.Show("Uusi tapahtuma lisätty", "Lisää");
+                                    formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("d/M/yyyy");
+                                    change = "Tapahtuma " + textBox_event_name.Text + " lisätty kalenteriin päivään " + formatDateTimeForMySql;
+                                    addChangeTracking(change);
+                                    readCalendarLists();
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show(Convert.ToString(ex));
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Samanniminen tapahtuma samalle päivälle on jo olemassa", "Lisää");
                             }
                         }
-                        if (!same_event)
+                        else
                         {
-                            insertTableQuery = @"INSERT INTO calendar (id, username, event_name, location, date)" +
-                                                "VALUES(null, '" + linkLabel_user.Text + "', '" + textBox_event_name.Text + "', '" + textBox_event_location.Text + "', '" + formatForMySql + "');";
-                            try
-                            {
-                                conn.Open();
-                                cmd = new MySqlCommand(insertTableQuery, conn);
-                                cmd.ExecuteNonQuery();
-                                conn.Close();
-                                MessageBox.Show("Uusi tapahtuma lisätty", "Lisää");
-                                //change = "Tapahtuma " + textBox_event_name.Text + " lisätty kalenteriin";
-                                //addChangeTracking(change);
-                                readCalendarLists();
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(Convert.ToString(ex));
-                            }
+                            MessageBox.Show("Et ole valinnut päivää", "Lisää");
                         }
                     }
+                    else
+                    {
+                        MessageBox.Show("Et ole syöttänyt tapahtumapaikkaa", "Lisää");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Et ole syöttänyt tapahtuman kuvausta", "Lisää");
+                }
+            /*}
+            else
+            {
+                MessageBox.Show("Et voi lisätä tapahtumaa mennelle ajalle", "Lisää");
+            }*/
+        }
+
+        private void button_event_set_today_Click(object sender, EventArgs e)
+        {
+            dateTimePicker_event_datetime.Value = DateTime.Now;
+        }
+
+        private void button_event_search_set_today_Click(object sender, EventArgs e)
+        {
+            dateTimePicker_event_search_datetime.Value = DateTime.Now;
+        }
+
+        private void button_event_delete_past_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Haluatko varmasti poistaa menneet tapahtumat?", "Poista", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                deleteTableQuery = @"DELETE FROM calendar WHERE username='" + linkLabel_user.Text +
+                                        "' AND date<'" + DateTime.Now.ToString("yyyy-MM-dd") + "' ;";
+                try
+                {
+                    conn.Open();
+                    cmd = new MySqlCommand(deleteTableQuery, conn);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    MessageBox.Show("Menneet tapahtumat on poistettu", "Poista");
+                    change = "Kalenterista poistettu " + DateTime.Now.ToString("d/M/yyyy") + " jälkeiset tapahtumat";
+                    addChangeTracking(change);
+                    readCalendarLists();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(Convert.ToString(ex));
                 }
             }
         }
@@ -743,28 +884,28 @@ namespace Home_n_Life
                 DateTime dateValue = dateTimePicker_event_datetime.Value;
                 // "2000-01-12 20:10:00Z"    
                 dateValue.ToString(CultureInfo.InvariantCulture.DateTimeFormat.UniversalSortableDateTimePattern);
-                string formatForMySql = dateTimePicker_event_datetime.Value.ToString("yyyy-MM-dd HH:mm:ss");
+                formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("yyyy-MM-dd");
                 alterTableQuery = @"ALTER TABLE calendar DROP COLUMN id;
-                                            ALTER TABLE calendar ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
+                                    ALTER TABLE calendar ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
                 DialogResult dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen tapahtuman?", "Poista", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
                     deleteTableQuery = @"DELETE FROM calendar WHERE username='" + linkLabel_user.Text +
-                                        "' AND event_name='" + textBox_event_name.Text + "' ;";
-                                        //"' AND date='" + formatForMySql + "' ;";
+                                        "' AND event_name='" + textBox_event_name.Text +
+                                        "' AND date='" + formatDateTimeForMySql + "' ;";
                     try
                     {
                         conn.Open();
                         cmd = new MySqlCommand(deleteTableQuery, conn);
                         cmd.ExecuteNonQuery();
-                        textBox_list_name.Text = "";
-                        textBox_shopping_list.Text = "";
                         conn.Close();
-                        readShoppingLists();
-                        comboBox_shopping_lists.SelectedItem = null;
                         MessageBox.Show("Tapahtuma on poistettu", "Poista");
-                        //change = "Kauppalista " + textBox_list_name.Text + " poistettu";
-                        //addChangeTracking(change);
+                        formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("d/M/yyyy");
+                        change = "Tapahtuma " + textBox_event_name.Text + " poistettu kalenterista päivältä " + formatDateTimeForMySql;
+                        addChangeTracking(change);
+                        textBox_event_name.Text = "";
+                        textBox_event_location.Text = "";
+                        dateTimePicker_event_datetime.Value = DateTime.Now;
                         readCalendarLists();
                     }
                     catch (Exception ex)
@@ -775,25 +916,140 @@ namespace Home_n_Life
             }
         }
 
-        private void button_event_search_Click(object sender, EventArgs e)
+        private void button_event_search_1_Click(object sender, EventArgs e)
         {
-
+            if (Convert.ToString(comboBox_event_search_month.SelectedItem) != "Koko vuosi" &&
+                textBox_event_search_year.Text != "")
+            {
+                isNumeric = int.TryParse(textBox_event_search_year.Text, out n);
+                if (isNumeric)
+                {
+                    month = dateTimePicker_event_datetime.Value.ToString(" MM ");
+                    setSearchMonth(ref month);
+                    selectTableQuery = @"SELECT id, username, event_name, location, date " +
+                                        " FROM calendar " +
+                                        " WHERE username='" + linkLabel_user.Text +
+                                        "' AND month='" + months[Int32.Parse(month)] +
+                                        "' AND year=" + Int32.Parse(textBox_event_search_year.Text) + " ;";
+                    searchCalendarLists(selectTableQuery);
+                }
+                else
+                {
+                    MessageBox.Show("Syöttämäsi vuosi ei ole vuosiluku", "Hae");
+                }
+            }
+            else if (Convert.ToString(comboBox_event_search_month.SelectedItem) != "Koko vuosi")
+            {
+                month = Convert.ToString(comboBox_event_search_month.SelectedItem);
+                setSearchMonth(ref month);
+                selectTableQuery = @"SELECT id, username, event_name, location, date " +
+                                    " FROM calendar " +
+                                    " WHERE username='" + linkLabel_user.Text +
+                                    "' AND month='" + months[Int32.Parse(month)] + "' ;";
+                searchCalendarLists(selectTableQuery);
+            }
+            else if (textBox_event_search_year.Text != "")
+            {
+                isNumeric = int.TryParse(textBox_event_search_year.Text, out n);
+                if (isNumeric)
+                {
+                    selectTableQuery = @"SELECT id, username, event_name, location, date " +
+                                        " FROM calendar " +
+                                        " WHERE username='" + linkLabel_user.Text +
+                                        "' AND year=" + Int32.Parse(textBox_event_search_year.Text) + " ;";
+                    searchCalendarLists(selectTableQuery);
+                }
+                else
+                {
+                    MessageBox.Show("Syöttämäsi vuosi ei ole vuosiluku","Hae");
+                }
+            }
+            else
+            {
+                readCalendarLists();
+            }
         }
 
+        private void button_clear_search_settings_Click(object sender, EventArgs e)
+        {
+            comboBox_event_search_month.SelectedItem = "Koko vuosi";
+            textBox_event_search_year.Text = "";
+        }
+
+        private void button_event_search_2_Click(object sender, EventArgs e)
+        {
+            formatDateTimeForMySql = dateTimePicker_event_search_datetime.Value.ToString("yyyy-MM-dd");
+            selectTableQuery = @"SELECT id, username, event_name, location, date " +
+                                " FROM calendar " +
+                                " WHERE username='" + linkLabel_user.Text +
+                                "' AND date='" + formatDateTimeForMySql + "' ;";
+            searchCalendarLists(selectTableQuery);
+        }
+//----- Checklist --------------------------------------------------------------------------------------
+        private void button_checklist_Click(object sender, EventArgs e)
+        {
+            if (view_change != "checklist")
+            {
+                checkDatabaseConnection();
+                view_change = "checklist";
+                viewChange(groupBox_checklist, button_checklist);
+            }
+        }
 //----- Change tracking --------------------------------------------------------------------------------------
+        private void readChangeTrackingLists()
+        {
+            listView_change_tracking.Items.Clear();
+            createTableQuery = @"CREATE TABLE IF NOT EXISTS change_tracking (
+                                            id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                            username VARCHAR(30) NOT NULL,
+                                            date DATETIME NOT NULL,
+                                            changes VARCHAR(100) NOT NULL);";
+            selectTableQuery = @"SELECT id, username, date, changes " +
+                                " FROM change_tracking " +
+                                " WHERE username='" + linkLabel_user.Text + "' ;";
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(createTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(selectTableQuery, conn);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    ListViewItem item = new ListViewItem(new string[]
+                    {
+                            Convert.ToString(dataReader["id"]),
+                            Convert.ToString(dataReader["username"]),
+                            Convert.ToString(dataReader["date"]),
+                            Convert.ToString(dataReader["changes"])
+                    });
+                    listView_change_tracking.Items.Add(item);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+            listView_change_tracking.GridLines = true;
+            listView_change_tracking.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView_change_tracking.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+        }
+
         private void addChangeTracking(string change)
         {
             DateTime dateValue = DateTime.Now;
             // "2000-01-12 20:10:00Z"    
             dateValue.ToString(CultureInfo.InvariantCulture.DateTimeFormat.UniversalSortableDateTimePattern);
-            string formatForMySql = dateValue.ToString("yyyy-MM-dd HH:mm:ss");
+            formatDateTimeForMySql = dateValue.ToString("yyyy-MM-dd HH:mm:ss");
             createTableQuery = @"CREATE TABLE IF NOT EXISTS change_tracking (
                                         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                         username VARCHAR(30) NOT NULL,
                                         date DATETIME NOT NULL,
                                         changes VARCHAR(100) NOT NULL);";
             insertTableQuery = @"INSERT INTO change_tracking (id, username, date, changes)" +
-                                "VALUES(null, '" + linkLabel_user.Text + "', '" + formatForMySql + "', '" + change + "');";
+                                "VALUES(null, '" + linkLabel_user.Text + "', '" + formatDateTimeForMySql + "', '" + change + "');";
 
             try
             {
@@ -817,44 +1073,30 @@ namespace Home_n_Life
                 checkDatabaseConnection();
                 view_change = "change_tracking";
                 viewChange(groupBox_change_tracking, button_change_tracking);
-                createTableQuery = @"CREATE TABLE IF NOT EXISTS change_tracking (
-                                            id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                                            username VARCHAR(30) NOT NULL,
-                                            date DATETIME NOT NULL,
-                                            changes VARCHAR(100) NOT NULL);";
-                selectTableQuery = @"SELECT id, username, date, changes " +
-                                    " FROM change_tracking " +
-                                    " WHERE username='" + linkLabel_user.Text + "' ;";
+            }
+        }
+
+        private void button_clear_change_tracking_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Haluatko varmasti tyhjentää tiedot muutoksista?", "Poista", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                dropTableQuery = @"DROP TABLE IF EXISTS `change_tracking` ;";
                 try
                 {
                     conn.Open();
-                    cmd = new MySqlCommand(createTableQuery, conn);
+                    cmd = new MySqlCommand(dropTableQuery, conn);
                     cmd.ExecuteNonQuery();
-                    cmd = new MySqlCommand(selectTableQuery, conn);
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-                    while (dataReader.Read())
-                    {
-                        ListViewItem item = new ListViewItem(new string[]
-                        {
-                            Convert.ToString(dataReader["id"]),
-                            Convert.ToString(dataReader["username"]),
-                            Convert.ToString(dataReader["date"]),
-                            Convert.ToString(dataReader["changes"])
-                        });
-                        listView_change_tracking.Items.Add(item);
-                    }
-                    dataReader.Close();
                     conn.Close();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(Convert.ToString(ex));
                 }
-                listView_change_tracking.GridLines = true;
-                listView_change_tracking.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                listView_change_tracking.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                readChangeTrackingLists();
             }
         }
+
 //----- Top Banner Buttons --------------------------------------------------------------------------------------
         private void button_logout_Click_1(object sender, EventArgs e)
         {
