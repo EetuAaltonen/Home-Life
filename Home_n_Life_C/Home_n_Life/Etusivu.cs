@@ -25,6 +25,10 @@ namespace Home_n_Life
         MySqlConnection conn;
         MySqlCommand cmd;
         string dropTableQuery, createTableQuery, insertTableQuery, selectTableQuery, updateTableQuery, deleteTableQuery, alterTableQuery;
+        //---Dialog------------------
+        DialogResult dialogResult;
+        //---listView-Added-Items----
+        ListViewItem item;
         //---Check-If-Numeric--------
         int n;
         bool isNumeric;
@@ -37,6 +41,7 @@ namespace Home_n_Life
         bool same_name = true;
         //---Menu--------------------
         bool menu_progressing;
+        int index;
         //---Shopping-List-----------
         string info_text, added_item;
         bool list_progressing;
@@ -65,10 +70,14 @@ namespace Home_n_Life
 
         private void button_logo_Click(object sender, EventArgs e)
         {
-            if (view_change != "home")
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                view_change = "home";
-                viewChange(groupBox_home, button_logo);
+                if (view_change != "home")
+                {
+                    view_change = "home";
+                    viewChange(groupBox_home, button_logo);
+                }
             }
         }
 //----- Change View --------------------------------------------------------------------------------------
@@ -235,7 +244,7 @@ namespace Home_n_Life
                 MySqlDataReader dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
-                    ListViewItem item = new ListViewItem(new string[]
+                    item = new ListViewItem(new string[]
                     {
                             Convert.ToString(dataReader["id"]),
                             Convert.ToString(dataReader["description"]),
@@ -277,12 +286,16 @@ namespace Home_n_Life
 
         private void button_economic_Click(object sender, EventArgs e)
         {
-            if (view_change != "economic")
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                checkDatabaseConnection();
-                view_change = "economic";
-                viewChange(groupBox_economic, button_economic);
-                readEconomicLists();
+                if (view_change != "economic")
+                {
+                    checkDatabaseConnection();
+                    view_change = "economic";
+                    viewChange(groupBox_economic, button_economic);
+                    readEconomicLists();
+                }
             }
         }
 
@@ -421,7 +434,7 @@ namespace Home_n_Life
             if ((listView_income.SelectedIndices.Count == 1 && listView_outlay.SelectedIndices.Count == 0) ||
                 (listView_outlay.SelectedIndices.Count == 1 && listView_income.SelectedIndices.Count == 0))
             {
-                DialogResult dialogResult = MessageBox.Show("Haluatko varmasti poistaa tämän tiedon?", "Poista", MessageBoxButtons.YesNo);
+                dialogResult = MessageBox.Show("Haluatko varmasti poistaa tämän tiedon?", "Poista", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
                     deleteTableQuery = @"DELETE FROM economic WHERE username='" + linkLabel_user.Text +
@@ -478,7 +491,18 @@ namespace Home_n_Life
                 MySqlDataReader dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
-                    comboBox_menus.Items.Add(Convert.ToString(dataReader["menu_name"]));
+                    same_name = false;
+                    foreach (string item in comboBox_menus.Items)
+                    {
+                        if (item == Convert.ToString(dataReader["menu_name"]))
+                        {
+                            same_name = true;
+                        }
+                    }
+                    if (!same_name)
+                    {
+                        comboBox_menus.Items.Add(Convert.ToString(dataReader["menu_name"]));
+                    }
                 }
                 dataReader.Close();
                 conn.Close();
@@ -491,11 +515,15 @@ namespace Home_n_Life
 
         private void button_menu_Click(object sender, EventArgs e)
         {
-            if (view_change != "menu")
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                checkDatabaseConnection();
-                view_change = "menu";
-                viewChange(groupBox_menu, button_menu);
+                if (view_change != "menu")
+                {
+                    checkDatabaseConnection();
+                    view_change = "menu";
+                    viewChange(groupBox_menu, button_menu);
+                }
             }
         }
 
@@ -503,8 +531,8 @@ namespace Home_n_Life
         {
             if (!menu_progressing)
             {
+                listView_menu.Items.Clear();
                 textBox_menu_name.Text = Convert.ToString(comboBox_menus.SelectedItem);
-                comboBox_menus.Items.Clear();
                 selectTableQuery = @"SELECT id, username, menu_name, food, description " +
                                     " FROM menu " +
                                     " WHERE username='" + linkLabel_user.Text + "' ;";
@@ -517,7 +545,7 @@ namespace Home_n_Life
                     MySqlDataReader dataReader = cmd.ExecuteReader();
                     while (dataReader.Read())
                     {
-                        ListViewItem item = new ListViewItem(new string[]
+                        item = new ListViewItem(new string[]
                         {
                             Convert.ToString(dataReader["id"]),
                             Convert.ToString(dataReader["food"]),
@@ -538,12 +566,113 @@ namespace Home_n_Life
             }
         }
 
-        private void button_menu_save_Click(object sender, EventArgs e)
+        private void button_menu_add_Click(object sender, EventArgs e)
         {
-
+            item = new ListViewItem(new string[]
+            {
+                    "",
+                    textBox_menu_food.Text,
+                    textBox_menu_description.Text
+            });
+            listView_menu.Items.Add(item);
+            MessageBox.Show("Uusi ruoka lisätty ruokalistaan", "Lisää");
+            listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            listView_menu.Columns[0].Width = 0; //Hide id
         }
 
-//----- Shopping list --------------------------------------------------------------------------------------
+        private void button_menu_remove_Click(object sender, EventArgs e)
+        {
+            menu_progressing = true;
+            dialogResult = MessageBox.Show("Haluatko varmasti poistaa tämän ruuan?", "Poista", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                deleteTableQuery = @"DELETE FROM menu WHERE username='" + linkLabel_user.Text +
+                                    "' AND id='" + Convert.ToString(listView_menu.SelectedItems[0].SubItems[0].Text) +
+                                    "' AND food='" + Convert.ToString(listView_menu.SelectedItems[0].SubItems[1].Text) + "' ;";
+                try
+                {
+                    conn.Open();
+                    cmd = new MySqlCommand(deleteTableQuery, conn);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    change = "Ruoka " + listView_menu.SelectedItems[0].SubItems[1].Text + " poistettu ruokalistalta";
+                    listView_menu.Items.Remove(listView_menu.SelectedItems[0]);
+                    MessageBox.Show("Ruoka on poistettu ruokalistalta", "Poista"); 
+                    addChangeTracking(change);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(Convert.ToString(ex));
+                }
+                textBox_menu_food.Text = "";
+                textBox_menu_description.Text = "";
+                listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                listView_menu.Columns[0].Width = 0; //Hide id
+            }
+            menu_progressing = false;
+        }
+
+        private void button_menu_save_Click(object sender, EventArgs e)
+        {
+            textBox_menu_name.Text = textBox_menu_name.Text.Replace(" ", "_");
+            if (textBox_menu_name.Text.Length > 0)
+            {
+                if (listView_menu.Items.Count > 0)
+                {
+                    insertTableQuery = @"INSERT INTO menu (id, username, menu_name, food, description) " +
+                                        "SELECT * FROM(SELECT 0, '" + linkLabel_user.Text + "', '" + textBox_menu_name.Text + "', '" + listView_menu.Items[index].SubItems[1] + "', '" + listView_menu.Items[index].SubItems[2] + "') AS tmp " +
+                                        "WHERE NOT EXISTS( " +
+                                        "SELECT menu_name FROM menu WHERE menu_name='" + textBox_menu_name.Text + "' " +
+                                        ") LIMIT 2 ;";
+                    updateTableQuery = @"UPDATE menu " +
+                                         "SET food='" + Convert.ToString(listView_menu.Items[index].SubItems[1].Text) + "' AND " +
+                                         "description='" + Convert.ToString(listView_menu.Items[index].SubItems[2]) + "' " +
+                                         "WHERE menu_name='" + textBox_menu_name.Text + "' ;";
+
+                    try
+                    {
+                        conn.Open();
+                        for (index = 0; index < listView_menu.Items.Count; index++)
+                        {
+                            cmd = new MySqlCommand(insertTableQuery, conn);
+                            cmd.ExecuteNonQuery();
+                            cmd = new MySqlCommand(updateTableQuery, conn);
+                            cmd.ExecuteNonQuery();
+                        }
+                        conn.Close();
+                        readMenus();
+                        menu_progressing = true;
+                        comboBox_menus.SelectedItem = textBox_menu_name.Text;
+                        menu_progressing = false;
+                        MessageBox.Show("Ruokalista tallennettu", "Tallenna");
+                        change = "Ruokalista " + textBox_menu_name.Text + " tallennettu";
+                        addChangeTracking(change);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(Convert.ToString(ex));
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Ruokalistalla ei ole ruokia", "Tallenna");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ruokalistan nimi on virheellinen", "Tallenna");
+            }
+        }
+
+        private void listView_menu_Click(object sender, EventArgs e)
+        {
+            textBox_menu_food.Text = listView_menu.SelectedItems[0].SubItems[1].Text;
+            textBox_menu_description.Text = listView_menu.SelectedItems[0].SubItems[2].Text;
+        }
+
+        //----- Shopping list --------------------------------------------------------------------------------------
         private void readShoppingLists()
         {
             comboBox_shopping_lists.Items.Clear();
@@ -577,11 +706,15 @@ namespace Home_n_Life
 
         private void button_shopping_list_Click(object sender, EventArgs e)
         {
-            if (view_change != "shopping_list");
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                checkDatabaseConnection();
-                view_change = "shopping_list";
-                viewChange(groupBox_shopping_list, button_shopping_list);
+                if (view_change != "shopping_list")
+                {
+                    checkDatabaseConnection();
+                    view_change = "shopping_list";
+                    viewChange(groupBox_shopping_list, button_shopping_list);
+                }
             }
         }
 
@@ -721,7 +854,7 @@ namespace Home_n_Life
 
         private void button_list_delete_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen kauppalistan?", "Poista", MessageBoxButtons.YesNo);
+            dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen kauppalistan?", "Poista", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 deleteTableQuery = @"DELETE FROM shoppinglist WHERE username='" + linkLabel_user.Text +
@@ -755,9 +888,8 @@ namespace Home_n_Life
                 DateTime temp_daytime = (DateTime)dataReader["date"];
                 if (checkBox_event_show_past.Checked)
                 {
-                    ListViewItem item = new ListViewItem(new string[]
+                    item = new ListViewItem(new string[]
                     {
-                                //Convert.ToString(dataReader["id"]),
                                 Convert.ToString(dataReader["event_name"]),
                                 Convert.ToString(dataReader["location"]),
                                 temp_daytime.ToString("d/M/yyyy")
@@ -768,9 +900,8 @@ namespace Home_n_Life
                 {
                     if (temp_daytime.Date >= DateTime.Now.Date)
                     {
-                        ListViewItem item = new ListViewItem(new string[]
+                        item = new ListViewItem(new string[]
                         {
-                                    //Convert.ToString(dataReader["id"]),
                                     Convert.ToString(dataReader["event_name"]),
                                     Convert.ToString(dataReader["location"]),
                                     temp_daytime.ToString("d/M/yyyy")
@@ -811,7 +942,6 @@ namespace Home_n_Life
             }
             listView_events.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             listView_events.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            //listView_events.Columns[0].Width = 0; //Hide id
         }
 
         private void searchCalendarLists(string selectTableQuery_)
@@ -872,11 +1002,15 @@ namespace Home_n_Life
 
         private void button_calendar_Click(object sender, EventArgs e)
         {
-            if (view_change != "calendar")
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                checkDatabaseConnection();
-                view_change = "calendar";
-                viewChange(groupBox_calendar, button_calendar);
+                if (view_change != "calendar")
+                {
+                    checkDatabaseConnection();
+                    view_change = "calendar";
+                    viewChange(groupBox_calendar, button_calendar);
+                }
             }
         }
 
@@ -963,7 +1097,7 @@ namespace Home_n_Life
 
         private void button_event_delete_past_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Haluatko varmasti poistaa menneet tapahtumat?", "Poista", MessageBoxButtons.YesNo);
+            dialogResult = MessageBox.Show("Haluatko varmasti poistaa menneet tapahtumat?", "Poista", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 deleteTableQuery = @"DELETE FROM calendar WHERE username='" + linkLabel_user.Text +
@@ -996,7 +1130,7 @@ namespace Home_n_Life
                 formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("yyyy-MM-dd");
                 alterTableQuery = @"ALTER TABLE calendar DROP COLUMN id;
                                     ALTER TABLE calendar ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
-                DialogResult dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen tapahtuman?", "Poista", MessageBoxButtons.YesNo);
+                dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen tapahtuman?", "Poista", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
                     deleteTableQuery = @"DELETE FROM calendar WHERE username='" + linkLabel_user.Text +
@@ -1126,13 +1260,34 @@ namespace Home_n_Life
             }
         }
 
+        private void button_cleaning_Click(object sender, EventArgs e)
+        {
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+
+            }
+        }
+
+        private void button_exercise_meter_Click(object sender, EventArgs e)
+        {
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+            }
+        }
+
         private void button_checklist_Click(object sender, EventArgs e)
         {
-            if (view_change != "checklist")
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                checkDatabaseConnection();
-                view_change = "checklist";
-                viewChange(groupBox_checklist, button_checklist);
+                if (view_change != "checklist")
+                {
+                    checkDatabaseConnection();
+                    view_change = "checklist";
+                    viewChange(groupBox_checklist, button_checklist);
+                }
             }
         }
 
@@ -1215,7 +1370,7 @@ namespace Home_n_Life
 
         private void button_checklist_delete_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen muistilistan?", "Poista", MessageBoxButtons.YesNo);
+            dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen muistilistan?", "Poista", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 deleteTableQuery = @"DELETE FROM checklist WHERE username='" + linkLabel_user.Text +
@@ -1262,7 +1417,7 @@ namespace Home_n_Life
                 MySqlDataReader dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
-                    ListViewItem item = new ListViewItem(new string[]
+                    item = new ListViewItem(new string[]
                     {
                             Convert.ToString(dataReader["id"]),
                             Convert.ToString(dataReader["username"]),
@@ -1314,17 +1469,21 @@ namespace Home_n_Life
 
         private void button_change_tracking_Click(object sender, EventArgs e)
         {
-            if (view_change != "change_tracking")
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                checkDatabaseConnection();
-                view_change = "change_tracking";
-                viewChange(groupBox_change_tracking, button_change_tracking);
+                if (view_change != "change_tracking")
+                {
+                    checkDatabaseConnection();
+                    view_change = "change_tracking";
+                    viewChange(groupBox_change_tracking, button_change_tracking);
+                }
             }
         }
 
         private void button_clear_change_tracking_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Haluatko varmasti tyhjentää tiedot muutoksista?", "Poista", MessageBoxButtons.YesNo);
+            dialogResult = MessageBox.Show("Haluatko varmasti tyhjentää tiedot muutoksista?", "Poista", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 dropTableQuery = @"DROP TABLE IF EXISTS `change_tracking` ;";

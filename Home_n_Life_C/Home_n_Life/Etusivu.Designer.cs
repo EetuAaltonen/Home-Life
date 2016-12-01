@@ -130,6 +130,14 @@
             this.comboBox_checklists = new System.Windows.Forms.ComboBox();
             this.label38 = new System.Windows.Forms.Label();
             this.groupBox_menu = new System.Windows.Forms.GroupBox();
+            this.button_menu_remove = new System.Windows.Forms.Button();
+            this.checkedListBox_menu_categories = new System.Windows.Forms.CheckedListBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.button_menu_add_random = new System.Windows.Forms.Button();
+            this.textBox_menu_description = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.listView_menu = new System.Windows.Forms.ListView();
+            this.label34 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.textBox_menu_name = new System.Windows.Forms.TextBox();
             this.label37 = new System.Windows.Forms.Label();
@@ -140,13 +148,6 @@
             this.label41 = new System.Windows.Forms.Label();
             this.textBox_menu_food = new System.Windows.Forms.TextBox();
             this.button_menu_add = new System.Windows.Forms.Button();
-            this.label34 = new System.Windows.Forms.Label();
-            this.listView_menu = new System.Windows.Forms.ListView();
-            this.label31 = new System.Windows.Forms.Label();
-            this.textBox_menu_description = new System.Windows.Forms.TextBox();
-            this.button_menu_add_random = new System.Windows.Forms.Button();
-            this.label32 = new System.Windows.Forms.Label();
-            this.checkedListBox_menu_categories = new System.Windows.Forms.CheckedListBox();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_username.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
@@ -348,6 +349,7 @@
             this.button_cleaning.TabIndex = 3;
             this.button_cleaning.Text = "Siivousvuorot";
             this.button_cleaning.UseVisualStyleBackColor = false;
+            this.button_cleaning.Click += new System.EventHandler(this.button_cleaning_Click);
             // 
             // button_shopping_list
             // 
@@ -386,6 +388,7 @@
             this.button_exercise_meter.TabIndex = 6;
             this.button_exercise_meter.Text = "Liikuntamittari";
             this.button_exercise_meter.UseVisualStyleBackColor = false;
+            this.button_exercise_meter.Click += new System.EventHandler(this.button_exercise_meter_Click);
             // 
             // button_checklist
             // 
@@ -1453,6 +1456,7 @@
             // groupBox_menu
             // 
             this.groupBox_menu.BackColor = System.Drawing.Color.Black;
+            this.groupBox_menu.Controls.Add(this.button_menu_remove);
             this.groupBox_menu.Controls.Add(this.checkedListBox_menu_categories);
             this.groupBox_menu.Controls.Add(this.label32);
             this.groupBox_menu.Controls.Add(this.button_menu_add_random);
@@ -1477,6 +1481,106 @@
             this.groupBox_menu.TabIndex = 24;
             this.groupBox_menu.TabStop = false;
             this.groupBox_menu.Visible = false;
+            // 
+            // button_menu_remove
+            // 
+            this.button_menu_remove.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_menu_remove.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_menu_remove.ForeColor = System.Drawing.Color.White;
+            this.button_menu_remove.Location = new System.Drawing.Point(190, 219);
+            this.button_menu_remove.Name = "button_menu_remove";
+            this.button_menu_remove.Size = new System.Drawing.Size(92, 28);
+            this.button_menu_remove.TabIndex = 31;
+            this.button_menu_remove.Text = "Poista";
+            this.button_menu_remove.UseVisualStyleBackColor = false;
+            this.button_menu_remove.Click += new System.EventHandler(this.button_menu_remove_Click);
+            // 
+            // checkedListBox_menu_categories
+            // 
+            this.checkedListBox_menu_categories.CheckOnClick = true;
+            this.checkedListBox_menu_categories.FormattingEnabled = true;
+            this.checkedListBox_menu_categories.Items.AddRange(new object[] {
+            "Kalaruoka",
+            "Liharuoka",
+            "Kasvisruoka",
+            "Roskaruoka",
+            "Juhlaruoka",
+            "Nopeasti valmistuva",
+            "Hitaasti kypsyvä"});
+            this.checkedListBox_menu_categories.Location = new System.Drawing.Point(10, 315);
+            this.checkedListBox_menu_categories.Name = "checkedListBox_menu_categories";
+            this.checkedListBox_menu_categories.Size = new System.Drawing.Size(272, 154);
+            this.checkedListBox_menu_categories.TabIndex = 30;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label32.ForeColor = System.Drawing.Color.White;
+            this.label32.Location = new System.Drawing.Point(6, 287);
+            this.label32.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(89, 20);
+            this.label32.TabIndex = 29;
+            this.label32.Text = "Ruokalajit";
+            // 
+            // button_menu_add_random
+            // 
+            this.button_menu_add_random.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_menu_add_random.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_menu_add_random.ForeColor = System.Drawing.Color.White;
+            this.button_menu_add_random.Location = new System.Drawing.Point(10, 475);
+            this.button_menu_add_random.Name = "button_menu_add_random";
+            this.button_menu_add_random.Size = new System.Drawing.Size(272, 28);
+            this.button_menu_add_random.TabIndex = 28;
+            this.button_menu_add_random.Text = "Lisää satunnainen ruoka";
+            this.button_menu_add_random.UseVisualStyleBackColor = false;
+            // 
+            // textBox_menu_description
+            // 
+            this.textBox_menu_description.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_menu_description.Location = new System.Drawing.Point(10, 176);
+            this.textBox_menu_description.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_menu_description.MaxLength = 25;
+            this.textBox_menu_description.Name = "textBox_menu_description";
+            this.textBox_menu_description.Size = new System.Drawing.Size(272, 26);
+            this.textBox_menu_description.TabIndex = 27;
+            this.textBox_menu_description.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.ForeColor = System.Drawing.Color.White;
+            this.label31.Location = new System.Drawing.Point(6, 142);
+            this.label31.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(67, 20);
+            this.label31.TabIndex = 26;
+            this.label31.Text = "Kuvaus";
+            // 
+            // listView_menu
+            // 
+            this.listView_menu.FullRowSelect = true;
+            this.listView_menu.Location = new System.Drawing.Point(298, 42);
+            this.listView_menu.MultiSelect = false;
+            this.listView_menu.Name = "listView_menu";
+            this.listView_menu.Size = new System.Drawing.Size(387, 456);
+            this.listView_menu.TabIndex = 25;
+            this.listView_menu.UseCompatibleStateImageBehavior = false;
+            this.listView_menu.Click += new System.EventHandler(this.listView_menu_Click);
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label34.ForeColor = System.Drawing.Color.White;
+            this.label34.Location = new System.Drawing.Point(296, 19);
+            this.label34.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(94, 20);
+            this.label34.TabIndex = 19;
+            this.label34.Text = "Ruokalista";
             // 
             // label36
             // 
@@ -1594,92 +1698,7 @@
             this.button_menu_add.TabIndex = 9;
             this.button_menu_add.Text = "Lisää ruokalistalle";
             this.button_menu_add.UseVisualStyleBackColor = false;
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label34.ForeColor = System.Drawing.Color.White;
-            this.label34.Location = new System.Drawing.Point(296, 19);
-            this.label34.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(94, 20);
-            this.label34.TabIndex = 19;
-            this.label34.Text = "Ruokalista";
-            // 
-            // listView_menu
-            // 
-            this.listView_menu.FullRowSelect = true;
-            this.listView_menu.Location = new System.Drawing.Point(298, 47);
-            this.listView_menu.MultiSelect = false;
-            this.listView_menu.Name = "listView_menu";
-            this.listView_menu.Size = new System.Drawing.Size(387, 456);
-            this.listView_menu.TabIndex = 25;
-            this.listView_menu.UseCompatibleStateImageBehavior = false;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label31.ForeColor = System.Drawing.Color.White;
-            this.label31.Location = new System.Drawing.Point(6, 142);
-            this.label31.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(67, 20);
-            this.label31.TabIndex = 26;
-            this.label31.Text = "Kuvaus";
-            // 
-            // textBox_menu_description
-            // 
-            this.textBox_menu_description.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_menu_description.Location = new System.Drawing.Point(10, 176);
-            this.textBox_menu_description.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.textBox_menu_description.MaxLength = 25;
-            this.textBox_menu_description.Name = "textBox_menu_description";
-            this.textBox_menu_description.Size = new System.Drawing.Size(272, 26);
-            this.textBox_menu_description.TabIndex = 27;
-            this.textBox_menu_description.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // button_menu_add_random
-            // 
-            this.button_menu_add_random.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_menu_add_random.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_menu_add_random.ForeColor = System.Drawing.Color.White;
-            this.button_menu_add_random.Location = new System.Drawing.Point(10, 475);
-            this.button_menu_add_random.Name = "button_menu_add_random";
-            this.button_menu_add_random.Size = new System.Drawing.Size(272, 28);
-            this.button_menu_add_random.TabIndex = 28;
-            this.button_menu_add_random.Text = "Lisää satunnainen ruoka";
-            this.button_menu_add_random.UseVisualStyleBackColor = false;
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label32.ForeColor = System.Drawing.Color.White;
-            this.label32.Location = new System.Drawing.Point(6, 287);
-            this.label32.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(89, 20);
-            this.label32.TabIndex = 29;
-            this.label32.Text = "Ruokalajit";
-            // 
-            // checkedListBox_menu_categories
-            // 
-            this.checkedListBox_menu_categories.CheckOnClick = true;
-            this.checkedListBox_menu_categories.FormattingEnabled = true;
-            this.checkedListBox_menu_categories.Items.AddRange(new object[] {
-            "Kalaruoka",
-            "Liharuoka",
-            "Kasvisruoka",
-            "Roskaruoka",
-            "Juhlaruoka",
-            "Nopeasti valmistuva",
-            "Hitaasti kypsyvä"});
-            this.checkedListBox_menu_categories.Location = new System.Drawing.Point(10, 315);
-            this.checkedListBox_menu_categories.Name = "checkedListBox_menu_categories";
-            this.checkedListBox_menu_categories.Size = new System.Drawing.Size(272, 154);
-            this.checkedListBox_menu_categories.TabIndex = 30;
+            this.button_menu_add.Click += new System.EventHandler(this.button_menu_add_Click);
             // 
             // Etusivu
             // 
@@ -1844,5 +1863,6 @@
         private System.Windows.Forms.Button button_menu_add_random;
         private System.Windows.Forms.TextBox textBox_menu_description;
         private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Button button_menu_remove;
     }
 }
