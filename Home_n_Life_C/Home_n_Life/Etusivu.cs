@@ -18,6 +18,7 @@ namespace Home_n_Life
         {
             InitializeComponent();
         }
+
 //----- Attributes --------------------------------------------------------------------------------------
         //---Database----------------
         string connetionString = "server=localhost;database=home&life;uid=root;pwd=;";
@@ -31,12 +32,14 @@ namespace Home_n_Life
         string view_change;
         GroupBox current_groupBox;
         Button current_button;
-        //---Shopping-List-----------
-        string info_text, added_item;
-        bool list_progressing;
         //---Economic----------------
         double income, outlay;
         bool same_name = true;
+        //---Menu--------------------
+        bool menu_progressing;
+        //---Shopping-List-----------
+        string info_text, added_item;
+        bool list_progressing;
         //---Calendar----------------
         bool same_event = true;
         string formatDateTimeForMySql, month, year;
@@ -96,23 +99,18 @@ namespace Home_n_Life
                 {
                     case "home":
                         break;
-                    case "shopping_list":
-                        textBox_list_name.Text = "";
+                    case "menu":
+                        listView_menu.Clear();
+                        listView_menu.View = View.Details;
+                        listView_menu.Columns.Add("Id", 20, HorizontalAlignment.Left);
+                        listView_menu.Columns.Add("Ruoka", 20, HorizontalAlignment.Left);
+                        listView_menu.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
+                        textBox_menu_name.Text = "";
                         textBox_shopping_list.Text = "";
-                        textBox_shopping_list.ForeColor = Color.Gray;
-                        info_text = "Kirjoita tähän tuotteet, esim näin:" +
-                                    System.Environment.NewLine +
-                                    "   - Tuote1" +
-                                    System.Environment.NewLine +
-                                    "   - Tuote2" +
-                                    System.Environment.NewLine +
-                                    "   - Tuote3" +
-                                    System.Environment.NewLine +
-                                    "   - Tuote4" +
-                                    System.Environment.NewLine +
-                                    "   - Tuote5";
-                        textBox_shopping_list.Text += info_text;
-                        readShoppingLists();
+                        readMenus();
+                        listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                        listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                        listView_menu.Columns[0].Width = 0; //Hide id
                         break;
                     case "economic":
                         listView_income.Clear();
@@ -140,10 +138,27 @@ namespace Home_n_Life
                         textBox_all_outlay.Text = "";
                         textBox_balance.Text = "";
                         break;
+                    case "shopping_list":
+                        textBox_list_name.Text = "";
+                        textBox_shopping_list.Text = "";
+                        textBox_shopping_list.ForeColor = Color.Gray;
+                        info_text = "Kirjoita tähän tuotteet, esim näin:" +
+                                    System.Environment.NewLine +
+                                    "   - Tuote1" +
+                                    System.Environment.NewLine +
+                                    "   - Tuote2" +
+                                    System.Environment.NewLine +
+                                    "   - Tuote3" +
+                                    System.Environment.NewLine +
+                                    "   - Tuote4" +
+                                    System.Environment.NewLine +
+                                    "   - Tuote5";
+                        textBox_shopping_list.Text += info_text;
+                        readShoppingLists();
+                        break;
                     case "calendar":
                         listView_events.Clear();
                         listView_events.View = View.Details;
-                        //listView_events.Columns.Add("Id", 20, HorizontalAlignment.Left);
                         listView_events.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
                         listView_events.Columns.Add("Paikka", 20, HorizontalAlignment.Left);
                         listView_events.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
@@ -441,6 +456,93 @@ namespace Home_n_Life
                 MessageBox.Show("Valitse yksi tulo tai meno", "Poista");
             }
         }
+//----- Menu --------------------------------------------------------------------------------------
+        private void readMenus()
+        {
+            comboBox_menus.Items.Clear();
+            createTableQuery = @"CREATE TABLE IF NOT EXISTS menu (
+                                        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                        username VARCHAR(30) NOT NULL,
+                                        menu_name VARCHAR(30) NOT NULL,
+                                        food VARCHAR(30) NOT NULL,
+                                        description VARCHAR(30) NOT NULL);";
+            selectTableQuery = @"SELECT id, username, menu_name, food, description " +
+                                " FROM menu " +
+                                " WHERE username='" + linkLabel_user.Text + "' ;";
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(createTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(selectTableQuery, conn);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    comboBox_menus.Items.Add(Convert.ToString(dataReader["menu_name"]));
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+        }
+
+        private void button_menu_Click(object sender, EventArgs e)
+        {
+            if (view_change != "menu")
+            {
+                checkDatabaseConnection();
+                view_change = "menu";
+                viewChange(groupBox_menu, button_menu);
+            }
+        }
+
+        private void comboBox_menus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!menu_progressing)
+            {
+                textBox_menu_name.Text = Convert.ToString(comboBox_menus.SelectedItem);
+                comboBox_menus.Items.Clear();
+                selectTableQuery = @"SELECT id, username, menu_name, food, description " +
+                                    " FROM menu " +
+                                    " WHERE username='" + linkLabel_user.Text + "' ;";
+                try
+                {
+                    conn.Open();
+                    cmd = new MySqlCommand(createTableQuery, conn);
+                    cmd.ExecuteNonQuery();
+                    cmd = new MySqlCommand(selectTableQuery, conn);
+                    MySqlDataReader dataReader = cmd.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        ListViewItem item = new ListViewItem(new string[]
+                        {
+                            Convert.ToString(dataReader["id"]),
+                            Convert.ToString(dataReader["food"]),
+                            Convert.ToString(dataReader["description"])
+                        });
+                        listView_menu.Items.Add(item);
+                    }
+                    dataReader.Close();
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(Convert.ToString(ex));
+                }
+                listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                listView_menu.Columns[0].Width = 0; //Hide id
+            }
+        }
+
+        private void button_menu_save_Click(object sender, EventArgs e)
+        {
+
+        }
+
 //----- Shopping list --------------------------------------------------------------------------------------
         private void readShoppingLists()
         {

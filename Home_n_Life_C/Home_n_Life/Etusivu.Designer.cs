@@ -95,6 +95,11 @@
             this.listView_outlay = new System.Windows.Forms.ListView();
             this.textBox_economic_name = new System.Windows.Forms.TextBox();
             this.groupBox_calendar = new System.Windows.Forms.GroupBox();
+            this.button_event_delete_past = new System.Windows.Forms.Button();
+            this.button_event_set_today = new System.Windows.Forms.Button();
+            this.checkBox_event_show_past = new System.Windows.Forms.CheckBox();
+            this.button_event_search_set_today = new System.Windows.Forms.Button();
+            this.button_event_clear_search_settings = new System.Windows.Forms.Button();
             this.button_event_search_1 = new System.Windows.Forms.Button();
             this.label30 = new System.Windows.Forms.Label();
             this.dateTimePicker_event_search_datetime = new System.Windows.Forms.DateTimePicker();
@@ -115,11 +120,6 @@
             this.label23 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.listView_events = new System.Windows.Forms.ListView();
-            this.button_event_clear_search_settings = new System.Windows.Forms.Button();
-            this.button_event_search_set_today = new System.Windows.Forms.Button();
-            this.checkBox_event_show_past = new System.Windows.Forms.CheckBox();
-            this.button_event_set_today = new System.Windows.Forms.Button();
-            this.button_event_delete_past = new System.Windows.Forms.Button();
             this.groupBox_checklist = new System.Windows.Forms.GroupBox();
             this.label33 = new System.Windows.Forms.Label();
             this.textBox_checklist_name = new System.Windows.Forms.TextBox();
@@ -129,6 +129,24 @@
             this.textBox_checklist = new System.Windows.Forms.TextBox();
             this.comboBox_checklists = new System.Windows.Forms.ComboBox();
             this.label38 = new System.Windows.Forms.Label();
+            this.groupBox_menu = new System.Windows.Forms.GroupBox();
+            this.label36 = new System.Windows.Forms.Label();
+            this.textBox_menu_name = new System.Windows.Forms.TextBox();
+            this.label37 = new System.Windows.Forms.Label();
+            this.button_menu_delete = new System.Windows.Forms.Button();
+            this.button_menu_save = new System.Windows.Forms.Button();
+            this.label40 = new System.Windows.Forms.Label();
+            this.comboBox_menus = new System.Windows.Forms.ComboBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.textBox_menu_food = new System.Windows.Forms.TextBox();
+            this.button_menu_add = new System.Windows.Forms.Button();
+            this.label34 = new System.Windows.Forms.Label();
+            this.listView_menu = new System.Windows.Forms.ListView();
+            this.label31 = new System.Windows.Forms.Label();
+            this.textBox_menu_description = new System.Windows.Forms.TextBox();
+            this.button_menu_add_random = new System.Windows.Forms.Button();
+            this.label32 = new System.Windows.Forms.Label();
+            this.checkedListBox_menu_categories = new System.Windows.Forms.CheckedListBox();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_username.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
@@ -139,6 +157,7 @@
             this.groupBox_economic.SuspendLayout();
             this.groupBox_calendar.SuspendLayout();
             this.groupBox_checklist.SuspendLayout();
+            this.groupBox_menu.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox_top_banner
@@ -316,6 +335,7 @@
             this.button_menu.TabIndex = 2;
             this.button_menu.Text = "Ruokalista";
             this.button_menu.UseVisualStyleBackColor = false;
+            this.button_menu.Click += new System.EventHandler(this.button_menu_Click);
             // 
             // button_cleaning
             // 
@@ -417,7 +437,7 @@
             this.groupBox_shopping_list.Enabled = false;
             this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 240);
             this.groupBox_shopping_list.Name = "groupBox_shopping_list";
-            this.groupBox_shopping_list.Size = new System.Drawing.Size(892, 420);
+            this.groupBox_shopping_list.Size = new System.Drawing.Size(50, 51);
             this.groupBox_shopping_list.TabIndex = 2;
             this.groupBox_shopping_list.TabStop = false;
             this.groupBox_shopping_list.Visible = false;
@@ -1019,6 +1039,70 @@
             this.groupBox_calendar.TabStop = false;
             this.groupBox_calendar.Visible = false;
             // 
+            // button_event_delete_past
+            // 
+            this.button_event_delete_past.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_event_delete_past.ForeColor = System.Drawing.Color.White;
+            this.button_event_delete_past.Location = new System.Drawing.Point(317, 389);
+            this.button_event_delete_past.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_event_delete_past.Name = "button_event_delete_past";
+            this.button_event_delete_past.Size = new System.Drawing.Size(188, 30);
+            this.button_event_delete_past.TabIndex = 43;
+            this.button_event_delete_past.Text = "Poista menneet tapahtumat";
+            this.button_event_delete_past.UseVisualStyleBackColor = false;
+            this.button_event_delete_past.Click += new System.EventHandler(this.button_event_delete_past_Click);
+            // 
+            // button_event_set_today
+            // 
+            this.button_event_set_today.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_event_set_today.ForeColor = System.Drawing.Color.White;
+            this.button_event_set_today.Location = new System.Drawing.Point(511, 256);
+            this.button_event_set_today.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_event_set_today.Name = "button_event_set_today";
+            this.button_event_set_today.Size = new System.Drawing.Size(53, 30);
+            this.button_event_set_today.TabIndex = 42;
+            this.button_event_set_today.Text = "Tänään";
+            this.button_event_set_today.UseVisualStyleBackColor = false;
+            this.button_event_set_today.Click += new System.EventHandler(this.button_event_set_today_Click);
+            // 
+            // checkBox_event_show_past
+            // 
+            this.checkBox_event_show_past.AutoSize = true;
+            this.checkBox_event_show_past.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_event_show_past.ForeColor = System.Drawing.Color.White;
+            this.checkBox_event_show_past.Location = new System.Drawing.Point(22, 233);
+            this.checkBox_event_show_past.Name = "checkBox_event_show_past";
+            this.checkBox_event_show_past.Size = new System.Drawing.Size(149, 24);
+            this.checkBox_event_show_past.TabIndex = 41;
+            this.checkBox_event_show_past.Text = "Näytä menneet";
+            this.checkBox_event_show_past.UseVisualStyleBackColor = true;
+            // 
+            // button_event_search_set_today
+            // 
+            this.button_event_search_set_today.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_event_search_set_today.ForeColor = System.Drawing.Color.White;
+            this.button_event_search_set_today.Location = new System.Drawing.Point(216, 352);
+            this.button_event_search_set_today.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_event_search_set_today.Name = "button_event_search_set_today";
+            this.button_event_search_set_today.Size = new System.Drawing.Size(53, 30);
+            this.button_event_search_set_today.TabIndex = 40;
+            this.button_event_search_set_today.Text = "Tänään";
+            this.button_event_search_set_today.UseVisualStyleBackColor = false;
+            this.button_event_search_set_today.Click += new System.EventHandler(this.button_event_search_set_today_Click);
+            // 
+            // button_event_clear_search_settings
+            // 
+            this.button_event_clear_search_settings.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_event_clear_search_settings.ForeColor = System.Drawing.Color.White;
+            this.button_event_clear_search_settings.Location = new System.Drawing.Point(22, 268);
+            this.button_event_clear_search_settings.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_event_clear_search_settings.Name = "button_event_clear_search_settings";
+            this.button_event_clear_search_settings.Size = new System.Drawing.Size(86, 30);
+            this.button_event_clear_search_settings.TabIndex = 39;
+            this.button_event_clear_search_settings.Text = "Tyhjennä";
+            this.button_event_clear_search_settings.UseVisualStyleBackColor = false;
+            this.button_event_clear_search_settings.Click += new System.EventHandler(this.button_clear_search_settings_Click);
+            // 
             // button_event_search_1
             // 
             this.button_event_search_1.BackColor = System.Drawing.Color.DodgerBlue;
@@ -1256,70 +1340,6 @@
             this.listView_events.UseCompatibleStateImageBehavior = false;
             this.listView_events.Click += new System.EventHandler(this.listView_events_Click);
             // 
-            // button_event_clear_search_settings
-            // 
-            this.button_event_clear_search_settings.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_event_clear_search_settings.ForeColor = System.Drawing.Color.White;
-            this.button_event_clear_search_settings.Location = new System.Drawing.Point(22, 268);
-            this.button_event_clear_search_settings.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.button_event_clear_search_settings.Name = "button_event_clear_search_settings";
-            this.button_event_clear_search_settings.Size = new System.Drawing.Size(86, 30);
-            this.button_event_clear_search_settings.TabIndex = 39;
-            this.button_event_clear_search_settings.Text = "Tyhjennä";
-            this.button_event_clear_search_settings.UseVisualStyleBackColor = false;
-            this.button_event_clear_search_settings.Click += new System.EventHandler(this.button_clear_search_settings_Click);
-            // 
-            // button_event_search_set_today
-            // 
-            this.button_event_search_set_today.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_event_search_set_today.ForeColor = System.Drawing.Color.White;
-            this.button_event_search_set_today.Location = new System.Drawing.Point(216, 352);
-            this.button_event_search_set_today.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.button_event_search_set_today.Name = "button_event_search_set_today";
-            this.button_event_search_set_today.Size = new System.Drawing.Size(53, 30);
-            this.button_event_search_set_today.TabIndex = 40;
-            this.button_event_search_set_today.Text = "Tänään";
-            this.button_event_search_set_today.UseVisualStyleBackColor = false;
-            this.button_event_search_set_today.Click += new System.EventHandler(this.button_event_search_set_today_Click);
-            // 
-            // checkBox_event_show_past
-            // 
-            this.checkBox_event_show_past.AutoSize = true;
-            this.checkBox_event_show_past.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox_event_show_past.ForeColor = System.Drawing.Color.White;
-            this.checkBox_event_show_past.Location = new System.Drawing.Point(22, 233);
-            this.checkBox_event_show_past.Name = "checkBox_event_show_past";
-            this.checkBox_event_show_past.Size = new System.Drawing.Size(149, 24);
-            this.checkBox_event_show_past.TabIndex = 41;
-            this.checkBox_event_show_past.Text = "Näytä menneet";
-            this.checkBox_event_show_past.UseVisualStyleBackColor = true;
-            // 
-            // button_event_set_today
-            // 
-            this.button_event_set_today.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_event_set_today.ForeColor = System.Drawing.Color.White;
-            this.button_event_set_today.Location = new System.Drawing.Point(511, 256);
-            this.button_event_set_today.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.button_event_set_today.Name = "button_event_set_today";
-            this.button_event_set_today.Size = new System.Drawing.Size(53, 30);
-            this.button_event_set_today.TabIndex = 42;
-            this.button_event_set_today.Text = "Tänään";
-            this.button_event_set_today.UseVisualStyleBackColor = false;
-            this.button_event_set_today.Click += new System.EventHandler(this.button_event_set_today_Click);
-            // 
-            // button_event_delete_past
-            // 
-            this.button_event_delete_past.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_event_delete_past.ForeColor = System.Drawing.Color.White;
-            this.button_event_delete_past.Location = new System.Drawing.Point(317, 389);
-            this.button_event_delete_past.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.button_event_delete_past.Name = "button_event_delete_past";
-            this.button_event_delete_past.Size = new System.Drawing.Size(188, 30);
-            this.button_event_delete_past.TabIndex = 43;
-            this.button_event_delete_past.Text = "Poista menneet tapahtumat";
-            this.button_event_delete_past.UseVisualStyleBackColor = false;
-            this.button_event_delete_past.Click += new System.EventHandler(this.button_event_delete_past_Click);
-            // 
             // groupBox_checklist
             // 
             this.groupBox_checklist.BackColor = System.Drawing.Color.Black;
@@ -1332,9 +1352,9 @@
             this.groupBox_checklist.Controls.Add(this.comboBox_checklists);
             this.groupBox_checklist.Controls.Add(this.label38);
             this.groupBox_checklist.Enabled = false;
-            this.groupBox_checklist.Location = new System.Drawing.Point(12, 191);
+            this.groupBox_checklist.Location = new System.Drawing.Point(70, 240);
             this.groupBox_checklist.Name = "groupBox_checklist";
-            this.groupBox_checklist.Size = new System.Drawing.Size(886, 229);
+            this.groupBox_checklist.Size = new System.Drawing.Size(50, 43);
             this.groupBox_checklist.TabIndex = 24;
             this.groupBox_checklist.TabStop = false;
             this.groupBox_checklist.Visible = false;
@@ -1430,12 +1450,244 @@
             this.label38.TabIndex = 8;
             this.label38.Text = "Valitse muistilista";
             // 
+            // groupBox_menu
+            // 
+            this.groupBox_menu.BackColor = System.Drawing.Color.Black;
+            this.groupBox_menu.Controls.Add(this.checkedListBox_menu_categories);
+            this.groupBox_menu.Controls.Add(this.label32);
+            this.groupBox_menu.Controls.Add(this.button_menu_add_random);
+            this.groupBox_menu.Controls.Add(this.textBox_menu_description);
+            this.groupBox_menu.Controls.Add(this.label31);
+            this.groupBox_menu.Controls.Add(this.listView_menu);
+            this.groupBox_menu.Controls.Add(this.label34);
+            this.groupBox_menu.Controls.Add(this.label36);
+            this.groupBox_menu.Controls.Add(this.textBox_menu_name);
+            this.groupBox_menu.Controls.Add(this.label37);
+            this.groupBox_menu.Controls.Add(this.button_menu_delete);
+            this.groupBox_menu.Controls.Add(this.button_menu_save);
+            this.groupBox_menu.Controls.Add(this.label40);
+            this.groupBox_menu.Controls.Add(this.comboBox_menus);
+            this.groupBox_menu.Controls.Add(this.label41);
+            this.groupBox_menu.Controls.Add(this.textBox_menu_food);
+            this.groupBox_menu.Controls.Add(this.button_menu_add);
+            this.groupBox_menu.Enabled = false;
+            this.groupBox_menu.Location = new System.Drawing.Point(12, 170);
+            this.groupBox_menu.Name = "groupBox_menu";
+            this.groupBox_menu.Size = new System.Drawing.Size(967, 567);
+            this.groupBox_menu.TabIndex = 24;
+            this.groupBox_menu.TabStop = false;
+            this.groupBox_menu.Visible = false;
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label36.ForeColor = System.Drawing.Color.White;
+            this.label36.Location = new System.Drawing.Point(6, 19);
+            this.label36.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(102, 20);
+            this.label36.TabIndex = 18;
+            this.label36.Text = "Lisää ruoka";
+            // 
+            // textBox_menu_name
+            // 
+            this.textBox_menu_name.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_menu_name.Location = new System.Drawing.Point(699, 150);
+            this.textBox_menu_name.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_menu_name.MaxLength = 30;
+            this.textBox_menu_name.Name = "textBox_menu_name";
+            this.textBox_menu_name.Size = new System.Drawing.Size(260, 26);
+            this.textBox_menu_name.TabIndex = 17;
+            this.textBox_menu_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label37.ForeColor = System.Drawing.Color.White;
+            this.label37.Location = new System.Drawing.Point(695, 120);
+            this.label37.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(141, 20);
+            this.label37.TabIndex = 16;
+            this.label37.Text = "Ruokalistan nimi";
+            // 
+            // button_menu_delete
+            // 
+            this.button_menu_delete.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_menu_delete.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_menu_delete.ForeColor = System.Drawing.Color.White;
+            this.button_menu_delete.Location = new System.Drawing.Point(699, 229);
+            this.button_menu_delete.Name = "button_menu_delete";
+            this.button_menu_delete.Size = new System.Drawing.Size(132, 28);
+            this.button_menu_delete.TabIndex = 15;
+            this.button_menu_delete.Text = "Poista";
+            this.button_menu_delete.UseVisualStyleBackColor = false;
+            // 
+            // button_menu_save
+            // 
+            this.button_menu_save.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_menu_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_menu_save.ForeColor = System.Drawing.Color.White;
+            this.button_menu_save.Location = new System.Drawing.Point(699, 195);
+            this.button_menu_save.Name = "button_menu_save";
+            this.button_menu_save.Size = new System.Drawing.Size(132, 28);
+            this.button_menu_save.TabIndex = 14;
+            this.button_menu_save.Text = "Tallenna";
+            this.button_menu_save.UseVisualStyleBackColor = false;
+            this.button_menu_save.Click += new System.EventHandler(this.button_menu_save_Click);
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label40.ForeColor = System.Drawing.Color.White;
+            this.label40.Location = new System.Drawing.Point(6, 71);
+            this.label40.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(99, 20);
+            this.label40.TabIndex = 9;
+            this.label40.Text = "Ruuan nimi";
+            // 
+            // comboBox_menus
+            // 
+            this.comboBox_menus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_menus.FormattingEnabled = true;
+            this.comboBox_menus.Location = new System.Drawing.Point(699, 72);
+            this.comboBox_menus.Name = "comboBox_menus";
+            this.comboBox_menus.Size = new System.Drawing.Size(257, 21);
+            this.comboBox_menus.TabIndex = 1;
+            this.comboBox_menus.SelectedIndexChanged += new System.EventHandler(this.comboBox_menus_SelectedIndexChanged);
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label41.ForeColor = System.Drawing.Color.White;
+            this.label41.Location = new System.Drawing.Point(695, 47);
+            this.label41.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(147, 20);
+            this.label41.TabIndex = 8;
+            this.label41.Text = "Valitse ruokalista";
+            // 
+            // textBox_menu_food
+            // 
+            this.textBox_menu_food.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_menu_food.Location = new System.Drawing.Point(10, 101);
+            this.textBox_menu_food.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_menu_food.MaxLength = 25;
+            this.textBox_menu_food.Name = "textBox_menu_food";
+            this.textBox_menu_food.Size = new System.Drawing.Size(272, 26);
+            this.textBox_menu_food.TabIndex = 8;
+            this.textBox_menu_food.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // button_menu_add
+            // 
+            this.button_menu_add.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_menu_add.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_menu_add.ForeColor = System.Drawing.Color.White;
+            this.button_menu_add.Location = new System.Drawing.Point(10, 219);
+            this.button_menu_add.Name = "button_menu_add";
+            this.button_menu_add.Size = new System.Drawing.Size(174, 28);
+            this.button_menu_add.TabIndex = 9;
+            this.button_menu_add.Text = "Lisää ruokalistalle";
+            this.button_menu_add.UseVisualStyleBackColor = false;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label34.ForeColor = System.Drawing.Color.White;
+            this.label34.Location = new System.Drawing.Point(296, 19);
+            this.label34.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(94, 20);
+            this.label34.TabIndex = 19;
+            this.label34.Text = "Ruokalista";
+            // 
+            // listView_menu
+            // 
+            this.listView_menu.FullRowSelect = true;
+            this.listView_menu.Location = new System.Drawing.Point(298, 47);
+            this.listView_menu.MultiSelect = false;
+            this.listView_menu.Name = "listView_menu";
+            this.listView_menu.Size = new System.Drawing.Size(387, 456);
+            this.listView_menu.TabIndex = 25;
+            this.listView_menu.UseCompatibleStateImageBehavior = false;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.ForeColor = System.Drawing.Color.White;
+            this.label31.Location = new System.Drawing.Point(6, 142);
+            this.label31.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(67, 20);
+            this.label31.TabIndex = 26;
+            this.label31.Text = "Kuvaus";
+            // 
+            // textBox_menu_description
+            // 
+            this.textBox_menu_description.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_menu_description.Location = new System.Drawing.Point(10, 176);
+            this.textBox_menu_description.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_menu_description.MaxLength = 25;
+            this.textBox_menu_description.Name = "textBox_menu_description";
+            this.textBox_menu_description.Size = new System.Drawing.Size(272, 26);
+            this.textBox_menu_description.TabIndex = 27;
+            this.textBox_menu_description.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // button_menu_add_random
+            // 
+            this.button_menu_add_random.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_menu_add_random.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_menu_add_random.ForeColor = System.Drawing.Color.White;
+            this.button_menu_add_random.Location = new System.Drawing.Point(10, 475);
+            this.button_menu_add_random.Name = "button_menu_add_random";
+            this.button_menu_add_random.Size = new System.Drawing.Size(272, 28);
+            this.button_menu_add_random.TabIndex = 28;
+            this.button_menu_add_random.Text = "Lisää satunnainen ruoka";
+            this.button_menu_add_random.UseVisualStyleBackColor = false;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label32.ForeColor = System.Drawing.Color.White;
+            this.label32.Location = new System.Drawing.Point(6, 287);
+            this.label32.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(89, 20);
+            this.label32.TabIndex = 29;
+            this.label32.Text = "Ruokalajit";
+            // 
+            // checkedListBox_menu_categories
+            // 
+            this.checkedListBox_menu_categories.CheckOnClick = true;
+            this.checkedListBox_menu_categories.FormattingEnabled = true;
+            this.checkedListBox_menu_categories.Items.AddRange(new object[] {
+            "Kalaruoka",
+            "Liharuoka",
+            "Kasvisruoka",
+            "Roskaruoka",
+            "Juhlaruoka",
+            "Nopeasti valmistuva",
+            "Hitaasti kypsyvä"});
+            this.checkedListBox_menu_categories.Location = new System.Drawing.Point(10, 315);
+            this.checkedListBox_menu_categories.Name = "checkedListBox_menu_categories";
+            this.checkedListBox_menu_categories.Size = new System.Drawing.Size(272, 154);
+            this.checkedListBox_menu_categories.TabIndex = 30;
+            // 
             // Etusivu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(990, 700);
+            this.Controls.Add(this.groupBox_menu);
             this.Controls.Add(this.groupBox_checklist);
             this.Controls.Add(this.groupBox_calendar);
             this.Controls.Add(this.groupBox_economic);
@@ -1465,6 +1717,8 @@
             this.groupBox_calendar.PerformLayout();
             this.groupBox_checklist.ResumeLayout(false);
             this.groupBox_checklist.PerformLayout();
+            this.groupBox_menu.ResumeLayout(false);
+            this.groupBox_menu.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1572,5 +1826,23 @@
         private System.Windows.Forms.TextBox textBox_checklist;
         private System.Windows.Forms.ComboBox comboBox_checklists;
         private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.GroupBox groupBox_menu;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.TextBox textBox_menu_name;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Button button_menu_delete;
+        private System.Windows.Forms.Button button_menu_save;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.ComboBox comboBox_menus;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.TextBox textBox_menu_food;
+        private System.Windows.Forms.Button button_menu_add;
+        private System.Windows.Forms.ListView listView_menu;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.CheckedListBox checkedListBox_menu_categories;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Button button_menu_add_random;
+        private System.Windows.Forms.TextBox textBox_menu_description;
+        private System.Windows.Forms.Label label31;
     }
 }
