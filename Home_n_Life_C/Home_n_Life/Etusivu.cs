@@ -34,8 +34,6 @@ namespace Home_n_Life
         //---Shopping-List-----------
         string info_text, added_item;
         bool list_progressing;
-        //---Change_tracking---------
-        string change;
         //---Economic----------------
         double income, outlay;
         bool same_name = true;
@@ -43,6 +41,10 @@ namespace Home_n_Life
         bool same_event = true;
         string formatDateTimeForMySql, month, year;
         string[] months = new string[122];
+        //---Checklist---------------
+        bool checklist_progressing;
+        //---Change_tracking---------
+        string change;
 
 //----- Etusivu Load --------------------------------------------------------------------------------------
         private void Etusivu_Load(object sender, EventArgs e)
@@ -95,6 +97,7 @@ namespace Home_n_Life
                     case "home":
                         break;
                     case "shopping_list":
+                        textBox_list_name.Text = "";
                         textBox_shopping_list.Text = "";
                         textBox_shopping_list.ForeColor = Color.Gray;
                         info_text = "Kirjoita tähän tuotteet, esim näin:" +
@@ -110,15 +113,6 @@ namespace Home_n_Life
                                     "   - Tuote5";
                         textBox_shopping_list.Text += info_text;
                         readShoppingLists();
-                        break;
-                    case "change_tracking":
-                        listView_change_tracking.Clear();
-                        listView_change_tracking.View = View.Details;
-                        listView_change_tracking.Columns.Add("Id", 20, HorizontalAlignment.Left);
-                        listView_change_tracking.Columns.Add("Käyttäjänimi", 20, HorizontalAlignment.Left);
-                        listView_change_tracking.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
-                        listView_change_tracking.Columns.Add("Muutos", 20, HorizontalAlignment.Left);
-                        readChangeTrackingLists();
                         break;
                     case "economic":
                         listView_income.Clear();
@@ -163,6 +157,20 @@ namespace Home_n_Life
                         comboBox_event_search_month.SelectedItem = "Koko vuosi";
                         textBox_event_search_year.Text = "";
                         dateTimePicker_event_search_datetime.Value = DateTime.Now;
+                        break;
+                    case "checklist":
+                        textBox_checklist_name.Text = "";
+                        textBox_checklist.Text = "";
+                        readChecklists();
+                        break;
+                    case "change_tracking":
+                        listView_change_tracking.Clear();
+                        listView_change_tracking.View = View.Details;
+                        listView_change_tracking.Columns.Add("Id", 20, HorizontalAlignment.Left);
+                        listView_change_tracking.Columns.Add("Käyttäjänimi", 20, HorizontalAlignment.Left);
+                        listView_change_tracking.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
+                        listView_change_tracking.Columns.Add("Muutos", 20, HorizontalAlignment.Left);
+                        readChangeTrackingLists();
                         break;
                 }
             }
@@ -472,7 +480,6 @@ namespace Home_n_Life
                 checkDatabaseConnection();
                 view_change = "shopping_list";
                 viewChange(groupBox_shopping_list, button_shopping_list);
-                textBox_list_name.Text = "";
             }
         }
 
@@ -539,7 +546,7 @@ namespace Home_n_Life
                 insertTableQuery = @"INSERT INTO shoppinglist (id, username, listname, text) " +
                                     "SELECT * FROM(SELECT 0, '" + linkLabel_user.Text + "', '" + textBox_list_name.Text + "', 'null') AS tmp " +
                                     "WHERE NOT EXISTS( " +
-                                    "SELECT listname FROM shoppinglist WHERE listname = '" + textBox_list_name.Text + "' " +
+                                    "SELECT listname FROM shoppinglist WHERE listname='" + textBox_list_name.Text + "' " +
                                     ") LIMIT 2 ;";
                 updateTableQuery = @"UPDATE shoppinglist " +
                                      "SET text='" + textBox_shopping_list.Text + "' " +
@@ -568,7 +575,7 @@ namespace Home_n_Life
             }
             else
             {
-                MessageBox.Show("Kauppalistan nimi on virheellinen tai sisältää", "Tallenna");
+                MessageBox.Show("Kauppalistan nimi on virheellinen", "Tallenna");
             }
         }
 
@@ -622,14 +629,14 @@ namespace Home_n_Life
                     conn.Open();
                     cmd = new MySqlCommand(deleteTableQuery, conn);
                     cmd.ExecuteNonQuery();
-                    textBox_list_name.Text = "";
-                    textBox_shopping_list.Text = "";
-                    conn.Close();
-                    readShoppingLists();
-                    comboBox_shopping_lists.SelectedItem = null;
+                    conn.Close();                    
                     MessageBox.Show("Kauppalista on poistettu", "Poista");
                     change = "Kauppalista " + textBox_list_name.Text + " poistettu";
                     addChangeTracking(change);
+                    textBox_list_name.Text = "";
+                    textBox_shopping_list.Text = "";
+                    comboBox_shopping_lists.SelectedItem = null;
+                    readShoppingLists();
                 }
                 catch (Exception ex)
                 {
@@ -986,6 +993,37 @@ namespace Home_n_Life
             searchCalendarLists(selectTableQuery);
         }
 //----- Checklist --------------------------------------------------------------------------------------
+        private void readChecklists()
+        {
+            comboBox_checklists.Items.Clear();
+            createTableQuery = @"CREATE TABLE IF NOT EXISTS checklist (
+                                        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                        username VARCHAR(30) NOT NULL,
+                                        checklist_name VARCHAR(30) NOT NULL,
+                                        text TEXT(2000) NOT NULL);";
+            selectTableQuery = @"SELECT id, username, checklist_name, text " +
+                                " FROM checklist " +
+                                " WHERE username='" + linkLabel_user.Text + "' ;";
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(createTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(selectTableQuery, conn);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    comboBox_checklists.Items.Add(Convert.ToString(dataReader["checklist_name"]));
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+        }
+
         private void button_checklist_Click(object sender, EventArgs e)
         {
             if (view_change != "checklist")
@@ -995,6 +1033,112 @@ namespace Home_n_Life
                 viewChange(groupBox_checklist, button_checklist);
             }
         }
+
+        private void comboBox_checklists_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!checklist_progressing)
+            {
+                textBox_checklist.Text = "";
+                textBox_checklist_name.Text = Convert.ToString(comboBox_shopping_lists.SelectedItem);
+                selectTableQuery = @"SELECT id, username, checklist_name, text " +
+                                    "FROM checklist WHERE username='" + linkLabel_user.Text + "' " +
+                                    "AND checklist_name='" + comboBox_checklists.SelectedItem + "' ;";
+                try
+                {
+                    conn.Open();
+                    cmd = new MySqlCommand(selectTableQuery, conn);
+                    MySqlDataReader dataReader = cmd.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        textBox_checklist_name.Text = Convert.ToString(dataReader["checklist_name"]);
+                        textBox_checklist.Text = Convert.ToString(dataReader["text"]);
+                    }
+                    dataReader.Close();
+                    conn.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(Convert.ToString(ex));
+                }
+            }
+        }
+
+        private void button_checklist_save_Click(object sender, EventArgs e)
+        {
+            textBox_checklist_name.Text = textBox_checklist_name.Text.Replace(" ", "_");
+            if (textBox_checklist_name.Text.Length > 0)
+            {
+                createTableQuery = @"CREATE TABLE IF NOT EXISTS checklist (
+                                            id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                            username VARCHAR(30) NOT NULL,
+                                            checklist_name VARCHAR(30) NOT NULL,
+                                            text VARCHAR(1000) NOT NULL);";
+                insertTableQuery = @"INSERT INTO checklist (id, username, checklist_name, text) " +
+                                    "SELECT * FROM(SELECT 0, '" + linkLabel_user.Text + "', '" + textBox_checklist_name.Text + "', 'null') AS tmp " +
+                                    "WHERE NOT EXISTS( " +
+                                    "SELECT checklist_name FROM checklist WHERE checklist_name='" + textBox_checklist_name.Text + "' " +
+                                    ") LIMIT 2 ;";
+                updateTableQuery = @"UPDATE checklist " +
+                                     "SET text='" + textBox_checklist.Text + "' " +
+                                     "WHERE checklist_name='" + textBox_checklist_name.Text + "' ;";
+
+                try
+                {
+                    conn.Open();
+                    cmd = new MySqlCommand(createTableQuery, conn);
+                    cmd.ExecuteNonQuery();
+                    cmd = new MySqlCommand(insertTableQuery, conn);
+                    cmd.ExecuteNonQuery();
+                    cmd = new MySqlCommand(updateTableQuery, conn);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    readChecklists();
+                    checklist_progressing = true;
+                    comboBox_checklists.SelectedItem = textBox_checklist_name.Text;
+                    checklist_progressing = false;
+                    MessageBox.Show("Muistilista tallennettu", "Tallenna");
+                    change = "Muistilista " + textBox_checklist_name.Text + " tallennettu";
+                    addChangeTracking(change);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(Convert.ToString(ex));
+                }
+            }
+            else
+            {
+                MessageBox.Show("Kauppalistan nimi on virheellinen", "Tallenna");
+            }
+        }
+
+        private void button_checklist_delete_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen muistilistan?", "Poista", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                deleteTableQuery = @"DELETE FROM checklist WHERE username='" + linkLabel_user.Text +
+                                "' AND checklist_name='" + textBox_checklist_name.Text + "' ;";
+                try
+                {
+                    conn.Open();
+                    cmd = new MySqlCommand(deleteTableQuery, conn);
+                    cmd.ExecuteNonQuery();
+                    conn.Close();                    
+                    MessageBox.Show("Muistilista on poistettu", "Poista");
+                    change = "Muistilista " + textBox_checklist_name.Text + " poistettu";
+                    addChangeTracking(change);
+                    textBox_checklist_name.Text = "";
+                    textBox_checklist.Text = "";
+                    comboBox_checklists.SelectedItem = null;
+                    readChecklists();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(Convert.ToString(ex));
+                }
+            }
+        }
+
 //----- Change tracking --------------------------------------------------------------------------------------
         private void readChangeTrackingLists()
         {

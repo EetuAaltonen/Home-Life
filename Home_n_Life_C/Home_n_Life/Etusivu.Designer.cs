@@ -122,12 +122,12 @@
             this.button_event_delete_past = new System.Windows.Forms.Button();
             this.groupBox_checklist = new System.Windows.Forms.GroupBox();
             this.label33 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox_checklist_name = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.button_checklist_delete = new System.Windows.Forms.Button();
+            this.button_checklist_save = new System.Windows.Forms.Button();
+            this.textBox_checklist = new System.Windows.Forms.TextBox();
+            this.comboBox_checklists = new System.Windows.Forms.ComboBox();
             this.label38 = new System.Windows.Forms.Label();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_username.SuspendLayout();
@@ -415,9 +415,9 @@
             this.groupBox_shopping_list.Controls.Add(this.textBox_item_name);
             this.groupBox_shopping_list.Controls.Add(this.button_add_item);
             this.groupBox_shopping_list.Enabled = false;
-            this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 295);
+            this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 240);
             this.groupBox_shopping_list.Name = "groupBox_shopping_list";
-            this.groupBox_shopping_list.Size = new System.Drawing.Size(50, 47);
+            this.groupBox_shopping_list.Size = new System.Drawing.Size(892, 420);
             this.groupBox_shopping_list.TabIndex = 2;
             this.groupBox_shopping_list.TabStop = false;
             this.groupBox_shopping_list.Visible = false;
@@ -741,7 +741,7 @@
             this.groupBox_economic.Controls.Add(this.listView_outlay);
             this.groupBox_economic.Controls.Add(this.textBox_economic_name);
             this.groupBox_economic.Enabled = false;
-            this.groupBox_economic.Location = new System.Drawing.Point(12, 236);
+            this.groupBox_economic.Location = new System.Drawing.Point(12, 297);
             this.groupBox_economic.Name = "groupBox_economic";
             this.groupBox_economic.Size = new System.Drawing.Size(50, 36);
             this.groupBox_economic.TabIndex = 5;
@@ -1324,17 +1324,17 @@
             // 
             this.groupBox_checklist.BackColor = System.Drawing.Color.Black;
             this.groupBox_checklist.Controls.Add(this.label33);
-            this.groupBox_checklist.Controls.Add(this.textBox2);
+            this.groupBox_checklist.Controls.Add(this.textBox_checklist_name);
             this.groupBox_checklist.Controls.Add(this.label35);
-            this.groupBox_checklist.Controls.Add(this.button1);
-            this.groupBox_checklist.Controls.Add(this.button2);
-            this.groupBox_checklist.Controls.Add(this.textBox3);
-            this.groupBox_checklist.Controls.Add(this.comboBox2);
+            this.groupBox_checklist.Controls.Add(this.button_checklist_delete);
+            this.groupBox_checklist.Controls.Add(this.button_checklist_save);
+            this.groupBox_checklist.Controls.Add(this.textBox_checklist);
+            this.groupBox_checklist.Controls.Add(this.comboBox_checklists);
             this.groupBox_checklist.Controls.Add(this.label38);
             this.groupBox_checklist.Enabled = false;
             this.groupBox_checklist.Location = new System.Drawing.Point(12, 191);
             this.groupBox_checklist.Name = "groupBox_checklist";
-            this.groupBox_checklist.Size = new System.Drawing.Size(50, 39);
+            this.groupBox_checklist.Size = new System.Drawing.Size(886, 229);
             this.groupBox_checklist.TabIndex = 24;
             this.groupBox_checklist.TabStop = false;
             this.groupBox_checklist.Visible = false;
@@ -1351,16 +1351,16 @@
             this.label33.TabIndex = 19;
             this.label33.Text = "Kirjoita muistilista";
             // 
-            // textBox2
+            // textBox_checklist_name
             // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(699, 150);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.textBox2.MaxLength = 30;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(260, 26);
-            this.textBox2.TabIndex = 17;
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox_checklist_name.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_checklist_name.Location = new System.Drawing.Point(699, 150);
+            this.textBox_checklist_name.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_checklist_name.MaxLength = 30;
+            this.textBox_checklist_name.Name = "textBox_checklist_name";
+            this.textBox_checklist_name.Size = new System.Drawing.Size(260, 26);
+            this.textBox_checklist_name.TabIndex = 17;
+            this.textBox_checklist_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label35
             // 
@@ -1374,46 +1374,49 @@
             this.label35.TabIndex = 16;
             this.label35.Text = "Muistilistan nimi";
             // 
-            // button1
+            // button_checklist_delete
             // 
-            this.button1.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(699, 229);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(132, 28);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "Poista";
-            this.button1.UseVisualStyleBackColor = false;
+            this.button_checklist_delete.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_checklist_delete.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_checklist_delete.ForeColor = System.Drawing.Color.White;
+            this.button_checklist_delete.Location = new System.Drawing.Point(699, 229);
+            this.button_checklist_delete.Name = "button_checklist_delete";
+            this.button_checklist_delete.Size = new System.Drawing.Size(132, 28);
+            this.button_checklist_delete.TabIndex = 15;
+            this.button_checklist_delete.Text = "Poista";
+            this.button_checklist_delete.UseVisualStyleBackColor = false;
+            this.button_checklist_delete.Click += new System.EventHandler(this.button_checklist_delete_Click);
             // 
-            // button2
+            // button_checklist_save
             // 
-            this.button2.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(699, 195);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(132, 28);
-            this.button2.TabIndex = 14;
-            this.button2.Text = "Tallenna";
-            this.button2.UseVisualStyleBackColor = false;
+            this.button_checklist_save.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_checklist_save.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_checklist_save.ForeColor = System.Drawing.Color.White;
+            this.button_checklist_save.Location = new System.Drawing.Point(699, 195);
+            this.button_checklist_save.Name = "button_checklist_save";
+            this.button_checklist_save.Size = new System.Drawing.Size(132, 28);
+            this.button_checklist_save.TabIndex = 14;
+            this.button_checklist_save.Text = "Tallenna";
+            this.button_checklist_save.UseVisualStyleBackColor = false;
+            this.button_checklist_save.Click += new System.EventHandler(this.button_checklist_save_Click);
             // 
-            // textBox3
+            // textBox_checklist
             // 
-            this.textBox3.Location = new System.Drawing.Point(22, 49);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(665, 456);
-            this.textBox3.TabIndex = 13;
+            this.textBox_checklist.Location = new System.Drawing.Point(22, 49);
+            this.textBox_checklist.Multiline = true;
+            this.textBox_checklist.Name = "textBox_checklist";
+            this.textBox_checklist.Size = new System.Drawing.Size(665, 456);
+            this.textBox_checklist.TabIndex = 13;
             // 
-            // comboBox2
+            // comboBox_checklists
             // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(699, 72);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(257, 21);
-            this.comboBox2.TabIndex = 1;
+            this.comboBox_checklists.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_checklists.FormattingEnabled = true;
+            this.comboBox_checklists.Location = new System.Drawing.Point(699, 72);
+            this.comboBox_checklists.Name = "comboBox_checklists";
+            this.comboBox_checklists.Size = new System.Drawing.Size(257, 21);
+            this.comboBox_checklists.TabIndex = 1;
+            this.comboBox_checklists.SelectedIndexChanged += new System.EventHandler(this.comboBox_checklists_SelectedIndexChanged);
             // 
             // label38
             // 
@@ -1562,12 +1565,12 @@
         private System.Windows.Forms.Button button_event_delete_past;
         private System.Windows.Forms.GroupBox groupBox_checklist;
         private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox_checklist_name;
         private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Button button_checklist_delete;
+        private System.Windows.Forms.Button button_checklist_save;
+        private System.Windows.Forms.TextBox textBox_checklist;
+        private System.Windows.Forms.ComboBox comboBox_checklists;
         private System.Windows.Forms.Label label38;
     }
 }
