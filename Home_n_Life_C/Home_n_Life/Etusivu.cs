@@ -205,7 +205,22 @@ namespace Home_n_Life
                         listView_menu.Columns.Add("Ruoka", 20, HorizontalAlignment.Left);
                         listView_menu.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
                         textBox_menu_name.Text = "";
-                        textBox_shopping_list.Text = "";
+                        comboBox_menus.SelectedItem = null;
+                        textBox_menu_food.Text = "";
+                        textBox_menu_description.Text = "";
+                        if (!user.full_permissions)
+                        {
+                            button_menu_delete.Visible = false;
+                            button_menu_delete.Enabled = false;
+                            button_menu_remove.Visible = false;
+                            button_menu_remove.Enabled = false;
+                            button_menu_add.Text = "Ehdota ruokaa";
+                            label32.Text = "";
+                            checkedListBox_menu_categories.Visible = false;
+                            checkedListBox_menu_categories.Enabled = false;
+                            button_menu_add_random.Visible = false;
+                            button_menu_add_random.Enabled = false;
+                        }
                         readMenus();
                         listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
                         listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
@@ -240,19 +255,32 @@ namespace Home_n_Life
                     case "shopping_list":
                         textBox_list_name.Text = "";
                         textBox_shopping_list.Text = "";
-                        textBox_shopping_list.ForeColor = Color.Gray;
-                        info_text = "Kirjoita tähän tuotteet, esim näin:" +
-                                    System.Environment.NewLine +
-                                    "   - Tuote1" +
-                                    System.Environment.NewLine +
-                                    "   - Tuote2" +
-                                    System.Environment.NewLine +
-                                    "   - Tuote3" +
-                                    System.Environment.NewLine +
-                                    "   - Tuote4" +
-                                    System.Environment.NewLine +
-                                    "   - Tuote5";
-                        textBox_shopping_list.Text += info_text;
+                        textBox_item_name.Text = "";
+                        textBox_item_amount.Text = "";
+                        comboBox_amount_type.SelectedItem = null;
+                        if (!user.full_permissions)
+                        {
+                            button_list_delete.Visible = false;
+                            button_list_delete.Enabled = false;
+                            textBox_shopping_list.Enabled = false;
+                            button_add_item.Text = "Ehdota tuotetta";
+                        }
+                        else
+                        {
+                            textBox_shopping_list.ForeColor = Color.Gray;
+                            info_text = "Kirjoita tähän tuotteet, esim näin:" +
+                                        System.Environment.NewLine +
+                                        "   - Tuote1" +
+                                        System.Environment.NewLine +
+                                        "   - Tuote2" +
+                                        System.Environment.NewLine +
+                                        "   - Tuote3" +
+                                        System.Environment.NewLine +
+                                        "   - Tuote4" +
+                                        System.Environment.NewLine +
+                                        "   - Tuote5";
+                            textBox_shopping_list.Text += info_text;
+                        }
                         readShoppingLists();
                         break;
                     case "calendar":
@@ -811,9 +839,16 @@ namespace Home_n_Life
                     textBox_shopping_list.ForeColor = Color.Black;
                     textBox_shopping_list.Text = "";
                 }
+                if (textBox_shopping_list.Text.Length > 0)
+                {
+                    added_item += System.Environment.NewLine;
+                }
                 added_item = "> " + textBox_item_name.Text + "  ";
                 added_item += textBox_item_amount.Text + " " + comboBox_amount_type.SelectedItem;
-                added_item += System.Environment.NewLine;
+                if (!user.full_permissions)
+                {
+                    added_item += " (" + user.user_name + " ehdotti)";
+                }
                 textBox_shopping_list.Text += added_item;
                 textBox_text_length.Text = Convert.ToString(textBox_shopping_list.Text.Length);
             }

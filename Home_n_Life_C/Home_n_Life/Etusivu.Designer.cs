@@ -442,7 +442,7 @@
             this.groupBox_shopping_list.Enabled = false;
             this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 240);
             this.groupBox_shopping_list.Name = "groupBox_shopping_list";
-            this.groupBox_shopping_list.Size = new System.Drawing.Size(941, 315);
+            this.groupBox_shopping_list.Size = new System.Drawing.Size(52, 51);
             this.groupBox_shopping_list.TabIndex = 2;
             this.groupBox_shopping_list.TabStop = false;
             this.groupBox_shopping_list.Visible = false;
@@ -664,7 +664,7 @@
             this.button_add_item.ForeColor = System.Drawing.Color.White;
             this.button_add_item.Location = new System.Drawing.Point(10, 217);
             this.button_add_item.Name = "button_add_item";
-            this.button_add_item.Size = new System.Drawing.Size(132, 28);
+            this.button_add_item.Size = new System.Drawing.Size(200, 28);
             this.button_add_item.TabIndex = 9;
             this.button_add_item.Text = "Lisää tuote";
             this.button_add_item.UseVisualStyleBackColor = false;
@@ -1479,9 +1479,9 @@
             this.groupBox_menu.Controls.Add(this.textBox_menu_food);
             this.groupBox_menu.Controls.Add(this.button_menu_add);
             this.groupBox_menu.Enabled = false;
-            this.groupBox_menu.Location = new System.Drawing.Point(12, 523);
+            this.groupBox_menu.Location = new System.Drawing.Point(134, 195);
             this.groupBox_menu.Name = "groupBox_menu";
-            this.groupBox_menu.Size = new System.Drawing.Size(50, 51);
+            this.groupBox_menu.Size = new System.Drawing.Size(170, 29);
             this.groupBox_menu.TabIndex = 24;
             this.groupBox_menu.TabStop = false;
             this.groupBox_menu.Visible = false;
