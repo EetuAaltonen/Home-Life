@@ -52,7 +52,7 @@ namespace Home_n_Life
         bool menu_progressing = false;
         int index;
         //---Shopping-List-----------
-        string info_text, added_item;
+        string added_item;
         bool list_progressing = false;
         //---Calendar----------------
         bool same_event = true;
@@ -71,11 +71,15 @@ namespace Home_n_Life
             months[3] = "Maaliskuu"; months[7] = "Heinäkuu"; months[11] = "Marraskuu";
             months[4] = "Huhtikuu"; months[8] = "Elokuu"; months[12] = "Joulukuu";
 
+            comboBox_search.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBox_search.AutoCompleteSource = AutoCompleteSource.ListItems;
+
             view_change = "home";
             conn = new MySqlConnection(connetionString);
             current_button = button_logo;
             viewChange(groupBox_home, button_logo);
         }
+
         public void initializeUserData(string user_name)
         {
             linkLabel_user.Text = user_name;
@@ -114,6 +118,7 @@ namespace Home_n_Life
             }
 
         }
+
         public void searchFamilyMembers()
         {
             listView_family_members.Clear();
@@ -253,7 +258,7 @@ namespace Home_n_Life
                         break;
                     case "shopping_list":
                         textBox_list_name.Text = "";
-                        textBox_shopping_list.Text = "";
+                        richTextBox_shopping_list.Text = "";
                         textBox_item_name.Text = "";
                         textBox_item_amount.Text = "";
                         comboBox_amount_type.SelectedItem = null;
@@ -261,24 +266,8 @@ namespace Home_n_Life
                         {
                             button_list_delete.Visible = false;
                             button_list_delete.Enabled = false;
-                            textBox_shopping_list.Enabled = false;
+                            richTextBox_shopping_list.Enabled = false;
                             button_add_item.Text = "Ehdota tuotetta";
-                        }
-                        else
-                        {
-                            textBox_shopping_list.ForeColor = Color.Gray;
-                            info_text = "Kirjoita tähän tuotteet, esim näin:" +
-                                        System.Environment.NewLine +
-                                        "   - Tuote1" +
-                                        System.Environment.NewLine +
-                                        "   - Tuote2" +
-                                        System.Environment.NewLine +
-                                        "   - Tuote3" +
-                                        System.Environment.NewLine +
-                                        "   - Tuote4" +
-                                        System.Environment.NewLine +
-                                        "   - Tuote5";
-                            textBox_shopping_list.Text += info_text;
                         }
                         readShoppingLists();
                         break;
@@ -316,7 +305,19 @@ namespace Home_n_Life
                 }
             }
         }
-//----- Change View --------------------------------------------------------------------------------------
+
+        private void button_search_Click(object sender, EventArgs e)
+        {
+            if (comboBox_search.Text.Contains("Kala"))
+            {
+                if (view_change != "home")
+                {
+                    view_change = "home";
+                    viewChange(groupBox_home, button_logo);
+                }
+            }
+        }
+
         private void button_logo_Click(object sender, EventArgs e)
         {
             dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
@@ -329,6 +330,92 @@ namespace Home_n_Life
                 }
             }
         }
+
+        private void button_economic_Click(object sender, EventArgs e)
+        {
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                if (view_change != "economic")
+                {
+                    checkDatabaseConnection();
+                    view_change = "economic";
+                    viewChange(groupBox_economic, button_economic);
+                    readEconomicLists();
+                }
+            }
+        }
+
+        private void button_menu_Click(object sender, EventArgs e)
+        {
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                if (view_change != "menu")
+                {
+                    checkDatabaseConnection();
+                    view_change = "menu";
+                    viewChange(groupBox_menu, button_menu);
+                }
+            }
+        }
+
+        private void button_shopping_list_Click(object sender, EventArgs e)
+        {
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                if (view_change != "shopping_list")
+                {
+                    checkDatabaseConnection();
+                    view_change = "shopping_list";
+                    viewChange(groupBox_shopping_list, button_shopping_list);
+                }
+            }
+        }
+
+        private void button_calendar_Click(object sender, EventArgs e)
+        {
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                if (view_change != "calendar")
+                {
+                    checkDatabaseConnection();
+                    view_change = "calendar";
+                    viewChange(groupBox_calendar, button_calendar);
+                }
+            }
+        }
+
+        private void button_checklist_Click(object sender, EventArgs e)
+        {
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                if (view_change != "checklist")
+                {
+                    checkDatabaseConnection();
+                    view_change = "checklist";
+                    viewChange(groupBox_checklist, button_checklist);
+                }
+            }
+        }
+
+        private void button_change_tracking_Click(object sender, EventArgs e)
+        {
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                if (view_change != "change_tracking")
+                {
+                    checkDatabaseConnection();
+                    view_change = "change_tracking";
+                    viewChange(groupBox_change_tracking, button_change_tracking);
+                }
+            }
+        }
+
 //----- Economic --------------------------------------------------------------------------------------
         private void readEconomicLists()
         {
@@ -356,7 +443,6 @@ namespace Home_n_Life
                 {
                     item = new ListViewItem(new string[]
                     {
-                            Convert.ToString(dataReader["id"]),
                             Convert.ToString(dataReader["description"]),
                             Convert.ToString(dataReader["amount"]),
                             Convert.ToString(dataReader["type"])
@@ -385,28 +471,11 @@ namespace Home_n_Life
             }
             listView_income.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             listView_income.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            listView_income.Columns[0].Width = 0; //Hide id
             listView_income.Columns[3].Width = 0; //Hide type
 
             listView_outlay.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             listView_outlay.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            listView_outlay.Columns[0].Width = 0; //Hide id
             listView_outlay.Columns[3].Width = 0; //Hide type
-        }
-
-        private void button_economic_Click(object sender, EventArgs e)
-        {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                if (view_change != "economic")
-                {
-                    checkDatabaseConnection();
-                    view_change = "economic";
-                    viewChange(groupBox_economic, button_economic);
-                    readEconomicLists();
-                }
-            }
         }
 
         private void listView_income_Click(object sender, EventArgs e)
@@ -498,10 +567,14 @@ namespace Home_n_Life
                         {
                             insertTableQuery = @"INSERT INTO economic(id, username, description, type, amount) " +
                                                 "VALUES('null', '" + linkLabel_user.Text + "', '" + textBox_economic_name.Text + "', '" + Convert.ToString(comboBox_economic_type.SelectedItem) + "', '" + textBox_economic_amount.Text + "');";
+                            alterTableQuery = @"ALTER TABLE economic DROP COLUMN id;
+                                                ALTER TABLE economic ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
                             try
                             {
                                 conn.Open();
                                 cmd = new MySqlCommand(insertTableQuery, conn);
+                                cmd.ExecuteNonQuery();
+                                cmd = new MySqlCommand(alterTableQuery, conn);
                                 cmd.ExecuteNonQuery();
                                 conn.Close();
                                 change = "Talouteen lisätty uusi " + Convert.ToString(comboBox_economic_type.SelectedItem).ToLower() + " " + textBox_economic_name.Text;
@@ -585,12 +658,11 @@ namespace Home_n_Life
             comboBox_menus.Items.Clear();
             createTableQuery = @"CREATE TABLE IF NOT EXISTS menu (
                                         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                                        username VARCHAR(30) NOT NULL,
                                         family_key VARCHAR(30) NOT NULL,
                                         menu_name VARCHAR(30) NOT NULL,
                                         food VARCHAR(30) NOT NULL,
                                         description VARCHAR(30) NOT NULL);";
-            selectTableQuery = @"SELECT id, username, family_key, menu_name, food, description " +
+            selectTableQuery = @"SELECT id, family_key, menu_name, food, description " +
                                 " FROM menu " +
                                 " WHERE family_key='" + user.family_key + "' ;";
             try
@@ -624,27 +696,13 @@ namespace Home_n_Life
             }
         }
 
-        private void button_menu_Click(object sender, EventArgs e)
-        {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                if (view_change != "menu")
-                {
-                    checkDatabaseConnection();
-                    view_change = "menu";
-                    viewChange(groupBox_menu, button_menu);
-                }
-            }
-        }
-
         private void comboBox_menus_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!menu_progressing)
             {
                 listView_menu.Items.Clear();
                 textBox_menu_name.Text = Convert.ToString(comboBox_menus.SelectedItem);
-                selectTableQuery = @"SELECT id, username, family_key, menu_name, food, description " +
+                selectTableQuery = @"SELECT id, family_key, menu_name, food, description " +
                                     " FROM menu " +
                                     " WHERE family_key='" + user.family_key + "' ;";
                 try
@@ -683,9 +741,9 @@ namespace Home_n_Life
                     textBox_menu_description.Text
             });
             listView_menu.Items.Add(item);
-            MessageBox.Show("Uusi ruoka lisätty ruokalistaan", "Lisää");
             listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            MessageBox.Show("Uusi ruoka lisätty ruokalistaan", "Lisää");
         }
 
         private void button_menu_remove_Click(object sender, EventArgs e)
@@ -695,11 +753,11 @@ namespace Home_n_Life
             if (dialogResult == DialogResult.Yes)
             {
                 listView_menu.Items.Remove(listView_menu.SelectedItems[0]);
-                MessageBox.Show("Ruoka on poistettu ruokalistalta", "Poista"); 
                 textBox_menu_food.Text = "";
                 textBox_menu_description.Text = "";
                 listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
                 listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                MessageBox.Show("Ruoka on poistettu ruokalistalta", "Poista"); 
             }
             menu_progressing = false;
         }
@@ -713,8 +771,8 @@ namespace Home_n_Life
                 {
                     deleteTableQuery = @"DELETE FROM menu " +
                                         "WHERE menu_name='" + textBox_menu_name.Text + "' AND family_key='" + user.family_key + "' ;";
-                    insertTableQuery = @"INSERT INTO menu (id, username, family_key, menu_name, food, description) " +
-                                        "VALUES(null, '" + user.user_name + "', '" + user.family_key  + "', '" + textBox_menu_name.Text + "', '" + listView_menu.Items[index].SubItems[0].Text + "', '" + listView_menu.Items[index].SubItems[1].Text + "' );";
+                    alterTableQuery = @"ALTER TABLE menu DROP COLUMN id;
+                                        ALTER TABLE menu ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
                     try
                     {
                         conn.Open();
@@ -722,9 +780,13 @@ namespace Home_n_Life
                         cmd.ExecuteNonQuery();
                         for (index = 0; index < listView_menu.Items.Count; index++)
                         {
+                            insertTableQuery = @"INSERT INTO menu (id, family_key, menu_name, food, description) " +
+                                        "VALUES(null, '" + user.family_key + "', '" + textBox_menu_name.Text + "', '" + listView_menu.Items[index].SubItems[0].Text + "', '" + listView_menu.Items[index].SubItems[1].Text + "' );";
                             cmd = new MySqlCommand(insertTableQuery, conn);
                             cmd.ExecuteNonQuery();
                         }
+                        cmd = new MySqlCommand(alterTableQuery, conn);
+                        cmd.ExecuteNonQuery();
                         conn.Close();
                         readMenus();
                         menu_progressing = true;
@@ -754,10 +816,14 @@ namespace Home_n_Life
         {
             deleteTableQuery = @"DELETE FROM menu " +
                                 "WHERE menu_name='" + textBox_menu_name.Text + "' AND family_key='" + user.family_key + "' ;";
+            alterTableQuery = @"ALTER TABLE menu DROP COLUMN id;
+                                        ALTER TABLE menu ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
             try
             {
                 conn.Open();
                 cmd = new MySqlCommand(deleteTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(alterTableQuery, conn);
                 cmd.ExecuteNonQuery();
                 conn.Close();
                 readMenus();
@@ -784,11 +850,10 @@ namespace Home_n_Life
             comboBox_shopping_lists.Items.Clear();
             createTableQuery = @"CREATE TABLE IF NOT EXISTS shoppinglist (
                                         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                                        username VARCHAR(30) NOT NULL,
                                         family_key VARCHAR(30) NOT NULL,
                                         listname VARCHAR(30) NOT NULL,
                                         text TEXT(500) NOT NULL);";
-            selectTableQuery = @"SELECT id, username, family_key, listname, text " +
+            selectTableQuery = @"SELECT id, family_key, listname, text " +
                                 "FROM shoppinglist " +
                                 "WHERE family_key='" + user.family_key + "' ;";
             try
@@ -811,41 +876,19 @@ namespace Home_n_Life
             }
         }
 
-        private void button_shopping_list_Click(object sender, EventArgs e)
-        {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                if (view_change != "shopping_list")
-                {
-                    checkDatabaseConnection();
-                    view_change = "shopping_list";
-                    viewChange(groupBox_shopping_list, button_shopping_list);
-                }
-            }
-        }
-
         private void button_add_item_Click(object sender, EventArgs e)
         {
             if (textBox_item_name.Text.Length > 0)
             {
-                if (textBox_shopping_list.Text == info_text)
-                {
-                    textBox_shopping_list.ForeColor = Color.Black;
-                    textBox_shopping_list.Text = "";
-                }
-                if (textBox_shopping_list.Text.Length > 0)
-                {
-                    added_item += System.Environment.NewLine;
-                }
                 added_item = "> " + textBox_item_name.Text + "  ";
                 added_item += textBox_item_amount.Text + " " + comboBox_amount_type.SelectedItem;
+                added_item += System.Environment.NewLine;
                 if (!user.full_permissions)
                 {
-                    added_item += " (" + user.user_name + " ehdotti)";
+                    added_item += " (" + user.user_name + " ehdottama)";
                 }
-                textBox_shopping_list.Text += added_item;
-                textBox_text_length.Text = Convert.ToString(textBox_shopping_list.Text.Length);
+                richTextBox_shopping_list.Text += added_item;
+                textBox_text_length.Text = Convert.ToString(richTextBox_shopping_list.Text.Length);
             }
             else
             {
@@ -853,16 +896,11 @@ namespace Home_n_Life
             }
         }
 
-        private void label_logo_Click(object sender, EventArgs e)
-        {
-        }
-
         private void comboBox_shopping_lists_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!list_progressing)
             {
-                textBox_shopping_list.ForeColor = Color.Black;
-                textBox_shopping_list.Text = "";
+                richTextBox_shopping_list.Text = "";
                 textBox_list_name.Text = Convert.ToString(comboBox_shopping_lists.SelectedItem);
                 selectTableQuery = @"SELECT id, username, family_key, listname, text " +
                                     "FROM shoppinglist WHERE family_key='" + user.family_key + "' " +
@@ -875,7 +913,7 @@ namespace Home_n_Life
                     while (dataReader.Read())
                     {
                         textBox_list_name.Text = Convert.ToString(dataReader["listname"]);
-                        textBox_shopping_list.Text = Convert.ToString(dataReader["text"]);
+                        richTextBox_shopping_list.Text = Convert.ToString(dataReader["text"]);
                     }
                     dataReader.Close();
                     conn.Close();
@@ -892,14 +930,16 @@ namespace Home_n_Life
             textBox_list_name.Text = textBox_list_name.Text.Replace(" ", "_");
             if (textBox_list_name.Text.Length > 0)
             {
-                insertTableQuery = @"INSERT INTO shoppinglist (id, username, family_key, listname, text) " +
-                                    "SELECT * FROM(SELECT 0, '" + linkLabel_user.Text + "', '" + user.family_key + "', '" + textBox_list_name.Text + "', 'null') AS tmp " +
+                insertTableQuery = @"INSERT INTO shoppinglist (id, family_key, listname, text) " +
+                                    "SELECT * FROM(SELECT 0, '" + user.family_key + "', '" + textBox_list_name.Text + "', 'null') AS tmp " +
                                     "WHERE NOT EXISTS( " +
                                     "SELECT listname FROM shoppinglist WHERE listname='" + textBox_list_name.Text + "' " +
                                     ") LIMIT 2 ;";
                 updateTableQuery = @"UPDATE shoppinglist " +
-                                     "SET text='" + textBox_shopping_list.Text + "' " +
+                                     "SET text='" + richTextBox_shopping_list.Text + "' " +
                                      "WHERE listname='" + textBox_list_name.Text + "' AND family_key='" + user.family_key + "' ;";
+                alterTableQuery = @"ALTER TABLE shoppinglist DROP COLUMN id;
+                                    ALTER TABLE shoppinglist ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
 
                 try
                 {
@@ -908,13 +948,15 @@ namespace Home_n_Life
                     cmd.ExecuteNonQuery();
                     cmd = new MySqlCommand(updateTableQuery, conn);
                     cmd.ExecuteNonQuery();
+                    cmd = new MySqlCommand(alterTableQuery, conn);
+                    cmd.ExecuteNonQuery();
                     conn.Close();
                     readShoppingLists();
                     list_progressing = true;
                     comboBox_shopping_lists.SelectedItem = textBox_list_name.Text;
                     list_progressing = false;
-                    MessageBox.Show("Kauppalista tallennettu", "Tallenna");
-                    change = "Kauppalista " + textBox_list_name.Text + " tallennettu";
+                    MessageBox.Show("Kauppalappu tallennettu", "Tallenna");
+                    change = "Kauppalappu " + textBox_list_name.Text + " tallennettu";
                     addChangeTracking(change);
                 }
                 catch (Exception ex)
@@ -924,66 +966,32 @@ namespace Home_n_Life
             }
             else
             {
-                MessageBox.Show("Kauppalistan nimi on virheellinen", "Tallenna");
+                MessageBox.Show("Kauppalapun nimi on virheellinen", "Tallenna");
             }
-        }
-
-        private void textBox_shopping_list_MouseEnter(object sender, EventArgs e)
-        {
-            if (textBox_shopping_list.Text == info_text)
-            {
-                textBox_shopping_list.ForeColor = Color.Black;
-                textBox_shopping_list.Text = "";
-            }
-        }
-
-        private void textBox_shopping_list_MouseLeave(object sender, EventArgs e)
-        {
-            if (textBox_shopping_list.Text == "")
-            {
-                textBox_shopping_list.ForeColor = Color.Gray;
-                textBox_shopping_list.Text = info_text;
-            }
-        }
-
-        private void textBox_shopping_list_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (textBox_shopping_list.Text == info_text)
-            {
-                textBox_shopping_list.ForeColor = Color.Black;
-                textBox_shopping_list.Text = "";
-            }
-            textBox_text_length.Text = Convert.ToString(textBox_shopping_list.Text.Length);
-        }
-
-        private void textBox_shopping_list_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (textBox_shopping_list.Text == "")
-            {
-                textBox_shopping_list.ForeColor = Color.Gray;
-                textBox_shopping_list.Text = info_text;
-            }
-            textBox_text_length.Text = Convert.ToString(textBox_shopping_list.Text.Length);
         }
 
         private void button_list_delete_Click(object sender, EventArgs e)
         {
-            dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen kauppalistan?", "Poista", MessageBoxButtons.YesNo);
+            dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen Kauppalappun?", "Poista", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 deleteTableQuery = @"DELETE FROM shoppinglist WHERE family_key='" + user.family_key +
                                 "' AND listname='" + textBox_list_name.Text + "' ;";
+                alterTableQuery = @"ALTER TABLE shoppinglist DROP COLUMN id;
+                                    ALTER TABLE shoppinglist ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
                 try
                 {
                     conn.Open();
                     cmd = new MySqlCommand(deleteTableQuery, conn);
                     cmd.ExecuteNonQuery();
+                    cmd = new MySqlCommand(alterTableQuery, conn);
+                    cmd.ExecuteNonQuery();
                     conn.Close();                    
-                    MessageBox.Show("Kauppalista on poistettu", "Poista");
-                    change = "Kauppalista " + textBox_list_name.Text + " poistettu";
+                    MessageBox.Show("Kauppalappu on poistettu", "Poista");
+                    change = "Kauppalappu " + textBox_list_name.Text + " poistettu";
                     addChangeTracking(change);
                     textBox_list_name.Text = "";
-                    textBox_shopping_list.Text = "";
+                    richTextBox_shopping_list.Text = "";
                     comboBox_shopping_lists.SelectedItem = null;
                     readShoppingLists();
                 }
@@ -993,6 +1001,20 @@ namespace Home_n_Life
                 }
             }   
         }
+
+        private void button_shopping_list_save_as_file_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFile = new SaveFileDialog();
+            saveFile.DefaultExt = "*.txt";
+            saveFile.Filter = "Tekstitiedostot (*.txt)|*.txt";
+
+            if (saveFile.ShowDialog() == System.Windows.Forms.DialogResult.OK &&
+            saveFile.FileName.Length > 0)
+            {
+                richTextBox_shopping_list.SaveFile(saveFile.FileName, RichTextBoxStreamType.PlainText);
+            }
+        }
+
 //----- Calendar --------------------------------------------------------------------------------------
         private void dataReadCalendarList()
         {
@@ -1075,7 +1097,6 @@ namespace Home_n_Life
             }
             listView_events.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             listView_events.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            //listView_events.Columns[0].Width = 0; //Hide id
         }
 
         private void setSearchMonth(ref string month)
@@ -1110,20 +1131,6 @@ namespace Home_n_Life
                 else
                 {
                     MessageBox.Show("Valitse vain yksi kerrallaan", "Tapahtumat");
-                }
-            }
-        }
-
-        private void button_calendar_Click(object sender, EventArgs e)
-        {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                if (view_change != "calendar")
-                {
-                    checkDatabaseConnection();
-                    view_change = "calendar";
-                    viewChange(groupBox_calendar, button_calendar);
                 }
             }
         }
@@ -1391,20 +1398,6 @@ namespace Home_n_Life
             }
         }
 
-        private void button_checklist_Click(object sender, EventArgs e)
-        {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                if (view_change != "checklist")
-                {
-                    checkDatabaseConnection();
-                    view_change = "checklist";
-                    viewChange(groupBox_checklist, button_checklist);
-                }
-            }
-        }
-
         private void comboBox_checklists_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!checklist_progressing)
@@ -1478,7 +1471,7 @@ namespace Home_n_Life
             }
             else
             {
-                MessageBox.Show("Kauppalistan nimi on virheellinen", "Tallenna");
+                MessageBox.Show("Kauppalappun nimi on virheellinen", "Tallenna");
             }
         }
 
@@ -1517,9 +1510,10 @@ namespace Home_n_Life
             createTableQuery = @"CREATE TABLE IF NOT EXISTS change_tracking (
                                             id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                             username VARCHAR(30) NOT NULL,
+                                            family_key VARCHAR(30) NOT NULL,
                                             date DATETIME NOT NULL,
                                             changes VARCHAR(100) NOT NULL);";
-            selectTableQuery = @"SELECT id, username, date, changes " +
+            selectTableQuery = @"SELECT id, username, family_key, date, changes " +
                                 " FROM change_tracking " +
                                 " WHERE family_key='" + user.family_key + "' ;";
             try
@@ -1565,7 +1559,7 @@ namespace Home_n_Life
                                         date DATETIME NOT NULL,
                                         changes VARCHAR(100) NOT NULL);";
             insertTableQuery = @"INSERT INTO change_tracking (id, username, family_key, date, changes)" +
-                                "VALUES(null, '" + linkLabel_user.Text + "', '" + user.family_key + "', '" + formatDateTimeForMySql + "', '" + change + "');";
+                                "VALUES(null, '" + user.user_name + "', '" + user.family_key + "', '" + formatDateTimeForMySql + "', '" + change + "');";
 
             try
             {
@@ -1579,20 +1573,6 @@ namespace Home_n_Life
             catch (Exception ex)
             {
                 MessageBox.Show(Convert.ToString(ex));
-            }
-        }
-
-        private void button_change_tracking_Click(object sender, EventArgs e)
-        {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                if (view_change != "change_tracking")
-                {
-                    checkDatabaseConnection();
-                    view_change = "change_tracking";
-                    viewChange(groupBox_change_tracking, button_change_tracking);
-                }
             }
         }
 

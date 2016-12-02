@@ -43,16 +43,16 @@
             this.button_sign_up = new System.Windows.Forms.Button();
             this.button_login = new System.Windows.Forms.Button();
             this.groupBox_registration = new System.Windows.Forms.GroupBox();
+            this.comboBox_account_permissions = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBox_family_key = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.button_return = new System.Windows.Forms.Button();
             this.textBox_account_password = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.button_create_account = new System.Windows.Forms.Button();
             this.textBox_account_name = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBox_family_key = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.comboBox_account_permissions = new System.Windows.Forms.ComboBox();
             this.groupBox_navigation.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox_login.SuspendLayout();
@@ -87,6 +87,7 @@
             // button_minimize
             // 
             this.button_minimize.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_minimize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_minimize.ForeColor = System.Drawing.Color.White;
             this.button_minimize.Location = new System.Drawing.Point(148, 8);
             this.button_minimize.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
@@ -210,11 +211,12 @@
             // button_sign_up
             // 
             this.button_sign_up.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_sign_up.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_sign_up.ForeColor = System.Drawing.Color.White;
-            this.button_sign_up.Location = new System.Drawing.Point(124, 274);
+            this.button_sign_up.Location = new System.Drawing.Point(99, 274);
             this.button_sign_up.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_sign_up.Name = "button_sign_up";
-            this.button_sign_up.Size = new System.Drawing.Size(101, 30);
+            this.button_sign_up.Size = new System.Drawing.Size(126, 30);
             this.button_sign_up.TabIndex = 4;
             this.button_sign_up.Text = "Rekisteröidy";
             this.button_sign_up.UseVisualStyleBackColor = false;
@@ -223,11 +225,12 @@
             // button_login
             // 
             this.button_login.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_login.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_login.ForeColor = System.Drawing.Color.White;
-            this.button_login.Location = new System.Drawing.Point(231, 274);
+            this.button_login.Location = new System.Drawing.Point(257, 274);
             this.button_login.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_login.Name = "button_login";
-            this.button_login.Size = new System.Drawing.Size(101, 30);
+            this.button_login.Size = new System.Drawing.Size(113, 30);
             this.button_login.TabIndex = 3;
             this.button_login.Text = "Kirjaudu";
             this.button_login.UseVisualStyleBackColor = false;
@@ -249,19 +252,66 @@
             this.groupBox_registration.Enabled = false;
             this.groupBox_registration.Location = new System.Drawing.Point(12, 115);
             this.groupBox_registration.Name = "groupBox_registration";
-            this.groupBox_registration.Size = new System.Drawing.Size(54, 49);
+            this.groupBox_registration.Size = new System.Drawing.Size(54, 47);
             this.groupBox_registration.TabIndex = 17;
             this.groupBox_registration.TabStop = false;
             this.groupBox_registration.Visible = false;
             // 
+            // comboBox_account_permissions
+            // 
+            this.comboBox_account_permissions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_account_permissions.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox_account_permissions.FormattingEnabled = true;
+            this.comboBox_account_permissions.Items.AddRange(new object[] {
+            "Vanhempi/Isanta",
+            "Lapsi/Asukas"});
+            this.comboBox_account_permissions.Location = new System.Drawing.Point(253, 213);
+            this.comboBox_account_permissions.Name = "comboBox_account_permissions";
+            this.comboBox_account_permissions.Size = new System.Drawing.Size(118, 28);
+            this.comboBox_account_permissions.TabIndex = 19;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(259, 176);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(111, 29);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "Oikeudet";
+            // 
+            // textBox_family_key
+            // 
+            this.textBox_family_key.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_family_key.Location = new System.Drawing.Point(99, 214);
+            this.textBox_family_key.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_family_key.MaxLength = 20;
+            this.textBox_family_key.Name = "textBox_family_key";
+            this.textBox_family_key.Size = new System.Drawing.Size(148, 26);
+            this.textBox_family_key.TabIndex = 17;
+            this.textBox_family_key.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(94, 176);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(134, 29);
+            this.label6.TabIndex = 16;
+            this.label6.Text = "Perheavain";
+            // 
             // button_return
             // 
             this.button_return.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_return.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_return.ForeColor = System.Drawing.Color.White;
-            this.button_return.Location = new System.Drawing.Point(124, 274);
+            this.button_return.Location = new System.Drawing.Point(99, 273);
             this.button_return.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_return.Name = "button_return";
-            this.button_return.Size = new System.Drawing.Size(101, 30);
+            this.button_return.Size = new System.Drawing.Size(117, 30);
             this.button_return.TabIndex = 4;
             this.button_return.Text = "Takaisin";
             this.button_return.UseVisualStyleBackColor = false;
@@ -303,11 +353,12 @@
             // button_create_account
             // 
             this.button_create_account.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_create_account.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_create_account.ForeColor = System.Drawing.Color.White;
-            this.button_create_account.Location = new System.Drawing.Point(231, 274);
+            this.button_create_account.Location = new System.Drawing.Point(245, 273);
             this.button_create_account.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_create_account.Name = "button_create_account";
-            this.button_create_account.Size = new System.Drawing.Size(101, 30);
+            this.button_create_account.Size = new System.Drawing.Size(126, 30);
             this.button_create_account.TabIndex = 3;
             this.button_create_account.Text = "Rekisteröidy";
             this.button_create_account.UseVisualStyleBackColor = false;
@@ -323,52 +374,6 @@
             this.textBox_account_name.Size = new System.Drawing.Size(272, 26);
             this.textBox_account_name.TabIndex = 1;
             this.textBox_account_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(94, 176);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(134, 29);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "Perheavain";
-            // 
-            // textBox_family_key
-            // 
-            this.textBox_family_key.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_family_key.Location = new System.Drawing.Point(99, 214);
-            this.textBox_family_key.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.textBox_family_key.MaxLength = 20;
-            this.textBox_family_key.Name = "textBox_family_key";
-            this.textBox_family_key.Size = new System.Drawing.Size(148, 26);
-            this.textBox_family_key.TabIndex = 17;
-            this.textBox_family_key.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(259, 176);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(111, 29);
-            this.label7.TabIndex = 18;
-            this.label7.Text = "Oikeudet";
-            // 
-            // comboBox_account_permissions
-            // 
-            this.comboBox_account_permissions.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_account_permissions.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox_account_permissions.FormattingEnabled = true;
-            this.comboBox_account_permissions.Items.AddRange(new object[] {
-            "Vanhempi/Isanta",
-            "Lapsi/Asukas"});
-            this.comboBox_account_permissions.Location = new System.Drawing.Point(253, 213);
-            this.comboBox_account_permissions.Name = "comboBox_account_permissions";
-            this.comboBox_account_permissions.Size = new System.Drawing.Size(121, 28);
-            this.comboBox_account_permissions.TabIndex = 19;
             // 
             // Kirjautuminen
             // 
