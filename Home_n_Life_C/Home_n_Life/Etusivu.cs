@@ -201,11 +201,11 @@ namespace Home_n_Life
                     case "menu":
                         listView_menu.Clear();
                         listView_menu.View = View.Details;
-                        listView_menu.Columns.Add("Id", 20, HorizontalAlignment.Left);
                         listView_menu.Columns.Add("Ruoka", 20, HorizontalAlignment.Left);
                         listView_menu.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
                         textBox_menu_name.Text = "";
                         comboBox_menus.SelectedItem = null;
+                        listView_menu.Items.Clear();
                         textBox_menu_food.Text = "";
                         textBox_menu_description.Text = "";
                         if (!user.full_permissions)
@@ -224,7 +224,6 @@ namespace Home_n_Life
                         readMenus();
                         listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
                         listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                        listView_menu.Columns[0].Width = 0; //Hide id
                         break;
                     case "economic":
                         listView_income.Clear();
@@ -587,12 +586,13 @@ namespace Home_n_Life
             createTableQuery = @"CREATE TABLE IF NOT EXISTS menu (
                                         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                         username VARCHAR(30) NOT NULL,
+                                        family_key VARCHAR(30) NOT NULL,
                                         menu_name VARCHAR(30) NOT NULL,
                                         food VARCHAR(30) NOT NULL,
                                         description VARCHAR(30) NOT NULL);";
-            selectTableQuery = @"SELECT id, username, menu_name, food, description " +
+            selectTableQuery = @"SELECT id, username, family_key, menu_name, food, description " +
                                 " FROM menu " +
-                                " WHERE username='" + linkLabel_user.Text + "' ;";
+                                " WHERE family_key='" + user.family_key + "' ;";
             try
             {
                 conn.Open();
@@ -644,9 +644,9 @@ namespace Home_n_Life
             {
                 listView_menu.Items.Clear();
                 textBox_menu_name.Text = Convert.ToString(comboBox_menus.SelectedItem);
-                selectTableQuery = @"SELECT id, username, menu_name, food, description " +
+                selectTableQuery = @"SELECT id, username, family_key, menu_name, food, description " +
                                     " FROM menu " +
-                                    " WHERE username='" + linkLabel_user.Text + "' ;";
+                                    " WHERE family_key='" + user.family_key + "' ;";
                 try
                 {
                     conn.Open();
@@ -658,7 +658,6 @@ namespace Home_n_Life
                     {
                         item = new ListViewItem(new string[]
                         {
-                            Convert.ToString(dataReader["id"]),
                             Convert.ToString(dataReader["food"]),
                             Convert.ToString(dataReader["description"])
                         });
@@ -673,7 +672,6 @@ namespace Home_n_Life
                 }
                 listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
                 listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                listView_menu.Columns[0].Width = 0; //Hide id
             }
         }
 
@@ -681,7 +679,6 @@ namespace Home_n_Life
         {
             item = new ListViewItem(new string[]
             {
-                    "",
                     textBox_menu_food.Text,
                     textBox_menu_description.Text
             });
@@ -689,7 +686,6 @@ namespace Home_n_Life
             MessageBox.Show("Uusi ruoka lisätty ruokalistaan", "Lisää");
             listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            listView_menu.Columns[0].Width = 0; //Hide id
         }
 
         private void button_menu_remove_Click(object sender, EventArgs e)
@@ -698,29 +694,12 @@ namespace Home_n_Life
             dialogResult = MessageBox.Show("Haluatko varmasti poistaa tämän ruuan?", "Poista", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                deleteTableQuery = @"DELETE FROM menu WHERE username='" + linkLabel_user.Text +
-                                    "' AND id='" + Convert.ToString(listView_menu.SelectedItems[0].SubItems[0].Text) +
-                                    "' AND food='" + Convert.ToString(listView_menu.SelectedItems[0].SubItems[1].Text) + "' ;";
-                try
-                {
-                    conn.Open();
-                    cmd = new MySqlCommand(deleteTableQuery, conn);
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    change = "Ruoka " + listView_menu.SelectedItems[0].SubItems[1].Text + " poistettu ruokalistalta";
-                    listView_menu.Items.Remove(listView_menu.SelectedItems[0]);
-                    MessageBox.Show("Ruoka on poistettu ruokalistalta", "Poista"); 
-                    addChangeTracking(change);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(Convert.ToString(ex));
-                }
+                listView_menu.Items.Remove(listView_menu.SelectedItems[0]);
+                MessageBox.Show("Ruoka on poistettu ruokalistalta", "Poista"); 
                 textBox_menu_food.Text = "";
                 textBox_menu_description.Text = "";
                 listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
                 listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                listView_menu.Columns[0].Width = 0; //Hide id
             }
             menu_progressing = false;
         }
@@ -732,24 +711,18 @@ namespace Home_n_Life
             {
                 if (listView_menu.Items.Count > 0)
                 {
-                    insertTableQuery = @"INSERT INTO menu (id, username, menu_name, food, description) " +
-                                        "SELECT * FROM(SELECT 0, '" + linkLabel_user.Text + "', '" + textBox_menu_name.Text + "', '" + listView_menu.Items[index].SubItems[1] + "', '" + listView_menu.Items[index].SubItems[2] + "') AS tmp " +
-                                        "WHERE NOT EXISTS( " +
-                                        "SELECT menu_name FROM menu WHERE menu_name='" + textBox_menu_name.Text + "' " +
-                                        ") LIMIT 2 ;";
-                    updateTableQuery = @"UPDATE menu " +
-                                         "SET food='" + Convert.ToString(listView_menu.Items[index].SubItems[1].Text) + "' AND " +
-                                         "description='" + Convert.ToString(listView_menu.Items[index].SubItems[2]) + "' " +
-                                         "WHERE menu_name='" + textBox_menu_name.Text + "' ;";
-
+                    deleteTableQuery = @"DELETE FROM menu " +
+                                        "WHERE menu_name='" + textBox_menu_name.Text + "' AND family_key='" + user.family_key + "' ;";
+                    insertTableQuery = @"INSERT INTO menu (id, username, family_key, menu_name, food, description) " +
+                                        "VALUES(null, '" + user.user_name + "', '" + user.family_key  + "', '" + textBox_menu_name.Text + "', '" + listView_menu.Items[index].SubItems[0].Text + "', '" + listView_menu.Items[index].SubItems[1].Text + "' );";
                     try
                     {
                         conn.Open();
+                        cmd = new MySqlCommand(deleteTableQuery, conn);
+                        cmd.ExecuteNonQuery();
                         for (index = 0; index < listView_menu.Items.Count; index++)
                         {
                             cmd = new MySqlCommand(insertTableQuery, conn);
-                            cmd.ExecuteNonQuery();
-                            cmd = new MySqlCommand(updateTableQuery, conn);
                             cmd.ExecuteNonQuery();
                         }
                         conn.Close();
@@ -777,10 +750,32 @@ namespace Home_n_Life
             }
         }
 
+        private void button_menu_delete_Click(object sender, EventArgs e)
+        {
+            deleteTableQuery = @"DELETE FROM menu " +
+                                "WHERE menu_name='" + textBox_menu_name.Text + "' AND family_key='" + user.family_key + "' ;";
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(deleteTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                readMenus();
+                comboBox_menus.SelectedItem = null;
+                MessageBox.Show("Ruokalista poistettu", "Poista");
+                change = "Ruokalista " + textBox_menu_name.Text + " poistettu";
+                addChangeTracking(change);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+        }
+
         private void listView_menu_Click(object sender, EventArgs e)
         {
-            textBox_menu_food.Text = listView_menu.SelectedItems[0].SubItems[1].Text;
-            textBox_menu_description.Text = listView_menu.SelectedItems[0].SubItems[2].Text;
+            textBox_menu_food.Text = listView_menu.SelectedItems[0].SubItems[0].Text;
+            textBox_menu_description.Text = listView_menu.SelectedItems[0].SubItems[1].Text;
         }
 
 //----- Shopping list --------------------------------------------------------------------------------------
@@ -904,7 +899,7 @@ namespace Home_n_Life
                                     ") LIMIT 2 ;";
                 updateTableQuery = @"UPDATE shoppinglist " +
                                      "SET text='" + textBox_shopping_list.Text + "' " +
-                                     "WHERE listname='" + textBox_list_name.Text + "' ;";
+                                     "WHERE listname='" + textBox_list_name.Text + "' AND family_key='" + user.family_key + "' ;";
 
                 try
                 {
@@ -1606,7 +1601,7 @@ namespace Home_n_Life
             dialogResult = MessageBox.Show("Haluatko varmasti tyhjentää tiedot muutoksista?", "Poista", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                dropTableQuery = @"DROP TABLE IF EXISTS `change_tracking` ;";
+                dropTableQuery = @"DROP TABLE IF EXISTS change_tracking ;";
                 try
                 {
                     conn.Open();
