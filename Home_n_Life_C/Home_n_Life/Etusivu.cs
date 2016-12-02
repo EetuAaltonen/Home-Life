@@ -19,11 +19,20 @@ namespace Home_n_Life
             InitializeComponent();
         }
 
+        class User
+        {
+            public string user_name;
+            public string family_key;
+            public bool full_permissions;
+        }
+
 //----- Attributes --------------------------------------------------------------------------------------
         //---Database----------------
         string connetionString = "server=localhost;database=home&life;uid=root;pwd=;";
         MySqlConnection conn;
         MySqlCommand cmd;
+        MySqlDataReader dataReader;
+        User user = new User();
         string dropTableQuery, createTableQuery, insertTableQuery, selectTableQuery, updateTableQuery, deleteTableQuery, alterTableQuery;
         //---Dialog------------------
         DialogResult dialogResult;
@@ -40,17 +49,17 @@ namespace Home_n_Life
         double income, outlay;
         bool same_name = true;
         //---Menu--------------------
-        bool menu_progressing;
+        bool menu_progressing = false;
         int index;
         //---Shopping-List-----------
         string info_text, added_item;
-        bool list_progressing;
+        bool list_progressing = false;
         //---Calendar----------------
         bool same_event = true;
         string formatDateTimeForMySql, month, year;
         string[] months = new string[122];
         //---Checklist---------------
-        bool checklist_progressing;
+        bool checklist_progressing = false;
         //---Change_tracking---------
         string change;
 
@@ -67,17 +76,98 @@ namespace Home_n_Life
             current_button = button_logo;
             viewChange(groupBox_home, button_logo);
         }
-
-        private void button_logo_Click(object sender, EventArgs e)
+        public void initializeUserData(string user_name)
         {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            linkLabel_user.Text = user_name;
+            user.user_name = user_name;
+
+            selectTableQuery = @"SELECT id, username, password, family_key, permissions " +
+                                        "FROM users " +
+                                        "WHERE username='" + user_name + "' ;";
+            try
             {
-                if (view_change != "home")
+                conn.Open();
+                cmd = new MySqlCommand(selectTableQuery, conn);
+                dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
                 {
-                    view_change = "home";
-                    viewChange(groupBox_home, button_logo);
+                    user.family_key = Convert.ToString(dataReader["family_key"]);
+                    if (Convert.ToString(dataReader["permissions"]) == "Vanhempi/Isanta")
+                    {
+                        user.full_permissions = true;
+                    }
+                    else
+                    {
+                        user.full_permissions = false;
+                        button_economic.Enabled = false;
+                        button_economic.Visible = false;
+                        button_change_tracking.Enabled = false;
+                        button_change_tracking.Visible = false;
+                    }
                 }
+                dataReader.Close();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+
+        }
+        public void searchFamilyMembers()
+        {
+            listView_family_members.Clear();
+            listView_family_members.View = View.Details;
+            listView_family_members.Columns.Add("Nimi", 20, HorizontalAlignment.Left);
+            listView_family_members.Columns.Add("Oikeudet", 20, HorizontalAlignment.Left);
+            listView_family_members.GridLines = true;
+            selectTableQuery = @"SELECT id, username, password, family_key, permissions " +
+                                        "FROM users " +
+                                        "WHERE family_key='" + user.family_key + "' ;";
+            listView_family_members.Items.Clear();
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(selectTableQuery, conn);
+                dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    item = new ListViewItem(new string[]
+                    {
+                            Convert.ToString(dataReader["username"]),
+                            Convert.ToString(dataReader["permissions"])
+                    });
+                    listView_family_members.Items.Add(item);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+            listView_family_members.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView_family_members.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+
+        }
+//----- Database --------------------------------------------------------------------------------------
+        public void checkDatabaseConnection()
+        {
+            progressBar_database_connection.Value = 1;
+            progressBar_database_connection.ForeColor = Color.Yellow;
+            try
+            {
+                conn = new MySqlConnection(connetionString);
+                conn.Open();
+                progressBar_database_connection.Value = 2;
+                progressBar_database_connection.ForeColor = Color.LimeGreen;
+                conn.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Tietokantaan ei saatu yhteyttä.", "Error");
+                progressBar_database_connection.Value = 1;
+                progressBar_database_connection.ForeColor = Color.Red;
             }
         }
 //----- Change View --------------------------------------------------------------------------------------
@@ -199,24 +289,17 @@ namespace Home_n_Life
                 }
             }
         }
-//----- Database --------------------------------------------------------------------------------------
-        private void checkDatabaseConnection()
+//----- Change View --------------------------------------------------------------------------------------
+        private void button_logo_Click(object sender, EventArgs e)
         {
-            progressBar_database_connection.Value = 1;
-            progressBar_database_connection.ForeColor = Color.Yellow;
-            try
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                conn = new MySqlConnection(connetionString);
-                conn.Open();
-                progressBar_database_connection.Value = 2;
-                progressBar_database_connection.ForeColor = Color.LimeGreen;
-                conn.Close();
-            }
-            catch
-            {
-                MessageBox.Show("Tietokantaan ei saatu yhteyttä.", "Error");
-                progressBar_database_connection.Value = 1;
-                progressBar_database_connection.ForeColor = Color.Red;
+                if (view_change != "home")
+                {
+                    view_change = "home";
+                    viewChange(groupBox_home, button_logo);
+                }
             }
         }
 //----- Economic --------------------------------------------------------------------------------------
@@ -241,7 +324,7 @@ namespace Home_n_Life
                 cmd = new MySqlCommand(createTableQuery, conn);
                 cmd.ExecuteNonQuery();
                 cmd = new MySqlCommand(selectTableQuery, conn);
-                MySqlDataReader dataReader = cmd.ExecuteReader();
+                dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
                     item = new ListViewItem(new string[]
@@ -488,7 +571,7 @@ namespace Home_n_Life
                 cmd = new MySqlCommand(createTableQuery, conn);
                 cmd.ExecuteNonQuery();
                 cmd = new MySqlCommand(selectTableQuery, conn);
-                MySqlDataReader dataReader = cmd.ExecuteReader();
+                dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
                     same_name = false;
@@ -542,7 +625,7 @@ namespace Home_n_Life
                     cmd = new MySqlCommand(createTableQuery, conn);
                     cmd.ExecuteNonQuery();
                     cmd = new MySqlCommand(selectTableQuery, conn);
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
+                    dataReader = cmd.ExecuteReader();
                     while (dataReader.Read())
                     {
                         item = new ListViewItem(new string[]
@@ -672,25 +755,26 @@ namespace Home_n_Life
             textBox_menu_description.Text = listView_menu.SelectedItems[0].SubItems[2].Text;
         }
 
-        //----- Shopping list --------------------------------------------------------------------------------------
+//----- Shopping list --------------------------------------------------------------------------------------
         private void readShoppingLists()
         {
             comboBox_shopping_lists.Items.Clear();
             createTableQuery = @"CREATE TABLE IF NOT EXISTS shoppinglist (
                                         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                         username VARCHAR(30) NOT NULL,
+                                        family_key VARCHAR(30) NOT NULL,
                                         listname VARCHAR(30) NOT NULL,
                                         text TEXT(500) NOT NULL);";
-            selectTableQuery = @"SELECT id, username, listname, text " +
-                                " FROM shoppinglist " +
-                                " WHERE username='" + linkLabel_user.Text + "' ;";
+            selectTableQuery = @"SELECT id, username, family_key, listname, text " +
+                                "FROM shoppinglist " +
+                                "WHERE family_key='" + user.family_key + "' ;";
             try
             {
                 conn.Open();
                 cmd = new MySqlCommand(createTableQuery, conn);
                 cmd.ExecuteNonQuery();
                 cmd = new MySqlCommand(selectTableQuery, conn);
-                MySqlDataReader dataReader = cmd.ExecuteReader();
+                dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
                     comboBox_shopping_lists.Items.Add(Convert.ToString(dataReader["listname"]));
@@ -750,14 +834,14 @@ namespace Home_n_Life
                 textBox_shopping_list.ForeColor = Color.Black;
                 textBox_shopping_list.Text = "";
                 textBox_list_name.Text = Convert.ToString(comboBox_shopping_lists.SelectedItem);
-                selectTableQuery = @"SELECT id, username, listname, text " +
-                                    "FROM shoppinglist WHERE username='" + linkLabel_user.Text + "' " +
+                selectTableQuery = @"SELECT id, username, family_key, listname, text " +
+                                    "FROM shoppinglist WHERE family_key='" + user.family_key + "' " +
                                     "AND listname='" + comboBox_shopping_lists.SelectedItem + "' ;";
                 try
                 {
                     conn.Open();
                     cmd = new MySqlCommand(selectTableQuery, conn);
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
+                    dataReader = cmd.ExecuteReader();
                     while (dataReader.Read())
                     {
                         textBox_list_name.Text = Convert.ToString(dataReader["listname"]);
@@ -778,8 +862,8 @@ namespace Home_n_Life
             textBox_list_name.Text = textBox_list_name.Text.Replace(" ", "_");
             if (textBox_list_name.Text.Length > 0)
             {
-                insertTableQuery = @"INSERT INTO shoppinglist (id, username, listname, text) " +
-                                    "SELECT * FROM(SELECT 0, '" + linkLabel_user.Text + "', '" + textBox_list_name.Text + "', 'null') AS tmp " +
+                insertTableQuery = @"INSERT INTO shoppinglist (id, username, family_key, listname, text) " +
+                                    "SELECT * FROM(SELECT 0, '" + linkLabel_user.Text + "', '" + user.family_key + "', '" + textBox_list_name.Text + "', 'null') AS tmp " +
                                     "WHERE NOT EXISTS( " +
                                     "SELECT listname FROM shoppinglist WHERE listname='" + textBox_list_name.Text + "' " +
                                     ") LIMIT 2 ;";
@@ -857,7 +941,7 @@ namespace Home_n_Life
             dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen kauppalistan?", "Poista", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                deleteTableQuery = @"DELETE FROM shoppinglist WHERE username='" + linkLabel_user.Text +
+                deleteTableQuery = @"DELETE FROM shoppinglist WHERE family_key='" + user.family_key +
                                 "' AND listname='" + textBox_list_name.Text + "' ;";
                 try
                 {
@@ -882,7 +966,7 @@ namespace Home_n_Life
 //----- Calendar --------------------------------------------------------------------------------------
         private void dataReadCalendarList()
         {
-            MySqlDataReader dataReader = cmd.ExecuteReader();
+            dataReader = cmd.ExecuteReader();
             while (dataReader.Read())
             {
                 DateTime temp_daytime = (DateTime)dataReader["date"];
@@ -951,7 +1035,7 @@ namespace Home_n_Life
             {
                 conn.Open();
                 cmd = new MySqlCommand(selectTableQuery_, conn);
-                MySqlDataReader dataReader = cmd.ExecuteReader();
+                dataReader = cmd.ExecuteReader();
                 dataReadCalendarList();
                 conn.Close();
             }
@@ -1246,7 +1330,7 @@ namespace Home_n_Life
                 cmd = new MySqlCommand(createTableQuery, conn);
                 cmd.ExecuteNonQuery();
                 cmd = new MySqlCommand(selectTableQuery, conn);
-                MySqlDataReader dataReader = cmd.ExecuteReader();
+                dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
                     comboBox_checklists.Items.Add(Convert.ToString(dataReader["checklist_name"]));
@@ -1304,7 +1388,7 @@ namespace Home_n_Life
                 {
                     conn.Open();
                     cmd = new MySqlCommand(selectTableQuery, conn);
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
+                    dataReader = cmd.ExecuteReader();
                     while (dataReader.Read())
                     {
                         textBox_checklist_name.Text = Convert.ToString(dataReader["checklist_name"]);
@@ -1407,14 +1491,14 @@ namespace Home_n_Life
                                             changes VARCHAR(100) NOT NULL);";
             selectTableQuery = @"SELECT id, username, date, changes " +
                                 " FROM change_tracking " +
-                                " WHERE username='" + linkLabel_user.Text + "' ;";
+                                " WHERE family_key='" + user.family_key + "' ;";
             try
             {
                 conn.Open();
                 cmd = new MySqlCommand(createTableQuery, conn);
                 cmd.ExecuteNonQuery();
                 cmd = new MySqlCommand(selectTableQuery, conn);
-                MySqlDataReader dataReader = cmd.ExecuteReader();
+                dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
                     item = new ListViewItem(new string[]
@@ -1447,10 +1531,11 @@ namespace Home_n_Life
             createTableQuery = @"CREATE TABLE IF NOT EXISTS change_tracking (
                                         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                         username VARCHAR(30) NOT NULL,
+                                        family_key VARCHAR(30) NOT NULL,
                                         date DATETIME NOT NULL,
                                         changes VARCHAR(100) NOT NULL);";
-            insertTableQuery = @"INSERT INTO change_tracking (id, username, date, changes)" +
-                                "VALUES(null, '" + linkLabel_user.Text + "', '" + formatDateTimeForMySql + "', '" + change + "');";
+            insertTableQuery = @"INSERT INTO change_tracking (id, username, family_key, date, changes)" +
+                                "VALUES(null, '" + linkLabel_user.Text + "', '" + user.family_key + "', '" + formatDateTimeForMySql + "', '" + change + "');";
 
             try
             {

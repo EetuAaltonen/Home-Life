@@ -148,6 +148,8 @@
             this.label41 = new System.Windows.Forms.Label();
             this.textBox_menu_food = new System.Windows.Forms.TextBox();
             this.button_menu_add = new System.Windows.Forms.Button();
+            this.label39 = new System.Windows.Forms.Label();
+            this.listView_family_members = new System.Windows.Forms.ListView();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_username.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
@@ -440,7 +442,7 @@
             this.groupBox_shopping_list.Enabled = false;
             this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 240);
             this.groupBox_shopping_list.Name = "groupBox_shopping_list";
-            this.groupBox_shopping_list.Size = new System.Drawing.Size(50, 51);
+            this.groupBox_shopping_list.Size = new System.Drawing.Size(941, 315);
             this.groupBox_shopping_list.TabIndex = 2;
             this.groupBox_shopping_list.TabStop = false;
             this.groupBox_shopping_list.Visible = false;
@@ -671,12 +673,14 @@
             // groupBox_home
             // 
             this.groupBox_home.BackColor = System.Drawing.Color.Black;
+            this.groupBox_home.Controls.Add(this.listView_family_members);
+            this.groupBox_home.Controls.Add(this.label39);
             this.groupBox_home.Controls.Add(this.label11);
             this.groupBox_home.Controls.Add(this.label10);
             this.groupBox_home.Enabled = false;
-            this.groupBox_home.Location = new System.Drawing.Point(12, 348);
+            this.groupBox_home.Location = new System.Drawing.Point(12, 346);
             this.groupBox_home.Name = "groupBox_home";
-            this.groupBox_home.Size = new System.Drawing.Size(50, 40);
+            this.groupBox_home.Size = new System.Drawing.Size(50, 46);
             this.groupBox_home.TabIndex = 3;
             this.groupBox_home.TabStop = false;
             this.groupBox_home.Visible = false;
@@ -1475,9 +1479,9 @@
             this.groupBox_menu.Controls.Add(this.textBox_menu_food);
             this.groupBox_menu.Controls.Add(this.button_menu_add);
             this.groupBox_menu.Enabled = false;
-            this.groupBox_menu.Location = new System.Drawing.Point(12, 170);
+            this.groupBox_menu.Location = new System.Drawing.Point(12, 523);
             this.groupBox_menu.Name = "groupBox_menu";
-            this.groupBox_menu.Size = new System.Drawing.Size(967, 567);
+            this.groupBox_menu.Size = new System.Drawing.Size(50, 51);
             this.groupBox_menu.TabIndex = 24;
             this.groupBox_menu.TabStop = false;
             this.groupBox_menu.Visible = false;
@@ -1700,6 +1704,27 @@
             this.button_menu_add.UseVisualStyleBackColor = false;
             this.button_menu_add.Click += new System.EventHandler(this.button_menu_add_Click);
             // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label39.ForeColor = System.Drawing.Color.White;
+            this.label39.Location = new System.Drawing.Point(647, 89);
+            this.label39.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(135, 20);
+            this.label39.TabIndex = 22;
+            this.label39.Text = "Perheenjäsenet";
+            // 
+            // listView_family_members
+            // 
+            this.listView_family_members.Enabled = false;
+            this.listView_family_members.Location = new System.Drawing.Point(651, 127);
+            this.listView_family_members.Name = "listView_family_members";
+            this.listView_family_members.Size = new System.Drawing.Size(279, 141);
+            this.listView_family_members.TabIndex = 23;
+            this.listView_family_members.UseCompatibleStateImageBehavior = false;
+            // 
             // Etusivu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1864,5 +1889,7 @@
         private System.Windows.Forms.TextBox textBox_menu_description;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Button button_menu_remove;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.ListView listView_family_members;
     }
 }
