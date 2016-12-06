@@ -388,6 +388,14 @@ namespace Home_n_Life
             }
         }
 
+        private void button_athletic_meter_Click(object sender, EventArgs e)
+        {
+            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+            }
+        }
+
         private void button_checklist_Click(object sender, EventArgs e)
         {
             dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
@@ -1387,14 +1395,6 @@ namespace Home_n_Life
             if (dialogResult == DialogResult.Yes)
             {
 
-            }
-        }
-
-        private void button_exercise_meter_Click(object sender, EventArgs e)
-        {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
             }
         }
 

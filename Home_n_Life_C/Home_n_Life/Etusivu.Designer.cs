@@ -35,6 +35,7 @@
             this.button_minimize = new System.Windows.Forms.Button();
             this.linkLabel_user = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
+            this.comboBox_search = new System.Windows.Forms.ComboBox();
             this.button_search = new System.Windows.Forms.Button();
             this.progressBar_database_connection = new System.Windows.Forms.ProgressBar();
             this.groupBox_navigation = new System.Windows.Forms.GroupBox();
@@ -44,7 +45,7 @@
             this.button_cleaning = new System.Windows.Forms.Button();
             this.button_shopping_list = new System.Windows.Forms.Button();
             this.button_calendar = new System.Windows.Forms.Button();
-            this.button_exercise_meter = new System.Windows.Forms.Button();
+            this.button_athletic_meter = new System.Windows.Forms.Button();
             this.button_checklist = new System.Windows.Forms.Button();
             this.button_change_tracking = new System.Windows.Forms.Button();
             this.groupBox_shopping_list = new System.Windows.Forms.GroupBox();
@@ -150,7 +151,7 @@
             this.label41 = new System.Windows.Forms.Label();
             this.textBox_menu_food = new System.Windows.Forms.TextBox();
             this.button_menu_add = new System.Windows.Forms.Button();
-            this.comboBox_search = new System.Windows.Forms.ComboBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_username.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
@@ -256,6 +257,16 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Käyttäjä:";
             // 
+            // comboBox_search
+            // 
+            this.comboBox_search.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBox_search.FormattingEnabled = true;
+            this.comboBox_search.Location = new System.Drawing.Point(239, 12);
+            this.comboBox_search.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
+            this.comboBox_search.Name = "comboBox_search";
+            this.comboBox_search.Size = new System.Drawing.Size(162, 24);
+            this.comboBox_search.TabIndex = 14;
+            // 
             // button_search
             // 
             this.button_search.BackColor = System.Drawing.Color.DodgerBlue;
@@ -298,7 +309,7 @@
             this.flowLayoutPanel1.Controls.Add(this.button_cleaning);
             this.flowLayoutPanel1.Controls.Add(this.button_shopping_list);
             this.flowLayoutPanel1.Controls.Add(this.button_calendar);
-            this.flowLayoutPanel1.Controls.Add(this.button_exercise_meter);
+            this.flowLayoutPanel1.Controls.Add(this.button_athletic_meter);
             this.flowLayoutPanel1.Controls.Add(this.button_checklist);
             this.flowLayoutPanel1.Controls.Add(this.button_change_tracking);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -372,18 +383,18 @@
             this.button_calendar.UseVisualStyleBackColor = false;
             this.button_calendar.Click += new System.EventHandler(this.button_calendar_Click);
             // 
-            // button_exercise_meter
+            // button_athletic_meter
             // 
-            this.button_exercise_meter.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_exercise_meter.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_exercise_meter.ForeColor = System.Drawing.Color.White;
-            this.button_exercise_meter.Location = new System.Drawing.Point(562, 3);
-            this.button_exercise_meter.Name = "button_exercise_meter";
-            this.button_exercise_meter.Size = new System.Drawing.Size(130, 46);
-            this.button_exercise_meter.TabIndex = 6;
-            this.button_exercise_meter.Text = "Liikuntamittari";
-            this.button_exercise_meter.UseVisualStyleBackColor = false;
-            this.button_exercise_meter.Click += new System.EventHandler(this.button_exercise_meter_Click);
+            this.button_athletic_meter.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_athletic_meter.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_athletic_meter.ForeColor = System.Drawing.Color.White;
+            this.button_athletic_meter.Location = new System.Drawing.Point(562, 3);
+            this.button_athletic_meter.Name = "button_athletic_meter";
+            this.button_athletic_meter.Size = new System.Drawing.Size(130, 46);
+            this.button_athletic_meter.TabIndex = 6;
+            this.button_athletic_meter.Text = "Liikuntamittari";
+            this.button_athletic_meter.UseVisualStyleBackColor = false;
+            this.button_athletic_meter.Click += new System.EventHandler(this.button_athletic_meter_Click);
             // 
             // button_checklist
             // 
@@ -1512,7 +1523,7 @@
             this.groupBox_menu.Controls.Add(this.textBox_menu_food);
             this.groupBox_menu.Controls.Add(this.button_menu_add);
             this.groupBox_menu.Enabled = false;
-            this.groupBox_menu.Location = new System.Drawing.Point(12, 185);
+            this.groupBox_menu.Location = new System.Drawing.Point(12, 512);
             this.groupBox_menu.Name = "groupBox_menu";
             this.groupBox_menu.Size = new System.Drawing.Size(50, 49);
             this.groupBox_menu.TabIndex = 24;
@@ -1738,15 +1749,13 @@
             this.button_menu_add.UseVisualStyleBackColor = false;
             this.button_menu_add.Click += new System.EventHandler(this.button_menu_add_Click);
             // 
-            // comboBox_search
+            // groupBox1
             // 
-            this.comboBox_search.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox_search.FormattingEnabled = true;
-            this.comboBox_search.Location = new System.Drawing.Point(239, 12);
-            this.comboBox_search.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
-            this.comboBox_search.Name = "comboBox_search";
-            this.comboBox_search.Size = new System.Drawing.Size(162, 24);
-            this.comboBox_search.TabIndex = 14;
+            this.groupBox1.Location = new System.Drawing.Point(12, 170);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(966, 518);
+            this.groupBox1.TabIndex = 25;
+            this.groupBox1.TabStop = false;
             // 
             // Etusivu
             // 
@@ -1754,6 +1763,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(990, 700);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox_menu);
             this.Controls.Add(this.groupBox_checklist);
             this.Controls.Add(this.groupBox_calendar);
@@ -1805,7 +1815,7 @@
         private System.Windows.Forms.Button button_cleaning;
         private System.Windows.Forms.Button button_shopping_list;
         private System.Windows.Forms.Button button_calendar;
-        private System.Windows.Forms.Button button_exercise_meter;
+        private System.Windows.Forms.Button button_athletic_meter;
         private System.Windows.Forms.Button button_checklist;
         private System.Windows.Forms.Button button_change_tracking;
         private System.Windows.Forms.GroupBox groupBox_shopping_list;
@@ -1915,5 +1925,6 @@
         private System.Windows.Forms.Button button_shopping_list_save_as_file;
         private System.Windows.Forms.RichTextBox richTextBox_shopping_list;
         private System.Windows.Forms.ComboBox comboBox_search;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
