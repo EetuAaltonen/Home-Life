@@ -30,7 +30,7 @@
         {
             this.groupBox_top_banner = new System.Windows.Forms.GroupBox();
             this.button_logo = new System.Windows.Forms.Button();
-            this.flowLayoutPanel_username = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanel_user = new System.Windows.Forms.FlowLayoutPanel();
             this.button_logout = new System.Windows.Forms.Button();
             this.button_minimize = new System.Windows.Forms.Button();
             this.linkLabel_user = new System.Windows.Forms.LinkLabel();
@@ -39,7 +39,7 @@
             this.button_search = new System.Windows.Forms.Button();
             this.progressBar_database_connection = new System.Windows.Forms.ProgressBar();
             this.groupBox_navigation = new System.Windows.Forms.GroupBox();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanel_navigate = new System.Windows.Forms.FlowLayoutPanel();
             this.button_economic = new System.Windows.Forms.Button();
             this.button_menu = new System.Windows.Forms.Button();
             this.button_cleaning = new System.Windows.Forms.Button();
@@ -151,11 +151,15 @@
             this.label41 = new System.Windows.Forms.Label();
             this.textBox_menu_food = new System.Windows.Forms.TextBox();
             this.button_menu_add = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox_athletic_meter = new System.Windows.Forms.GroupBox();
+            this.label43 = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox_top_banner.SuspendLayout();
-            this.flowLayoutPanel_username.SuspendLayout();
+            this.flowLayoutPanel_user.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
+            this.flowLayoutPanel_navigate.SuspendLayout();
             this.groupBox_shopping_list.SuspendLayout();
             this.groupBox_home.SuspendLayout();
             this.groupBox_change_tracking.SuspendLayout();
@@ -163,13 +167,14 @@
             this.groupBox_calendar.SuspendLayout();
             this.groupBox_checklist.SuspendLayout();
             this.groupBox_menu.SuspendLayout();
+            this.groupBox_athletic_meter.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox_top_banner
             // 
             this.groupBox_top_banner.BackColor = System.Drawing.Color.Black;
             this.groupBox_top_banner.Controls.Add(this.button_logo);
-            this.groupBox_top_banner.Controls.Add(this.flowLayoutPanel_username);
+            this.groupBox_top_banner.Controls.Add(this.flowLayoutPanel_user);
             this.groupBox_top_banner.Location = new System.Drawing.Point(0, -2);
             this.groupBox_top_banner.Name = "groupBox_top_banner";
             this.groupBox_top_banner.Size = new System.Drawing.Size(996, 82);
@@ -189,20 +194,20 @@
             this.button_logo.UseVisualStyleBackColor = true;
             this.button_logo.Click += new System.EventHandler(this.button_logo_Click);
             // 
-            // flowLayoutPanel_username
+            // flowLayoutPanel_user
             // 
-            this.flowLayoutPanel_username.Controls.Add(this.button_logout);
-            this.flowLayoutPanel_username.Controls.Add(this.button_minimize);
-            this.flowLayoutPanel_username.Controls.Add(this.linkLabel_user);
-            this.flowLayoutPanel_username.Controls.Add(this.label1);
-            this.flowLayoutPanel_username.Controls.Add(this.comboBox_search);
-            this.flowLayoutPanel_username.Controls.Add(this.button_search);
-            this.flowLayoutPanel_username.Controls.Add(this.progressBar_database_connection);
-            this.flowLayoutPanel_username.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel_username.Location = new System.Drawing.Point(228, 19);
-            this.flowLayoutPanel_username.Name = "flowLayoutPanel_username";
-            this.flowLayoutPanel_username.Size = new System.Drawing.Size(750, 46);
-            this.flowLayoutPanel_username.TabIndex = 3;
+            this.flowLayoutPanel_user.Controls.Add(this.button_logout);
+            this.flowLayoutPanel_user.Controls.Add(this.button_minimize);
+            this.flowLayoutPanel_user.Controls.Add(this.linkLabel_user);
+            this.flowLayoutPanel_user.Controls.Add(this.label1);
+            this.flowLayoutPanel_user.Controls.Add(this.comboBox_search);
+            this.flowLayoutPanel_user.Controls.Add(this.button_search);
+            this.flowLayoutPanel_user.Controls.Add(this.progressBar_database_connection);
+            this.flowLayoutPanel_user.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
+            this.flowLayoutPanel_user.Location = new System.Drawing.Point(228, 19);
+            this.flowLayoutPanel_user.Name = "flowLayoutPanel_user";
+            this.flowLayoutPanel_user.Size = new System.Drawing.Size(750, 46);
+            this.flowLayoutPanel_user.TabIndex = 3;
             // 
             // button_logout
             // 
@@ -295,28 +300,28 @@
             // groupBox_navigation
             // 
             this.groupBox_navigation.BackColor = System.Drawing.Color.Black;
-            this.groupBox_navigation.Controls.Add(this.flowLayoutPanel1);
+            this.groupBox_navigation.Controls.Add(this.flowLayoutPanel_navigate);
             this.groupBox_navigation.Location = new System.Drawing.Point(12, 86);
             this.groupBox_navigation.Name = "groupBox_navigation";
             this.groupBox_navigation.Size = new System.Drawing.Size(967, 78);
             this.groupBox_navigation.TabIndex = 1;
             this.groupBox_navigation.TabStop = false;
             // 
-            // flowLayoutPanel1
+            // flowLayoutPanel_navigate
             // 
-            this.flowLayoutPanel1.Controls.Add(this.button_economic);
-            this.flowLayoutPanel1.Controls.Add(this.button_menu);
-            this.flowLayoutPanel1.Controls.Add(this.button_cleaning);
-            this.flowLayoutPanel1.Controls.Add(this.button_shopping_list);
-            this.flowLayoutPanel1.Controls.Add(this.button_calendar);
-            this.flowLayoutPanel1.Controls.Add(this.button_athletic_meter);
-            this.flowLayoutPanel1.Controls.Add(this.button_checklist);
-            this.flowLayoutPanel1.Controls.Add(this.button_change_tracking);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 16);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(961, 59);
-            this.flowLayoutPanel1.TabIndex = 0;
+            this.flowLayoutPanel_navigate.Controls.Add(this.button_economic);
+            this.flowLayoutPanel_navigate.Controls.Add(this.button_menu);
+            this.flowLayoutPanel_navigate.Controls.Add(this.button_cleaning);
+            this.flowLayoutPanel_navigate.Controls.Add(this.button_shopping_list);
+            this.flowLayoutPanel_navigate.Controls.Add(this.button_calendar);
+            this.flowLayoutPanel_navigate.Controls.Add(this.button_athletic_meter);
+            this.flowLayoutPanel_navigate.Controls.Add(this.button_checklist);
+            this.flowLayoutPanel_navigate.Controls.Add(this.button_change_tracking);
+            this.flowLayoutPanel_navigate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel_navigate.Location = new System.Drawing.Point(3, 16);
+            this.flowLayoutPanel_navigate.Name = "flowLayoutPanel_navigate";
+            this.flowLayoutPanel_navigate.Size = new System.Drawing.Size(961, 59);
+            this.flowLayoutPanel_navigate.TabIndex = 0;
             // 
             // button_economic
             // 
@@ -447,7 +452,7 @@
             this.groupBox_shopping_list.Enabled = false;
             this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 240);
             this.groupBox_shopping_list.Name = "groupBox_shopping_list";
-            this.groupBox_shopping_list.Size = new System.Drawing.Size(53, 43);
+            this.groupBox_shopping_list.Size = new System.Drawing.Size(575, 290);
             this.groupBox_shopping_list.TabIndex = 2;
             this.groupBox_shopping_list.TabStop = false;
             this.groupBox_shopping_list.Visible = false;
@@ -1749,13 +1754,64 @@
             this.button_menu_add.UseVisualStyleBackColor = false;
             this.button_menu_add.Click += new System.EventHandler(this.button_menu_add_Click);
             // 
-            // groupBox1
+            // groupBox_athletic_meter
             // 
-            this.groupBox1.Location = new System.Drawing.Point(12, 170);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(966, 518);
-            this.groupBox1.TabIndex = 25;
-            this.groupBox1.TabStop = false;
+            this.groupBox_athletic_meter.BackColor = System.Drawing.Color.Black;
+            this.groupBox_athletic_meter.Controls.Add(this.textBox1);
+            this.groupBox_athletic_meter.Controls.Add(this.label43);
+            this.groupBox_athletic_meter.Controls.Add(this.label42);
+            this.groupBox_athletic_meter.Controls.Add(this.panel1);
+            this.groupBox_athletic_meter.Enabled = false;
+            this.groupBox_athletic_meter.Location = new System.Drawing.Point(12, 170);
+            this.groupBox_athletic_meter.Name = "groupBox_athletic_meter";
+            this.groupBox_athletic_meter.Size = new System.Drawing.Size(963, 511);
+            this.groupBox_athletic_meter.TabIndex = 25;
+            this.groupBox_athletic_meter.TabStop = false;
+            this.groupBox_athletic_meter.Visible = false;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label43.ForeColor = System.Drawing.Color.White;
+            this.label43.Location = new System.Drawing.Point(6, 237);
+            this.label43.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(182, 20);
+            this.label43.TabIndex = 20;
+            this.label43.Text = "Tilastot tältä vuodelta";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label42.ForeColor = System.Drawing.Color.White;
+            this.label42.Location = new System.Drawing.Point(9, 27);
+            this.label42.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(149, 20);
+            this.label42.TabIndex = 19;
+            this.label42.Text = "Lisää ja muotoile ";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Location = new System.Drawing.Point(10, 260);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(946, 244);
+            this.panel1.TabIndex = 18;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(13, 57);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox1.MaxLength = 25;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(272, 26);
+            this.textBox1.TabIndex = 21;
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Etusivu
             // 
@@ -1763,7 +1819,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(990, 700);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox_athletic_meter);
             this.Controls.Add(this.groupBox_menu);
             this.Controls.Add(this.groupBox_checklist);
             this.Controls.Add(this.groupBox_calendar);
@@ -1779,10 +1835,10 @@
             this.Text = "Home&Life - Etusivu";
             this.Load += new System.EventHandler(this.Etusivu_Load);
             this.groupBox_top_banner.ResumeLayout(false);
-            this.flowLayoutPanel_username.ResumeLayout(false);
-            this.flowLayoutPanel_username.PerformLayout();
+            this.flowLayoutPanel_user.ResumeLayout(false);
+            this.flowLayoutPanel_user.PerformLayout();
             this.groupBox_navigation.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel_navigate.ResumeLayout(false);
             this.groupBox_shopping_list.ResumeLayout(false);
             this.groupBox_shopping_list.PerformLayout();
             this.groupBox_home.ResumeLayout(false);
@@ -1796,6 +1852,8 @@
             this.groupBox_checklist.PerformLayout();
             this.groupBox_menu.ResumeLayout(false);
             this.groupBox_menu.PerformLayout();
+            this.groupBox_athletic_meter.ResumeLayout(false);
+            this.groupBox_athletic_meter.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1803,13 +1861,13 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox_top_banner;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel_username;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel_user;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button_logout;
         public System.Windows.Forms.LinkLabel linkLabel_user;
         private System.Windows.Forms.Button button_search;
         private System.Windows.Forms.GroupBox groupBox_navigation;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel_navigate;
         private System.Windows.Forms.Button button_economic;
         private System.Windows.Forms.Button button_menu;
         private System.Windows.Forms.Button button_cleaning;
@@ -1925,6 +1983,10 @@
         private System.Windows.Forms.Button button_shopping_list_save_as_file;
         private System.Windows.Forms.RichTextBox richTextBox_shopping_list;
         private System.Windows.Forms.ComboBox comboBox_search;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox_athletic_meter;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

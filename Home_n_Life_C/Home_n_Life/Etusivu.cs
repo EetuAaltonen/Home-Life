@@ -57,11 +57,14 @@ namespace Home_n_Life
         //---Calendar----------------
         bool same_event = true;
         string formatDateTimeForMySql, month, year;
-        string[] months = new string[122];
+        string[] months = new string[13];
+        //---Athletic-meter----------
+        List<Label> addedLabels = new List<Label>();
         //---Checklist---------------
         bool checklist_progressing = false;
         //---Change_tracking---------
         string change;
+        bool draw_once;
 
 //----- Etusivu Load --------------------------------------------------------------------------------------
         private void Etusivu_Load(object sender, EventArgs e)
@@ -288,6 +291,25 @@ namespace Home_n_Life
                         textBox_event_search_year.Text = "";
                         dateTimePicker_event_search_datetime.Value = DateTime.Now;
                         break;
+                    case "athletic_meter":
+                        checkDatabaseConnection();
+                        view_change = "athletic_meter";
+                        viewChange(groupBox_athletic_meter, button_athletic_meter);
+                        Label label;
+                        for (int i = 1; i < months.Length; i++)
+                        {
+                            label = new Label();
+                            label.Text = months[i];
+                            label.Size = new Size(60, 20);
+                            label.BackColor = System.Drawing.Color.Transparent;
+                            label.Location = new Point((80 * (i - 1)) + 5, 220);
+                            panel1.Controls.Add(label);
+                            addedLabels.Insert(0, label);
+                        }
+
+                        draw_once = true;
+                        panel1.Refresh();
+                        break;
                     case "checklist":
                         textBox_checklist_name.Text = "";
                         textBox_checklist.Text = "";
@@ -390,9 +412,25 @@ namespace Home_n_Life
 
         private void button_athletic_meter_Click(object sender, EventArgs e)
         {
+            if (addedLabels.Count > 0)
+            {
+                int listCount = addedLabels.Count;
+                for (int i = 0; i < listCount; i++)
+                {
+                    Label removeLabel = addedLabels[0];
+                    addedLabels.Remove(removeLabel);
+                    panel1.Controls.Remove(removeLabel);
+                }
+            }
             dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
+                if (view_change != "athletic_meter")
+                {
+                    checkDatabaseConnection();
+                    view_change = "athletic_meter";
+                    viewChange(groupBox_athletic_meter, button_athletic_meter);
+                }
             }
         }
 
@@ -1389,12 +1427,56 @@ namespace Home_n_Life
             }
         }
 
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+            if (draw_once)
+            {
+                // Create pen.
+                Pen pen = new Pen(Color.Black, 10);
+
+                // Create array of points that define lines to draw.
+                List<Point> points = new List<Point>();
+                Random rnd = new Random();
+                Label labelValue;
+                int height = rnd.Next(30, 151);
+                points.Add(new Point(30, 50));
+                points.Add(new Point(30, 200));
+                labelValue = new Label();
+                labelValue.Text = Convert.ToString(200 - height);
+                labelValue.Size = new Size(60, 20);
+                labelValue.BackColor = System.Drawing.Color.Transparent;
+                labelValue.Location = new Point(20, (height - 10));
+                panel1.Controls.Add(labelValue);
+                addedLabels.Insert(0, labelValue);
+                
+                for (int i = 1; i < 12; i++)
+                {
+                    height = rnd.Next(30, 151);
+                    points.Add(new Point(30 + (i * 80), 200));
+                    points.Add(new Point(30 + (i * 80), height));
+                    points.Add(new Point(30 + (i * 80), 200));
+
+                    labelValue = new Label();
+                    labelValue.Text = Convert.ToString(200 - height);
+                    labelValue.Size = new Size(60, 20);
+                    labelValue.BackColor = System.Drawing.Color.Transparent;
+                    labelValue.Location = new Point(20 + (i * 80), (height - 10));
+                    panel1.Controls.Add(labelValue);
+                    addedLabels.Insert(0, labelValue);
+                }
+
+                //Draw lines to screen.
+                Point[] points_ = points.ToArray();
+                e.Graphics.DrawLines(pen, points_);
+                draw_once = false;
+            }
+        }
+
         private void button_cleaning_Click(object sender, EventArgs e)
         {
             dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-
             }
         }
 
