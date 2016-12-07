@@ -60,6 +60,8 @@ namespace Home_n_Life
         string[] months = new string[13];
         //---Athletic-meter----------
         List<Label> addedLabels = new List<Label>();
+        List<Point> points;
+        List<int> values;
         //---Checklist---------------
         bool checklist_progressing = false;
         //---Change_tracking---------
@@ -292,23 +294,9 @@ namespace Home_n_Life
                         dateTimePicker_event_search_datetime.Value = DateTime.Now;
                         break;
                     case "athletic_meter":
-                        checkDatabaseConnection();
                         view_change = "athletic_meter";
                         viewChange(groupBox_athletic_meter, button_athletic_meter);
-                        Label label;
-                        for (int i = 1; i < months.Length; i++)
-                        {
-                            label = new Label();
-                            label.Text = months[i];
-                            label.Size = new Size(60, 20);
-                            label.BackColor = System.Drawing.Color.Transparent;
-                            label.Location = new Point((80 * (i - 1)) + 5, 220);
-                            panel1.Controls.Add(label);
-                            addedLabels.Insert(0, label);
-                        }
-
-                        draw_once = true;
-                        panel1.Refresh();
+                        readAthleticMeter();
                         break;
                     case "checklist":
                         textBox_checklist_name.Text = "";
@@ -412,22 +400,22 @@ namespace Home_n_Life
 
         private void button_athletic_meter_Click(object sender, EventArgs e)
         {
-            if (addedLabels.Count > 0)
-            {
-                int listCount = addedLabels.Count;
-                for (int i = 0; i < listCount; i++)
-                {
-                    Label removeLabel = addedLabels[0];
-                    addedLabels.Remove(removeLabel);
-                    panel1.Controls.Remove(removeLabel);
-                }
-            }
             dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
                 if (view_change != "athletic_meter")
                 {
                     checkDatabaseConnection();
+                    if (addedLabels.Count > 0)
+                    {
+                        int listCount = addedLabels.Count;
+                        for (int i = 0; i < listCount; i++)
+                        {
+                            Label removeLabel = addedLabels[0];
+                            addedLabels.Remove(removeLabel);
+                            panel_athletic_statistics.Controls.Remove(removeLabel);
+                        }
+                    }
                     view_change = "athletic_meter";
                     viewChange(groupBox_athletic_meter, button_athletic_meter);
                 }
@@ -803,7 +791,7 @@ namespace Home_n_Life
                 textBox_menu_description.Text = "";
                 listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
                 listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                MessageBox.Show("Ruoka on poistettu ruokalistalta", "Poista"); 
+                MessageBox.Show("Ruoka on poistettu ruokalistalta", "Poista");
             }
             menu_progressing = false;
         }
@@ -889,7 +877,6 @@ namespace Home_n_Life
             textBox_menu_food.Text = listView_menu.SelectedItems[0].SubItems[0].Text;
             textBox_menu_description.Text = listView_menu.SelectedItems[0].SubItems[1].Text;
         }
-
 //----- Shopping list --------------------------------------------------------------------------------------
         private void readShoppingLists()
         {
@@ -1032,7 +1019,7 @@ namespace Home_n_Life
                     cmd.ExecuteNonQuery();
                     cmd = new MySqlCommand(alterTableQuery, conn);
                     cmd.ExecuteNonQuery();
-                    conn.Close();                    
+                    conn.Close();
                     MessageBox.Show("Kauppalappu on poistettu", "Poista");
                     change = "Kauppalappu " + textBox_list_name.Text + " poistettu";
                     addChangeTracking(change);
@@ -1045,7 +1032,7 @@ namespace Home_n_Life
                 {
                     MessageBox.Show(Convert.ToString(ex));
                 }
-            }   
+            }
         }
 
         private void button_shopping_list_save_as_file_Click(object sender, EventArgs e)
@@ -1185,66 +1172,66 @@ namespace Home_n_Life
         {
             //if (dateTimePicker_event_datetime.Value.Date >= DateTime.Now.Date)
             //{
-                formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("d/M/yyyy");
-                if (textBox_event_name.Text != "")
+            formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("d/M/yyyy");
+            if (textBox_event_name.Text != "")
+            {
+                if (textBox_event_location.Text != "")
                 {
-                    if (textBox_event_location.Text != "")
+                    if (Convert.ToString(dateTimePicker_event_datetime.Value) != "")
                     {
-                        if (Convert.ToString(dateTimePicker_event_datetime.Value) != "")
+                        same_event = false;
+                        for (int i = 0; i < listView_events.Items.Count; i++)
                         {
-                            same_event = false;
-                            for (int i = 0; i < listView_events.Items.Count; i++)
+                            if (textBox_event_name.Text == listView_events.Items[i].SubItems[0].Text &&
+                                formatDateTimeForMySql == listView_events.Items[i].SubItems[2].Text)
                             {
-                                if (textBox_event_name.Text == listView_events.Items[i].SubItems[0].Text &&
-                                    formatDateTimeForMySql == listView_events.Items[i].SubItems[2].Text)
-                                {
-                                    same_event = true;
-                                }
+                                same_event = true;
                             }
-                            if (!same_event)
+                        }
+                        if (!same_event)
+                        {
+                            month = dateTimePicker_event_datetime.Value.ToString(" MM ");
+                            formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("yyyy-MM-dd");
+                            insertTableQuery = @"INSERT INTO calendar (id, username, event_name, location, date, month, year)" +
+                                                "VALUES(null, '" + linkLabel_user.Text + "', '" + textBox_event_name.Text +
+                                                "', '" + textBox_event_location.Text + "', '" + formatDateTimeForMySql +
+                                                "', '" + months[Int32.Parse(month)] + "', '" + dateTimePicker_event_datetime.Value.ToString("yyyy") + "');";
+                            try
                             {
-                                month = dateTimePicker_event_datetime.Value.ToString(" MM ");
-                                formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("yyyy-MM-dd");
-                                insertTableQuery = @"INSERT INTO calendar (id, username, event_name, location, date, month, year)" +
-                                                    "VALUES(null, '" + linkLabel_user.Text + "', '" + textBox_event_name.Text +
-                                                    "', '" + textBox_event_location.Text + "', '" + formatDateTimeForMySql +
-                                                    "', '" + months[Int32.Parse(month)] + "', '" + dateTimePicker_event_datetime.Value.ToString("yyyy") + "');";
-                                try
-                                {
-                                    conn.Open();
-                                    cmd = new MySqlCommand(insertTableQuery, conn);
-                                    cmd.ExecuteNonQuery();
-                                    conn.Close();
-                                    MessageBox.Show("Uusi tapahtuma lisätty", "Lisää");
-                                    formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("d/M/yyyy");
-                                    change = "Tapahtuma " + textBox_event_name.Text + " lisätty kalenteriin päivään " + formatDateTimeForMySql;
-                                    addChangeTracking(change);
-                                    readCalendarLists();
-                                }
-                                catch (Exception ex)
-                                {
-                                    MessageBox.Show(Convert.ToString(ex));
-                                }
+                                conn.Open();
+                                cmd = new MySqlCommand(insertTableQuery, conn);
+                                cmd.ExecuteNonQuery();
+                                conn.Close();
+                                MessageBox.Show("Uusi tapahtuma lisätty", "Lisää");
+                                formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("d/M/yyyy");
+                                change = "Tapahtuma " + textBox_event_name.Text + " lisätty kalenteriin päivään " + formatDateTimeForMySql;
+                                addChangeTracking(change);
+                                readCalendarLists();
                             }
-                            else
+                            catch (Exception ex)
                             {
-                                MessageBox.Show("Samanniminen tapahtuma samalle päivälle on jo olemassa", "Lisää");
+                                MessageBox.Show(Convert.ToString(ex));
                             }
                         }
                         else
                         {
-                            MessageBox.Show("Et ole valinnut päivää", "Lisää");
+                            MessageBox.Show("Samanniminen tapahtuma samalle päivälle on jo olemassa", "Lisää");
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Et ole syöttänyt tapahtumapaikkaa", "Lisää");
+                        MessageBox.Show("Et ole valinnut päivää", "Lisää");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Et ole syöttänyt tapahtuman kuvausta", "Lisää");
+                    MessageBox.Show("Et ole syöttänyt tapahtumapaikkaa", "Lisää");
                 }
+            }
+            else
+            {
+                MessageBox.Show("Et ole syöttänyt tapahtuman kuvausta", "Lisää");
+            }
             /*}
             else
             {
@@ -1371,7 +1358,7 @@ namespace Home_n_Life
                 }
                 else
                 {
-                    MessageBox.Show("Syöttämäsi vuosi ei ole vuosiluku","Hae");
+                    MessageBox.Show("Syöttämäsi vuosi ei ole vuosiluku", "Hae");
                 }
             }
             else
@@ -1394,6 +1381,96 @@ namespace Home_n_Life
                                 " WHERE username='" + linkLabel_user.Text +
                                 "' AND date='" + formatDateTimeForMySql + "' ;";
             searchCalendarLists(selectTableQuery);
+        }
+//----- Athletic meter --------------------------------------------------------------------------------------
+        private void readAthleticMeter()
+        {
+            month = DateTime.Now.ToString(" MM ");
+            createTableQuery = @"CREATE TABLE IF NOT EXISTS athletic_meter (
+                                        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                        username VARCHAR(30) NOT NULL,
+                                        month VARCHAR(30) NOT NULL,
+                                        year VARCHAR(30) NOT NULL,
+                                        amount int(10));";
+            selectTableQuery = @"SELECT id, username, month, year, amount " +
+                                " FROM athletic_meter " +
+                                " WHERE username='" + linkLabel_user.Text +
+                                "' AND month='" + months[Int32.Parse(month)] +
+                                "' AND year=" + Int32.Parse(textBox_athletic_year.Text) + " ;";
+            try
+            {
+                values = new List<int>();
+                conn.Open();
+                cmd = new MySqlCommand(createTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(selectTableQuery, conn);
+                dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    textBox_athletic_kilometers.Text = Convert.ToString(dataReader["amount"]);
+                }
+                dataReader.Close();
+                selectTableQuery = @"SELECT id, username, month, year, amount " +
+                                " FROM athletic_meter " +
+                                " WHERE username='" + linkLabel_user.Text +
+                                "' AND year=" + Int32.Parse(textBox_athletic_year.Text) + " ;";
+                cmd = new MySqlCommand(selectTableQuery, conn);
+                dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    values.Add(Int32.Parse(Convert.ToString(dataReader["amount"])));
+                }
+                dataReader.Close();
+                conn.Close();
+
+                addedLabels = new List<Label>();
+                Label label;
+                for (int i = 1; i < months.Length; i++)
+                {
+                    label = new Label();
+                    label.Text = months[i];
+                    label.Size = new Size(60, 20);
+                    label.BackColor = System.Drawing.Color.Transparent;
+                    label.Location = new Point((80 * (i - 1)) + 5, 220);
+                    panel_athletic_statistics.Controls.Add(label);
+                    addedLabels.Insert(0, label);
+                }
+
+                points = new List<Point>();
+                //Random rnd = new Random();
+                Label labelValue;
+                points.Add(new Point(30, (200 - (values[0] / 2))));
+                points.Add(new Point(30, 200));
+                labelValue = new Label();
+                labelValue.Text = Convert.ToString(values[0]);
+                labelValue.Size = new Size(60, 20);
+                labelValue.BackColor = System.Drawing.Color.Transparent;
+                labelValue.Location = new Point(20, (200 - (values[0] / 2) - 30));
+                panel_athletic_statistics.Controls.Add(labelValue);
+                addedLabels.Insert(0, labelValue);
+
+                for (int i = 1; i < values.Count/*12*/; i++)
+                {
+                    points.Add(new Point(30 + (i * 80), 200));
+                    points.Add(new Point(30 + (i * 80), (200 - (values[i]/2)) ));
+                    points.Add(new Point(30 + (i * 80), 200));
+
+                    labelValue = new Label();
+                    labelValue.Text = Convert.ToString(values[i]);
+                    labelValue.Size = new Size(60, 20);
+                    labelValue.BackColor = System.Drawing.Color.Transparent;
+                    labelValue.Location = new Point(20 + (i * 80), (200 - (values[i]/2) - 30));
+                    panel_athletic_statistics.Controls.Add(labelValue);
+                    addedLabels.Insert(0, labelValue);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+
+            draw_once = true;
+            panel_athletic_statistics.Refresh();
         }
 //----- Checklist --------------------------------------------------------------------------------------
         private void readChecklists()
@@ -1431,41 +1508,7 @@ namespace Home_n_Life
         {
             if (draw_once)
             {
-                // Create pen.
                 Pen pen = new Pen(Color.Black, 10);
-
-                // Create array of points that define lines to draw.
-                List<Point> points = new List<Point>();
-                Random rnd = new Random();
-                Label labelValue;
-                int height = rnd.Next(30, 151);
-                points.Add(new Point(30, 50));
-                points.Add(new Point(30, 200));
-                labelValue = new Label();
-                labelValue.Text = Convert.ToString(200 - height);
-                labelValue.Size = new Size(60, 20);
-                labelValue.BackColor = System.Drawing.Color.Transparent;
-                labelValue.Location = new Point(20, (height - 10));
-                panel1.Controls.Add(labelValue);
-                addedLabels.Insert(0, labelValue);
-                
-                for (int i = 1; i < 12; i++)
-                {
-                    height = rnd.Next(30, 151);
-                    points.Add(new Point(30 + (i * 80), 200));
-                    points.Add(new Point(30 + (i * 80), height));
-                    points.Add(new Point(30 + (i * 80), 200));
-
-                    labelValue = new Label();
-                    labelValue.Text = Convert.ToString(200 - height);
-                    labelValue.Size = new Size(60, 20);
-                    labelValue.BackColor = System.Drawing.Color.Transparent;
-                    labelValue.Location = new Point(20 + (i * 80), (height - 10));
-                    panel1.Controls.Add(labelValue);
-                    addedLabels.Insert(0, labelValue);
-                }
-
-                //Draw lines to screen.
                 Point[] points_ = points.ToArray();
                 e.Graphics.DrawLines(pen, points_);
                 draw_once = false;
