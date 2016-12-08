@@ -61,8 +61,7 @@ namespace Home_n_Life
         //---Athletic-meter----------
         List<Label> addedLabels = new List<Label>();
         List<Point> points;
-        List<double> values;
-        double zoom;
+        List<Tuple<string, double>> values;
         //---Checklist---------------
         bool checklist_progressing = false;
         //---Change_tracking---------
@@ -1360,9 +1359,10 @@ namespace Home_n_Life
                     panel_athletic_statistics.Controls.Remove(removeLabel);
                 }
             }
-            month = DateTime.Now.ToString(" MM ");
+            month = DateTime.Now.ToString(" M ");
+            textBox_athletic_month.Text = months[Int32.Parse(month)];
             year = DateTime.Now.ToString(" yyyy ");
-            if (Int32.Parse(textBox_athletic_year.Text) > 0)
+            if (textBox_athletic_year.Text.Length > 0)
             {
                 year = textBox_athletic_year.Text;
             }
@@ -1379,7 +1379,7 @@ namespace Home_n_Life
                                 "' AND year=" + Int32.Parse(year) + " ;";
             try
             {
-                values = new List<double>();
+                values = new List<Tuple<string, double>>();
                 conn.Open();
                 cmd = new MySqlCommand(createTableQuery, conn);
                 cmd.ExecuteNonQuery();
@@ -1393,37 +1393,22 @@ namespace Home_n_Life
                 selectTableQuery = @"SELECT id, username, month, year, amount " +
                                 " FROM athletic_meter " +
                                 " WHERE username='" + user.user_name +
-                                "' AND year=" + Int32.Parse(textBox_athletic_year.Text) + " ;";
+                                "' AND year=" + Int32.Parse(year) + " ;";
                 cmd = new MySqlCommand(selectTableQuery, conn);
                 dataReader = cmd.ExecuteReader();
                 double largest = 0;
+                double zoom = 0;
                 while (dataReader.Read())
                 {
                     if (double.Parse(Convert.ToString(dataReader["amount"])) >= largest)
                     {
                         largest = double.Parse(Convert.ToString(dataReader["amount"]));
                     }
-                    values.Add(double.Parse(Convert.ToString(dataReader["amount"])));
+                    values.Add(Tuple.Create(Convert.ToString(dataReader["month"]), double.Parse(Convert.ToString(dataReader["amount"]))));
                 }
+                zoom = largest / 240;
                 dataReader.Close();
                 conn.Close();
-                zoom = 1;
-                if (largest / 100000 >= 1)
-                {
-                    zoom = 1000;
-                }
-                else if (largest / 10000 >= 1)
-                {
-                    zoom = 100;
-                }
-                else if (largest / 1000 >= 1)
-                {
-                    zoom = 10;
-                }
-                else if (largest / 500 >= 1)
-                {
-                    zoom = 2;
-                }
 
                 addedLabels = new List<Label>();
                 Label label;
@@ -1437,37 +1422,89 @@ namespace Home_n_Life
                     panel_athletic_statistics.Controls.Add(label);
                     addedLabels.Insert(0, label);
                 }
-                if (values.Count > 0)
+                Label labelValue;
+                for (int i = 1; i < 13; i++)
                 {
-                    points = new List<Point>();
-                    Label labelValue;
-                    points.Add(new Point(30, 240 - Convert.ToInt32((values[0]/zoom))*2));
-                    points.Add(new Point(30, 240));
-                    labelValue = new Label();
-                    labelValue.Text = Convert.ToString(values[0]);
-                    labelValue.Size = new Size(60, 20);
-                    labelValue.BackColor = System.Drawing.Color.Transparent;
-                    labelValue.Location = new Point(20, 240 - Convert.ToInt32((values[0] / zoom)) * 2);
-                    panel_athletic_statistics.Controls.Add(labelValue);
-                    addedLabels.Insert(0, labelValue);
-
-                    for (int i = 1; i < values.Count/*12*/; i++)
+                    double tempValue = 0;
+                    foreach (var value in values)
                     {
-                        points.Add(new Point(30 + (i * 80), 240));
-                        points.Add(new Point(30 + (i * 80), 240 - Convert.ToInt32((values[i] / zoom)) * 2));
-                        points.Add(new Point(30 + (i * 80), 240));
-
+                        if (value.Item1.Equals(months[i]))
+                        {
+                            tempValue = value.Item2;
+                        }
+                    }
+                    if (i == 1)
+                    {
+                        points = new List<Point>();
+                        if (tempValue > 0)
+                        {
+                            points.Add(new Point(30, 260 - Convert.ToInt32(tempValue / zoom)));
+                        }
+                        else
+                        {
+                            points.Add(new Point(30, 250));
+                        }
+                        points.Add(new Point(30, 250));
                         labelValue = new Label();
-                        labelValue.Text = Convert.ToString(values[i]);
+                        labelValue.Text = Convert.ToString(tempValue);
                         labelValue.Size = new Size(60, 20);
                         labelValue.BackColor = System.Drawing.Color.Transparent;
-                        labelValue.Location = new Point(20 + (i * 80), 240 - Convert.ToInt32((values[i] / zoom)) * 2);
+                        if (tempValue > 0)
+                        {
+                            labelValue.Location = new Point(20, 250 - Convert.ToInt32(tempValue / zoom));
+                        }
+                        else
+                        {
+                            labelValue.Location = new Point(20, 220);
+                        }
                         panel_athletic_statistics.Controls.Add(labelValue);
                         addedLabels.Insert(0, labelValue);
                     }
-                    draw_once = true;
-                    panel_athletic_statistics.Refresh();
+                    else
+                    {
+                        points.Add(new Point(30 + ((i - 1) * 80), 250));
+                        if (tempValue > 0)
+                        {
+                            if (270 - Convert.ToInt32(tempValue / zoom) <= 250)
+                            {
+                                points.Add(new Point(30 + ((i - 1) * 80), 270 - Convert.ToInt32(tempValue / zoom)));
+                            }
+                            else
+                            {
+                                points.Add(new Point(30 + ((i - 1) * 80), 250));
+                            }
+                        }
+                        else
+                        {
+                            points.Add(new Point(30 + ((i - 1) * 80), 250));
+                        }
+                        points.Add(new Point(30 + ((i - 1) * 80), 250));
+
+                        labelValue = new Label();
+                        labelValue.Text = Convert.ToString(tempValue);
+                        labelValue.Size = new Size(60, 20);
+                        labelValue.BackColor = System.Drawing.Color.Transparent;
+                        if (tempValue > 0)
+                        {
+                            if (240 - Convert.ToInt32(tempValue / zoom) <= 220)
+                            {
+                                labelValue.Location = new Point(20 + ((i - 1) * 80), 250 - Convert.ToInt32(tempValue / zoom));
+                            }
+                            else
+                            {
+                                labelValue.Location = new Point(20 + ((i - 1) * 80), 220);
+                            }
+                        }
+                        else
+                        {
+                            labelValue.Location = new Point(20 + ((i - 1) * 80), 220);
+                        }
+                        panel_athletic_statistics.Controls.Add(labelValue);
+                        addedLabels.Insert(0, labelValue);
+                    }
                 }
+                draw_once = true;
+                panel_athletic_statistics.Refresh();
             }
             catch (Exception ex)
             {
@@ -1477,6 +1514,7 @@ namespace Home_n_Life
 
         private void button_athletic_add_kilometers_Click(object sender, EventArgs e)
         {
+            textBox_athletic_year.Text = "";
             month = DateTime.Now.ToString(" M ");
             year = DateTime.Now.ToString(" yyyy ");
             deleteTableQuery = @"DELETE FROM athletic_meter" +
@@ -1514,6 +1552,12 @@ namespace Home_n_Life
                 draw_once = false;
             }
         }
+
+        private void button_athletic_search_Click(object sender, EventArgs e)
+        {
+            readAthleticMeter();
+        }
+
 //----- Checklist --------------------------------------------------------------------------------------
         private void readChecklists()
         {
