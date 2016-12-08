@@ -61,7 +61,8 @@ namespace Home_n_Life
         //---Athletic-meter----------
         List<Label> addedLabels = new List<Label>();
         List<Point> points;
-        List<int> values;
+        List<double> values;
+        double zoom;
         //---Checklist---------------
         bool checklist_progressing = false;
         //---Change_tracking---------
@@ -406,16 +407,6 @@ namespace Home_n_Life
                 if (view_change != "athletic_meter")
                 {
                     checkDatabaseConnection();
-                    if (addedLabels.Count > 0)
-                    {
-                        int listCount = addedLabels.Count;
-                        for (int i = 0; i < listCount; i++)
-                        {
-                            Label removeLabel = addedLabels[0];
-                            addedLabels.Remove(removeLabel);
-                            panel_athletic_statistics.Controls.Remove(removeLabel);
-                        }
-                    }
                     view_change = "athletic_meter";
                     viewChange(groupBox_athletic_meter, button_athletic_meter);
                 }
@@ -465,7 +456,7 @@ namespace Home_n_Life
                                             amount DOUBLE(10,2) NOT NULL);";
             selectTableQuery = @"SELECT id, username, description, type, amount " +
                                 " FROM economic " +
-                                " WHERE username='" + linkLabel_user.Text + "' ;";
+                                " WHERE username='" + user.user_name + "' ;";
             try
             {
                 conn.Open();
@@ -600,7 +591,7 @@ namespace Home_n_Life
                         if (!same_name)
                         {
                             insertTableQuery = @"INSERT INTO economic(id, username, description, type, amount) " +
-                                                "VALUES('null', '" + linkLabel_user.Text + "', '" + textBox_economic_name.Text + "', '" + Convert.ToString(comboBox_economic_type.SelectedItem) + "', '" + textBox_economic_amount.Text + "');";
+                                                "VALUES('null', '" + user.user_name + "', '" + textBox_economic_name.Text + "', '" + Convert.ToString(comboBox_economic_type.SelectedItem) + "', '" + textBox_economic_amount.Text + "');";
                             alterTableQuery = @"ALTER TABLE economic DROP COLUMN id;
                                                 ALTER TABLE economic ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
                             try
@@ -654,7 +645,7 @@ namespace Home_n_Life
                 dialogResult = MessageBox.Show("Haluatko varmasti poistaa tämän tiedon?", "Poista", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    deleteTableQuery = @"DELETE FROM economic WHERE username='" + linkLabel_user.Text +
+                    deleteTableQuery = @"DELETE FROM economic WHERE username='" + user.user_name +
                                         "' AND description='" + textBox_economic_name.Text +
                                         "' AND type='" + Convert.ToString(comboBox_economic_type.SelectedItem) + "' ;";
                     alterTableQuery = @"ALTER TABLE economic DROP COLUMN id;
@@ -1095,7 +1086,7 @@ namespace Home_n_Life
                                  year INT(6) NOT NULL ) ;";
             selectTableQuery = @"SELECT id, username, event_name, location, date, month, year " +
                                 " FROM calendar " +
-                                " WHERE username='" + linkLabel_user.Text + "' ;";
+                                " WHERE username='" + user.user_name + "' ;";
             try
             {
                 conn.Open();
@@ -1193,7 +1184,7 @@ namespace Home_n_Life
                             month = dateTimePicker_event_datetime.Value.ToString(" MM ");
                             formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("yyyy-MM-dd");
                             insertTableQuery = @"INSERT INTO calendar (id, username, event_name, location, date, month, year)" +
-                                                "VALUES(null, '" + linkLabel_user.Text + "', '" + textBox_event_name.Text +
+                                                "VALUES(null, '" + user.user_name + "', '" + textBox_event_name.Text +
                                                 "', '" + textBox_event_location.Text + "', '" + formatDateTimeForMySql +
                                                 "', '" + months[Int32.Parse(month)] + "', '" + dateTimePicker_event_datetime.Value.ToString("yyyy") + "');";
                             try
@@ -1254,7 +1245,7 @@ namespace Home_n_Life
             dialogResult = MessageBox.Show("Haluatko varmasti poistaa menneet tapahtumat?", "Poista", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                deleteTableQuery = @"DELETE FROM calendar WHERE username='" + linkLabel_user.Text +
+                deleteTableQuery = @"DELETE FROM calendar WHERE username='" + user.user_name +
                                         "' AND date<'" + DateTime.Now.ToString("yyyy-MM-dd") + "' ;";
                 try
                 {
@@ -1287,7 +1278,7 @@ namespace Home_n_Life
                 dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen tapahtuman?", "Poista", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    deleteTableQuery = @"DELETE FROM calendar WHERE username='" + linkLabel_user.Text +
+                    deleteTableQuery = @"DELETE FROM calendar WHERE username='" + user.user_name +
                                         "' AND event_name='" + textBox_event_name.Text +
                                         "' AND date='" + formatDateTimeForMySql + "' ;";
                     try
@@ -1325,7 +1316,7 @@ namespace Home_n_Life
                     setSearchMonth(ref month);
                     selectTableQuery = @"SELECT id, username, event_name, location, date " +
                                         " FROM calendar " +
-                                        " WHERE username='" + linkLabel_user.Text +
+                                        " WHERE username='" + user.user_name +
                                         "' AND month='" + months[Int32.Parse(month)] +
                                         "' AND year=" + Int32.Parse(textBox_event_search_year.Text) + " ;";
                     searchCalendarLists(selectTableQuery);
@@ -1341,7 +1332,7 @@ namespace Home_n_Life
                 setSearchMonth(ref month);
                 selectTableQuery = @"SELECT id, username, event_name, location, date " +
                                     " FROM calendar " +
-                                    " WHERE username='" + linkLabel_user.Text +
+                                    " WHERE username='" + user.user_name +
                                     "' AND month='" + months[Int32.Parse(month)] + "' ;";
                 searchCalendarLists(selectTableQuery);
             }
@@ -1352,7 +1343,7 @@ namespace Home_n_Life
                 {
                     selectTableQuery = @"SELECT id, username, event_name, location, date " +
                                         " FROM calendar " +
-                                        " WHERE username='" + linkLabel_user.Text +
+                                        " WHERE username='" + user.user_name +
                                         "' AND year=" + Int32.Parse(textBox_event_search_year.Text) + " ;";
                     searchCalendarLists(selectTableQuery);
                 }
@@ -1378,28 +1369,44 @@ namespace Home_n_Life
             formatDateTimeForMySql = dateTimePicker_event_search_datetime.Value.ToString("yyyy-MM-dd");
             selectTableQuery = @"SELECT id, username, event_name, location, date " +
                                 " FROM calendar " +
-                                " WHERE username='" + linkLabel_user.Text +
+                                " WHERE username='" + user.user_name +
                                 "' AND date='" + formatDateTimeForMySql + "' ;";
             searchCalendarLists(selectTableQuery);
         }
 //----- Athletic meter --------------------------------------------------------------------------------------
         private void readAthleticMeter()
         {
+            zoom = 0;
+            if (addedLabels.Count > 0)
+            {
+                int listCount = addedLabels.Count;
+                for (int i = 0; i < listCount; i++)
+                {
+                    Label removeLabel = addedLabels[0];
+                    addedLabels.Remove(removeLabel);
+                    panel_athletic_statistics.Controls.Remove(removeLabel);
+                }
+            }
             month = DateTime.Now.ToString(" MM ");
+            year = DateTime.Now.ToString(" yyyy ");
+            if (Int32.Parse(textBox_athletic_year.Text) > 0)
+            {
+                year = textBox_athletic_year.Text;
+            }
             createTableQuery = @"CREATE TABLE IF NOT EXISTS athletic_meter (
                                         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                         username VARCHAR(30) NOT NULL,
                                         month VARCHAR(30) NOT NULL,
                                         year VARCHAR(30) NOT NULL,
-                                        amount int(10));";
+                                        amount DOUBLE(10,10));";
             selectTableQuery = @"SELECT id, username, month, year, amount " +
                                 " FROM athletic_meter " +
-                                " WHERE username='" + linkLabel_user.Text +
+                                " WHERE username='" + user.user_name +
                                 "' AND month='" + months[Int32.Parse(month)] +
-                                "' AND year=" + Int32.Parse(textBox_athletic_year.Text) + " ;";
+                                "' AND year=" + Int32.Parse(year) + " ;";
             try
             {
-                values = new List<int>();
+                values = new List<double>();
                 conn.Open();
                 cmd = new MySqlCommand(createTableQuery, conn);
                 cmd.ExecuteNonQuery();
@@ -1407,18 +1414,43 @@ namespace Home_n_Life
                 dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
-                    textBox_athletic_kilometers.Text = Convert.ToString(dataReader["amount"]);
+                    //textBox_athletic_kilometers.Text = Convert.ToString(dataReader["amount"]);
                 }
                 dataReader.Close();
                 selectTableQuery = @"SELECT id, username, month, year, amount " +
                                 " FROM athletic_meter " +
-                                " WHERE username='" + linkLabel_user.Text +
+                                " WHERE username='" + user.user_name +
                                 "' AND year=" + Int32.Parse(textBox_athletic_year.Text) + " ;";
                 cmd = new MySqlCommand(selectTableQuery, conn);
                 dataReader = cmd.ExecuteReader();
+                double largest = 0;
                 while (dataReader.Read())
                 {
-                    values.Add(Int32.Parse(Convert.ToString(dataReader["amount"])));
+                    if (double.Parse(Convert.ToString(dataReader["amount"])) >= largest)
+                    {
+                        if ((double.Parse(Convert.ToString(dataReader["amount"])) % 10000) >= 1)
+                        {
+                            zoom = 5;
+                        }
+                        else if ((double.Parse(Convert.ToString(dataReader["amount"])) % 1000) >= 1)
+                        {
+                            zoom = 4;
+                        }
+                        else if ((double.Parse(Convert.ToString(dataReader["amount"])) % 500) >= 1)
+                        {
+                            zoom = 3;
+                        }
+                        else if ((double.Parse(Convert.ToString(dataReader["amount"])) % 200) >= 1)
+                        {
+                            zoom = 2;
+                        }
+                        else
+                        {
+                            zoom = 1;
+                        }
+                        largest = double.Parse(Convert.ToString(dataReader["amount"]));
+                    }
+                    values.Add(double.Parse(Convert.ToString(dataReader["amount"])));
                 }
                 dataReader.Close();
                 conn.Close();
@@ -1435,42 +1467,87 @@ namespace Home_n_Life
                     panel_athletic_statistics.Controls.Add(label);
                     addedLabels.Insert(0, label);
                 }
-
-                points = new List<Point>();
-                //Random rnd = new Random();
-                Label labelValue;
-                points.Add(new Point(30, (200 - (values[0] / 2))));
-                points.Add(new Point(30, 200));
-                labelValue = new Label();
-                labelValue.Text = Convert.ToString(values[0]);
-                labelValue.Size = new Size(60, 20);
-                labelValue.BackColor = System.Drawing.Color.Transparent;
-                labelValue.Location = new Point(20, (200 - (values[0] / 2) - 30));
-                panel_athletic_statistics.Controls.Add(labelValue);
-                addedLabels.Insert(0, labelValue);
-
-                for (int i = 1; i < values.Count/*12*/; i++)
+                if (values.Count > 0)
                 {
-                    points.Add(new Point(30 + (i * 80), 200));
-                    points.Add(new Point(30 + (i * 80), (200 - (values[i]/2)) ));
-                    points.Add(new Point(30 + (i * 80), 200));
-
+                    points = new List<Point>();
+                    //Random rnd = new Random();
+                    Label labelValue;
+                    points.Add(new Point(30, 200 - Convert.ToInt32(values[0] / zoom)));
+                    points.Add(new Point(30, 200));
                     labelValue = new Label();
-                    labelValue.Text = Convert.ToString(values[i]);
+                    labelValue.Text = Convert.ToString(values[0]);
                     labelValue.Size = new Size(60, 20);
                     labelValue.BackColor = System.Drawing.Color.Transparent;
-                    labelValue.Location = new Point(20 + (i * 80), (200 - (values[i]/2) - 30));
+                    labelValue.Location = new Point(20, 200 - Convert.ToInt32(values[0] / zoom));
                     panel_athletic_statistics.Controls.Add(labelValue);
                     addedLabels.Insert(0, labelValue);
+
+                    for (int i = 1; i < values.Count/*12*/; i++)
+                    {
+                        points.Add(new Point(30 + (i * 80), 200));
+                        points.Add(new Point(30 + (i * 80), 200 - Convert.ToInt32(values[i] / zoom)));
+                        points.Add(new Point(30 + (i * 80), 200));
+
+                        labelValue = new Label();
+                        labelValue.Text = Convert.ToString(values[i]);
+                        labelValue.Size = new Size(60, 20);
+                        labelValue.BackColor = System.Drawing.Color.Transparent;
+                        labelValue.Location = new Point(20 + (i * 80), 200 - Convert.ToInt32(values[i] / zoom));
+                        panel_athletic_statistics.Controls.Add(labelValue);
+                        addedLabels.Insert(0, labelValue);
+                    }
+                    draw_once = true;
+                    panel_athletic_statistics.Refresh();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(Convert.ToString(ex));
             }
+        }
 
-            draw_once = true;
-            panel_athletic_statistics.Refresh();
+        private void button_athletic_add_kilometers_Click(object sender, EventArgs e)
+        {
+            textBox_athletic_kilometers.Text = Convert.ToString(double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text));
+            month = DateTime.Now.ToString(" M ");
+            year = DateTime.Now.ToString(" yyyy ");
+            deleteTableQuery = @"DELETE FROM athletic_meter" +
+                                " WHERE username='" + user.user_name + "' AND month='" + months[Int32.Parse(month)] + "' AND year=" + Int32.Parse(year) +
+                                " AND EXISTS(SELECT month, year WHERE username='" + user.user_name + "' LIMIT 1) ;";
+            insertTableQuery = @"INSERT INTO athletic_meter (id, username, month, year, amount)" +
+                                "VALUES(null, '" + user.user_name + "', '" + months[Int32.Parse(month)] + "', '" + Int32.Parse(year) + "', '" + double.Parse(textBox_athletic_kilometers.Text) + "');";
+
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(deleteTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(insertTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                //cmd = new MySqlCommand(alterTableQuery, conn);
+                //cmd.ExecuteNonQuery();
+                conn.Close();
+                readAthleticMeter();
+                MessageBox.Show("Kauppalappu tallennettu", "Tallenna");
+                change = "Liikuntamittariin lisätty kilometrejä: " + textBox_athletic_add_kilometers.Text;
+                addChangeTracking(change);
+                textBox_athletic_add_kilometers.Text = "";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+        }
+
+        private void panel_athletic_statistics_Paint(object sender, PaintEventArgs e)
+        {
+            if (draw_once)
+            {
+                Pen pen = new Pen(Color.Black, 10);
+                Point[] points_ = points.ToArray();
+                e.Graphics.DrawLines(pen, points_);
+                draw_once = false;
+            }
         }
 //----- Checklist --------------------------------------------------------------------------------------
         private void readChecklists()
@@ -1483,7 +1560,7 @@ namespace Home_n_Life
                                         text TEXT(2000) NOT NULL);";
             selectTableQuery = @"SELECT id, username, checklist_name, text " +
                                 " FROM checklist " +
-                                " WHERE username='" + linkLabel_user.Text + "' ;";
+                                " WHERE username='" + user.user_name + "' ;";
             try
             {
                 conn.Open();
@@ -1504,17 +1581,6 @@ namespace Home_n_Life
             }
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-            if (draw_once)
-            {
-                Pen pen = new Pen(Color.Black, 10);
-                Point[] points_ = points.ToArray();
-                e.Graphics.DrawLines(pen, points_);
-                draw_once = false;
-            }
-        }
-
         private void button_cleaning_Click(object sender, EventArgs e)
         {
             dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
@@ -1530,7 +1596,7 @@ namespace Home_n_Life
                 textBox_checklist.Text = "";
                 textBox_checklist_name.Text = Convert.ToString(comboBox_shopping_lists.SelectedItem);
                 selectTableQuery = @"SELECT id, username, checklist_name, text " +
-                                    "FROM checklist WHERE username='" + linkLabel_user.Text + "' " +
+                                    "FROM checklist WHERE username='" + user.user_name + "' " +
                                     "AND checklist_name='" + comboBox_checklists.SelectedItem + "' ;";
                 try
                 {
@@ -1563,7 +1629,7 @@ namespace Home_n_Life
                                             checklist_name VARCHAR(30) NOT NULL,
                                             text VARCHAR(1000) NOT NULL);";
                 insertTableQuery = @"INSERT INTO checklist (id, username, checklist_name, text) " +
-                                    "SELECT * FROM(SELECT 0, '" + linkLabel_user.Text + "', '" + textBox_checklist_name.Text + "', 'null') AS tmp " +
+                                    "SELECT * FROM(SELECT 0, '" + user.user_name + "', '" + textBox_checklist_name.Text + "', 'null') AS tmp " +
                                     "WHERE NOT EXISTS( " +
                                     "SELECT checklist_name FROM checklist WHERE checklist_name='" + textBox_checklist_name.Text + "' " +
                                     ") LIMIT 2 ;";
@@ -1605,7 +1671,7 @@ namespace Home_n_Life
             dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen muistilistan?", "Poista", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                deleteTableQuery = @"DELETE FROM checklist WHERE username='" + linkLabel_user.Text +
+                deleteTableQuery = @"DELETE FROM checklist WHERE username='" + user.user_name +
                                 "' AND checklist_name='" + textBox_checklist_name.Text + "' ;";
                 try
                 {

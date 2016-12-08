@@ -152,18 +152,18 @@
             this.textBox_menu_food = new System.Windows.Forms.TextBox();
             this.button_menu_add = new System.Windows.Forms.Button();
             this.groupBox_athletic_meter = new System.Windows.Forms.GroupBox();
+            this.label47 = new System.Windows.Forms.Label();
+            this.textBox_athletic_kilometers = new System.Windows.Forms.TextBox();
+            this.label46 = new System.Windows.Forms.Label();
+            this.button_athletic_add_kilometers = new System.Windows.Forms.Button();
+            this.label45 = new System.Windows.Forms.Label();
+            this.label44 = new System.Windows.Forms.Label();
+            this.textBox_athletic_year = new System.Windows.Forms.TextBox();
+            this.button_athletic_search = new System.Windows.Forms.Button();
+            this.textBox_athletic_add_kilometers = new System.Windows.Forms.TextBox();
             this.label43 = new System.Windows.Forms.Label();
             this.label42 = new System.Windows.Forms.Label();
             this.panel_athletic_statistics = new System.Windows.Forms.Panel();
-            this.textBox_athletic_add_kilometers = new System.Windows.Forms.TextBox();
-            this.button_athletic_search = new System.Windows.Forms.Button();
-            this.textBox_athletic_year = new System.Windows.Forms.TextBox();
-            this.label44 = new System.Windows.Forms.Label();
-            this.label45 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label46 = new System.Windows.Forms.Label();
-            this.textBox_athletic_kilometers = new System.Windows.Forms.TextBox();
-            this.label47 = new System.Windows.Forms.Label();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_user.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
@@ -1768,7 +1768,7 @@
             this.groupBox_athletic_meter.Controls.Add(this.label47);
             this.groupBox_athletic_meter.Controls.Add(this.textBox_athletic_kilometers);
             this.groupBox_athletic_meter.Controls.Add(this.label46);
-            this.groupBox_athletic_meter.Controls.Add(this.button2);
+            this.groupBox_athletic_meter.Controls.Add(this.button_athletic_add_kilometers);
             this.groupBox_athletic_meter.Controls.Add(this.label45);
             this.groupBox_athletic_meter.Controls.Add(this.label44);
             this.groupBox_athletic_meter.Controls.Add(this.textBox_athletic_year);
@@ -1784,6 +1784,115 @@
             this.groupBox_athletic_meter.TabIndex = 25;
             this.groupBox_athletic_meter.TabStop = false;
             this.groupBox_athletic_meter.Visible = false;
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label47.ForeColor = System.Drawing.Color.White;
+            this.label47.Location = new System.Drawing.Point(352, 87);
+            this.label47.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(182, 20);
+            this.label47.TabIndex = 29;
+            this.label47.Text = "Kertyneitä kilometrejä";
+            // 
+            // textBox_athletic_kilometers
+            // 
+            this.textBox_athletic_kilometers.Enabled = false;
+            this.textBox_athletic_kilometers.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_athletic_kilometers.Location = new System.Drawing.Point(356, 117);
+            this.textBox_athletic_kilometers.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_athletic_kilometers.MaxLength = 25;
+            this.textBox_athletic_kilometers.Name = "textBox_athletic_kilometers";
+            this.textBox_athletic_kilometers.Size = new System.Drawing.Size(171, 26);
+            this.textBox_athletic_kilometers.TabIndex = 28;
+            this.textBox_athletic_kilometers.Text = "0";
+            this.textBox_athletic_kilometers.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label46.ForeColor = System.Drawing.Color.White;
+            this.label46.Location = new System.Drawing.Point(352, 27);
+            this.label46.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(207, 20);
+            this.label46.TabIndex = 27;
+            this.label46.Text = "Tämän kuukauden tiedot";
+            // 
+            // button_athletic_add_kilometers
+            // 
+            this.button_athletic_add_kilometers.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_athletic_add_kilometers.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_athletic_add_kilometers.ForeColor = System.Drawing.Color.White;
+            this.button_athletic_add_kilometers.Location = new System.Drawing.Point(10, 109);
+            this.button_athletic_add_kilometers.Name = "button_athletic_add_kilometers";
+            this.button_athletic_add_kilometers.Size = new System.Drawing.Size(107, 28);
+            this.button_athletic_add_kilometers.TabIndex = 26;
+            this.button_athletic_add_kilometers.Text = "Lisää";
+            this.button_athletic_add_kilometers.UseVisualStyleBackColor = false;
+            this.button_athletic_add_kilometers.Click += new System.EventHandler(this.button_athletic_add_kilometers_Click);
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label45.ForeColor = System.Drawing.Color.White;
+            this.label45.Location = new System.Drawing.Point(733, 87);
+            this.label45.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(54, 20);
+            this.label45.TabIndex = 25;
+            this.label45.Text = "Vuosi";
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label44.ForeColor = System.Drawing.Color.White;
+            this.label44.Location = new System.Drawing.Point(733, 27);
+            this.label44.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(156, 20);
+            this.label44.TabIndex = 24;
+            this.label44.Text = "Hae vuoden tiedot";
+            // 
+            // textBox_athletic_year
+            // 
+            this.textBox_athletic_year.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_athletic_year.Location = new System.Drawing.Point(737, 117);
+            this.textBox_athletic_year.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_athletic_year.MaxLength = 25;
+            this.textBox_athletic_year.Name = "textBox_athletic_year";
+            this.textBox_athletic_year.Size = new System.Drawing.Size(183, 26);
+            this.textBox_athletic_year.TabIndex = 23;
+            this.textBox_athletic_year.Text = "2016";
+            this.textBox_athletic_year.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // button_athletic_search
+            // 
+            this.button_athletic_search.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_athletic_search.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_athletic_search.ForeColor = System.Drawing.Color.White;
+            this.button_athletic_search.Location = new System.Drawing.Point(737, 157);
+            this.button_athletic_search.Name = "button_athletic_search";
+            this.button_athletic_search.Size = new System.Drawing.Size(107, 28);
+            this.button_athletic_search.TabIndex = 22;
+            this.button_athletic_search.Text = "Hae";
+            this.button_athletic_search.UseVisualStyleBackColor = false;
+            // 
+            // textBox_athletic_add_kilometers
+            // 
+            this.textBox_athletic_add_kilometers.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_athletic_add_kilometers.Location = new System.Drawing.Point(10, 70);
+            this.textBox_athletic_add_kilometers.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_athletic_add_kilometers.MaxLength = 25;
+            this.textBox_athletic_add_kilometers.Name = "textBox_athletic_add_kilometers";
+            this.textBox_athletic_add_kilometers.Size = new System.Drawing.Size(171, 26);
+            this.textBox_athletic_add_kilometers.TabIndex = 21;
+            this.textBox_athletic_add_kilometers.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label43
             // 
@@ -1816,114 +1925,7 @@
             this.panel_athletic_statistics.Name = "panel_athletic_statistics";
             this.panel_athletic_statistics.Size = new System.Drawing.Size(946, 244);
             this.panel_athletic_statistics.TabIndex = 18;
-            this.panel_athletic_statistics.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
-            // 
-            // textBox_athletic_add_kilometers
-            // 
-            this.textBox_athletic_add_kilometers.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_athletic_add_kilometers.Location = new System.Drawing.Point(10, 70);
-            this.textBox_athletic_add_kilometers.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.textBox_athletic_add_kilometers.MaxLength = 25;
-            this.textBox_athletic_add_kilometers.Name = "textBox_athletic_add_kilometers";
-            this.textBox_athletic_add_kilometers.Size = new System.Drawing.Size(171, 26);
-            this.textBox_athletic_add_kilometers.TabIndex = 21;
-            this.textBox_athletic_add_kilometers.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // button_athletic_search
-            // 
-            this.button_athletic_search.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_athletic_search.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_athletic_search.ForeColor = System.Drawing.Color.White;
-            this.button_athletic_search.Location = new System.Drawing.Point(737, 157);
-            this.button_athletic_search.Name = "button_athletic_search";
-            this.button_athletic_search.Size = new System.Drawing.Size(107, 28);
-            this.button_athletic_search.TabIndex = 22;
-            this.button_athletic_search.Text = "Hae";
-            this.button_athletic_search.UseVisualStyleBackColor = false;
-            // 
-            // textBox_athletic_year
-            // 
-            this.textBox_athletic_year.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_athletic_year.Location = new System.Drawing.Point(737, 117);
-            this.textBox_athletic_year.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.textBox_athletic_year.MaxLength = 25;
-            this.textBox_athletic_year.Name = "textBox_athletic_year";
-            this.textBox_athletic_year.Size = new System.Drawing.Size(183, 26);
-            this.textBox_athletic_year.TabIndex = 23;
-            this.textBox_athletic_year.Text = "2016";
-            this.textBox_athletic_year.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label44.ForeColor = System.Drawing.Color.White;
-            this.label44.Location = new System.Drawing.Point(733, 27);
-            this.label44.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(156, 20);
-            this.label44.TabIndex = 24;
-            this.label44.Text = "Hae vuoden tiedot";
-            // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label45.ForeColor = System.Drawing.Color.White;
-            this.label45.Location = new System.Drawing.Point(733, 87);
-            this.label45.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(54, 20);
-            this.label45.TabIndex = 25;
-            this.label45.Text = "Vuosi";
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(10, 109);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(107, 28);
-            this.button2.TabIndex = 26;
-            this.button2.Text = "Lisää";
-            this.button2.UseVisualStyleBackColor = false;
-            // 
-            // label46
-            // 
-            this.label46.AutoSize = true;
-            this.label46.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label46.ForeColor = System.Drawing.Color.White;
-            this.label46.Location = new System.Drawing.Point(352, 27);
-            this.label46.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(207, 20);
-            this.label46.TabIndex = 27;
-            this.label46.Text = "Tämän kuukauden tiedot";
-            // 
-            // textBox_athletic_kilometers
-            // 
-            this.textBox_athletic_kilometers.Enabled = false;
-            this.textBox_athletic_kilometers.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_athletic_kilometers.Location = new System.Drawing.Point(356, 117);
-            this.textBox_athletic_kilometers.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.textBox_athletic_kilometers.MaxLength = 25;
-            this.textBox_athletic_kilometers.Name = "textBox_athletic_kilometers";
-            this.textBox_athletic_kilometers.Size = new System.Drawing.Size(171, 26);
-            this.textBox_athletic_kilometers.TabIndex = 28;
-            this.textBox_athletic_kilometers.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label47.ForeColor = System.Drawing.Color.White;
-            this.label47.Location = new System.Drawing.Point(352, 87);
-            this.label47.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(182, 20);
-            this.label47.TabIndex = 29;
-            this.label47.Text = "Kertyneitä kilometrejä";
+            this.panel_athletic_statistics.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_athletic_statistics_Paint);
             // 
             // Etusivu
             // 
@@ -2100,7 +2102,7 @@
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.TextBox textBox_athletic_add_kilometers;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button_athletic_add_kilometers;
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.TextBox textBox_athletic_year;
