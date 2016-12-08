@@ -33,7 +33,7 @@ namespace Home_n_Life
         MySqlCommand cmd;
         MySqlDataReader dataReader;
         User user = new User();
-        string dropTableQuery, createTableQuery, insertTableQuery, selectTableQuery, updateTableQuery, deleteTableQuery, alterTableQuery;
+        string dropTableQuery, createTableQuery, insertTableQuery, selectTableQuery, updateTableQuery, deleteTableQuery;
         //---Dialog------------------
         DialogResult dialogResult;
         //---listView-Added-Items----
@@ -239,7 +239,7 @@ namespace Home_n_Life
                     case "economic":
                         listView_income.Clear();
                         listView_income.View = View.Details;
-                        listView_income.Columns.Add("Id", 20, HorizontalAlignment.Left);
+                        //listView_income.Columns.Add("Id", 20, HorizontalAlignment.Left);
                         listView_income.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
                         listView_income.Columns.Add("Summa", 20, HorizontalAlignment.Left);
                         listView_income.Columns.Add("Type", 20, HorizontalAlignment.Left);
@@ -248,7 +248,7 @@ namespace Home_n_Life
 
                         listView_outlay.Clear();
                         listView_outlay.View = View.Details;
-                        listView_outlay.Columns.Add("Id", 20, HorizontalAlignment.Left);
+                        //listView_outlay.Columns.Add("Id", 20, HorizontalAlignment.Left);
                         listView_outlay.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
                         listView_outlay.Columns.Add("Summa", 20, HorizontalAlignment.Left);
                         listView_outlay.Columns.Add("Type", 20, HorizontalAlignment.Left);
@@ -496,11 +496,11 @@ namespace Home_n_Life
             }
             listView_income.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             listView_income.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            listView_income.Columns[3].Width = 0; //Hide type
+            listView_income.Columns[2].Width = 0; //Hide type
 
             listView_outlay.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             listView_outlay.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            listView_outlay.Columns[3].Width = 0; //Hide type
+            listView_outlay.Columns[2].Width = 0; //Hide type
         }
 
         private void listView_income_Click(object sender, EventArgs e)
@@ -513,9 +513,9 @@ namespace Home_n_Life
             {
                 if (listView_income.SelectedIndices.Count == 1)
                 {
-                    textBox_economic_name.Text = listView_income.SelectedItems[0].SubItems[1].Text;
-                    textBox_economic_amount.Text = listView_income.SelectedItems[0].SubItems[2].Text;
-                    if (listView_income.SelectedItems[0].SubItems[3].Text == "Tulo")
+                    textBox_economic_name.Text = listView_income.SelectedItems[0].SubItems[0].Text;
+                    textBox_economic_amount.Text = listView_income.SelectedItems[0].SubItems[1].Text;
+                    if (listView_income.SelectedItems[0].SubItems[2].Text == "Tulo")
                     {
                         comboBox_economic_type.SelectedIndex = 0;
                     }
@@ -541,9 +541,9 @@ namespace Home_n_Life
             {
                 if (listView_outlay.SelectedIndices.Count == 1)
                 {
-                    textBox_economic_name.Text = listView_outlay.SelectedItems[0].SubItems[1].Text;
-                    textBox_economic_amount.Text = listView_outlay.SelectedItems[0].SubItems[2].Text;
-                    if (listView_outlay.SelectedItems[0].SubItems[3].Text == "Tulo")
+                    textBox_economic_name.Text = listView_outlay.SelectedItems[0].SubItems[0].Text;
+                    textBox_economic_amount.Text = listView_outlay.SelectedItems[0].SubItems[1].Text;
+                    if (listView_outlay.SelectedItems[0].SubItems[2].Text == "Tulo")
                     {
                         comboBox_economic_type.SelectedIndex = 0;
                     }
@@ -592,14 +592,10 @@ namespace Home_n_Life
                         {
                             insertTableQuery = @"INSERT INTO economic(id, username, description, type, amount) " +
                                                 "VALUES('null', '" + user.user_name + "', '" + textBox_economic_name.Text + "', '" + Convert.ToString(comboBox_economic_type.SelectedItem) + "', '" + textBox_economic_amount.Text + "');";
-                            alterTableQuery = @"ALTER TABLE economic DROP COLUMN id;
-                                                ALTER TABLE economic ADD COLUMN id BIGINT UNSIGNED DEFAULT 0 PRIMARY KEY FIRST ;";
                             try
                             {
                                 conn.Open();
                                 cmd = new MySqlCommand(insertTableQuery, conn);
-                                cmd.ExecuteNonQuery();
-                                cmd = new MySqlCommand(alterTableQuery, conn);
                                 cmd.ExecuteNonQuery();
                                 conn.Close();
                                 change = "Talouteen lisätty uusi " + Convert.ToString(comboBox_economic_type.SelectedItem).ToLower() + " " + textBox_economic_name.Text;
@@ -648,14 +644,10 @@ namespace Home_n_Life
                     deleteTableQuery = @"DELETE FROM economic WHERE username='" + user.user_name +
                                         "' AND description='" + textBox_economic_name.Text +
                                         "' AND type='" + Convert.ToString(comboBox_economic_type.SelectedItem) + "' ;";
-                    alterTableQuery = @"ALTER TABLE economic DROP COLUMN id;
-                                        ALTER TABLE economic ADD COLUMN id BIGINT UNSIGNED DEFAULT 0 PRIMARY KEY FIRST ;";
                     try
                     {
                         conn.Open();
                         cmd = new MySqlCommand(deleteTableQuery, conn);
-                        cmd.ExecuteNonQuery();
-                        cmd = new MySqlCommand(alterTableQuery, conn);
                         cmd.ExecuteNonQuery();
                         conn.Close();
                         change = "Taloudesta poistettu " + Convert.ToString(comboBox_economic_type.SelectedItem).ToLower() + " " + textBox_economic_name.Text;
@@ -796,8 +788,6 @@ namespace Home_n_Life
                 {
                     deleteTableQuery = @"DELETE FROM menu " +
                                         "WHERE menu_name='" + textBox_menu_name.Text + "' AND family_key='" + user.family_key + "' ;";
-                    alterTableQuery = @"ALTER TABLE menu DROP COLUMN id;
-                                        ALTER TABLE menu ADD COLUMN id BIGINT UNSIGNED DEFAULT 0 PRIMARY KEY FIRST ;";
                     try
                     {
                         conn.Open();
@@ -810,8 +800,6 @@ namespace Home_n_Life
                             cmd = new MySqlCommand(insertTableQuery, conn);
                             cmd.ExecuteNonQuery();
                         }
-                        cmd = new MySqlCommand(alterTableQuery, conn);
-                        cmd.ExecuteNonQuery();
                         conn.Close();
                         readMenus();
                         menu_progressing = true;
@@ -841,14 +829,10 @@ namespace Home_n_Life
         {
             deleteTableQuery = @"DELETE FROM menu " +
                                 "WHERE menu_name='" + textBox_menu_name.Text + "' AND family_key='" + user.family_key + "' ;";
-            alterTableQuery = @"ALTER TABLE menu DROP COLUMN id;
-                                        ALTER TABLE menu ADD COLUMN id BIGINT UNSIGNED DEFAULT 0 PRIMARY KEY FIRST ;";
             try
             {
                 conn.Open();
                 cmd = new MySqlCommand(deleteTableQuery, conn);
-                cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand(alterTableQuery, conn);
                 cmd.ExecuteNonQuery();
                 conn.Close();
                 readMenus();
@@ -962,8 +946,6 @@ namespace Home_n_Life
                 updateTableQuery = @"UPDATE shoppinglist " +
                                      "SET text='" + richTextBox_shopping_list.Text + "' " +
                                      "WHERE listname='" + textBox_list_name.Text + "' AND family_key='" + user.family_key + "' ;";
-                alterTableQuery = @"ALTER TABLE shoppinglist DROP COLUMN id;
-                                    ALTER TABLE shoppinglist ADD COLUMN id BIGINT UNSIGNED DEFAULT 0 PRIMARY KEY FIRST ;";
 
                 try
                 {
@@ -971,8 +953,6 @@ namespace Home_n_Life
                     cmd = new MySqlCommand(insertTableQuery, conn);
                     cmd.ExecuteNonQuery();
                     cmd = new MySqlCommand(updateTableQuery, conn);
-                    cmd.ExecuteNonQuery();
-                    cmd = new MySqlCommand(alterTableQuery, conn);
                     cmd.ExecuteNonQuery();
                     conn.Close();
                     readShoppingLists();
@@ -1001,14 +981,10 @@ namespace Home_n_Life
             {
                 deleteTableQuery = @"DELETE FROM shoppinglist WHERE family_key='" + user.family_key +
                                 "' AND listname='" + textBox_list_name.Text + "' ;";
-                alterTableQuery = @"ALTER TABLE shoppinglist DROP COLUMN id;
-                                    ALTER TABLE shoppinglist ADD COLUMN id BIGINT UNSIGNED DEFAULT 0 PRIMARY KEY FIRST ;";
                 try
                 {
                     conn.Open();
                     cmd = new MySqlCommand(deleteTableQuery, conn);
-                    cmd.ExecuteNonQuery();
-                    cmd = new MySqlCommand(alterTableQuery, conn);
                     cmd.ExecuteNonQuery();
                     conn.Close();
                     MessageBox.Show("Kauppalappu on poistettu", "Poista");
@@ -1273,8 +1249,6 @@ namespace Home_n_Life
                 // "2000-01-12 20:10:00Z"    
                 dateValue.ToString(CultureInfo.InvariantCulture.DateTimeFormat.UniversalSortableDateTimePattern);
                 formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("yyyy-MM-dd");
-                alterTableQuery = @"ALTER TABLE calendar DROP COLUMN id;
-                                    ALTER TABLE calendar ADD COLUMN id BIGINT UNSIGNED DEFAULT 0 PRIMARY KEY FIRST ;";
                 dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen tapahtuman?", "Poista", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
@@ -1508,16 +1482,12 @@ namespace Home_n_Life
             deleteTableQuery = @"DELETE FROM athletic_meter" +
                                 " WHERE username='" + user.user_name + "' AND month='" + months[Int32.Parse(month)] + "' AND year=" + Int32.Parse(year) +
                                 " AND EXISTS(SELECT month, year WHERE username='" + user.user_name + "' LIMIT 1) ;";
-            alterTableQuery = @"ALTER TABLE athletic_meter DROP COLUMN id;
-                                ALTER TABLE athletic_meter ADD COLUMN id BIGINT UNSIGNED DEFAULT 0 PRIMARY KEY FIRST ;";
             insertTableQuery = @"INSERT INTO athletic_meter(id, username, month, year, amount) " +
                                 "VALUES('null', '" + user.user_name + "', '" + months[Int32.Parse(month)] + "', '" + Int32.Parse(year) + "', '" + Convert.ToString(double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text)) + "');";
             try
             {
                 conn.Open();
                 cmd = new MySqlCommand(deleteTableQuery, conn);
-                cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand(alterTableQuery, conn);
                 cmd.ExecuteNonQuery();
                 cmd = new MySqlCommand(insertTableQuery, conn);
                 cmd.ExecuteNonQuery();

@@ -460,7 +460,7 @@
             this.groupBox_shopping_list.Enabled = false;
             this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 240);
             this.groupBox_shopping_list.Name = "groupBox_shopping_list";
-            this.groupBox_shopping_list.Size = new System.Drawing.Size(53, 51);
+            this.groupBox_shopping_list.Size = new System.Drawing.Size(53, 43);
             this.groupBox_shopping_list.TabIndex = 2;
             this.groupBox_shopping_list.TabStop = false;
             this.groupBox_shopping_list.Visible = false;
@@ -817,9 +817,9 @@
             this.groupBox_economic.Controls.Add(this.listView_outlay);
             this.groupBox_economic.Controls.Add(this.textBox_economic_name);
             this.groupBox_economic.Enabled = false;
-            this.groupBox_economic.Location = new System.Drawing.Point(12, 297);
+            this.groupBox_economic.Location = new System.Drawing.Point(12, 179);
             this.groupBox_economic.Name = "groupBox_economic";
-            this.groupBox_economic.Size = new System.Drawing.Size(53, 34);
+            this.groupBox_economic.Size = new System.Drawing.Size(967, 507);
             this.groupBox_economic.TabIndex = 5;
             this.groupBox_economic.TabStop = false;
             this.groupBox_economic.Visible = false;
@@ -1092,7 +1092,7 @@
             this.groupBox_calendar.Enabled = false;
             this.groupBox_calendar.Location = new System.Drawing.Point(12, 456);
             this.groupBox_calendar.Name = "groupBox_calendar";
-            this.groupBox_calendar.Size = new System.Drawing.Size(53, 50);
+            this.groupBox_calendar.Size = new System.Drawing.Size(56, 46);
             this.groupBox_calendar.TabIndex = 6;
             this.groupBox_calendar.TabStop = false;
             this.groupBox_calendar.Visible = false;
@@ -1538,7 +1538,7 @@
             this.groupBox_menu.Enabled = false;
             this.groupBox_menu.Location = new System.Drawing.Point(12, 512);
             this.groupBox_menu.Name = "groupBox_menu";
-            this.groupBox_menu.Size = new System.Drawing.Size(50, 31);
+            this.groupBox_menu.Size = new System.Drawing.Size(56, 41);
             this.groupBox_menu.TabIndex = 24;
             this.groupBox_menu.TabStop = false;
             this.groupBox_menu.Visible = false;
@@ -1778,9 +1778,9 @@
             this.groupBox_athletic_meter.Controls.Add(this.label42);
             this.groupBox_athletic_meter.Controls.Add(this.panel_athletic_statistics);
             this.groupBox_athletic_meter.Enabled = false;
-            this.groupBox_athletic_meter.Location = new System.Drawing.Point(12, 170);
+            this.groupBox_athletic_meter.Location = new System.Drawing.Point(18, 629);
             this.groupBox_athletic_meter.Name = "groupBox_athletic_meter";
-            this.groupBox_athletic_meter.Size = new System.Drawing.Size(967, 518);
+            this.groupBox_athletic_meter.Size = new System.Drawing.Size(50, 54);
             this.groupBox_athletic_meter.TabIndex = 25;
             this.groupBox_athletic_meter.TabStop = false;
             this.groupBox_athletic_meter.Visible = false;
