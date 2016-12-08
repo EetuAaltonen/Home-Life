@@ -24,6 +24,7 @@ namespace Home_n_Life
             public string user_name;
             public string family_key;
             public bool full_permissions;
+            public List<string> family_members;
         }
 
 //----- Attributes --------------------------------------------------------------------------------------
@@ -126,6 +127,7 @@ namespace Home_n_Life
 
         public void searchFamilyMembers()
         {
+            user.family_members = new List<string>();
             listView_family_members.Clear();
             listView_family_members.View = View.Details;
             listView_family_members.Columns.Add("Nimi", 20, HorizontalAlignment.Left);
@@ -148,6 +150,7 @@ namespace Home_n_Life
                             Convert.ToString(dataReader["permissions"])
                     });
                     listView_family_members.Items.Add(item);
+                    user.family_members.Add(Convert.ToString(dataReader["username"]));
                 }
                 dataReader.Close();
                 conn.Close();
@@ -235,10 +238,39 @@ namespace Home_n_Life
                         listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
                         listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                         break;
+                    case "cleaning_shift":
+
+                        if (!user.full_permissions)
+                        {
+                            listView_cleaning_shift_family_members.Enabled = false;
+                            textBox_cleaning_shift_work.Enabled = false;
+                            button_cleaning_shift_add.Enabled = false;
+                            button_cleaning_shift_add.Visible = false;
+                            button_cleaning_shift_remove.Enabled = false;
+                            button_cleaning_shift_remove.Visible = false;
+                            label_cleaning_shift_info.Text = "Valitse perheenjäsen listalta\n ja tarkastele";
+                        }
+
+                        listView_cleaning_shift_family_members.Clear();
+                        listView_cleaning_shift_family_members.View = View.Details;
+                        listView_cleaning_shift_family_members.Columns.Add("Perheenjäsen", 20, HorizontalAlignment.Left);
+
+                        listView_cleaning_shift_list.Clear();
+                        listView_cleaning_shift_list.View = View.Details;
+                        listView_cleaning_shift_list.Columns.Add("Askare", 20, HorizontalAlignment.Left);
+                        listView_cleaning_shift_list.Columns.Add("Perheenjäsen", 20, HorizontalAlignment.Left);
+
+                        readCleaning();
+
+                        listView_cleaning_shift_family_members.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                        listView_cleaning_shift_family_members.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+
+                        listView_cleaning_shift_list.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                        listView_cleaning_shift_list.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                        break;
                     case "economic":
                         listView_income.Clear();
                         listView_income.View = View.Details;
-                        //listView_income.Columns.Add("Id", 20, HorizontalAlignment.Left);
                         listView_income.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
                         listView_income.Columns.Add("Summa", 20, HorizontalAlignment.Left);
                         listView_income.Columns.Add("Type", 20, HorizontalAlignment.Left);
@@ -247,7 +279,6 @@ namespace Home_n_Life
 
                         listView_outlay.Clear();
                         listView_outlay.View = View.Details;
-                        //listView_outlay.Columns.Add("Id", 20, HorizontalAlignment.Left);
                         listView_outlay.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
                         listView_outlay.Columns.Add("Summa", 20, HorizontalAlignment.Left);
                         listView_outlay.Columns.Add("Type", 20, HorizontalAlignment.Left);
@@ -851,6 +882,147 @@ namespace Home_n_Life
             textBox_menu_food.Text = listView_menu.SelectedItems[0].SubItems[0].Text;
             textBox_menu_description.Text = listView_menu.SelectedItems[0].SubItems[1].Text;
         }
+//----- Cleaning --------------------------------------------------------------------------------------
+        private void readCleaning()
+        {
+            listView_cleaning_shift_list.Items.Clear();
+            createTableQuery = @"CREATE TABLE IF NOT EXISTS cleaning_shift (
+                                            id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                            family_key VARCHAR(30) NOT NULL,
+                                            description VARCHAR(30) NOT NULL,
+                                            worker VARCHAR(30) NOT NULL);";
+            selectTableQuery = @"SELECT id, family_key, description, worker " +
+                                " FROM cleaning_shift " +
+                                " WHERE family_key='" + user.family_key + "' ;";
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(createTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(selectTableQuery, conn);
+                dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    item = new ListViewItem(new string[]
+                    {
+                            Convert.ToString(dataReader["description"]),
+                            Convert.ToString(dataReader["worker"])
+                    });
+                    listView_cleaning_shift_list.Items.Add(item);
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+            listView_cleaning_shift_list.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView_cleaning_shift_list.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+
+            listView_cleaning_shift_family_members.Items.Clear();
+            foreach (string member in user.family_members)
+            {
+                listView_cleaning_shift_family_members.Items.Add(member);
+            }
+        }
+
+        private void listView_cleaning_shift_family_members_Click(object sender, EventArgs e)
+        {
+            if (listView_cleaning_shift_list.SelectedIndices.Count > 0)
+            {
+                listView_cleaning_shift_list.SelectedItems[0].Selected = false;
+            }
+            if (listView_cleaning_shift_family_members.SelectedIndices.Count > 0)
+            {
+                if (listView_cleaning_shift_family_members.SelectedIndices.Count == 1)
+                {
+                    textBox_cleaning_shift_worker.Text = listView_cleaning_shift_family_members.SelectedItems[0].SubItems[0].Text;
+                }
+                else
+                {
+                    MessageBox.Show("Valitse vain yksi kerrallaan", "Menot");
+                }
+            }
+        }
+
+        private void listView_cleaning_shift_list_Click(object sender, EventArgs e)
+        {
+            if (listView_cleaning_shift_family_members.SelectedIndices.Count > 0)
+            {
+                listView_cleaning_shift_family_members.SelectedItems[0].Selected = false;
+            }
+            if (listView_cleaning_shift_list.SelectedIndices.Count > 0)
+            {
+                if (listView_cleaning_shift_list.SelectedIndices.Count == 1)
+                {
+                    textBox_cleaning_shift_work.Text = listView_cleaning_shift_list.SelectedItems[0].SubItems[0].Text;
+                    textBox_cleaning_shift_worker.Text = listView_cleaning_shift_list.SelectedItems[0].SubItems[1].Text;
+                }
+                else
+                {
+                    MessageBox.Show("Valitse vain yksi kerrallaan", "Menot");
+                }
+            }
+        }
+
+        private void button_cleaning_shift_add_Click(object sender, EventArgs e)
+        {
+            insertTableQuery = @"INSERT INTO cleaning_shift(id, family_key, description, worker) " +
+                                "VALUES('null', '" + user.family_key + "', '" + textBox_cleaning_shift_work.Text + "', '" + textBox_cleaning_shift_worker.Text + "');";
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(insertTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                change = "Siivousvuoroihin lisätty " + textBox_cleaning_shift_work.Text;
+                addChangeTracking(change);
+                textBox_cleaning_shift_work.Text = "";
+                textBox_cleaning_shift_worker.Text = "";
+                readCleaning();
+                MessageBox.Show("Uusi askare lisätty", "Lisää");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+        }
+
+        private void button_cleaning_shift_remove_Click(object sender, EventArgs e)
+        {
+            if (listView_cleaning_shift_list.SelectedIndices.Count == 1)
+            {
+                dialogResult = MessageBox.Show("Haluatko varmasti poistaa tämän tiedon?", "Poista", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    deleteTableQuery = @"DELETE FROM cleaning_shift WHERE family_key='" + user.family_key +
+                                        "' AND description='" + listView_cleaning_shift_list.SelectedItems[0].SubItems[0].Text +
+                                        "' AND worker='" + listView_cleaning_shift_list.SelectedItems[0].SubItems[1].Text + "' ;";
+                    try
+                    {
+                        conn.Open();
+                        cmd = new MySqlCommand(deleteTableQuery, conn);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        change = "Siivouksesta poistettu " + textBox_cleaning_shift_work.Text;
+                        addChangeTracking(change);
+                        textBox_cleaning_shift_worker.Text = "";
+                        textBox_cleaning_shift_work.Text = "";
+                        readCleaning();
+                        MessageBox.Show("Listaus poistettu", "Poista");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(Convert.ToString(ex));
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Valitse yksi tulo tai meno", "Poista");
+            }
+        }
 //----- Shopping list --------------------------------------------------------------------------------------
         private void readShoppingLists()
         {
@@ -1136,73 +1308,73 @@ namespace Home_n_Life
 
         private void button_event_add_Click(object sender, EventArgs e)
         {
-            //if (dateTimePicker_event_datetime.Value.Date >= DateTime.Now.Date)
-            //{
-            formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("d/M/yyyy");
-            if (textBox_event_name.Text != "")
+            if (dateTimePicker_event_datetime.Value.Date >= DateTime.Now.Date)
             {
-                if (textBox_event_location.Text != "")
+                formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("d/M/yyyy");
+                if (textBox_event_name.Text != "")
                 {
-                    if (Convert.ToString(dateTimePicker_event_datetime.Value) != "")
+                    if (textBox_event_location.Text != "")
                     {
-                        same_event = false;
-                        for (int i = 0; i < listView_events.Items.Count; i++)
+                        if (Convert.ToString(dateTimePicker_event_datetime.Value) != "")
                         {
-                            if (textBox_event_name.Text == listView_events.Items[i].SubItems[0].Text &&
-                                formatDateTimeForMySql == listView_events.Items[i].SubItems[2].Text)
+                            same_event = false;
+                            for (int i = 0; i < listView_events.Items.Count; i++)
                             {
-                                same_event = true;
+                                if (textBox_event_name.Text == listView_events.Items[i].SubItems[0].Text &&
+                                    formatDateTimeForMySql == listView_events.Items[i].SubItems[2].Text)
+                                {
+                                    same_event = true;
+                                }
                             }
-                        }
-                        if (!same_event)
-                        {
-                            month = dateTimePicker_event_datetime.Value.ToString(" MM ");
-                            formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("yyyy-MM-dd");
-                            insertTableQuery = @"INSERT INTO calendar (id, username, event_name, location, date, month, year)" +
-                                                "VALUES(null, '" + user.user_name + "', '" + textBox_event_name.Text +
-                                                "', '" + textBox_event_location.Text + "', '" + formatDateTimeForMySql +
-                                                "', '" + months[Int32.Parse(month)] + "', '" + dateTimePicker_event_datetime.Value.ToString("yyyy") + "');";
-                            try
+                            if (!same_event)
                             {
-                                conn.Open();
-                                cmd = new MySqlCommand(insertTableQuery, conn);
-                                cmd.ExecuteNonQuery();
-                                conn.Close();
-                                MessageBox.Show("Uusi tapahtuma lisätty", "Lisää");
-                                formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("d/M/yyyy");
-                                change = "Tapahtuma " + textBox_event_name.Text + " lisätty kalenteriin päivään " + formatDateTimeForMySql;
-                                addChangeTracking(change);
-                                readCalendarLists();
+                                month = dateTimePicker_event_datetime.Value.ToString(" MM ");
+                                formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("yyyy-MM-dd");
+                                insertTableQuery = @"INSERT INTO calendar (id, username, event_name, location, date, month, year)" +
+                                                    "VALUES(null, '" + user.user_name + "', '" + textBox_event_name.Text +
+                                                    "', '" + textBox_event_location.Text + "', '" + formatDateTimeForMySql +
+                                                    "', '" + months[Int32.Parse(month)] + "', '" + dateTimePicker_event_datetime.Value.ToString("yyyy") + "');";
+                                try
+                                {
+                                    conn.Open();
+                                    cmd = new MySqlCommand(insertTableQuery, conn);
+                                    cmd.ExecuteNonQuery();
+                                    conn.Close();
+                                    MessageBox.Show("Uusi tapahtuma lisätty", "Lisää");
+                                    formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("d/M/yyyy");
+                                    change = "Tapahtuma " + textBox_event_name.Text + " lisätty kalenteriin päivään " + formatDateTimeForMySql;
+                                    addChangeTracking(change);
+                                    readCalendarLists();
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show(Convert.ToString(ex));
+                                }
                             }
-                            catch (Exception ex)
+                            else
                             {
-                                MessageBox.Show(Convert.ToString(ex));
+                                MessageBox.Show("Samanniminen tapahtuma samalle päivälle on jo olemassa", "Lisää");
                             }
                         }
                         else
                         {
-                            MessageBox.Show("Samanniminen tapahtuma samalle päivälle on jo olemassa", "Lisää");
+                            MessageBox.Show("Et ole valinnut päivää", "Lisää");
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Et ole valinnut päivää", "Lisää");
+                        MessageBox.Show("Et ole syöttänyt tapahtumapaikkaa", "Lisää");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Et ole syöttänyt tapahtumapaikkaa", "Lisää");
+                    MessageBox.Show("Et ole syöttänyt tapahtuman kuvausta", "Lisää");
                 }
             }
             else
             {
-                MessageBox.Show("Et ole syöttänyt tapahtuman kuvausta", "Lisää");
-            }
-            /*}
-            else
-            {
                 MessageBox.Show("Et voi lisätä tapahtumaa mennelle ajalle", "Lisää");
-            }*/
+            }
         }
 
         private void button_event_set_today_Click(object sender, EventArgs e)
@@ -1590,11 +1762,17 @@ namespace Home_n_Life
             }
         }
 
-        private void button_cleaning_Click(object sender, EventArgs e)
+        private void button_cleaning_shift_Click(object sender, EventArgs e)
         {
             dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
+                if (view_change != "cleaning_shift")
+                {
+                    checkDatabaseConnection();
+                    view_change = "cleaning_shift";
+                    viewChange(groupBox_cleaning_shift, button_cleaning_shift);
+                }
             }
         }
 
