@@ -228,11 +228,6 @@ namespace Home_n_Life
                             button_menu_remove.Visible = false;
                             button_menu_remove.Enabled = false;
                             button_menu_add.Text = "Ehdota ruokaa";
-                            label32.Text = "";
-                            checkedListBox_menu_categories.Visible = false;
-                            checkedListBox_menu_categories.Enabled = false;
-                            button_menu_add_random.Visible = false;
-                            button_menu_add_random.Enabled = false;
                         }
                         readMenus();
                         listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
