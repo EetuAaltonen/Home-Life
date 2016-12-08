@@ -593,7 +593,7 @@ namespace Home_n_Life
                             insertTableQuery = @"INSERT INTO economic(id, username, description, type, amount) " +
                                                 "VALUES('null', '" + user.user_name + "', '" + textBox_economic_name.Text + "', '" + Convert.ToString(comboBox_economic_type.SelectedItem) + "', '" + textBox_economic_amount.Text + "');";
                             alterTableQuery = @"ALTER TABLE economic DROP COLUMN id;
-                                                ALTER TABLE economic ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
+                                                ALTER TABLE economic ADD COLUMN id BIGINT UNSIGNED DEFAULT 0 PRIMARY KEY FIRST ;";
                             try
                             {
                                 conn.Open();
@@ -649,7 +649,7 @@ namespace Home_n_Life
                                         "' AND description='" + textBox_economic_name.Text +
                                         "' AND type='" + Convert.ToString(comboBox_economic_type.SelectedItem) + "' ;";
                     alterTableQuery = @"ALTER TABLE economic DROP COLUMN id;
-                                        ALTER TABLE economic ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
+                                        ALTER TABLE economic ADD COLUMN id BIGINT UNSIGNED DEFAULT 0 PRIMARY KEY FIRST ;";
                     try
                     {
                         conn.Open();
@@ -797,7 +797,7 @@ namespace Home_n_Life
                     deleteTableQuery = @"DELETE FROM menu " +
                                         "WHERE menu_name='" + textBox_menu_name.Text + "' AND family_key='" + user.family_key + "' ;";
                     alterTableQuery = @"ALTER TABLE menu DROP COLUMN id;
-                                        ALTER TABLE menu ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
+                                        ALTER TABLE menu ADD COLUMN id BIGINT UNSIGNED DEFAULT 0 PRIMARY KEY FIRST ;";
                     try
                     {
                         conn.Open();
@@ -842,7 +842,7 @@ namespace Home_n_Life
             deleteTableQuery = @"DELETE FROM menu " +
                                 "WHERE menu_name='" + textBox_menu_name.Text + "' AND family_key='" + user.family_key + "' ;";
             alterTableQuery = @"ALTER TABLE menu DROP COLUMN id;
-                                        ALTER TABLE menu ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
+                                        ALTER TABLE menu ADD COLUMN id BIGINT UNSIGNED DEFAULT 0 PRIMARY KEY FIRST ;";
             try
             {
                 conn.Open();
@@ -963,7 +963,7 @@ namespace Home_n_Life
                                      "SET text='" + richTextBox_shopping_list.Text + "' " +
                                      "WHERE listname='" + textBox_list_name.Text + "' AND family_key='" + user.family_key + "' ;";
                 alterTableQuery = @"ALTER TABLE shoppinglist DROP COLUMN id;
-                                    ALTER TABLE shoppinglist ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
+                                    ALTER TABLE shoppinglist ADD COLUMN id BIGINT UNSIGNED DEFAULT 0 PRIMARY KEY FIRST ;";
 
                 try
                 {
@@ -1002,7 +1002,7 @@ namespace Home_n_Life
                 deleteTableQuery = @"DELETE FROM shoppinglist WHERE family_key='" + user.family_key +
                                 "' AND listname='" + textBox_list_name.Text + "' ;";
                 alterTableQuery = @"ALTER TABLE shoppinglist DROP COLUMN id;
-                                    ALTER TABLE shoppinglist ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
+                                    ALTER TABLE shoppinglist ADD COLUMN id BIGINT UNSIGNED DEFAULT 0 PRIMARY KEY FIRST ;";
                 try
                 {
                     conn.Open();
@@ -1274,7 +1274,7 @@ namespace Home_n_Life
                 dateValue.ToString(CultureInfo.InvariantCulture.DateTimeFormat.UniversalSortableDateTimePattern);
                 formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("yyyy-MM-dd");
                 alterTableQuery = @"ALTER TABLE calendar DROP COLUMN id;
-                                    ALTER TABLE calendar ADD COLUMN id BIGINT UNSIGNED DEFAULT 1 PRIMARY KEY FIRST ;";
+                                    ALTER TABLE calendar ADD COLUMN id BIGINT UNSIGNED DEFAULT 0 PRIMARY KEY FIRST ;";
                 dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen tapahtuman?", "Poista", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
@@ -1376,7 +1376,6 @@ namespace Home_n_Life
 //----- Athletic meter --------------------------------------------------------------------------------------
         private void readAthleticMeter()
         {
-            zoom = 0;
             if (addedLabels.Count > 0)
             {
                 int listCount = addedLabels.Count;
@@ -1394,11 +1393,11 @@ namespace Home_n_Life
                 year = textBox_athletic_year.Text;
             }
             createTableQuery = @"CREATE TABLE IF NOT EXISTS athletic_meter (
-                                        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                                        username VARCHAR(30) NOT NULL,
-                                        month VARCHAR(30) NOT NULL,
-                                        year VARCHAR(30) NOT NULL,
-                                        amount DOUBLE(10,10));";
+                                            id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                            username VARCHAR(30) NOT NULL,
+                                            month VARCHAR(100) NOT NULL,
+                                            year VARCHAR(5) NOT NULL,
+                                            amount DOUBLE(10,2) NOT NULL);";
             selectTableQuery = @"SELECT id, username, month, year, amount " +
                                 " FROM athletic_meter " +
                                 " WHERE username='" + user.user_name +
@@ -1414,7 +1413,7 @@ namespace Home_n_Life
                 dataReader = cmd.ExecuteReader();
                 while (dataReader.Read())
                 {
-                    //textBox_athletic_kilometers.Text = Convert.ToString(dataReader["amount"]);
+                    textBox_athletic_kilometers.Text = Convert.ToString(dataReader["amount"]);
                 }
                 dataReader.Close();
                 selectTableQuery = @"SELECT id, username, month, year, amount " +
@@ -1428,32 +1427,29 @@ namespace Home_n_Life
                 {
                     if (double.Parse(Convert.ToString(dataReader["amount"])) >= largest)
                     {
-                        if ((double.Parse(Convert.ToString(dataReader["amount"])) % 10000) >= 1)
-                        {
-                            zoom = 5;
-                        }
-                        else if ((double.Parse(Convert.ToString(dataReader["amount"])) % 1000) >= 1)
-                        {
-                            zoom = 4;
-                        }
-                        else if ((double.Parse(Convert.ToString(dataReader["amount"])) % 500) >= 1)
-                        {
-                            zoom = 3;
-                        }
-                        else if ((double.Parse(Convert.ToString(dataReader["amount"])) % 200) >= 1)
-                        {
-                            zoom = 2;
-                        }
-                        else
-                        {
-                            zoom = 1;
-                        }
                         largest = double.Parse(Convert.ToString(dataReader["amount"]));
                     }
                     values.Add(double.Parse(Convert.ToString(dataReader["amount"])));
                 }
                 dataReader.Close();
                 conn.Close();
+                zoom = 1;
+                if (largest / 100000 >= 1)
+                {
+                    zoom = 1000;
+                }
+                else if (largest / 10000 >= 1)
+                {
+                    zoom = 100;
+                }
+                else if (largest / 1000 >= 1)
+                {
+                    zoom = 10;
+                }
+                else if (largest / 500 >= 1)
+                {
+                    zoom = 2;
+                }
 
                 addedLabels = new List<Label>();
                 Label label;
@@ -1463,36 +1459,35 @@ namespace Home_n_Life
                     label.Text = months[i];
                     label.Size = new Size(60, 20);
                     label.BackColor = System.Drawing.Color.Transparent;
-                    label.Location = new Point((80 * (i - 1)) + 5, 220);
+                    label.Location = new Point((80 * (i - 1)) + 5, 270);
                     panel_athletic_statistics.Controls.Add(label);
                     addedLabels.Insert(0, label);
                 }
                 if (values.Count > 0)
                 {
                     points = new List<Point>();
-                    //Random rnd = new Random();
                     Label labelValue;
-                    points.Add(new Point(30, 200 - Convert.ToInt32(values[0] / zoom)));
-                    points.Add(new Point(30, 200));
+                    points.Add(new Point(30, 240 - Convert.ToInt32((values[0]/zoom))*2));
+                    points.Add(new Point(30, 240));
                     labelValue = new Label();
                     labelValue.Text = Convert.ToString(values[0]);
                     labelValue.Size = new Size(60, 20);
                     labelValue.BackColor = System.Drawing.Color.Transparent;
-                    labelValue.Location = new Point(20, 200 - Convert.ToInt32(values[0] / zoom));
+                    labelValue.Location = new Point(20, 240 - Convert.ToInt32((values[0] / zoom)) * 2);
                     panel_athletic_statistics.Controls.Add(labelValue);
                     addedLabels.Insert(0, labelValue);
 
                     for (int i = 1; i < values.Count/*12*/; i++)
                     {
-                        points.Add(new Point(30 + (i * 80), 200));
-                        points.Add(new Point(30 + (i * 80), 200 - Convert.ToInt32(values[i] / zoom)));
-                        points.Add(new Point(30 + (i * 80), 200));
+                        points.Add(new Point(30 + (i * 80), 240));
+                        points.Add(new Point(30 + (i * 80), 240 - Convert.ToInt32((values[i] / zoom)) * 2));
+                        points.Add(new Point(30 + (i * 80), 240));
 
                         labelValue = new Label();
                         labelValue.Text = Convert.ToString(values[i]);
                         labelValue.Size = new Size(60, 20);
                         labelValue.BackColor = System.Drawing.Color.Transparent;
-                        labelValue.Location = new Point(20 + (i * 80), 200 - Convert.ToInt32(values[i] / zoom));
+                        labelValue.Location = new Point(20 + (i * 80), 240 - Convert.ToInt32((values[i] / zoom)) * 2);
                         panel_athletic_statistics.Controls.Add(labelValue);
                         addedLabels.Insert(0, labelValue);
                     }
@@ -1508,27 +1503,27 @@ namespace Home_n_Life
 
         private void button_athletic_add_kilometers_Click(object sender, EventArgs e)
         {
-            textBox_athletic_kilometers.Text = Convert.ToString(double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text));
             month = DateTime.Now.ToString(" M ");
             year = DateTime.Now.ToString(" yyyy ");
             deleteTableQuery = @"DELETE FROM athletic_meter" +
                                 " WHERE username='" + user.user_name + "' AND month='" + months[Int32.Parse(month)] + "' AND year=" + Int32.Parse(year) +
                                 " AND EXISTS(SELECT month, year WHERE username='" + user.user_name + "' LIMIT 1) ;";
-            insertTableQuery = @"INSERT INTO athletic_meter (id, username, month, year, amount)" +
-                                "VALUES(null, '" + user.user_name + "', '" + months[Int32.Parse(month)] + "', '" + Int32.Parse(year) + "', '" + double.Parse(textBox_athletic_kilometers.Text) + "');";
-
+            alterTableQuery = @"ALTER TABLE athletic_meter DROP COLUMN id;
+                                ALTER TABLE athletic_meter ADD COLUMN id BIGINT UNSIGNED DEFAULT 0 PRIMARY KEY FIRST ;";
+            insertTableQuery = @"INSERT INTO athletic_meter(id, username, month, year, amount) " +
+                                "VALUES('null', '" + user.user_name + "', '" + months[Int32.Parse(month)] + "', '" + Int32.Parse(year) + "', '" + Convert.ToString(double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text)) + "');";
             try
             {
                 conn.Open();
                 cmd = new MySqlCommand(deleteTableQuery, conn);
                 cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(alterTableQuery, conn);
+                cmd.ExecuteNonQuery();
                 cmd = new MySqlCommand(insertTableQuery, conn);
                 cmd.ExecuteNonQuery();
-                //cmd = new MySqlCommand(alterTableQuery, conn);
-                //cmd.ExecuteNonQuery();
                 conn.Close();
                 readAthleticMeter();
-                MessageBox.Show("Kauppalappu tallennettu", "Tallenna");
+                MessageBox.Show("Kilometrit lisätty", "Lisää");
                 change = "Liikuntamittariin lisätty kilometrejä: " + textBox_athletic_add_kilometers.Text;
                 addChangeTracking(change);
                 textBox_athletic_add_kilometers.Text = "";

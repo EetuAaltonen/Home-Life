@@ -1090,9 +1090,9 @@
             this.groupBox_calendar.Controls.Add(this.label22);
             this.groupBox_calendar.Controls.Add(this.listView_events);
             this.groupBox_calendar.Enabled = false;
-            this.groupBox_calendar.Location = new System.Drawing.Point(12, 339);
+            this.groupBox_calendar.Location = new System.Drawing.Point(12, 456);
             this.groupBox_calendar.Name = "groupBox_calendar";
-            this.groupBox_calendar.Size = new System.Drawing.Size(733, 360);
+            this.groupBox_calendar.Size = new System.Drawing.Size(53, 50);
             this.groupBox_calendar.TabIndex = 6;
             this.groupBox_calendar.TabStop = false;
             this.groupBox_calendar.Visible = false;
@@ -1780,7 +1780,7 @@
             this.groupBox_athletic_meter.Enabled = false;
             this.groupBox_athletic_meter.Location = new System.Drawing.Point(12, 170);
             this.groupBox_athletic_meter.Name = "groupBox_athletic_meter";
-            this.groupBox_athletic_meter.Size = new System.Drawing.Size(956, 347);
+            this.groupBox_athletic_meter.Size = new System.Drawing.Size(967, 518);
             this.groupBox_athletic_meter.TabIndex = 25;
             this.groupBox_athletic_meter.TabStop = false;
             this.groupBox_athletic_meter.Visible = false;
@@ -1899,7 +1899,7 @@
             this.label43.AutoSize = true;
             this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label43.ForeColor = System.Drawing.Color.White;
-            this.label43.Location = new System.Drawing.Point(6, 237);
+            this.label43.Location = new System.Drawing.Point(6, 179);
             this.label43.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(182, 20);
@@ -1921,9 +1921,9 @@
             // panel_athletic_statistics
             // 
             this.panel_athletic_statistics.BackColor = System.Drawing.Color.White;
-            this.panel_athletic_statistics.Location = new System.Drawing.Point(10, 260);
+            this.panel_athletic_statistics.Location = new System.Drawing.Point(10, 203);
             this.panel_athletic_statistics.Name = "panel_athletic_statistics";
-            this.panel_athletic_statistics.Size = new System.Drawing.Size(946, 244);
+            this.panel_athletic_statistics.Size = new System.Drawing.Size(946, 300);
             this.panel_athletic_statistics.TabIndex = 18;
             this.panel_athletic_statistics.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_athletic_statistics_Paint);
             // 
