@@ -369,9 +369,9 @@ namespace Home_n_Life
 
         private void button_economic_Click(object sender, EventArgs e)
         {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
+            //dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            //if (dialogResult == DialogResult.Yes)
+            //{
                 if (view_change != "economic")
                 {
                     checkDatabaseConnection();
@@ -379,93 +379,92 @@ namespace Home_n_Life
                     viewChange(groupBox_economic, button_economic);
                     readEconomicLists();
                 }
-            }
+            //}
         }
 
         private void button_menu_Click(object sender, EventArgs e)
         {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
+            //dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            //if (dialogResult == DialogResult.Yes)
+            //{
                 if (view_change != "menu")
                 {
                     checkDatabaseConnection();
                     view_change = "menu";
                     viewChange(groupBox_menu, button_menu);
                 }
-            }
+            //}
         }
 
         private void button_shopping_list_Click(object sender, EventArgs e)
         {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
+            //dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            //if (dialogResult == DialogResult.Yes)
+            //{
                 if (view_change != "shopping_list")
                 {
                     checkDatabaseConnection();
                     view_change = "shopping_list";
                     viewChange(groupBox_shopping_list, button_shopping_list);
                 }
-            }
+            //}
         }
 
         private void button_calendar_Click(object sender, EventArgs e)
         {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
+            //dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            //if (dialogResult == DialogResult.Yes)
+            //{
                 if (view_change != "calendar")
                 {
                     checkDatabaseConnection();
                     view_change = "calendar";
                     viewChange(groupBox_calendar, button_calendar);
                 }
-            }
+            //}
         }
 
         private void button_athletic_meter_Click(object sender, EventArgs e)
         {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
+            //dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            //if (dialogResult == DialogResult.Yes)
+            //{
                 if (view_change != "athletic_meter")
                 {
                     checkDatabaseConnection();
                     view_change = "athletic_meter";
                     viewChange(groupBox_athletic_meter, button_athletic_meter);
                 }
-            }
+            //}
         }
 
         private void button_checklist_Click(object sender, EventArgs e)
         {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
+            //dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            //if (dialogResult == DialogResult.Yes)
+            //{
                 if (view_change != "checklist")
                 {
                     checkDatabaseConnection();
                     view_change = "checklist";
                     viewChange(groupBox_checklist, button_checklist);
                 }
-            }
+            //}
         }
 
         private void button_change_tracking_Click(object sender, EventArgs e)
         {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
+            //dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            //if (dialogResult == DialogResult.Yes)
+            //{
                 if (view_change != "change_tracking")
                 {
                     checkDatabaseConnection();
                     view_change = "change_tracking";
                     viewChange(groupBox_change_tracking, button_change_tracking);
                 }
-            }
+            //}
         }
-
 //----- Economic --------------------------------------------------------------------------------------
         private void readEconomicLists()
         {
@@ -1180,7 +1179,6 @@ namespace Home_n_Life
                 richTextBox_shopping_list.SaveFile(saveFile.FileName, RichTextBoxStreamType.PlainText);
             }
         }
-
 //----- Calendar --------------------------------------------------------------------------------------
         private void dataReadCalendarList()
         {
@@ -1724,7 +1722,6 @@ namespace Home_n_Life
         {
             readAthleticMeter();
         }
-
 //----- Checklist --------------------------------------------------------------------------------------
         private void readChecklists()
         {
@@ -1759,16 +1756,16 @@ namespace Home_n_Life
 
         private void button_cleaning_shift_Click(object sender, EventArgs e)
         {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
+            //dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
+            //if (dialogResult == DialogResult.Yes)
+            //{
                 if (view_change != "cleaning_shift")
                 {
                     checkDatabaseConnection();
                     view_change = "cleaning_shift";
                     viewChange(groupBox_cleaning_shift, button_cleaning_shift);
                 }
-            }
+            //}
         }
 
         private void comboBox_checklists_SelectedIndexChanged(object sender, EventArgs e)
@@ -1875,7 +1872,6 @@ namespace Home_n_Life
                 }
             }
         }
-
 //----- Change tracking --------------------------------------------------------------------------------------
         private void readChangeTrackingLists()
         {
@@ -1969,7 +1965,6 @@ namespace Home_n_Life
                 readChangeTrackingLists();
             }
         }
-
 //----- Top Banner Buttons --------------------------------------------------------------------------------------
         private void button_logout_Click_1(object sender, EventArgs e)
         {
