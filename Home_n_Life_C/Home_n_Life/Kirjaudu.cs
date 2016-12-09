@@ -18,7 +18,9 @@ namespace Home_n_Life
             InitializeComponent();
         }
         string connetionString = "server=localhost;database=home&life;uid=root;pwd=;";
-        string query_user, query_password, query_family_key;
+        string query_password;
+        List<string> query_users;
+        List<string> query_family_keys;
         MySqlConnection conn;
         MySqlCommand cmd;
         MySqlDataReader dataReader;
@@ -86,7 +88,6 @@ namespace Home_n_Life
             {
                 if (textBox_password.Text.Length > 0)
                 {
-                    query_user = "";
                     createTableQuery = @"CREATE TABLE IF NOT EXISTS users (
                                                 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                                 username VARCHAR(30) NOT NULL,
@@ -103,11 +104,12 @@ namespace Home_n_Life
                         cmd.ExecuteNonQuery();
                         cmd = new MySqlCommand(selectTableQuery, conn);
                         dataReader = cmd.ExecuteReader();
+                        query_users = new List<string>();
                         while (dataReader.Read())
                         {
                             if (dataReader["username"] != null)
                             {
-                                query_user = Convert.ToString(dataReader["username"]);
+                                query_users.Add(Convert.ToString(dataReader["username"]));
                             }
                         }
                         dataReader.Close();
@@ -117,7 +119,7 @@ namespace Home_n_Life
                     {
                         MessageBox.Show(Convert.ToString(ex));
                     }
-                    if (textBox_username.Text == query_user)
+                    if (query_users.Contains(textBox_username.Text))
                     {
                         query_password = "";
                         selectTableQuery = @"SELECT id, username, password, family_key, permissions " +
@@ -193,15 +195,14 @@ namespace Home_n_Life
         private void button_create_account_Click(object sender, EventArgs e)
         {
             conn = new MySqlConnection(connetionString);
-            if (textBox_account_name.Text.Length > 0)
+            if (textBox_account_name.Text.Length >= 4)
             {
-                if (textBox_account_password.Text.Length > 0)
+                if (textBox_account_password.Text.Length >= 4)
                 {
                     if (textBox_family_key.Text.Length >= 4)
                     {
                         if (comboBox_account_permissions.SelectedItem != null)
                         {
-                            query_user = "";
                             createTableQuery = @"CREATE TABLE IF NOT EXISTS users (
                                                 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                                 username VARCHAR(30) NOT NULL,
@@ -219,34 +220,35 @@ namespace Home_n_Life
                                 cmd.ExecuteNonQuery();
                                 cmd = new MySqlCommand(selectTableQuery, conn);
                                 dataReader = cmd.ExecuteReader();
+                                query_users = new List<string>();
                                 while (dataReader.Read())
                                 {
                                     if (dataReader["username"] != null)
                                     {
-                                        query_user = Convert.ToString(dataReader["username"]);
+                                        query_users.Add(Convert.ToString(dataReader["username"]));
                                     }
                                 }
                                 dataReader.Close();
-                                if (query_user != textBox_account_name.Text)
+                                if (!query_users.Contains(textBox_account_name.Text))
                                 {
-                                    query_family_key = "";
+                                    query_family_keys = new List<string>();
                                     dataReader = cmd.ExecuteReader();
                                     while (dataReader.Read())
                                     {
                                         if (dataReader["family_key"] != null)
                                         {
-                                            query_family_key = Convert.ToString(dataReader["family_key"]);
+                                            query_family_keys.Add(Convert.ToString(dataReader["family_key"]));
                                         }
                                     }
                                     dataReader.Close();
-                                    if (query_family_key != "")
+                                    if (query_family_keys.Contains(textBox_family_key.Text))
                                     {
-                                        dialogResult = MessageBox.Show("Tämä perheavainta on jo olemassa.\nHaluatko liittyä perheeseen " + query_family_key + "?", "Rekisteröityminen", MessageBoxButtons.YesNo);
+                                        dialogResult = MessageBox.Show("Tämä perheavainta on jo olemassa.\nHaluatko liittyä perheeseen " + textBox_family_key.Text + "?", "Rekisteröityminen", MessageBoxButtons.YesNo);
                                         if (dialogResult == DialogResult.Yes)
                                         {
                                             cmd = new MySqlCommand(insertTableQuery, conn);
                                             cmd.ExecuteNonQuery();
-                                            MessageBox.Show("Uusi " + comboBox_account_permissions.SelectedItem + " " + textBox_account_name.Text + " lisätty perheeseen " + query_family_key, "Rekisteröityminen");
+                                            MessageBox.Show("Uusi " + comboBox_account_permissions.SelectedItem + " " + textBox_account_name.Text + " lisätty perheeseen " + textBox_family_key.Text, "Rekisteröityminen");
                                             groupBox_login.Location = new Point(13, 65);
                                             groupBox_login.Size = new Size(478, 337);
                                             groupBox_login.Enabled = true;
@@ -262,7 +264,7 @@ namespace Home_n_Life
                                         {
                                             cmd = new MySqlCommand(insertTableQuery, conn);
                                             cmd.ExecuteNonQuery();
-                                            MessageBox.Show("Uusi " + comboBox_account_permissions.SelectedItem + " " + textBox_account_name.Text + " lisätty perheeseen " + query_family_key, "Rekisteröityminen");
+                                            MessageBox.Show("Uusi " + comboBox_account_permissions.SelectedItem + " " + textBox_account_name.Text + " lisätty perheeseen " + textBox_family_key.Text, "Rekisteröityminen");
                                             groupBox_login.Location = new Point(13, 65);
                                             groupBox_login.Size = new Size(478, 337);
                                             groupBox_login.Enabled = true;
@@ -290,17 +292,17 @@ namespace Home_n_Life
                     }
                     else
                     {
-                        MessageBox.Show("Syötä minimissään neljä merkkiä pitkä perheavain", "Rekisteröityminen");
+                        MessageBox.Show("Syötä vähintään neljä merkkiä pitkä perheavain", "Rekisteröityminen");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Syötä salasana", "Rekisteröityminen");
+                    MessageBox.Show("Syötä vähintään neljä merkkiä pitkä salasana", "Rekisteröityminen");
                 }
             }
             else
             {
-                MessageBox.Show("Syötä käyttäjänimi", "Rekisteröityminen");
+                MessageBox.Show("Syötä vähintään neljä merkkiä pitkä käyttäjänimi", "Rekisteröityminen");
             }
         }
 

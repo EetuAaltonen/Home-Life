@@ -155,7 +155,7 @@
             this.groupBox_login.Enabled = false;
             this.groupBox_login.Location = new System.Drawing.Point(12, 65);
             this.groupBox_login.Name = "groupBox_login";
-            this.groupBox_login.Size = new System.Drawing.Size(460, 324);
+            this.groupBox_login.Size = new System.Drawing.Size(54, 44);
             this.groupBox_login.TabIndex = 13;
             this.groupBox_login.TabStop = false;
             this.groupBox_login.Visible = false;
@@ -252,7 +252,7 @@
             this.groupBox_registration.Enabled = false;
             this.groupBox_registration.Location = new System.Drawing.Point(12, 115);
             this.groupBox_registration.Name = "groupBox_registration";
-            this.groupBox_registration.Size = new System.Drawing.Size(54, 47);
+            this.groupBox_registration.Size = new System.Drawing.Size(479, 299);
             this.groupBox_registration.TabIndex = 17;
             this.groupBox_registration.TabStop = false;
             this.groupBox_registration.Visible = false;
