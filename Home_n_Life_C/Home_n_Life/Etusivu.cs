@@ -1025,7 +1025,7 @@ namespace Home_n_Life
                                         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                         family_key VARCHAR(30) NOT NULL,
                                         listname VARCHAR(30) NOT NULL,
-                                        text TEXT(500) NOT NULL);";
+                                        text TEXT(1000) NOT NULL);";
             selectTableQuery = @"SELECT id, family_key, listname, text " +
                                 "FROM shoppinglist " +
                                 "WHERE family_key='" + user.family_key + "' ;";
@@ -1061,12 +1061,16 @@ namespace Home_n_Life
                     added_item += " (" + user.user_name + " ehdottama)";
                 }
                 richTextBox_shopping_list.Text += added_item;
-                textBox_text_length.Text = Convert.ToString(richTextBox_shopping_list.Text.Length);
             }
             else
             {
                 MessageBox.Show("Syötä tuotteen nimi", "Tuotteen lisääminen");
             }
+        }
+
+        private void richTextBox_shopping_list_TextChanged(object sender, EventArgs e)
+        {
+            textBox_text_length.Text = Convert.ToString(richTextBox_shopping_list.Text.Length);
         }
 
         private void comboBox_shopping_lists_SelectedIndexChanged(object sender, EventArgs e)
@@ -1075,7 +1079,7 @@ namespace Home_n_Life
             {
                 richTextBox_shopping_list.Text = "";
                 textBox_list_name.Text = Convert.ToString(comboBox_shopping_lists.SelectedItem);
-                selectTableQuery = @"SELECT id, username, family_key, listname, text " +
+                selectTableQuery = @"SELECT id, family_key, listname, text " +
                                     "FROM shoppinglist WHERE family_key='" + user.family_key + "' " +
                                     "AND listname='" + comboBox_shopping_lists.SelectedItem + "' ;";
                 try
@@ -1106,7 +1110,7 @@ namespace Home_n_Life
                 insertTableQuery = @"INSERT INTO shoppinglist (id, family_key, listname, text) " +
                                     "SELECT * FROM(SELECT 0, '" + user.family_key + "', '" + textBox_list_name.Text + "', 'null') AS tmp " +
                                     "WHERE NOT EXISTS( " +
-                                    "SELECT listname FROM shoppinglist WHERE listname='" + textBox_list_name.Text + "' " +
+                                    "SELECT family_key, listname FROM shoppinglist WHERE family_key='" + user.family_key + "' AND listname='" + textBox_list_name.Text + "' " +
                                     ") LIMIT 2 ;";
                 updateTableQuery = @"UPDATE shoppinglist " +
                                      "SET text='" + richTextBox_shopping_list.Text + "' " +
@@ -1158,6 +1162,9 @@ namespace Home_n_Life
                     textBox_list_name.Text = "";
                     richTextBox_shopping_list.Text = "";
                     comboBox_shopping_lists.SelectedItem = null;
+                    comboBox_amount_type.SelectedItem = null;
+                    textBox_item_name.Text = "";
+                    textBox_item_amount.Text = "";
                     readShoppingLists();
                 }
                 catch (Exception ex)
@@ -1682,17 +1689,20 @@ namespace Home_n_Life
             textBox_athletic_year.Text = "";
             month = DateTime.Now.ToString(" M ");
             year = DateTime.Now.ToString(" yyyy ");
-            deleteTableQuery = @"DELETE FROM athletic_meter" +
-                                " WHERE username='" + user.user_name + "' AND month='" + months[Int32.Parse(month)] + "' AND year=" + Int32.Parse(year) +
-                                " AND EXISTS(SELECT month, year WHERE username='" + user.user_name + "' LIMIT 1) ;";
-            insertTableQuery = @"INSERT INTO athletic_meter(id, username, month, year, amount) " +
-                                "VALUES('null', '" + user.user_name + "', '" + months[Int32.Parse(month)] + "', '" + Int32.Parse(year) + "', '" + Convert.ToString(double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text)) + "');";
+            insertTableQuery = @"INSERT INTO athletic_meter (id, username, month, year, amount) " +
+                                "SELECT * FROM(SELECT 0, '" + user.user_name + "', '" + months[Int32.Parse(month)] + "', " + Int32.Parse(year) + ", " + Convert.ToString(double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text)) +  ") AS tmp " +
+                                "WHERE NOT EXISTS( " +
+                                "SELECT username, month, year FROM athletic_meter WHERE username='" + user.user_name + "' AND month='" + months[Int32.Parse(month)] + "' AND year=" + Int32.Parse(year) +
+                                ") LIMIT 2 ;";
+            updateTableQuery = @"UPDATE athletic_meter " +
+                                 "SET amount='" + Convert.ToString(double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text)) + "' " +
+                                 "WHERE username='" + user.user_name + "' AND month='" + months[Int32.Parse(month)] + "' AND year="+ Int32.Parse(year) + " ;";
             try
             {
                 conn.Open();
-                cmd = new MySqlCommand(deleteTableQuery, conn);
-                cmd.ExecuteNonQuery();
                 cmd = new MySqlCommand(insertTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(updateTableQuery, conn);
                 cmd.ExecuteNonQuery();
                 conn.Close();
                 readAthleticMeter();
@@ -1756,16 +1766,12 @@ namespace Home_n_Life
 
         private void button_cleaning_shift_Click(object sender, EventArgs e)
         {
-            //dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            //if (dialogResult == DialogResult.Yes)
-            //{
-                if (view_change != "cleaning_shift")
-                {
-                    checkDatabaseConnection();
-                    view_change = "cleaning_shift";
-                    viewChange(groupBox_cleaning_shift, button_cleaning_shift);
-                }
-            //}
+            if (view_change != "cleaning_shift")
+            {
+                checkDatabaseConnection();
+                view_change = "cleaning_shift";
+                viewChange(groupBox_cleaning_shift, button_cleaning_shift);
+            }
         }
 
         private void comboBox_checklists_SelectedIndexChanged(object sender, EventArgs e)
@@ -1810,7 +1816,7 @@ namespace Home_n_Life
                 insertTableQuery = @"INSERT INTO checklist (id, username, checklist_name, text) " +
                                     "SELECT * FROM(SELECT 0, '" + user.user_name + "', '" + textBox_checklist_name.Text + "', 'null') AS tmp " +
                                     "WHERE NOT EXISTS( " +
-                                    "SELECT checklist_name FROM checklist WHERE checklist_name='" + textBox_checklist_name.Text + "' " +
+                                    "SELECT username, checklist_name FROM checklist WHERE username='" + user.user_name + "' AND checklist_name='" + textBox_checklist_name.Text + "' " +
                                     ") LIMIT 2 ;";
                 updateTableQuery = @"UPDATE checklist " +
                                      "SET text='" + textBox_checklist.Text + "' " +

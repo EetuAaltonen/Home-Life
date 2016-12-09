@@ -149,6 +149,8 @@
             this.textBox_menu_food = new System.Windows.Forms.TextBox();
             this.button_menu_add = new System.Windows.Forms.Button();
             this.groupBox_athletic_meter = new System.Windows.Forms.GroupBox();
+            this.label48 = new System.Windows.Forms.Label();
+            this.textBox_athletic_month = new System.Windows.Forms.TextBox();
             this.label47 = new System.Windows.Forms.Label();
             this.textBox_athletic_kilometers = new System.Windows.Forms.TextBox();
             this.label46 = new System.Windows.Forms.Label();
@@ -160,20 +162,18 @@
             this.label43 = new System.Windows.Forms.Label();
             this.label42 = new System.Windows.Forms.Label();
             this.panel_athletic_statistics = new System.Windows.Forms.Panel();
-            this.textBox_athletic_month = new System.Windows.Forms.TextBox();
-            this.label48 = new System.Windows.Forms.Label();
             this.groupBox_cleaning_shift = new System.Windows.Forms.GroupBox();
-            this.label45 = new System.Windows.Forms.Label();
-            this.listView_cleaning_shift_family_members = new System.Windows.Forms.ListView();
-            this.listView_cleaning_shift_list = new System.Windows.Forms.ListView();
-            this.label49 = new System.Windows.Forms.Label();
-            this.label_cleaning_shift_info = new System.Windows.Forms.Label();
-            this.label51 = new System.Windows.Forms.Label();
-            this.textBox_cleaning_shift_worker = new System.Windows.Forms.TextBox();
-            this.label52 = new System.Windows.Forms.Label();
-            this.textBox_cleaning_shift_work = new System.Windows.Forms.TextBox();
-            this.button_cleaning_shift_add = new System.Windows.Forms.Button();
             this.button_cleaning_shift_remove = new System.Windows.Forms.Button();
+            this.button_cleaning_shift_add = new System.Windows.Forms.Button();
+            this.textBox_cleaning_shift_work = new System.Windows.Forms.TextBox();
+            this.label52 = new System.Windows.Forms.Label();
+            this.textBox_cleaning_shift_worker = new System.Windows.Forms.TextBox();
+            this.label51 = new System.Windows.Forms.Label();
+            this.label_cleaning_shift_info = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.listView_cleaning_shift_list = new System.Windows.Forms.ListView();
+            this.listView_cleaning_shift_family_members = new System.Windows.Forms.ListView();
+            this.label45 = new System.Windows.Forms.Label();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_user.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
@@ -471,7 +471,7 @@
             this.groupBox_shopping_list.Enabled = false;
             this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 240);
             this.groupBox_shopping_list.Name = "groupBox_shopping_list";
-            this.groupBox_shopping_list.Size = new System.Drawing.Size(52, 39);
+            this.groupBox_shopping_list.Size = new System.Drawing.Size(53, 39);
             this.groupBox_shopping_list.TabIndex = 2;
             this.groupBox_shopping_list.TabStop = false;
             this.groupBox_shopping_list.Visible = false;
@@ -483,6 +483,7 @@
             this.richTextBox_shopping_list.Size = new System.Drawing.Size(387, 456);
             this.richTextBox_shopping_list.TabIndex = 25;
             this.richTextBox_shopping_list.Text = "";
+            this.richTextBox_shopping_list.TextChanged += new System.EventHandler(this.richTextBox_shopping_list_TextChanged);
             // 
             // button_shopping_list_save_as_file
             // 
@@ -529,9 +530,9 @@
             this.label9.Location = new System.Drawing.Point(156, 283);
             this.label9.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(54, 20);
+            this.label9.Size = new System.Drawing.Size(64, 20);
             this.label9.TabIndex = 22;
-            this.label9.Text = "/  500";
+            this.label9.Text = "/  1000";
             // 
             // textBox_text_length
             // 
@@ -1427,9 +1428,9 @@
             this.groupBox_checklist.Controls.Add(this.comboBox_checklists);
             this.groupBox_checklist.Controls.Add(this.label38);
             this.groupBox_checklist.Enabled = false;
-            this.groupBox_checklist.Location = new System.Drawing.Point(70, 240);
+            this.groupBox_checklist.Location = new System.Drawing.Point(67, 240);
             this.groupBox_checklist.Name = "groupBox_checklist";
-            this.groupBox_checklist.Size = new System.Drawing.Size(50, 43);
+            this.groupBox_checklist.Size = new System.Drawing.Size(53, 39);
             this.groupBox_checklist.TabIndex = 24;
             this.groupBox_checklist.TabStop = false;
             this.groupBox_checklist.Visible = false;
@@ -1748,10 +1749,35 @@
             this.groupBox_athletic_meter.Enabled = false;
             this.groupBox_athletic_meter.Location = new System.Drawing.Point(67, 285);
             this.groupBox_athletic_meter.Name = "groupBox_athletic_meter";
-            this.groupBox_athletic_meter.Size = new System.Drawing.Size(53, 54);
+            this.groupBox_athletic_meter.Size = new System.Drawing.Size(53, 47);
             this.groupBox_athletic_meter.TabIndex = 25;
             this.groupBox_athletic_meter.TabStop = false;
             this.groupBox_athletic_meter.Visible = false;
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label48.ForeColor = System.Drawing.Color.White;
+            this.label48.Location = new System.Drawing.Point(7, 92);
+            this.label48.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(222, 39);
+            this.label48.TabIndex = 32;
+            this.label48.Text = "Jos syötit vahingossa väärän kilometrimäärän,\r\nvoit aina miinustaa kilometrejä\r\ns" +
+    "yöttämällä negatiivisia lukuja";
+            // 
+            // textBox_athletic_month
+            // 
+            this.textBox_athletic_month.Enabled = false;
+            this.textBox_athletic_month.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_athletic_month.Location = new System.Drawing.Point(356, 57);
+            this.textBox_athletic_month.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_athletic_month.MaxLength = 25;
+            this.textBox_athletic_month.Name = "textBox_athletic_month";
+            this.textBox_athletic_month.Size = new System.Drawing.Size(171, 26);
+            this.textBox_athletic_month.TabIndex = 31;
+            this.textBox_athletic_month.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label47
             // 
@@ -1883,31 +1909,6 @@
             this.panel_athletic_statistics.TabIndex = 18;
             this.panel_athletic_statistics.Paint += new System.Windows.Forms.PaintEventHandler(this.panel_athletic_statistics_Paint);
             // 
-            // textBox_athletic_month
-            // 
-            this.textBox_athletic_month.Enabled = false;
-            this.textBox_athletic_month.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_athletic_month.Location = new System.Drawing.Point(356, 57);
-            this.textBox_athletic_month.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.textBox_athletic_month.MaxLength = 25;
-            this.textBox_athletic_month.Name = "textBox_athletic_month";
-            this.textBox_athletic_month.Size = new System.Drawing.Size(171, 26);
-            this.textBox_athletic_month.TabIndex = 31;
-            this.textBox_athletic_month.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label48
-            // 
-            this.label48.AutoSize = true;
-            this.label48.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label48.ForeColor = System.Drawing.Color.White;
-            this.label48.Location = new System.Drawing.Point(7, 92);
-            this.label48.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(222, 39);
-            this.label48.TabIndex = 32;
-            this.label48.Text = "Jos syötit vahingossa väärän kilometrimäärän,\r\nvoit aina miinustaa kilometrejä\r\ns" +
-    "yöttämällä negatiivisia lukuja";
-            // 
             // groupBox_cleaning_shift
             // 
             this.groupBox_cleaning_shift.BackColor = System.Drawing.Color.Black;
@@ -1930,110 +1931,19 @@
             this.groupBox_cleaning_shift.TabStop = false;
             this.groupBox_cleaning_shift.Visible = false;
             // 
-            // label45
+            // button_cleaning_shift_remove
             // 
-            this.label45.AutoSize = true;
-            this.label45.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label45.ForeColor = System.Drawing.Color.White;
-            this.label45.Location = new System.Drawing.Point(9, 27);
-            this.label45.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(135, 20);
-            this.label45.TabIndex = 21;
-            this.label45.Text = "Perheenjäsenet";
-            // 
-            // listView_cleaning_shift_family_members
-            // 
-            this.listView_cleaning_shift_family_members.FullRowSelect = true;
-            this.listView_cleaning_shift_family_members.Location = new System.Drawing.Point(13, 55);
-            this.listView_cleaning_shift_family_members.MultiSelect = false;
-            this.listView_cleaning_shift_family_members.Name = "listView_cleaning_shift_family_members";
-            this.listView_cleaning_shift_family_members.Size = new System.Drawing.Size(279, 141);
-            this.listView_cleaning_shift_family_members.TabIndex = 24;
-            this.listView_cleaning_shift_family_members.UseCompatibleStateImageBehavior = false;
-            this.listView_cleaning_shift_family_members.Click += new System.EventHandler(this.listView_cleaning_shift_family_members_Click);
-            // 
-            // listView_cleaning_shift_list
-            // 
-            this.listView_cleaning_shift_list.FullRowSelect = true;
-            this.listView_cleaning_shift_list.Location = new System.Drawing.Point(677, 55);
-            this.listView_cleaning_shift_list.MultiSelect = false;
-            this.listView_cleaning_shift_list.Name = "listView_cleaning_shift_list";
-            this.listView_cleaning_shift_list.Size = new System.Drawing.Size(279, 448);
-            this.listView_cleaning_shift_list.TabIndex = 25;
-            this.listView_cleaning_shift_list.UseCompatibleStateImageBehavior = false;
-            this.listView_cleaning_shift_list.Click += new System.EventHandler(this.listView_cleaning_shift_list_Click);
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label49.ForeColor = System.Drawing.Color.White;
-            this.label49.Location = new System.Drawing.Point(674, 27);
-            this.label49.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(90, 20);
-            this.label49.TabIndex = 26;
-            this.label49.Text = "Vuorolista";
-            // 
-            // label_cleaning_shift_info
-            // 
-            this.label_cleaning_shift_info.AutoSize = true;
-            this.label_cleaning_shift_info.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_cleaning_shift_info.ForeColor = System.Drawing.Color.White;
-            this.label_cleaning_shift_info.Location = new System.Drawing.Point(352, 27);
-            this.label_cleaning_shift_info.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label_cleaning_shift_info.Name = "label_cleaning_shift_info";
-            this.label_cleaning_shift_info.Size = new System.Drawing.Size(274, 40);
-            this.label_cleaning_shift_info.TabIndex = 27;
-            this.label_cleaning_shift_info.Text = "Valitse perheenjäsen listalta ja\r\nsyötä askare tai valitse se listalta";
-            // 
-            // label51
-            // 
-            this.label51.AutoSize = true;
-            this.label51.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label51.ForeColor = System.Drawing.Color.White;
-            this.label51.Location = new System.Drawing.Point(352, 97);
-            this.label51.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(119, 20);
-            this.label51.TabIndex = 28;
-            this.label51.Text = "Perheenjäsen";
-            // 
-            // textBox_cleaning_shift_worker
-            // 
-            this.textBox_cleaning_shift_worker.Enabled = false;
-            this.textBox_cleaning_shift_worker.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_cleaning_shift_worker.Location = new System.Drawing.Point(356, 127);
-            this.textBox_cleaning_shift_worker.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.textBox_cleaning_shift_worker.MaxLength = 25;
-            this.textBox_cleaning_shift_worker.Name = "textBox_cleaning_shift_worker";
-            this.textBox_cleaning_shift_worker.Size = new System.Drawing.Size(232, 26);
-            this.textBox_cleaning_shift_worker.TabIndex = 29;
-            this.textBox_cleaning_shift_worker.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label52
-            // 
-            this.label52.AutoSize = true;
-            this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label52.ForeColor = System.Drawing.Color.White;
-            this.label52.Location = new System.Drawing.Point(352, 176);
-            this.label52.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(65, 20);
-            this.label52.TabIndex = 30;
-            this.label52.Text = "Askare";
-            // 
-            // textBox_cleaning_shift_work
-            // 
-            this.textBox_cleaning_shift_work.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_cleaning_shift_work.Location = new System.Drawing.Point(356, 207);
-            this.textBox_cleaning_shift_work.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.textBox_cleaning_shift_work.MaxLength = 25;
-            this.textBox_cleaning_shift_work.Name = "textBox_cleaning_shift_work";
-            this.textBox_cleaning_shift_work.Size = new System.Drawing.Size(232, 26);
-            this.textBox_cleaning_shift_work.TabIndex = 31;
-            this.textBox_cleaning_shift_work.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.button_cleaning_shift_remove.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_cleaning_shift_remove.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_cleaning_shift_remove.ForeColor = System.Drawing.Color.White;
+            this.button_cleaning_shift_remove.Location = new System.Drawing.Point(478, 247);
+            this.button_cleaning_shift_remove.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_cleaning_shift_remove.Name = "button_cleaning_shift_remove";
+            this.button_cleaning_shift_remove.Size = new System.Drawing.Size(110, 30);
+            this.button_cleaning_shift_remove.TabIndex = 33;
+            this.button_cleaning_shift_remove.Text = "Poista";
+            this.button_cleaning_shift_remove.UseVisualStyleBackColor = false;
+            this.button_cleaning_shift_remove.Click += new System.EventHandler(this.button_cleaning_shift_remove_Click);
             // 
             // button_cleaning_shift_add
             // 
@@ -2049,19 +1959,110 @@
             this.button_cleaning_shift_add.UseVisualStyleBackColor = false;
             this.button_cleaning_shift_add.Click += new System.EventHandler(this.button_cleaning_shift_add_Click);
             // 
-            // button_cleaning_shift_remove
+            // textBox_cleaning_shift_work
             // 
-            this.button_cleaning_shift_remove.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_cleaning_shift_remove.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_cleaning_shift_remove.ForeColor = System.Drawing.Color.White;
-            this.button_cleaning_shift_remove.Location = new System.Drawing.Point(478, 247);
-            this.button_cleaning_shift_remove.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.button_cleaning_shift_remove.Name = "button_cleaning_shift_remove";
-            this.button_cleaning_shift_remove.Size = new System.Drawing.Size(110, 30);
-            this.button_cleaning_shift_remove.TabIndex = 33;
-            this.button_cleaning_shift_remove.Text = "Poista";
-            this.button_cleaning_shift_remove.UseVisualStyleBackColor = false;
-            this.button_cleaning_shift_remove.Click += new System.EventHandler(this.button_cleaning_shift_remove_Click);
+            this.textBox_cleaning_shift_work.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_cleaning_shift_work.Location = new System.Drawing.Point(356, 207);
+            this.textBox_cleaning_shift_work.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_cleaning_shift_work.MaxLength = 25;
+            this.textBox_cleaning_shift_work.Name = "textBox_cleaning_shift_work";
+            this.textBox_cleaning_shift_work.Size = new System.Drawing.Size(232, 26);
+            this.textBox_cleaning_shift_work.TabIndex = 31;
+            this.textBox_cleaning_shift_work.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label52.ForeColor = System.Drawing.Color.White;
+            this.label52.Location = new System.Drawing.Point(352, 176);
+            this.label52.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(65, 20);
+            this.label52.TabIndex = 30;
+            this.label52.Text = "Askare";
+            // 
+            // textBox_cleaning_shift_worker
+            // 
+            this.textBox_cleaning_shift_worker.Enabled = false;
+            this.textBox_cleaning_shift_worker.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_cleaning_shift_worker.Location = new System.Drawing.Point(356, 127);
+            this.textBox_cleaning_shift_worker.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.textBox_cleaning_shift_worker.MaxLength = 25;
+            this.textBox_cleaning_shift_worker.Name = "textBox_cleaning_shift_worker";
+            this.textBox_cleaning_shift_worker.Size = new System.Drawing.Size(232, 26);
+            this.textBox_cleaning_shift_worker.TabIndex = 29;
+            this.textBox_cleaning_shift_worker.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label51.ForeColor = System.Drawing.Color.White;
+            this.label51.Location = new System.Drawing.Point(352, 97);
+            this.label51.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(119, 20);
+            this.label51.TabIndex = 28;
+            this.label51.Text = "Perheenjäsen";
+            // 
+            // label_cleaning_shift_info
+            // 
+            this.label_cleaning_shift_info.AutoSize = true;
+            this.label_cleaning_shift_info.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_cleaning_shift_info.ForeColor = System.Drawing.Color.White;
+            this.label_cleaning_shift_info.Location = new System.Drawing.Point(352, 27);
+            this.label_cleaning_shift_info.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label_cleaning_shift_info.Name = "label_cleaning_shift_info";
+            this.label_cleaning_shift_info.Size = new System.Drawing.Size(274, 40);
+            this.label_cleaning_shift_info.TabIndex = 27;
+            this.label_cleaning_shift_info.Text = "Valitse perheenjäsen listalta ja\r\nsyötä askare tai valitse se listalta";
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label49.ForeColor = System.Drawing.Color.White;
+            this.label49.Location = new System.Drawing.Point(674, 27);
+            this.label49.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(90, 20);
+            this.label49.TabIndex = 26;
+            this.label49.Text = "Vuorolista";
+            // 
+            // listView_cleaning_shift_list
+            // 
+            this.listView_cleaning_shift_list.FullRowSelect = true;
+            this.listView_cleaning_shift_list.Location = new System.Drawing.Point(677, 55);
+            this.listView_cleaning_shift_list.MultiSelect = false;
+            this.listView_cleaning_shift_list.Name = "listView_cleaning_shift_list";
+            this.listView_cleaning_shift_list.Size = new System.Drawing.Size(279, 448);
+            this.listView_cleaning_shift_list.TabIndex = 25;
+            this.listView_cleaning_shift_list.UseCompatibleStateImageBehavior = false;
+            this.listView_cleaning_shift_list.Click += new System.EventHandler(this.listView_cleaning_shift_list_Click);
+            // 
+            // listView_cleaning_shift_family_members
+            // 
+            this.listView_cleaning_shift_family_members.FullRowSelect = true;
+            this.listView_cleaning_shift_family_members.Location = new System.Drawing.Point(13, 55);
+            this.listView_cleaning_shift_family_members.MultiSelect = false;
+            this.listView_cleaning_shift_family_members.Name = "listView_cleaning_shift_family_members";
+            this.listView_cleaning_shift_family_members.Size = new System.Drawing.Size(279, 141);
+            this.listView_cleaning_shift_family_members.TabIndex = 24;
+            this.listView_cleaning_shift_family_members.UseCompatibleStateImageBehavior = false;
+            this.listView_cleaning_shift_family_members.Click += new System.EventHandler(this.listView_cleaning_shift_family_members_Click);
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label45.ForeColor = System.Drawing.Color.White;
+            this.label45.Location = new System.Drawing.Point(9, 27);
+            this.label45.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(135, 20);
+            this.label45.TabIndex = 21;
+            this.label45.Text = "Perheenjäsenet";
             // 
             // Etusivu
             // 
