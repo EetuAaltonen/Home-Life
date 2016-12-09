@@ -43,7 +43,7 @@ namespace Home_n_Life
         int n;
         bool isNumeric;
         //---View-Change-------------
-        string view_change;
+        string view_change, current_view;
         GroupBox current_groupBox;
         Button current_button;
         //---Economic----------------
@@ -80,10 +80,9 @@ namespace Home_n_Life
             comboBox_search.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBox_search.AutoCompleteSource = AutoCompleteSource.ListItems;
 
-            view_change = "home";
             conn = new MySqlConnection(connetionString);
-            current_button = button_logo;
-            viewChange(groupBox_home, button_logo);
+            view_change = "home";
+            viewChange(groupBox_home, button_logo, view_change);
         }
 
         public void initializeUserData(string user_name)
@@ -184,160 +183,168 @@ namespace Home_n_Life
             }
         }
 //----- Change View --------------------------------------------------------------------------------------
-        private void viewChange(GroupBox current_groupBox_, Button current_button_)
+        private void viewChange(GroupBox groupBox_change, Button button_change, string view_change)
         {
-            if (current_groupBox_ != current_groupBox)
+            if (view_change != current_view)
             {
-                if (current_button != button_logo)
+                if (current_groupBox != groupBox_change)
                 {
-                    current_button.BackColor = Color.DodgerBlue;
-                }
-                if (current_button_ != button_logo)
-                {
-                    current_button = current_button_;
-                    current_button.BackColor = Color.CadetBlue;
-                }
-                if (current_groupBox != null)
-                {
-                    current_groupBox.Enabled = false;
-                    current_groupBox.Visible = false;
-                }
-                current_groupBox = current_groupBox_;
-                current_groupBox.Location = new Point(12, 170);
-                current_groupBox.Size = new Size(967, 518);
-                current_groupBox.Visible = true;
-                current_groupBox.Enabled = true;
-                switch (view_change)
-                {
-                    case "home":
-                        break;
-                    case "menu":
-                        listView_menu.Clear();
-                        listView_menu.View = View.Details;
-                        listView_menu.Columns.Add("Ruoka", 20, HorizontalAlignment.Left);
-                        listView_menu.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
-                        textBox_menu_name.Text = "";
-                        comboBox_menus.SelectedItem = null;
-                        listView_menu.Items.Clear();
-                        textBox_menu_food.Text = "";
-                        textBox_menu_description.Text = "";
-                        if (!user.full_permissions)
+                    if (current_button != null)
+                    {
+                        if (current_button != button_logo)
                         {
-                            button_menu_delete.Visible = false;
-                            button_menu_delete.Enabled = false;
-                            button_menu_remove.Visible = false;
-                            button_menu_remove.Enabled = false;
-                            button_menu_add.Text = "Ehdota ruokaa";
+                            current_button.BackColor = Color.DodgerBlue;
                         }
-                        readMenus();
-                        listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                        listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                        break;
-                    case "cleaning_shift":
-
-                        if (!user.full_permissions)
+                        if (button_change != button_logo)
                         {
-                            listView_cleaning_shift_family_members.Enabled = false;
-                            textBox_cleaning_shift_work.Enabled = false;
-                            button_cleaning_shift_add.Enabled = false;
-                            button_cleaning_shift_add.Visible = false;
-                            button_cleaning_shift_remove.Enabled = false;
-                            button_cleaning_shift_remove.Visible = false;
-                            label_cleaning_shift_info.Text = "Valitse perheenjäsen listalta\n ja tarkastele";
+                            button_change.BackColor = Color.CadetBlue;
                         }
+                    }
+                    current_button = button_change;
+                    if (current_groupBox != null)
+                    {
+                        current_groupBox.Enabled = false;
+                        current_groupBox.Visible = false;
+                    }
+                    current_groupBox = groupBox_change;
+                    current_groupBox.Location = new Point(12, 170);
+                    current_groupBox.Size = new Size(967, 518);
+                    current_groupBox.Visible = true;
+                    current_groupBox.Enabled = true;
+                    checkDatabaseConnection();
+                    current_view = view_change;
+                    switch (current_view)
+                    {
+                        case "home":
+                            break;
+                        case "menu":
+                            listView_menu.Clear();
+                            listView_menu.View = View.Details;
+                            listView_menu.Columns.Add("Ruoka", 20, HorizontalAlignment.Left);
+                            listView_menu.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
+                            textBox_menu_name.Text = "";
+                            comboBox_menus.SelectedItem = null;
+                            listView_menu.Items.Clear();
+                            textBox_menu_food.Text = "";
+                            textBox_menu_description.Text = "";
+                            if (!user.full_permissions)
+                            {
+                                button_menu_delete.Visible = false;
+                                button_menu_delete.Enabled = false;
+                                button_menu_remove.Visible = false;
+                                button_menu_remove.Enabled = false;
+                                button_menu_add.Text = "Ehdota ruokaa";
+                            }
+                            readMenus();
+                            listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                            listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                            break;
+                        case "cleaning_shift":
 
-                        listView_cleaning_shift_family_members.Clear();
-                        listView_cleaning_shift_family_members.View = View.Details;
-                        listView_cleaning_shift_family_members.Columns.Add("Perheenjäsen", 20, HorizontalAlignment.Left);
+                            if (!user.full_permissions)
+                            {
+                                listView_cleaning_shift_family_members.Enabled = false;
+                                textBox_cleaning_shift_work.Enabled = false;
+                                button_cleaning_shift_add.Enabled = false;
+                                button_cleaning_shift_add.Visible = false;
+                                button_cleaning_shift_remove.Enabled = false;
+                                button_cleaning_shift_remove.Visible = false;
+                                label_cleaning_shift_info.Text = "Valitse perheenjäsen listalta\n ja tarkastele";
+                            }
 
-                        listView_cleaning_shift_list.Clear();
-                        listView_cleaning_shift_list.View = View.Details;
-                        listView_cleaning_shift_list.Columns.Add("Askare", 20, HorizontalAlignment.Left);
-                        listView_cleaning_shift_list.Columns.Add("Perheenjäsen", 20, HorizontalAlignment.Left);
+                            listView_cleaning_shift_family_members.Clear();
+                            listView_cleaning_shift_family_members.View = View.Details;
+                            listView_cleaning_shift_family_members.Columns.Add("Perheenjäsen", 20, HorizontalAlignment.Left);
 
-                        readCleaning();
+                            listView_cleaning_shift_list.Clear();
+                            listView_cleaning_shift_list.View = View.Details;
+                            listView_cleaning_shift_list.Columns.Add("Askare", 20, HorizontalAlignment.Left);
+                            listView_cleaning_shift_list.Columns.Add("Perheenjäsen", 20, HorizontalAlignment.Left);
 
-                        listView_cleaning_shift_family_members.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                        listView_cleaning_shift_family_members.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                            readCleaning();
 
-                        listView_cleaning_shift_list.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                        listView_cleaning_shift_list.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                        break;
-                    case "economic":
-                        listView_income.Clear();
-                        listView_income.View = View.Details;
-                        listView_income.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
-                        listView_income.Columns.Add("Summa", 20, HorizontalAlignment.Left);
-                        listView_income.Columns.Add("Type", 20, HorizontalAlignment.Left);
-                        listView_income.GridLines = true;
-                        listView_income.FullRowSelect = true;
+                            listView_cleaning_shift_family_members.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                            listView_cleaning_shift_family_members.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 
-                        listView_outlay.Clear();
-                        listView_outlay.View = View.Details;
-                        listView_outlay.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
-                        listView_outlay.Columns.Add("Summa", 20, HorizontalAlignment.Left);
-                        listView_outlay.Columns.Add("Type", 20, HorizontalAlignment.Left);
-                        listView_outlay.GridLines = true;
-                        listView_outlay.FullRowSelect = true;
+                            listView_cleaning_shift_list.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                            listView_cleaning_shift_list.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                            break;
+                        case "economic":
+                            listView_income.Clear();
+                            listView_income.View = View.Details;
+                            listView_income.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
+                            listView_income.Columns.Add("Summa", 20, HorizontalAlignment.Left);
+                            listView_income.Columns.Add("Type", 20, HorizontalAlignment.Left);
+                            listView_income.GridLines = true;
+                            listView_income.FullRowSelect = true;
 
-                        textBox_economic_name.Text = "";
-                        textBox_economic_amount.Text = "";
-                        comboBox_economic_type.SelectedIndex = -1;
-                        textBox_all_income.Text = "";
-                        textBox_all_outlay.Text = "";
-                        textBox_balance.Text = "";
-                        break;
-                    case "shopping_list":
-                        textBox_list_name.Text = "";
-                        richTextBox_shopping_list.Text = "";
-                        textBox_item_name.Text = "";
-                        textBox_item_amount.Text = "";
-                        comboBox_amount_type.SelectedItem = null;
-                        if (!user.full_permissions)
-                        {
-                            button_list_delete.Visible = false;
-                            button_list_delete.Enabled = false;
-                            richTextBox_shopping_list.Enabled = false;
-                            button_add_item.Text = "Ehdota tuotetta";
-                        }
-                        readShoppingLists();
-                        break;
-                    case "calendar":
-                        listView_events.Clear();
-                        listView_events.View = View.Details;
-                        listView_events.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
-                        listView_events.Columns.Add("Paikka", 20, HorizontalAlignment.Left);
-                        listView_events.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
-                        listView_events.GridLines = true;
-                        listView_events.FullRowSelect = true;
-                        readCalendarLists();
-                        textBox_event_name.Text = "";
-                        textBox_event_location.Text = "";
-                        dateTimePicker_event_datetime.Value = DateTime.Now;
+                            listView_outlay.Clear();
+                            listView_outlay.View = View.Details;
+                            listView_outlay.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
+                            listView_outlay.Columns.Add("Summa", 20, HorizontalAlignment.Left);
+                            listView_outlay.Columns.Add("Type", 20, HorizontalAlignment.Left);
+                            listView_outlay.GridLines = true;
+                            listView_outlay.FullRowSelect = true;
 
-                        comboBox_event_search_month.SelectedItem = "Koko vuosi";
-                        textBox_event_search_year.Text = "";
-                        dateTimePicker_event_search_datetime.Value = DateTime.Now;
-                        break;
-                    case "athletic_meter":
-                        view_change = "athletic_meter";
-                        viewChange(groupBox_athletic_meter, button_athletic_meter);
-                        readAthleticMeter();
-                        break;
-                    case "checklist":
-                        textBox_checklist_name.Text = "";
-                        textBox_checklist.Text = "";
-                        readChecklists();
-                        break;
-                    case "change_tracking":
-                        listView_change_tracking.Clear();
-                        listView_change_tracking.View = View.Details;
-                        listView_change_tracking.Columns.Add("Id", 20, HorizontalAlignment.Left);
-                        listView_change_tracking.Columns.Add("Käyttäjänimi", 20, HorizontalAlignment.Left);
-                        listView_change_tracking.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
-                        listView_change_tracking.Columns.Add("Muutos", 20, HorizontalAlignment.Left);
-                        readChangeTrackingLists();
-                        break;
+                            textBox_economic_name.Text = "";
+                            textBox_economic_amount.Text = "";
+                            comboBox_economic_type.SelectedIndex = -1;
+                            textBox_all_income.Text = "";
+                            textBox_all_outlay.Text = "";
+                            textBox_balance.Text = "";
+
+                            readEconomicLists();
+                            break;
+                        case "shopping_list":
+                            textBox_list_name.Text = "";
+                            richTextBox_shopping_list.Text = "";
+                            textBox_item_name.Text = "";
+                            textBox_item_amount.Text = "";
+                            comboBox_amount_type.SelectedItem = null;
+                            if (!user.full_permissions)
+                            {
+                                button_list_delete.Visible = false;
+                                button_list_delete.Enabled = false;
+                                richTextBox_shopping_list.Enabled = false;
+                                button_add_item.Text = "Ehdota tuotetta";
+                            }
+                            readShoppingLists();
+                            break;
+                        case "calendar":
+                            listView_events.Clear();
+                            listView_events.View = View.Details;
+                            listView_events.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
+                            listView_events.Columns.Add("Paikka", 20, HorizontalAlignment.Left);
+                            listView_events.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
+                            listView_events.GridLines = true;
+                            listView_events.FullRowSelect = true;
+                            readCalendarLists();
+                            textBox_event_name.Text = "";
+                            textBox_event_location.Text = "";
+                            dateTimePicker_event_datetime.Value = DateTime.Now;
+
+                            comboBox_event_search_month.SelectedItem = "Koko vuosi";
+                            textBox_event_search_year.Text = "";
+                            dateTimePicker_event_search_datetime.Value = DateTime.Now;
+                            break;
+                        case "athletic_meter":
+                            readAthleticMeter();
+                            break;
+                        case "checklist":
+                            textBox_checklist_name.Text = "";
+                            textBox_checklist.Text = "";
+                            readChecklists();
+                            break;
+                        case "change_tracking":
+                            listView_change_tracking.Clear();
+                            listView_change_tracking.View = View.Details;
+                            listView_change_tracking.Columns.Add("Id", 20, HorizontalAlignment.Left);
+                            listView_change_tracking.Columns.Add("Käyttäjänimi", 20, HorizontalAlignment.Left);
+                            listView_change_tracking.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
+                            listView_change_tracking.Columns.Add("Muutos", 20, HorizontalAlignment.Left);
+                            readChangeTrackingLists();
+                            break;
+                    }
                 }
             }
         }
@@ -346,124 +353,63 @@ namespace Home_n_Life
         {
             if (comboBox_search.Text.Contains("Kala"))
             {
-                if (view_change != "home")
-                {
-                    view_change = "home";
-                    viewChange(groupBox_home, button_logo);
-                }
+                view_change = "home";
+                viewChange(groupBox_home, button_logo, view_change);
             }
         }
 
         private void button_logo_Click(object sender, EventArgs e)
         {
-            dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                if (view_change != "home")
-                {
-                    view_change = "home";
-                    viewChange(groupBox_home, button_logo);
-                }
-            }
+            view_change = "home";
+            viewChange(groupBox_home, button_logo, view_change);
         }
 
         private void button_economic_Click(object sender, EventArgs e)
         {
-            //dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            //if (dialogResult == DialogResult.Yes)
-            //{
-                if (view_change != "economic")
-                {
-                    checkDatabaseConnection();
-                    view_change = "economic";
-                    viewChange(groupBox_economic, button_economic);
-                    readEconomicLists();
-                }
-            //}
+            view_change = "economic";
+            viewChange(groupBox_economic, button_economic, view_change);
         }
 
         private void button_menu_Click(object sender, EventArgs e)
         {
-            //dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            //if (dialogResult == DialogResult.Yes)
-            //{
-                if (view_change != "menu")
-                {
-                    checkDatabaseConnection();
-                    view_change = "menu";
-                    viewChange(groupBox_menu, button_menu);
-                }
-            //}
+            view_change = "menu";
+            viewChange(groupBox_menu, button_menu, view_change);
+        }
+
+        private void button_cleaning_shift_Click(object sender, EventArgs e)
+        {
+            view_change = "cleaning_shift";
+            viewChange(groupBox_cleaning_shift, button_cleaning_shift, view_change);
         }
 
         private void button_shopping_list_Click(object sender, EventArgs e)
         {
-            //dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            //if (dialogResult == DialogResult.Yes)
-            //{
-                if (view_change != "shopping_list")
-                {
-                    checkDatabaseConnection();
-                    view_change = "shopping_list";
-                    viewChange(groupBox_shopping_list, button_shopping_list);
-                }
-            //}
+            view_change = "shopping_list";
+            viewChange(groupBox_shopping_list, button_shopping_list, view_change);
         }
 
         private void button_calendar_Click(object sender, EventArgs e)
         {
-            //dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            //if (dialogResult == DialogResult.Yes)
-            //{
-                if (view_change != "calendar")
-                {
-                    checkDatabaseConnection();
-                    view_change = "calendar";
-                    viewChange(groupBox_calendar, button_calendar);
-                }
-            //}
+            view_change = "calendar";
+            viewChange(groupBox_calendar, button_calendar, view_change);
         }
 
         private void button_athletic_meter_Click(object sender, EventArgs e)
         {
-            //dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            //if (dialogResult == DialogResult.Yes)
-            //{
-                if (view_change != "athletic_meter")
-                {
-                    checkDatabaseConnection();
-                    view_change = "athletic_meter";
-                    viewChange(groupBox_athletic_meter, button_athletic_meter);
-                }
-            //}
+            view_change = "athletic_meter";
+            viewChange(groupBox_athletic_meter, button_athletic_meter, view_change);
         }
 
         private void button_checklist_Click(object sender, EventArgs e)
         {
-            //dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            //if (dialogResult == DialogResult.Yes)
-            //{
-                if (view_change != "checklist")
-                {
-                    checkDatabaseConnection();
-                    view_change = "checklist";
-                    viewChange(groupBox_checklist, button_checklist);
-                }
-            //}
+            view_change = "checklist";
+            viewChange(groupBox_checklist, button_checklist, view_change);
         }
 
         private void button_change_tracking_Click(object sender, EventArgs e)
         {
-            //dialogResult = MessageBox.Show("Olethan varmasti muistanut tallentaa keskeneräiset työsi?", "Siirry", MessageBoxButtons.YesNo);
-            //if (dialogResult == DialogResult.Yes)
-            //{
-                if (view_change != "change_tracking")
-                {
-                    checkDatabaseConnection();
-                    view_change = "change_tracking";
-                    viewChange(groupBox_change_tracking, button_change_tracking);
-                }
-            //}
+            view_change = "change_tracking";
+            viewChange(groupBox_change_tracking, button_change_tracking, view_change);
         }
 //----- Economic --------------------------------------------------------------------------------------
         private void readEconomicLists()
@@ -1761,16 +1707,6 @@ namespace Home_n_Life
             catch (Exception ex)
             {
                 MessageBox.Show(Convert.ToString(ex));
-            }
-        }
-
-        private void button_cleaning_shift_Click(object sender, EventArgs e)
-        {
-            if (view_change != "cleaning_shift")
-            {
-                checkDatabaseConnection();
-                view_change = "cleaning_shift";
-                viewChange(groupBox_cleaning_shift, button_cleaning_shift);
             }
         }
 
