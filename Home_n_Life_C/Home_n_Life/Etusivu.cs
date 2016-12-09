@@ -30,6 +30,7 @@ namespace Home_n_Life
 //----- Attributes --------------------------------------------------------------------------------------
         //---Database----------------
         string connetionString = "server=localhost;database=home&life;uid=root;pwd=;";
+        bool MySqlConnectionOn;
         MySqlConnection conn;
         MySqlCommand cmd;
         MySqlDataReader dataReader;
@@ -63,6 +64,7 @@ namespace Home_n_Life
         List<Label> addedLabels = new List<Label>();
         List<Point> points;
         List<Tuple<string, double>> values;
+        double current_kilometers;
         //---Checklist---------------
         bool checklist_progressing = false;
         //---Change_tracking---------
@@ -72,6 +74,8 @@ namespace Home_n_Life
 //----- Etusivu Load --------------------------------------------------------------------------------------
         private void Etusivu_Load(object sender, EventArgs e)
         {
+            conn = new MySqlConnection(connetionString);
+
             months[1] = "Tammikuu"; months[5] = "Toukokuu"; months[9] = "Syyskuu";
             months[2] = "Helmikuu"; months[6] = "Kesäkuu"; months[10] = "Lokakuu";
             months[3] = "Maaliskuu"; months[7] = "Heinäkuu"; months[11] = "Marraskuu";
@@ -79,8 +83,7 @@ namespace Home_n_Life
 
             comboBox_search.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBox_search.AutoCompleteSource = AutoCompleteSource.ListItems;
-
-            conn = new MySqlConnection(connetionString);
+            
             view_change = "home";
             viewChange(groupBox_home, button_logo, view_change);
         }
@@ -165,6 +168,7 @@ namespace Home_n_Life
 //----- Database --------------------------------------------------------------------------------------
         public void checkDatabaseConnection()
         {
+            MySqlConnectionOn = false;
             progressBar_database_connection.Value = 1;
             progressBar_database_connection.ForeColor = Color.Yellow;
             try
@@ -173,11 +177,11 @@ namespace Home_n_Life
                 conn.Open();
                 progressBar_database_connection.Value = 2;
                 progressBar_database_connection.ForeColor = Color.LimeGreen;
+                MySqlConnectionOn = true;
                 conn.Close();
             }
             catch
             {
-                MessageBox.Show("Tietokantaan ei saatu yhteyttä.", "Error");
                 progressBar_database_connection.Value = 1;
                 progressBar_database_connection.ForeColor = Color.Red;
             }
@@ -185,167 +189,175 @@ namespace Home_n_Life
 //----- Change View --------------------------------------------------------------------------------------
         private void viewChange(GroupBox groupBox_change, Button button_change, string view_change)
         {
-            if (view_change != current_view)
+            checkDatabaseConnection();
+            if (MySqlConnectionOn)
             {
-                if (current_groupBox != groupBox_change)
+                if (view_change != current_view)
                 {
-                    if (current_button != null)
+                    if (current_groupBox != groupBox_change)
                     {
-                        if (current_button != button_logo)
+                        if (current_button != null)
                         {
-                            current_button.BackColor = Color.DodgerBlue;
+                            if (current_button != button_logo)
+                            {
+                                current_button.BackColor = Color.DodgerBlue;
+                            }
+                            if (button_change != button_logo)
+                            {
+                                button_change.BackColor = Color.CadetBlue;
+                            }
                         }
-                        if (button_change != button_logo)
+                        current_button = button_change;
+                        if (current_groupBox != null)
                         {
-                            button_change.BackColor = Color.CadetBlue;
+                            current_groupBox.Enabled = false;
+                            current_groupBox.Visible = false;
                         }
-                    }
-                    current_button = button_change;
-                    if (current_groupBox != null)
-                    {
-                        current_groupBox.Enabled = false;
-                        current_groupBox.Visible = false;
-                    }
-                    current_groupBox = groupBox_change;
-                    current_groupBox.Location = new Point(12, 170);
-                    current_groupBox.Size = new Size(967, 518);
-                    current_groupBox.Visible = true;
-                    current_groupBox.Enabled = true;
-                    checkDatabaseConnection();
-                    current_view = view_change;
-                    switch (current_view)
-                    {
-                        case "home":
-                            break;
-                        case "menu":
-                            listView_menu.Clear();
-                            listView_menu.View = View.Details;
-                            listView_menu.Columns.Add("Ruoka", 20, HorizontalAlignment.Left);
-                            listView_menu.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
-                            textBox_menu_name.Text = "";
-                            comboBox_menus.SelectedItem = null;
-                            listView_menu.Items.Clear();
-                            textBox_menu_food.Text = "";
-                            textBox_menu_description.Text = "";
-                            if (!user.full_permissions)
-                            {
-                                button_menu_delete.Visible = false;
-                                button_menu_delete.Enabled = false;
-                                button_menu_remove.Visible = false;
-                                button_menu_remove.Enabled = false;
-                                button_menu_add.Text = "Ehdota ruokaa";
-                            }
-                            readMenus();
-                            listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                            listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                            break;
-                        case "cleaning_shift":
+                        current_groupBox = groupBox_change;
+                        current_groupBox.Location = new Point(12, 170);
+                        current_groupBox.Size = new Size(967, 518);
+                        current_groupBox.Visible = true;
+                        current_groupBox.Enabled = true;
+                        checkDatabaseConnection();
+                        current_view = view_change;
+                        switch (current_view)
+                        {
+                            case "home":
+                                break;
+                            case "menu":
+                                listView_menu.Clear();
+                                listView_menu.View = View.Details;
+                                listView_menu.Columns.Add("Ruoka", 20, HorizontalAlignment.Left);
+                                listView_menu.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
+                                textBox_menu_name.Text = "";
+                                comboBox_menus.SelectedItem = null;
+                                listView_menu.Items.Clear();
+                                textBox_menu_food.Text = "";
+                                textBox_menu_description.Text = "";
+                                if (!user.full_permissions)
+                                {
+                                    button_menu_delete.Visible = false;
+                                    button_menu_delete.Enabled = false;
+                                    button_menu_remove.Visible = false;
+                                    button_menu_remove.Enabled = false;
+                                    button_menu_add.Text = "Ehdota ruokaa";
+                                }
+                                readMenus();
+                                listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                                listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                                break;
+                            case "cleaning_shift":
 
-                            if (!user.full_permissions)
-                            {
-                                listView_cleaning_shift_family_members.Enabled = false;
-                                textBox_cleaning_shift_work.Enabled = false;
-                                button_cleaning_shift_add.Enabled = false;
-                                button_cleaning_shift_add.Visible = false;
-                                button_cleaning_shift_remove.Enabled = false;
-                                button_cleaning_shift_remove.Visible = false;
-                                label_cleaning_shift_info.Text = "Valitse perheenjäsen listalta\n ja tarkastele";
-                            }
+                                if (!user.full_permissions)
+                                {
+                                    listView_cleaning_shift_family_members.Enabled = false;
+                                    textBox_cleaning_shift_work.Enabled = false;
+                                    button_cleaning_shift_add.Enabled = false;
+                                    button_cleaning_shift_add.Visible = false;
+                                    button_cleaning_shift_remove.Enabled = false;
+                                    button_cleaning_shift_remove.Visible = false;
+                                    label_cleaning_shift_info.Text = "Valitse perheenjäsen listalta\n ja tarkastele";
+                                }
 
-                            listView_cleaning_shift_family_members.Clear();
-                            listView_cleaning_shift_family_members.View = View.Details;
-                            listView_cleaning_shift_family_members.Columns.Add("Perheenjäsen", 20, HorizontalAlignment.Left);
+                                listView_cleaning_shift_family_members.Clear();
+                                listView_cleaning_shift_family_members.View = View.Details;
+                                listView_cleaning_shift_family_members.Columns.Add("Perheenjäsen", 20, HorizontalAlignment.Left);
 
-                            listView_cleaning_shift_list.Clear();
-                            listView_cleaning_shift_list.View = View.Details;
-                            listView_cleaning_shift_list.Columns.Add("Askare", 20, HorizontalAlignment.Left);
-                            listView_cleaning_shift_list.Columns.Add("Perheenjäsen", 20, HorizontalAlignment.Left);
+                                listView_cleaning_shift_list.Clear();
+                                listView_cleaning_shift_list.View = View.Details;
+                                listView_cleaning_shift_list.Columns.Add("Askare", 20, HorizontalAlignment.Left);
+                                listView_cleaning_shift_list.Columns.Add("Perheenjäsen", 20, HorizontalAlignment.Left);
 
-                            readCleaning();
+                                readCleaning();
 
-                            listView_cleaning_shift_family_members.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                            listView_cleaning_shift_family_members.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                                listView_cleaning_shift_family_members.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                                listView_cleaning_shift_family_members.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 
-                            listView_cleaning_shift_list.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                            listView_cleaning_shift_list.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                            break;
-                        case "economic":
-                            listView_income.Clear();
-                            listView_income.View = View.Details;
-                            listView_income.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
-                            listView_income.Columns.Add("Summa", 20, HorizontalAlignment.Left);
-                            listView_income.Columns.Add("Type", 20, HorizontalAlignment.Left);
-                            listView_income.GridLines = true;
-                            listView_income.FullRowSelect = true;
+                                listView_cleaning_shift_list.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                                listView_cleaning_shift_list.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                                break;
+                            case "economic":
+                                listView_income.Clear();
+                                listView_income.View = View.Details;
+                                listView_income.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
+                                listView_income.Columns.Add("Summa", 20, HorizontalAlignment.Left);
+                                listView_income.Columns.Add("Type", 20, HorizontalAlignment.Left);
+                                listView_income.GridLines = true;
+                                listView_income.FullRowSelect = true;
 
-                            listView_outlay.Clear();
-                            listView_outlay.View = View.Details;
-                            listView_outlay.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
-                            listView_outlay.Columns.Add("Summa", 20, HorizontalAlignment.Left);
-                            listView_outlay.Columns.Add("Type", 20, HorizontalAlignment.Left);
-                            listView_outlay.GridLines = true;
-                            listView_outlay.FullRowSelect = true;
+                                listView_outlay.Clear();
+                                listView_outlay.View = View.Details;
+                                listView_outlay.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
+                                listView_outlay.Columns.Add("Summa", 20, HorizontalAlignment.Left);
+                                listView_outlay.Columns.Add("Type", 20, HorizontalAlignment.Left);
+                                listView_outlay.GridLines = true;
+                                listView_outlay.FullRowSelect = true;
 
-                            textBox_economic_name.Text = "";
-                            textBox_economic_amount.Text = "";
-                            comboBox_economic_type.SelectedIndex = -1;
-                            textBox_all_income.Text = "";
-                            textBox_all_outlay.Text = "";
-                            textBox_balance.Text = "";
+                                textBox_economic_name.Text = "";
+                                textBox_economic_amount.Text = "";
+                                comboBox_economic_type.SelectedIndex = -1;
+                                textBox_all_income.Text = "";
+                                textBox_all_outlay.Text = "";
+                                textBox_balance.Text = "";
 
-                            readEconomicLists();
-                            break;
-                        case "shopping_list":
-                            textBox_list_name.Text = "";
-                            richTextBox_shopping_list.Text = "";
-                            textBox_item_name.Text = "";
-                            textBox_item_amount.Text = "";
-                            comboBox_amount_type.SelectedItem = null;
-                            if (!user.full_permissions)
-                            {
-                                button_list_delete.Visible = false;
-                                button_list_delete.Enabled = false;
-                                richTextBox_shopping_list.Enabled = false;
-                                button_add_item.Text = "Ehdota tuotetta";
-                            }
-                            readShoppingLists();
-                            break;
-                        case "calendar":
-                            listView_events.Clear();
-                            listView_events.View = View.Details;
-                            listView_events.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
-                            listView_events.Columns.Add("Paikka", 20, HorizontalAlignment.Left);
-                            listView_events.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
-                            listView_events.GridLines = true;
-                            listView_events.FullRowSelect = true;
-                            readCalendarLists();
-                            textBox_event_name.Text = "";
-                            textBox_event_location.Text = "";
-                            dateTimePicker_event_datetime.Value = DateTime.Now;
+                                readEconomicLists();
+                                break;
+                            case "shopping_list":
+                                textBox_list_name.Text = "";
+                                richTextBox_shopping_list.Text = "";
+                                textBox_item_name.Text = "";
+                                textBox_item_amount.Text = "";
+                                comboBox_amount_type.SelectedItem = null;
+                                if (!user.full_permissions)
+                                {
+                                    button_list_delete.Visible = false;
+                                    button_list_delete.Enabled = false;
+                                    richTextBox_shopping_list.Enabled = false;
+                                    button_add_item.Text = "Ehdota tuotetta";
+                                }
+                                readShoppingLists();
+                                break;
+                            case "calendar":
+                                listView_events.Clear();
+                                listView_events.View = View.Details;
+                                listView_events.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
+                                listView_events.Columns.Add("Paikka", 20, HorizontalAlignment.Left);
+                                listView_events.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
+                                listView_events.GridLines = true;
+                                listView_events.FullRowSelect = true;
+                                readCalendarLists();
+                                textBox_event_name.Text = "";
+                                textBox_event_location.Text = "";
+                                dateTimePicker_event_datetime.Value = DateTime.Now;
 
-                            comboBox_event_search_month.SelectedItem = "Koko vuosi";
-                            textBox_event_search_year.Text = "";
-                            dateTimePicker_event_search_datetime.Value = DateTime.Now;
-                            break;
-                        case "athletic_meter":
-                            readAthleticMeter();
-                            break;
-                        case "checklist":
-                            textBox_checklist_name.Text = "";
-                            textBox_checklist.Text = "";
-                            readChecklists();
-                            break;
-                        case "change_tracking":
-                            listView_change_tracking.Clear();
-                            listView_change_tracking.View = View.Details;
-                            listView_change_tracking.Columns.Add("Id", 20, HorizontalAlignment.Left);
-                            listView_change_tracking.Columns.Add("Käyttäjänimi", 20, HorizontalAlignment.Left);
-                            listView_change_tracking.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
-                            listView_change_tracking.Columns.Add("Muutos", 20, HorizontalAlignment.Left);
-                            readChangeTrackingLists();
-                            break;
+                                comboBox_event_search_month.SelectedItem = "Koko vuosi";
+                                textBox_event_search_year.Text = "";
+                                dateTimePicker_event_search_datetime.Value = DateTime.Now;
+                                break;
+                            case "athletic_meter":
+                                readAthleticMeter();
+                                break;
+                            case "checklist":
+                                textBox_checklist_name.Text = "";
+                                textBox_checklist.Text = "";
+                                readChecklists();
+                                break;
+                            case "change_tracking":
+                                listView_change_tracking.Clear();
+                                listView_change_tracking.View = View.Details;
+                                listView_change_tracking.Columns.Add("Id", 20, HorizontalAlignment.Left);
+                                listView_change_tracking.Columns.Add("Käyttäjänimi", 20, HorizontalAlignment.Left);
+                                listView_change_tracking.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
+                                listView_change_tracking.Columns.Add("Muutos", 20, HorizontalAlignment.Left);
+                                readChangeTrackingLists();
+                                break;
+                        }
                     }
                 }
+            }
+            else
+            {
+                MessageBox.Show("Tietokantaan ei saatu yhteyttä\nYritä korjata yhteytesi, jotta voit jatkaa", "Tietokanta");
             }
         }
 
@@ -1484,6 +1496,10 @@ namespace Home_n_Life
             {
                 year = textBox_athletic_year.Text;
             }
+            else
+            {
+                textBox_athletic_year.Text = year;
+            }
             createTableQuery = @"CREATE TABLE IF NOT EXISTS athletic_meter (
                                             id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                             username VARCHAR(30) NOT NULL,
@@ -1556,7 +1572,14 @@ namespace Home_n_Life
                         points = new List<Point>();
                         if (tempValue > 0)
                         {
-                            points.Add(new Point(30, 260 - Convert.ToInt32(tempValue / zoom)));
+                            if (270 - Convert.ToInt32(tempValue / zoom) <= 240)
+                            {
+                                points.Add(new Point(30, 260 - Convert.ToInt32(tempValue / zoom)));
+                            }
+                            else
+                            {
+                                points.Add(new Point(30, 250));
+                            }
                         }
                         else
                         {
@@ -1569,7 +1592,14 @@ namespace Home_n_Life
                         labelValue.BackColor = System.Drawing.Color.Transparent;
                         if (tempValue > 0)
                         {
-                            labelValue.Location = new Point(20, 250 - Convert.ToInt32(tempValue / zoom));
+                            if (240 - Convert.ToInt32(tempValue / zoom) <= 210)
+                            {
+                                labelValue.Location = new Point(20, 250 - Convert.ToInt32(tempValue / zoom));
+                            }
+                            else
+                            {
+                                labelValue.Location = new Point(20, 220);
+                            }
                         }
                         else
                         {
@@ -1583,7 +1613,7 @@ namespace Home_n_Life
                         points.Add(new Point(30 + ((i - 1) * 80), 250));
                         if (tempValue > 0)
                         {
-                            if (270 - Convert.ToInt32(tempValue / zoom) <= 250)
+                            if (270 - Convert.ToInt32(tempValue / zoom) <= 240)
                             {
                                 points.Add(new Point(30 + ((i - 1) * 80), 270 - Convert.ToInt32(tempValue / zoom)));
                             }
@@ -1604,7 +1634,7 @@ namespace Home_n_Life
                         labelValue.BackColor = System.Drawing.Color.Transparent;
                         if (tempValue > 0)
                         {
-                            if (240 - Convert.ToInt32(tempValue / zoom) <= 220)
+                            if (240 - Convert.ToInt32(tempValue / zoom) <= 210)
                             {
                                 labelValue.Location = new Point(20 + ((i - 1) * 80), 250 - Convert.ToInt32(tempValue / zoom));
                             }
@@ -1632,16 +1662,21 @@ namespace Home_n_Life
 
         private void button_athletic_add_kilometers_Click(object sender, EventArgs e)
         {
+            current_kilometers = 0;
+            if ((double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text)) >= 0)
+            {
+                current_kilometers = (double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text));
+            }
             textBox_athletic_year.Text = "";
             month = DateTime.Now.ToString(" M ");
             year = DateTime.Now.ToString(" yyyy ");
             insertTableQuery = @"INSERT INTO athletic_meter (id, username, month, year, amount) " +
-                                "SELECT * FROM(SELECT 0, '" + user.user_name + "', '" + months[Int32.Parse(month)] + "', " + Int32.Parse(year) + ", " + Convert.ToString(double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text)) +  ") AS tmp " +
+                                "SELECT * FROM(SELECT -1, '" + user.user_name + "', '" + months[Int32.Parse(month)] + "', " + Int32.Parse(year) + ", " + Convert.ToString(current_kilometers) +  ") AS tmp " +
                                 "WHERE NOT EXISTS( " +
                                 "SELECT username, month, year FROM athletic_meter WHERE username='" + user.user_name + "' AND month='" + months[Int32.Parse(month)] + "' AND year=" + Int32.Parse(year) +
                                 ") LIMIT 2 ;";
             updateTableQuery = @"UPDATE athletic_meter " +
-                                 "SET amount='" + Convert.ToString(double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text)) + "' " +
+                                 "SET amount='" + Convert.ToString(current_kilometers) + "' " +
                                  "WHERE username='" + user.user_name + "' AND month='" + months[Int32.Parse(month)] + "' AND year="+ Int32.Parse(year) + " ;";
             try
             {

@@ -40,7 +40,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.button_show_password = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.button_sign_up = new System.Windows.Forms.Button();
+            this.button_registration = new System.Windows.Forms.Button();
             this.button_login = new System.Windows.Forms.Button();
             this.groupBox_registration = new System.Windows.Forms.GroupBox();
             this.comboBox_account_permissions = new System.Windows.Forms.ComboBox();
@@ -149,13 +149,13 @@
             this.groupBox_login.Controls.Add(this.label2);
             this.groupBox_login.Controls.Add(this.button_show_password);
             this.groupBox_login.Controls.Add(this.label1);
-            this.groupBox_login.Controls.Add(this.button_sign_up);
+            this.groupBox_login.Controls.Add(this.button_registration);
             this.groupBox_login.Controls.Add(this.textBox_username);
             this.groupBox_login.Controls.Add(this.button_login);
             this.groupBox_login.Enabled = false;
             this.groupBox_login.Location = new System.Drawing.Point(12, 65);
             this.groupBox_login.Name = "groupBox_login";
-            this.groupBox_login.Size = new System.Drawing.Size(54, 44);
+            this.groupBox_login.Size = new System.Drawing.Size(479, 312);
             this.groupBox_login.TabIndex = 13;
             this.groupBox_login.TabStop = false;
             this.groupBox_login.Visible = false;
@@ -208,19 +208,19 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Käyttäjänimi";
             // 
-            // button_sign_up
+            // button_registration
             // 
-            this.button_sign_up.BackColor = System.Drawing.Color.DodgerBlue;
-            this.button_sign_up.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_sign_up.ForeColor = System.Drawing.Color.White;
-            this.button_sign_up.Location = new System.Drawing.Point(99, 274);
-            this.button_sign_up.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
-            this.button_sign_up.Name = "button_sign_up";
-            this.button_sign_up.Size = new System.Drawing.Size(126, 30);
-            this.button_sign_up.TabIndex = 4;
-            this.button_sign_up.Text = "Rekisteröidy";
-            this.button_sign_up.UseVisualStyleBackColor = false;
-            this.button_sign_up.Click += new System.EventHandler(this.button_sign_up_Click);
+            this.button_registration.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_registration.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_registration.ForeColor = System.Drawing.Color.White;
+            this.button_registration.Location = new System.Drawing.Point(99, 274);
+            this.button_registration.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
+            this.button_registration.Name = "button_registration";
+            this.button_registration.Size = new System.Drawing.Size(126, 30);
+            this.button_registration.TabIndex = 4;
+            this.button_registration.Text = "Rekisteröidy";
+            this.button_registration.UseVisualStyleBackColor = false;
+            this.button_registration.Click += new System.EventHandler(this.button_registration_Click);
             // 
             // button_login
             // 
@@ -252,7 +252,7 @@
             this.groupBox_registration.Enabled = false;
             this.groupBox_registration.Location = new System.Drawing.Point(12, 115);
             this.groupBox_registration.Name = "groupBox_registration";
-            this.groupBox_registration.Size = new System.Drawing.Size(479, 299);
+            this.groupBox_registration.Size = new System.Drawing.Size(38, 44);
             this.groupBox_registration.TabIndex = 17;
             this.groupBox_registration.TabStop = false;
             this.groupBox_registration.Visible = false;
@@ -412,7 +412,7 @@
         private System.Windows.Forms.TextBox textBox_password;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button_sign_up;
+        private System.Windows.Forms.Button button_registration;
         private System.Windows.Forms.GroupBox groupBox_registration;
         private System.Windows.Forms.TextBox textBox_account_password;
         private System.Windows.Forms.Label label3;
