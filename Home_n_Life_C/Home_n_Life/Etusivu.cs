@@ -36,6 +36,7 @@ namespace Home_n_Life
         MySqlDataReader dataReader;
         User user = new User();
         string dropTableQuery, createTableQuery, insertTableQuery, selectTableQuery, updateTableQuery, deleteTableQuery;
+        string formatDateTimeFromMySql;
         //---Dialog------------------
         DialogResult dialogResult;
         //---listView-Added-Items----
@@ -58,6 +59,7 @@ namespace Home_n_Life
         bool list_progressing = false;
         //---Calendar----------------
         bool same_event = true;
+        DateTime temp_daytime;
         string formatDateTimeForMySql, month, year;
         string[] months = new string[13];
         //---Athletic-meter----------
@@ -135,10 +137,10 @@ namespace Home_n_Life
             listView_family_members.Columns.Add("Nimi", 20, HorizontalAlignment.Left);
             listView_family_members.Columns.Add("Oikeudet", 20, HorizontalAlignment.Left);
             listView_family_members.GridLines = true;
+            listView_family_members.Items.Clear();
             selectTableQuery = @"SELECT id, username, password, family_key, permissions " +
                                         "FROM users " +
                                         "WHERE family_key='" + user.family_key + "' ;";
-            listView_family_members.Items.Clear();
             try
             {
                 conn.Open();
@@ -163,6 +165,62 @@ namespace Home_n_Life
             }
             listView_family_members.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             listView_family_members.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+
+        }
+
+        public void searchThisMonthEvents()
+        {
+            listView_this_month_events.Clear();
+            listView_this_month_events.View = View.Details;
+            listView_this_month_events.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
+            listView_this_month_events.Columns.Add("Paikka", 20, HorizontalAlignment.Left);
+            listView_this_month_events.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
+            listView_this_month_events.GridLines = true;
+            listView_this_month_events.FullRowSelect = true;
+            listView_this_month_events.Items.Clear();
+            month = DateTime.Now.ToString(" M ");
+            year = DateTime.Now.ToString(" yyyy ");
+            createTableQuery = @"CREATE TABLE IF NOT EXISTS calendar (
+                                 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                 username VARCHAR(30) NOT NULL,
+                                 event_name VARCHAR(30) NOT NULL,
+                                 location VARCHAR(30) NOT NULL,
+                                 date DATE NOT NULL,
+                                 month VARCHAR(30) NOT NULL,
+                                 year INT(6) NOT NULL ) ;";
+            selectTableQuery = @"SELECT id, username, event_name, location, date, month, year " +
+                                " FROM calendar " +
+                                " WHERE username='" + user.user_name + "' AND month='" + months[Int32.Parse(month)] + "' AND year='" + year + "' ;";
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(createTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(selectTableQuery, conn);
+                dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    temp_daytime = (DateTime)dataReader["date"];
+                    if (temp_daytime >= DateTime.Now.Date)
+                    {
+                        item = new ListViewItem(new string[]
+                        {
+                                Convert.ToString(dataReader["event_name"]),
+                                Convert.ToString(dataReader["location"]),
+                                temp_daytime.ToString(" d.M.yyyy ")
+                        });
+                        listView_this_month_events.Items.Add(item);
+                    }
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+            listView_this_month_events.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView_this_month_events.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 
         }
 //----- Database --------------------------------------------------------------------------------------
@@ -223,6 +281,8 @@ namespace Home_n_Life
                         switch (current_view)
                         {
                             case "home":
+                                searchFamilyMembers();
+                                searchThisMonthEvents();
                                 break;
                             case "menu":
                                 listView_menu.Clear();
@@ -1145,38 +1205,6 @@ namespace Home_n_Life
             }
         }
 //----- Calendar --------------------------------------------------------------------------------------
-        private void dataReadCalendarList()
-        {
-            dataReader = cmd.ExecuteReader();
-            while (dataReader.Read())
-            {
-                DateTime temp_daytime = (DateTime)dataReader["date"];
-                if (checkBox_event_show_past.Checked)
-                {
-                    item = new ListViewItem(new string[]
-                    {
-                                Convert.ToString(dataReader["event_name"]),
-                                Convert.ToString(dataReader["location"]),
-                                temp_daytime.ToString("d/M/yyyy")
-                    });
-                    listView_events.Items.Add(item);
-                }
-                else
-                {
-                    if (temp_daytime.Date >= DateTime.Now.Date)
-                    {
-                        item = new ListViewItem(new string[]
-                        {
-                                    Convert.ToString(dataReader["event_name"]),
-                                    Convert.ToString(dataReader["location"]),
-                                    temp_daytime.ToString("d/M/yyyy")
-                        });
-                        listView_events.Items.Add(item);
-                    }
-                }
-            }
-            dataReader.Close();
-        }
 
         private void readCalendarLists()
         {
@@ -1198,7 +1226,35 @@ namespace Home_n_Life
                 cmd = new MySqlCommand(createTableQuery, conn);
                 cmd.ExecuteNonQuery();
                 cmd = new MySqlCommand(selectTableQuery, conn);
-                dataReadCalendarList();
+                dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    temp_daytime = (DateTime)dataReader["date"];
+                    if (checkBox_event_show_past.Checked)
+                    {
+                        item = new ListViewItem(new string[]
+                        {
+                                Convert.ToString(dataReader["event_name"]),
+                                Convert.ToString(dataReader["location"]),
+                                temp_daytime.ToString("d/M/yyyy")
+                        });
+                        listView_events.Items.Add(item);
+                    }
+                    else
+                    {
+                        if (temp_daytime.Date >= DateTime.Now.Date)
+                        {
+                            item = new ListViewItem(new string[]
+                            {
+                                    Convert.ToString(dataReader["event_name"]),
+                                    Convert.ToString(dataReader["location"]),
+                                    temp_daytime.ToString("d/M/yyyy")
+                            });
+                            listView_events.Items.Add(item);
+                        }
+                    }
+                }
+                dataReader.Close();
                 conn.Close();
             }
             catch (Exception ex)
@@ -1211,21 +1267,7 @@ namespace Home_n_Life
 
         private void searchCalendarLists(string selectTableQuery_)
         {
-            listView_events.Items.Clear();
-            try
-            {
-                conn.Open();
-                cmd = new MySqlCommand(selectTableQuery_, conn);
-                dataReader = cmd.ExecuteReader();
-                dataReadCalendarList();
-                conn.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(Convert.ToString(ex));
-            }
-            listView_events.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            listView_events.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            readCalendarLists();
         }
 
         private void setSearchMonth(ref string month)
@@ -1492,13 +1534,14 @@ namespace Home_n_Life
             month = DateTime.Now.ToString(" M ");
             textBox_athletic_month.Text = months[Int32.Parse(month)];
             year = DateTime.Now.ToString(" yyyy ");
+            textBox_athletic_year.Text = textBox_athletic_year.Text.Replace(" ", "");
             if (textBox_athletic_year.Text.Length > 0)
             {
                 year = textBox_athletic_year.Text;
             }
             else
             {
-                textBox_athletic_year.Text = year;
+                textBox_athletic_year.Text = year.Replace(" ", ""); ;
             }
             createTableQuery = @"CREATE TABLE IF NOT EXISTS athletic_meter (
                                             id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -1652,7 +1695,6 @@ namespace Home_n_Life
                     }
                 }
                 draw_once = true;
-                panel_athletic_statistics.Refresh();
             }
             catch (Exception ex)
             {
@@ -1702,6 +1744,7 @@ namespace Home_n_Life
         {
             if (draw_once)
             {
+                panel_athletic_statistics.Refresh();
                 Pen pen = new Pen(Color.Black, 10);
                 Point[] points_ = points.ToArray();
                 e.Graphics.DrawLines(pen, points_);

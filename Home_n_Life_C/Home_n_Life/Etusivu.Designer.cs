@@ -174,6 +174,8 @@
             this.listView_cleaning_shift_list = new System.Windows.Forms.ListView();
             this.listView_cleaning_shift_family_members = new System.Windows.Forms.ListView();
             this.label45 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.listView_this_month_events = new System.Windows.Forms.ListView();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_user.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
@@ -712,14 +714,16 @@
             // groupBox_home
             // 
             this.groupBox_home.BackColor = System.Drawing.Color.Black;
+            this.groupBox_home.Controls.Add(this.listView_this_month_events);
+            this.groupBox_home.Controls.Add(this.label32);
             this.groupBox_home.Controls.Add(this.listView_family_members);
             this.groupBox_home.Controls.Add(this.label39);
             this.groupBox_home.Controls.Add(this.label11);
             this.groupBox_home.Controls.Add(this.label10);
             this.groupBox_home.Enabled = false;
-            this.groupBox_home.Location = new System.Drawing.Point(12, 346);
+            this.groupBox_home.Location = new System.Drawing.Point(12, 176);
             this.groupBox_home.Name = "groupBox_home";
-            this.groupBox_home.Size = new System.Drawing.Size(56, 57);
+            this.groupBox_home.Size = new System.Drawing.Size(52, 48);
             this.groupBox_home.TabIndex = 3;
             this.groupBox_home.TabStop = false;
             this.groupBox_home.Visible = false;
@@ -1545,9 +1549,9 @@
             this.groupBox_menu.Controls.Add(this.textBox_menu_food);
             this.groupBox_menu.Controls.Add(this.button_menu_add);
             this.groupBox_menu.Enabled = false;
-            this.groupBox_menu.Location = new System.Drawing.Point(12, 170);
+            this.groupBox_menu.Location = new System.Drawing.Point(74, 285);
             this.groupBox_menu.Name = "groupBox_menu";
-            this.groupBox_menu.Size = new System.Drawing.Size(56, 64);
+            this.groupBox_menu.Size = new System.Drawing.Size(52, 64);
             this.groupBox_menu.TabIndex = 24;
             this.groupBox_menu.TabStop = false;
             this.groupBox_menu.Visible = false;
@@ -1747,9 +1751,9 @@
             this.groupBox_athletic_meter.Controls.Add(this.label42);
             this.groupBox_athletic_meter.Controls.Add(this.panel_athletic_statistics);
             this.groupBox_athletic_meter.Enabled = false;
-            this.groupBox_athletic_meter.Location = new System.Drawing.Point(67, 285);
+            this.groupBox_athletic_meter.Location = new System.Drawing.Point(15, 356);
             this.groupBox_athletic_meter.Name = "groupBox_athletic_meter";
-            this.groupBox_athletic_meter.Size = new System.Drawing.Size(886, 256);
+            this.groupBox_athletic_meter.Size = new System.Drawing.Size(52, 47);
             this.groupBox_athletic_meter.TabIndex = 25;
             this.groupBox_athletic_meter.TabStop = false;
             this.groupBox_athletic_meter.Visible = false;
@@ -2064,6 +2068,27 @@
             this.label45.TabIndex = 21;
             this.label45.Text = "Perheenjäsenet";
             // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label32.ForeColor = System.Drawing.Color.White;
+            this.label32.Location = new System.Drawing.Point(646, 237);
+            this.label32.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(265, 20);
+            this.label32.TabIndex = 24;
+            this.label32.Text = "Tulevat tapahtumat tässä kussa";
+            // 
+            // listView_this_month_events
+            // 
+            this.listView_this_month_events.Enabled = false;
+            this.listView_this_month_events.Location = new System.Drawing.Point(651, 269);
+            this.listView_this_month_events.Name = "listView_this_month_events";
+            this.listView_this_month_events.Size = new System.Drawing.Size(279, 141);
+            this.listView_this_month_events.TabIndex = 25;
+            this.listView_this_month_events.UseCompatibleStateImageBehavior = false;
+            // 
             // Etusivu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2260,5 +2285,7 @@
         private System.Windows.Forms.Label label49;
         private System.Windows.Forms.ListView listView_cleaning_shift_list;
         private System.Windows.Forms.ListView listView_cleaning_shift_family_members;
+        private System.Windows.Forms.ListView listView_this_month_events;
+        private System.Windows.Forms.Label label32;
     }
 }
