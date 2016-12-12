@@ -26,8 +26,7 @@ namespace Home_n_Life
         MySqlCommand cmd;
         MySqlDataReader dataReader;
         DialogResult dialogResult;
-        string dropTableQuery, createTableQuery, insertTableQuery, selectTableQuery, updateTableQuery, deleteTableQuery;
-
+        string createDatabase, createTableQuery, insertTableQuery, selectTableQuery;
 //----- Database --------------------------------------------------------------------------------------
         private void checkDatabaseConnection()
         {
@@ -52,6 +51,28 @@ namespace Home_n_Life
 //----- Login --------------------------------------------------------------------------------------
         private void Kirjautuminen_Load(object sender, EventArgs e)
         {
+            try
+            {
+                conn = new MySqlConnection(connetionString);
+                conn.Open();
+                conn.Close();
+            }
+            catch
+            {
+                conn = new MySqlConnection("server=localhost;uid=root;pwd=;");
+                createDatabase = "CREATE DATABASE IF NOT EXISTS `home&life`;";
+                MySqlCommand cmd = new MySqlCommand(createDatabase, conn);
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Et vielä omistanut tietokantaa nimeltä 'home&life'\nSe on nyt luotu puolestasi", "Tietokanta");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(Convert.ToString(ex));
+                }
+            }
             checkDatabaseConnection();
             if (MySqlConnectionOn)
             {
@@ -61,6 +82,7 @@ namespace Home_n_Life
                 groupBox_login.Visible = true;
                 groupBox_registration.Enabled = false;
                 groupBox_registration.Visible = false;
+                textBox_username.Select();
             }
             else
             {
@@ -163,6 +185,7 @@ namespace Home_n_Life
                             {
                                 Etusivu etusivu = new Etusivu();
                                 etusivu.Show();
+                                etusivu.button_economic.Select();
                                 etusivu.initializeUserData(textBox_username.Text);
                                 etusivu.searchFamilyMembers();
                                 etusivu.searchThisMonthEvents();
@@ -202,6 +225,7 @@ namespace Home_n_Life
             groupBox_registration.Visible = true;
             groupBox_login.Enabled = false;
             groupBox_login.Visible = false;
+            textBox_account_name.Select();
             textBox_account_name.Text = "";
             textBox_account_password.Text = "";
             textBox_family_key.Text = "";
@@ -340,6 +364,7 @@ namespace Home_n_Life
             groupBox_login.Visible = true;
             groupBox_registration.Enabled = false;
             groupBox_registration.Visible = false;
+            textBox_username.Select();
         }
     }
 }

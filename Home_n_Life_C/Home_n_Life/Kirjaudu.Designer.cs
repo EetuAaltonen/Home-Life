@@ -67,7 +67,7 @@
             this.textBox_username.MaxLength = 20;
             this.textBox_username.Name = "textBox_username";
             this.textBox_username.Size = new System.Drawing.Size(272, 26);
-            this.textBox_username.TabIndex = 1;
+            this.textBox_username.TabIndex = 0;
             this.textBox_username.Text = "EetuA";
             this.textBox_username.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -79,7 +79,7 @@
             this.button_exit.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_exit.Name = "button_exit";
             this.button_exit.Size = new System.Drawing.Size(60, 30);
-            this.button_exit.TabIndex = 6;
+            this.button_exit.TabIndex = 5;
             this.button_exit.Text = "Exit";
             this.button_exit.UseVisualStyleBackColor = false;
             this.button_exit.Click += new System.EventHandler(this.button_exit_Click);
@@ -93,7 +93,7 @@
             this.button_minimize.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_minimize.Name = "button_minimize";
             this.button_minimize.Size = new System.Drawing.Size(60, 30);
-            this.button_minimize.TabIndex = 7;
+            this.button_minimize.TabIndex = 6;
             this.button_minimize.Text = "Pienennä";
             this.button_minimize.UseVisualStyleBackColor = false;
             this.button_minimize.Click += new System.EventHandler(this.button_minimize_Click);
@@ -155,7 +155,7 @@
             this.groupBox_login.Enabled = false;
             this.groupBox_login.Location = new System.Drawing.Point(12, 65);
             this.groupBox_login.Name = "groupBox_login";
-            this.groupBox_login.Size = new System.Drawing.Size(479, 312);
+            this.groupBox_login.Size = new System.Drawing.Size(38, 44);
             this.groupBox_login.TabIndex = 13;
             this.groupBox_login.TabStop = false;
             this.groupBox_login.Visible = false;
@@ -169,7 +169,7 @@
             this.textBox_password.Name = "textBox_password";
             this.textBox_password.PasswordChar = '*';
             this.textBox_password.Size = new System.Drawing.Size(272, 26);
-            this.textBox_password.TabIndex = 2;
+            this.textBox_password.TabIndex = 1;
             this.textBox_password.Text = "admin";
             this.textBox_password.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -192,7 +192,7 @@
             this.button_show_password.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_show_password.Name = "button_show_password";
             this.button_show_password.Size = new System.Drawing.Size(49, 26);
-            this.button_show_password.TabIndex = 5;
+            this.button_show_password.TabIndex = 4;
             this.button_show_password.Text = "Näytä";
             this.button_show_password.UseVisualStyleBackColor = false;
             this.button_show_password.Click += new System.EventHandler(this.button_show_password_Click);
@@ -217,7 +217,7 @@
             this.button_registration.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_registration.Name = "button_registration";
             this.button_registration.Size = new System.Drawing.Size(126, 30);
-            this.button_registration.TabIndex = 4;
+            this.button_registration.TabIndex = 3;
             this.button_registration.Text = "Rekisteröidy";
             this.button_registration.UseVisualStyleBackColor = false;
             this.button_registration.Click += new System.EventHandler(this.button_registration_Click);
@@ -231,7 +231,7 @@
             this.button_login.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_login.Name = "button_login";
             this.button_login.Size = new System.Drawing.Size(113, 30);
-            this.button_login.TabIndex = 3;
+            this.button_login.TabIndex = 2;
             this.button_login.Text = "Kirjaudu";
             this.button_login.UseVisualStyleBackColor = false;
             this.button_login.Click += new System.EventHandler(this.button_login_Click);
@@ -252,7 +252,7 @@
             this.groupBox_registration.Enabled = false;
             this.groupBox_registration.Location = new System.Drawing.Point(12, 115);
             this.groupBox_registration.Name = "groupBox_registration";
-            this.groupBox_registration.Size = new System.Drawing.Size(38, 44);
+            this.groupBox_registration.Size = new System.Drawing.Size(38, 49);
             this.groupBox_registration.TabIndex = 17;
             this.groupBox_registration.TabStop = false;
             this.groupBox_registration.Visible = false;
@@ -268,7 +268,7 @@
             this.comboBox_account_permissions.Location = new System.Drawing.Point(253, 213);
             this.comboBox_account_permissions.Name = "comboBox_account_permissions";
             this.comboBox_account_permissions.Size = new System.Drawing.Size(118, 28);
-            this.comboBox_account_permissions.TabIndex = 19;
+            this.comboBox_account_permissions.TabIndex = 3;
             // 
             // label7
             // 
@@ -289,7 +289,7 @@
             this.textBox_family_key.MaxLength = 20;
             this.textBox_family_key.Name = "textBox_family_key";
             this.textBox_family_key.Size = new System.Drawing.Size(148, 26);
-            this.textBox_family_key.TabIndex = 17;
+            this.textBox_family_key.TabIndex = 2;
             this.textBox_family_key.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label6
@@ -312,7 +312,7 @@
             this.button_return.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_return.Name = "button_return";
             this.button_return.Size = new System.Drawing.Size(117, 30);
-            this.button_return.TabIndex = 4;
+            this.button_return.TabIndex = 5;
             this.button_return.Text = "Takaisin";
             this.button_return.UseVisualStyleBackColor = false;
             this.button_return.Click += new System.EventHandler(this.button_return_Click);
@@ -325,7 +325,7 @@
             this.textBox_account_password.MaxLength = 20;
             this.textBox_account_password.Name = "textBox_account_password";
             this.textBox_account_password.Size = new System.Drawing.Size(272, 26);
-            this.textBox_account_password.TabIndex = 2;
+            this.textBox_account_password.TabIndex = 1;
             this.textBox_account_password.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label3
@@ -359,7 +359,7 @@
             this.button_create_account.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_create_account.Name = "button_create_account";
             this.button_create_account.Size = new System.Drawing.Size(126, 30);
-            this.button_create_account.TabIndex = 3;
+            this.button_create_account.TabIndex = 4;
             this.button_create_account.Text = "Rekisteröidy";
             this.button_create_account.UseVisualStyleBackColor = false;
             this.button_create_account.Click += new System.EventHandler(this.button_create_account_Click);
@@ -372,7 +372,7 @@
             this.textBox_account_name.MaxLength = 20;
             this.textBox_account_name.Name = "textBox_account_name";
             this.textBox_account_name.Size = new System.Drawing.Size(272, 26);
-            this.textBox_account_name.TabIndex = 1;
+            this.textBox_account_name.TabIndex = 0;
             this.textBox_account_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Kirjautuminen

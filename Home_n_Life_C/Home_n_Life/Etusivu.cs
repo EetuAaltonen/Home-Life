@@ -36,7 +36,6 @@ namespace Home_n_Life
         MySqlDataReader dataReader;
         User user = new User();
         string dropTableQuery, createTableQuery, insertTableQuery, selectTableQuery, updateTableQuery, deleteTableQuery;
-        string formatDateTimeFromMySql;
         //---Dialog------------------
         DialogResult dialogResult;
         //---listView-Added-Items----
@@ -72,7 +71,6 @@ namespace Home_n_Life
         //---Change_tracking---------
         string change;
         bool draw_once;
-
 //----- Etusivu Load --------------------------------------------------------------------------------------
         private void Etusivu_Load(object sender, EventArgs e)
         {
@@ -1205,7 +1203,6 @@ namespace Home_n_Life
             }
         }
 //----- Calendar --------------------------------------------------------------------------------------
-
         private void readCalendarLists()
         {
             listView_events.Items.Clear();
