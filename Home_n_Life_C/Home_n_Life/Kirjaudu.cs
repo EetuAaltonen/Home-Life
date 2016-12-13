@@ -86,7 +86,7 @@ namespace Home_n_Life
             }
             else
             {
-                MessageBox.Show("Tietokantaan ei saatu yhteyttä\nYritä korjata yhteytesi, jotta voit jatkaa\nTarkista, että sinulla on XAMPP yhteys päällä ja\n'home&life'-niminen MySql-tietokanta olemassa\nOhjelma joudutaan sulkemaan", "Tietokanta");
+                MessageBox.Show("Tietokantaan ei saatu yhteyttä\nYritä korjata yhteytesi, jotta voit jatkaa\nTarkista, että sinulla on XAMPP yhteys päällä\nOhjelma joudutaan sulkemaan", "Tietokanta");
                 Application.Exit();
             }
         }
