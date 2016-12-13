@@ -213,7 +213,7 @@ namespace Home_n_Life
             }
             else
             {
-                MessageBox.Show("Tietokantaan ei saatu yhteyttä\nYritä korjata yhteytesi, jotta voit jatkaa", "Tietokanta");
+                MessageBox.Show("Tietokantaan ei saatu yhteyttä\nYritä korjata yhteytesi, jotta voit jatkaa\nTarkista, että sinulla on XAMPP yhteys päällä", "Tietokanta");
             }
         }
 
@@ -352,7 +352,7 @@ namespace Home_n_Life
             }
             else
             {
-                MessageBox.Show("Tietokantaan ei saatu yhteyttä\nYritä korjata yhteytesi, jotta voit jatkaa", "Tietokanta");
+                MessageBox.Show("Tietokantaan ei saatu yhteyttä\nYritä korjata yhteytesi, jotta voit jatkaa\nTarkista, että sinulla on XAMPP yhteys päällä", "Tietokanta");
             }
         }
 
