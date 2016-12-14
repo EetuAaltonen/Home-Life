@@ -1270,7 +1270,7 @@ namespace Home_n_Life
                                  year INT(6) NOT NULL ) ;";
             selectTableQuery = @"SELECT id, username, event_name, location, date, month, year " +
                                 " FROM calendar " +
-                                " WHERE username='" + user.user_name + "' ;";
+                                " WHERE username='" + user.user_name + "';";
             try
             {
                 conn.Open();
@@ -1318,7 +1318,51 @@ namespace Home_n_Life
 
         private void searchCalendarLists(string selectTableQuery_)
         {
-            readCalendarLists();
+            selectTableQuery = selectTableQuery_;
+            listView_events.Items.Clear();
+            try
+            {
+                conn.Open();
+                cmd = new MySqlCommand(createTableQuery, conn);
+                cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand(selectTableQuery, conn);
+                dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    temp_daytime = (DateTime)dataReader["date"];
+                    if (checkBox_event_show_past.Checked)
+                    {
+                        item = new ListViewItem(new string[]
+                        {
+                                Convert.ToString(dataReader["event_name"]),
+                                Convert.ToString(dataReader["location"]),
+                                temp_daytime.ToString("d/M/yyyy")
+                        });
+                        listView_events.Items.Add(item);
+                    }
+                    else
+                    {
+                        if (temp_daytime.Date >= DateTime.Now.Date)
+                        {
+                            item = new ListViewItem(new string[]
+                            {
+                                    Convert.ToString(dataReader["event_name"]),
+                                    Convert.ToString(dataReader["location"]),
+                                    temp_daytime.ToString("d/M/yyyy")
+                            });
+                            listView_events.Items.Add(item);
+                        }
+                    }
+                }
+                dataReader.Close();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+            listView_events.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listView_events.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
         private void setSearchMonth(ref string month)
@@ -1503,11 +1547,15 @@ namespace Home_n_Life
         private void button_event_search_1_Click(object sender, EventArgs e)
         {
             if (Convert.ToString(comboBox_event_search_month.SelectedItem) != "Koko vuosi" &&
-                textBox_event_search_year.Text != "")
+            textBox_event_search_year.Text != "")
             {
                 isNumeric = int.TryParse(textBox_event_search_year.Text, out n);
                 if (isNumeric)
                 {
+                    if (int.Parse(textBox_event_search_year.Text) < DateTime.Now.Year)
+                    {
+                        checkBox_event_show_past.Checked = true;
+                    }
                     month = dateTimePicker_event_datetime.Value.ToString(" MM ");
                     setSearchMonth(ref month);
                     selectTableQuery = @"SELECT id, username, event_name, location, date " +
@@ -1537,6 +1585,10 @@ namespace Home_n_Life
                 isNumeric = int.TryParse(textBox_event_search_year.Text, out n);
                 if (isNumeric)
                 {
+                    if (int.Parse(textBox_event_search_year.Text) < DateTime.Now.Year)
+                    {
+                        checkBox_event_show_past.Checked = true;
+                    }
                     selectTableQuery = @"SELECT id, username, event_name, location, date " +
                                         " FROM calendar " +
                                         " WHERE username='" + user.user_name +

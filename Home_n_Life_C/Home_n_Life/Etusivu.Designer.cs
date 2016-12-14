@@ -867,7 +867,7 @@
             this.groupBox_economic.Enabled = false;
             this.groupBox_economic.Location = new System.Drawing.Point(12, 285);
             this.groupBox_economic.Name = "groupBox_economic";
-            this.groupBox_economic.Size = new System.Drawing.Size(56, 67);
+            this.groupBox_economic.Size = new System.Drawing.Size(53, 63);
             this.groupBox_economic.TabIndex = 5;
             this.groupBox_economic.TabStop = false;
             this.groupBox_economic.Visible = false;
@@ -1138,9 +1138,9 @@
             this.groupBox_calendar.Controls.Add(this.label22);
             this.groupBox_calendar.Controls.Add(this.listView_events);
             this.groupBox_calendar.Enabled = false;
-            this.groupBox_calendar.Location = new System.Drawing.Point(12, 456);
+            this.groupBox_calendar.Location = new System.Drawing.Point(144, 199);
             this.groupBox_calendar.Name = "groupBox_calendar";
-            this.groupBox_calendar.Size = new System.Drawing.Size(56, 46);
+            this.groupBox_calendar.Size = new System.Drawing.Size(767, 458);
             this.groupBox_calendar.TabIndex = 6;
             this.groupBox_calendar.TabStop = false;
             this.groupBox_calendar.Visible = false;
@@ -1785,7 +1785,7 @@
             this.groupBox_athletic_meter.Enabled = false;
             this.groupBox_athletic_meter.Location = new System.Drawing.Point(15, 356);
             this.groupBox_athletic_meter.Name = "groupBox_athletic_meter";
-            this.groupBox_athletic_meter.Size = new System.Drawing.Size(50, 50);
+            this.groupBox_athletic_meter.Size = new System.Drawing.Size(53, 50);
             this.groupBox_athletic_meter.TabIndex = 25;
             this.groupBox_athletic_meter.TabStop = false;
             this.groupBox_athletic_meter.Visible = false;
@@ -1960,9 +1960,9 @@
             this.groupBox_cleaning_shift.Controls.Add(this.listView_cleaning_shift_family_members);
             this.groupBox_cleaning_shift.Controls.Add(this.label45);
             this.groupBox_cleaning_shift.Enabled = false;
-            this.groupBox_cleaning_shift.Location = new System.Drawing.Point(205, 202);
+            this.groupBox_cleaning_shift.Location = new System.Drawing.Point(67, 175);
             this.groupBox_cleaning_shift.Name = "groupBox_cleaning_shift";
-            this.groupBox_cleaning_shift.Size = new System.Drawing.Size(748, 387);
+            this.groupBox_cleaning_shift.Size = new System.Drawing.Size(53, 49);
             this.groupBox_cleaning_shift.TabIndex = 26;
             this.groupBox_cleaning_shift.TabStop = false;
             this.groupBox_cleaning_shift.Visible = false;
