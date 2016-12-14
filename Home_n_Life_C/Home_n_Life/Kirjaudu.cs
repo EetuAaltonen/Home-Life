@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using System.Text.RegularExpressions;
 
 namespace Home_n_Life
 {
@@ -121,6 +122,7 @@ namespace Home_n_Life
                 conn = new MySqlConnection(connetionString);
                 if (textBox_username.Text.Length > 0)
                 {
+
                     if (textBox_password.Text.Length > 0)
                     {
                         createTableQuery = @"CREATE TABLE IF NOT EXISTS users (
@@ -205,6 +207,7 @@ namespace Home_n_Life
                     {
                         MessageBox.Show("Syötä salasana", "Kirjautuminen");
                     }
+                    
                 }
                 else
                 {
@@ -240,109 +243,125 @@ namespace Home_n_Life
             if (MySqlConnectionOn)
             {
                 conn = new MySqlConnection(connetionString);
+                textBox_account_name.Text = textBox_account_name.Text.Replace(" ", "");
+                textBox_family_key.Text = textBox_family_key.Text.Replace(" ", "");
                 if (textBox_account_name.Text.Length >= 4)
                 {
-                    if (textBox_account_password.Text.Length >= 4)
+                    if (Regex.IsMatch(textBox_account_name.Text, @"^[a-zA-Z0-9_]+$"))
                     {
-                        if (textBox_family_key.Text.Length >= 4)
+                        if (textBox_account_password.Text.Length >= 4)
                         {
-                            if (comboBox_account_permissions.SelectedItem != null)
+                            if (textBox_family_key.Text.Length >= 4)
                             {
-                                createTableQuery = @"CREATE TABLE IF NOT EXISTS users (
-                                                    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                                                    username VARCHAR(30) NOT NULL,
-                                                    password VARCHAR(30) NOT NULL,
-                                                    family_key VARCHAR(30) NOT NULL,
-                                                    permissions VARCHAR(30) NOT NULL);";
-                                selectTableQuery = @"SELECT id, username, password, family_key, permissions " +
-                                                    " FROM users ;";
-                                insertTableQuery = @"INSERT INTO users (id, username, password, family_key, permissions) " +
-                                                    "VALUES('null', '" + textBox_account_name.Text + "', '" + textBox_account_password.Text + "', '" + textBox_family_key.Text + "', '" + Convert.ToString(comboBox_account_permissions.SelectedItem) + "');";
-                                try
+                                if (Regex.IsMatch(textBox_family_key.Text, @"^[a-zA-Z0-9_]+$"))
                                 {
-                                    conn.Open();
-                                    cmd = new MySqlCommand(createTableQuery, conn);
-                                    cmd.ExecuteNonQuery();
-                                    cmd = new MySqlCommand(selectTableQuery, conn);
-                                    dataReader = cmd.ExecuteReader();
-                                    query_users = new List<string>();
-                                    while (dataReader.Read())
+                                    if (comboBox_account_permissions.SelectedItem != null)
                                     {
-                                        if (dataReader["username"] != null)
+                                        createTableQuery = @"CREATE TABLE IF NOT EXISTS users (
+                                                            id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                                                            username VARCHAR(30) NOT NULL,
+                                                            password VARCHAR(30) NOT NULL,
+                                                            family_key VARCHAR(30) NOT NULL,
+                                                            permissions VARCHAR(30) NOT NULL);";
+                                        selectTableQuery = @"SELECT id, username, password, family_key, permissions " +
+                                                            " FROM users ;";
+                                        insertTableQuery = @"INSERT INTO users (id, username, password, family_key, permissions) " +
+                                                            "VALUES('null', '" + textBox_account_name.Text + "', '" + textBox_account_password.Text + "', '" + textBox_family_key.Text + "', '" + Convert.ToString(comboBox_account_permissions.SelectedItem) + "');";
+                                        try
                                         {
-                                            query_users.Add(Convert.ToString(dataReader["username"]));
-                                        }
-                                    }
-                                    dataReader.Close();
-                                    if (!query_users.Contains(textBox_account_name.Text))
-                                    {
-                                        query_family_keys = new List<string>();
-                                        dataReader = cmd.ExecuteReader();
-                                        while (dataReader.Read())
-                                        {
-                                            if (dataReader["family_key"] != null)
+                                            conn.Open();
+                                            cmd = new MySqlCommand(createTableQuery, conn);
+                                            cmd.ExecuteNonQuery();
+                                            cmd = new MySqlCommand(selectTableQuery, conn);
+                                            dataReader = cmd.ExecuteReader();
+                                            query_users = new List<string>();
+                                            while (dataReader.Read())
                                             {
-                                                query_family_keys.Add(Convert.ToString(dataReader["family_key"]));
+                                                if (dataReader["username"] != null)
+                                                {
+                                                    query_users.Add(Convert.ToString(dataReader["username"]));
+                                                }
                                             }
-                                        }
-                                        dataReader.Close();
-                                        if (query_family_keys.Contains(textBox_family_key.Text))
-                                        {
-                                            dialogResult = MessageBox.Show("Tämä perheavainta on jo olemassa.\nHaluatko liittyä perheeseen " + textBox_family_key.Text + "?", "Rekisteröityminen", MessageBoxButtons.YesNo);
-                                            if (dialogResult == DialogResult.Yes)
+                                            dataReader.Close();
+                                            if (!query_users.Contains(textBox_account_name.Text))
                                             {
-                                                cmd = new MySqlCommand(insertTableQuery, conn);
-                                                cmd.ExecuteNonQuery();
-                                                MessageBox.Show("Uusi " + comboBox_account_permissions.SelectedItem + " " + textBox_account_name.Text + " lisätty perheeseen " + textBox_family_key.Text, "Rekisteröityminen");
-                                                groupBox_login.Location = new Point(13, 65);
-                                                groupBox_login.Size = new Size(478, 337);
-                                                groupBox_login.Enabled = true;
-                                                groupBox_login.Visible = true;
-                                                groupBox_registration.Enabled = false;
-                                                groupBox_registration.Visible = false;
+                                                query_family_keys = new List<string>();
+                                                dataReader = cmd.ExecuteReader();
+                                                while (dataReader.Read())
+                                                {
+                                                    if (dataReader["family_key"] != null)
+                                                    {
+                                                        query_family_keys.Add(Convert.ToString(dataReader["family_key"]));
+                                                    }
+                                                }
+                                                dataReader.Close();
+                                                if (query_family_keys.Contains(textBox_family_key.Text))
+                                                {
+                                                    dialogResult = MessageBox.Show("Tämä perheavain on jo olemassa.\nHaluatko liittyä perheeseen " + textBox_family_key.Text + "?", "Rekisteröityminen", MessageBoxButtons.YesNo);
+                                                    if (dialogResult == DialogResult.Yes)
+                                                    {
+                                                        cmd = new MySqlCommand(insertTableQuery, conn);
+                                                        cmd.ExecuteNonQuery();
+                                                        MessageBox.Show("Uusi " + comboBox_account_permissions.SelectedItem + " " + textBox_account_name.Text + " lisätty perheeseen " + textBox_family_key.Text, "Rekisteröityminen");
+                                                        groupBox_login.Location = new Point(13, 65);
+                                                        groupBox_login.Size = new Size(478, 337);
+                                                        groupBox_login.Enabled = true;
+                                                        groupBox_login.Visible = true;
+                                                        groupBox_registration.Enabled = false;
+                                                        groupBox_registration.Visible = false;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    dialogResult = MessageBox.Show("Tätä perheavainta ei vielä ole olemassa.\nHaluatko luoda uuden " + textBox_family_key.Text + "?", "Rekisteröityminen", MessageBoxButtons.YesNo);
+                                                    if (dialogResult == DialogResult.Yes)
+                                                    {
+                                                        cmd = new MySqlCommand(insertTableQuery, conn);
+                                                        cmd.ExecuteNonQuery();
+                                                        MessageBox.Show("Uusi " + comboBox_account_permissions.SelectedItem + " " + textBox_account_name.Text + " lisätty perheeseen " + textBox_family_key.Text, "Rekisteröityminen");
+                                                        groupBox_login.Location = new Point(13, 65);
+                                                        groupBox_login.Size = new Size(478, 337);
+                                                        groupBox_login.Enabled = true;
+                                                        groupBox_login.Visible = true;
+                                                        groupBox_registration.Enabled = false;
+                                                        groupBox_registration.Visible = false;
+                                                    }
+                                                }
                                             }
-                                        }
-                                        else
-                                        {
-                                            dialogResult = MessageBox.Show("Tätä perheavainta ei ole vielä olemassa.\nHaluatko luoda uuden " + textBox_family_key.Text + "?", "Rekisteröityminen", MessageBoxButtons.YesNo);
-                                            if (dialogResult == DialogResult.Yes)
+                                            else
                                             {
-                                                cmd = new MySqlCommand(insertTableQuery, conn);
-                                                cmd.ExecuteNonQuery();
-                                                MessageBox.Show("Uusi " + comboBox_account_permissions.SelectedItem + " " + textBox_account_name.Text + " lisätty perheeseen " + textBox_family_key.Text, "Rekisteröityminen");
-                                                groupBox_login.Location = new Point(13, 65);
-                                                groupBox_login.Size = new Size(478, 337);
-                                                groupBox_login.Enabled = true;
-                                                groupBox_login.Visible = true;
-                                                groupBox_registration.Enabled = false;
-                                                groupBox_registration.Visible = false;
+                                                MessageBox.Show("Käyttäjänimi on jo olemassa", "Rekisteröityminen");
                                             }
+                                            conn.Close();
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            MessageBox.Show(Convert.ToString(ex));
                                         }
                                     }
                                     else
                                     {
-                                        MessageBox.Show("Käyttäjänimi on jo olemassa", "Rekisteröityminen");
+                                        MessageBox.Show("Valitse käyttäjälle oikeudet", "Rekisteröityminen");
                                     }
-                                    conn.Close();
                                 }
-                                catch (Exception ex)
+                                else
                                 {
-                                    MessageBox.Show(Convert.ToString(ex));
+                                    MessageBox.Show("Perheavain ei saa sisältää erikoismerkkejä\nVain a-z, A-Z, 0-9 ja _", "Kirjautuminen");
                                 }
                             }
                             else
                             {
-                                MessageBox.Show("Valitse käyttäjälle oikeudet", "Rekisteröityminen");
+                                MessageBox.Show("Syötä vähintään neljä merkkiä pitkä perheavain", "Rekisteröityminen");
                             }
                         }
                         else
                         {
-                            MessageBox.Show("Syötä vähintään neljä merkkiä pitkä perheavain", "Rekisteröityminen");
+                            MessageBox.Show("Syötä vähintään neljä merkkiä pitkä salasana", "Rekisteröityminen");
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Syötä vähintään neljä merkkiä pitkä salasana", "Rekisteröityminen");
+                        MessageBox.Show("Käyttäjänimi ei saa sisältää erikoismerkkejä\nVain a-z, A-Z, 0-9 ja _", "Kirjautuminen");
                     }
                 }
                 else

@@ -252,7 +252,7 @@
             this.groupBox_registration.Enabled = false;
             this.groupBox_registration.Location = new System.Drawing.Point(12, 115);
             this.groupBox_registration.Name = "groupBox_registration";
-            this.groupBox_registration.Size = new System.Drawing.Size(38, 49);
+            this.groupBox_registration.Size = new System.Drawing.Size(38, 50);
             this.groupBox_registration.TabIndex = 17;
             this.groupBox_registration.TabStop = false;
             this.groupBox_registration.Visible = false;
@@ -286,7 +286,7 @@
             this.textBox_family_key.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_family_key.Location = new System.Drawing.Point(99, 214);
             this.textBox_family_key.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.textBox_family_key.MaxLength = 20;
+            this.textBox_family_key.MaxLength = 15;
             this.textBox_family_key.Name = "textBox_family_key";
             this.textBox_family_key.Size = new System.Drawing.Size(148, 26);
             this.textBox_family_key.TabIndex = 2;
