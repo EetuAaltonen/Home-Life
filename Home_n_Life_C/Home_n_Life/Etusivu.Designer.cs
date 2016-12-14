@@ -285,8 +285,19 @@
             // 
             // comboBox_search
             // 
+            this.comboBox_search.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.comboBox_search.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBox_search.FormattingEnabled = true;
+            this.comboBox_search.Items.AddRange(new object[] {
+            "Etusivu",
+            "Talous",
+            "Ruokalista",
+            "Siivousvuorot",
+            "Kauppalappu",
+            "Kalenteri",
+            "Liikuntamittari",
+            "Muistilistat",
+            "Muutosseuranta"});
             this.comboBox_search.Location = new System.Drawing.Point(239, 12);
             this.comboBox_search.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
             this.comboBox_search.Name = "comboBox_search";
@@ -473,7 +484,7 @@
             this.groupBox_shopping_list.Enabled = false;
             this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 240);
             this.groupBox_shopping_list.Name = "groupBox_shopping_list";
-            this.groupBox_shopping_list.Size = new System.Drawing.Size(53, 39);
+            this.groupBox_shopping_list.Size = new System.Drawing.Size(53, 42);
             this.groupBox_shopping_list.TabIndex = 2;
             this.groupBox_shopping_list.TabStop = false;
             this.groupBox_shopping_list.Visible = false;
@@ -856,7 +867,7 @@
             this.groupBox_economic.Enabled = false;
             this.groupBox_economic.Location = new System.Drawing.Point(12, 285);
             this.groupBox_economic.Name = "groupBox_economic";
-            this.groupBox_economic.Size = new System.Drawing.Size(49, 48);
+            this.groupBox_economic.Size = new System.Drawing.Size(56, 67);
             this.groupBox_economic.TabIndex = 5;
             this.groupBox_economic.TabStop = false;
             this.groupBox_economic.Visible = false;
@@ -975,9 +986,9 @@
             this.label16.Location = new System.Drawing.Point(18, 149);
             this.label16.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(102, 20);
+            this.label16.Size = new System.Drawing.Size(97, 20);
             this.label16.TabIndex = 27;
-            this.label16.Text = "Euro määrä";
+            this.label16.Text = "Euromäärä";
             // 
             // label15
             // 
@@ -1572,7 +1583,7 @@
             this.groupBox_menu.Enabled = false;
             this.groupBox_menu.Location = new System.Drawing.Point(74, 285);
             this.groupBox_menu.Name = "groupBox_menu";
-            this.groupBox_menu.Size = new System.Drawing.Size(52, 64);
+            this.groupBox_menu.Size = new System.Drawing.Size(59, 63);
             this.groupBox_menu.TabIndex = 24;
             this.groupBox_menu.TabStop = false;
             this.groupBox_menu.Visible = false;
@@ -1774,7 +1785,7 @@
             this.groupBox_athletic_meter.Enabled = false;
             this.groupBox_athletic_meter.Location = new System.Drawing.Point(15, 356);
             this.groupBox_athletic_meter.Name = "groupBox_athletic_meter";
-            this.groupBox_athletic_meter.Size = new System.Drawing.Size(52, 47);
+            this.groupBox_athletic_meter.Size = new System.Drawing.Size(50, 50);
             this.groupBox_athletic_meter.TabIndex = 25;
             this.groupBox_athletic_meter.TabStop = false;
             this.groupBox_athletic_meter.Visible = false;
@@ -1949,9 +1960,9 @@
             this.groupBox_cleaning_shift.Controls.Add(this.listView_cleaning_shift_family_members);
             this.groupBox_cleaning_shift.Controls.Add(this.label45);
             this.groupBox_cleaning_shift.Enabled = false;
-            this.groupBox_cleaning_shift.Location = new System.Drawing.Point(12, 519);
+            this.groupBox_cleaning_shift.Location = new System.Drawing.Point(205, 202);
             this.groupBox_cleaning_shift.Name = "groupBox_cleaning_shift";
-            this.groupBox_cleaning_shift.Size = new System.Drawing.Size(52, 48);
+            this.groupBox_cleaning_shift.Size = new System.Drawing.Size(748, 387);
             this.groupBox_cleaning_shift.TabIndex = 26;
             this.groupBox_cleaning_shift.TabStop = false;
             this.groupBox_cleaning_shift.Visible = false;
