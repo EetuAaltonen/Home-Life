@@ -309,7 +309,11 @@ namespace Home_n_Life
                                         button_menu_remove.Visible = false;
                                         button_menu_remove.Enabled = false;
                                         textBox_menu_name.ReadOnly = true;
+                                        button_menu_add.Visible = false;
+                                        button_menu_add.Enabled = false;
                                         button_menu_add.Text = "Ehdota ruokaa";
+                                        button_menu_save.Visible = false;
+                                        button_menu_save.Enabled = false;
                                     }
                                     readMenus();
                                     listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
@@ -383,7 +387,13 @@ namespace Home_n_Life
                                         button_list_delete.Enabled = false;
                                         richTextBox_shopping_list.ReadOnly = true;
                                         textBox_list_name.ReadOnly = true;
+                                        button_add_item.Visible = false;
+                                        button_add_item.Enabled = false;
                                         button_add_item.Text = "Ehdota tuotetta";
+                                        button_list_save.Visible = false;
+                                        button_list_save.Enabled = false;
+                                        button_shopping_list_save_as_file.Visible = false;
+                                        button_shopping_list_save_as_file.Enabled = false;
                                     }
                                     readShoppingLists();
                                     break;
@@ -782,6 +792,17 @@ namespace Home_n_Life
 
         private void comboBox_menus_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (!user.full_permissions)
+            {
+                if (comboBox_menus.SelectedItem != null)
+                {
+                    button_menu_add.Visible = true;
+                    button_menu_add.Enabled = true;
+                    button_menu_save.Visible = true;
+                    button_menu_save.Enabled = true;
+                }
+            }
+
             if (!menu_progressing)
             {
                 listView_menu.Items.Clear();
@@ -1184,6 +1205,19 @@ namespace Home_n_Life
 
         private void comboBox_shopping_lists_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (!user.full_permissions)
+            {
+                if (comboBox_shopping_lists.SelectedItem != null)
+                {
+                    button_add_item.Visible = true;
+                    button_add_item.Enabled = true;
+                    button_add_item.Text = "Ehdota tuotetta";
+                    button_list_save.Visible = true;
+                    button_list_save.Enabled = true;
+                    button_shopping_list_save_as_file.Visible = true;
+                    button_shopping_list_save_as_file.Enabled = true; 
+                }
+            }
             if (!list_progressing)
             {
                 richTextBox_shopping_list.Text = "";
@@ -1670,6 +1704,28 @@ namespace Home_n_Life
 //----- Athletic meter --------------------------------------------------------------------------------------
         private void readAthleticMeter()
         {
+            month = DateTime.Now.ToString(" M ");
+            textBox_athletic_month.Text = months[Int32.Parse(month)];
+            year = DateTime.Now.ToString(" yyyy ");
+            textBox_athletic_year.Text = textBox_athletic_year.Text.Replace(" ", "");
+            if (textBox_athletic_year.Text.Length > 0)
+            {
+                isNumeric = Int32.TryParse(textBox_athletic_year.Text, out n);
+                if (isNumeric)
+                {
+                    year = textBox_athletic_year.Text;
+                }
+                else
+                {
+                    MessageBox.Show("Syötä vuosiluku numeroina", "Hae");
+                    textBox_athletic_year.Text = year.Replace(" ", ""); ;
+                }
+            }
+            else
+            {
+                textBox_athletic_year.Text = year.Replace(" ", ""); ;
+            }
+
             if (addedLabels.Count > 0)
             {
                 int listCount = addedLabels.Count;
@@ -1680,19 +1736,7 @@ namespace Home_n_Life
                     panel_athletic_statistics.Controls.Remove(removeLabel);
                 }
             }
-            month = DateTime.Now.ToString(" M ");
-            textBox_athletic_month.Text = months[Int32.Parse(month)];
-            year = DateTime.Now.ToString(" yyyy ");
-            textBox_athletic_year.Text = textBox_athletic_year.Text.Replace(" ", "");
-            if (textBox_athletic_year.Text.Length > 0)
-            {
 
-                year = textBox_athletic_year.Text;
-            }
-            else
-            {
-                textBox_athletic_year.Text = year.Replace(" ", ""); ;
-            }
             createTableQuery = @"CREATE TABLE IF NOT EXISTS athletic_meter (
                                             id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                             username VARCHAR(30) NOT NULL,
@@ -1928,7 +1972,7 @@ namespace Home_n_Life
                                         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                         username VARCHAR(30) NOT NULL,
                                         checklist_name VARCHAR(30) NOT NULL,
-                                        text TEXT(2000) NOT NULL);";
+                                        text TEXT(5000) NOT NULL);";
             selectTableQuery = @"SELECT id, username, checklist_name, text " +
                                 " FROM checklist " +
                                 " WHERE username='" + user.user_name + "' ;";
@@ -2031,34 +2075,41 @@ namespace Home_n_Life
 
         private void button_checklist_delete_Click(object sender, EventArgs e)
         {
-            dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen muistilistan?", "Poista", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            if (comboBox_checklists.SelectedItem != null)
             {
-                deleteTableQuery = @"DELETE FROM checklist WHERE username='" + user.user_name +
-                                "' AND checklist_name='" + textBox_checklist_name.Text + "' ;";
-                try
+                dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen muistilistan?", "Poista", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
                 {
-                    conn.Open();
-                    cmd = new MySqlCommand(deleteTableQuery, conn);
-                    cmd.ExecuteNonQuery();
-                    conn.Close();                    
-                    MessageBox.Show("Muistilista on poistettu", "Poista");
-                    textBox_checklist_name.Text = "";
-                    textBox_checklist.Text = "";
-                    comboBox_checklists.SelectedItem = null;
-                    readChecklists();
+                    deleteTableQuery = @"DELETE FROM checklist WHERE username='" + user.user_name +
+                                    "' AND checklist_name='" + textBox_checklist_name.Text + "' ;";
+                    try
+                    {
+                        conn.Open();
+                        cmd = new MySqlCommand(deleteTableQuery, conn);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        MessageBox.Show("Muistilista on poistettu", "Poista");
+                        textBox_checklist_name.Text = "";
+                        textBox_checklist.Text = "";
+                        comboBox_checklists.SelectedItem = null;
+                        readChecklists();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(Convert.ToString(ex));
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(Convert.ToString(ex));
-                }
+            }
+            else
+            {
+                MessageBox.Show("Et ole valinnut poistettavaa muistilistaa", "Poista");
             }
         }
 
         private void textBox_checklist_TextChanged(object sender, EventArgs e)
         {
             textBox_checklist_text_length.Text = Convert.ToString(textBox_checklist.Text.Length);
-            if (Int32.Parse(textBox_checklist_text_length.Text) > 2000)
+            if (Int32.Parse(textBox_checklist_text_length.Text) > 5000)
             {
                 MessageBox.Show("Et voi lisätä enempää tektiä muistilistalle", "Lisää");
                 if (previous_checklist != "")
@@ -2066,6 +2117,8 @@ namespace Home_n_Life
                     textBox_checklist.Text = previous_checklist;
                     textBox_checklist_text_length.Text = Convert.ToString(textBox_checklist.Text.Length);
                 }
+                textBox_checklist.SelectionStart = textBox_checklist.Text.Length - 1; // add some logic if length is 0
+                textBox_checklist.SelectionLength = 0;
             }
             previous_checklist = textBox_checklist.Text;
         }

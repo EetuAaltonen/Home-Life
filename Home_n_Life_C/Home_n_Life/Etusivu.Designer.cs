@@ -487,7 +487,7 @@
             this.groupBox_shopping_list.Enabled = false;
             this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 240);
             this.groupBox_shopping_list.Name = "groupBox_shopping_list";
-            this.groupBox_shopping_list.Size = new System.Drawing.Size(49, 39);
+            this.groupBox_shopping_list.Size = new System.Drawing.Size(56, 42);
             this.groupBox_shopping_list.TabIndex = 2;
             this.groupBox_shopping_list.TabStop = false;
             this.groupBox_shopping_list.Visible = false;
@@ -870,7 +870,7 @@
             this.groupBox_economic.Enabled = false;
             this.groupBox_economic.Location = new System.Drawing.Point(12, 285);
             this.groupBox_economic.Name = "groupBox_economic";
-            this.groupBox_economic.Size = new System.Drawing.Size(56, 58);
+            this.groupBox_economic.Size = new System.Drawing.Size(56, 63);
             this.groupBox_economic.TabIndex = 5;
             this.groupBox_economic.TabStop = false;
             this.groupBox_economic.Visible = false;
@@ -1470,9 +1470,9 @@
             this.groupBox_checklist.Controls.Add(this.comboBox_checklists);
             this.groupBox_checklist.Controls.Add(this.label38);
             this.groupBox_checklist.Enabled = false;
-            this.groupBox_checklist.Location = new System.Drawing.Point(67, 240);
+            this.groupBox_checklist.Location = new System.Drawing.Point(74, 240);
             this.groupBox_checklist.Name = "groupBox_checklist";
-            this.groupBox_checklist.Size = new System.Drawing.Size(956, 461);
+            this.groupBox_checklist.Size = new System.Drawing.Size(53, 39);
             this.groupBox_checklist.TabIndex = 24;
             this.groupBox_checklist.TabStop = false;
             this.groupBox_checklist.Visible = false;
@@ -1543,6 +1543,7 @@
             this.textBox_checklist.Location = new System.Drawing.Point(22, 49);
             this.textBox_checklist.Multiline = true;
             this.textBox_checklist.Name = "textBox_checklist";
+            this.textBox_checklist.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox_checklist.Size = new System.Drawing.Size(665, 456);
             this.textBox_checklist.TabIndex = 13;
             this.textBox_checklist.TextChanged += new System.EventHandler(this.textBox_checklist_TextChanged);
@@ -1590,7 +1591,7 @@
             this.groupBox_menu.Enabled = false;
             this.groupBox_menu.Location = new System.Drawing.Point(74, 285);
             this.groupBox_menu.Name = "groupBox_menu";
-            this.groupBox_menu.Size = new System.Drawing.Size(53, 63);
+            this.groupBox_menu.Size = new System.Drawing.Size(922, 373);
             this.groupBox_menu.TabIndex = 24;
             this.groupBox_menu.TabStop = false;
             this.groupBox_menu.Visible = false;
@@ -1792,7 +1793,7 @@
             this.groupBox_athletic_meter.Enabled = false;
             this.groupBox_athletic_meter.Location = new System.Drawing.Point(15, 356);
             this.groupBox_athletic_meter.Name = "groupBox_athletic_meter";
-            this.groupBox_athletic_meter.Size = new System.Drawing.Size(49, 49);
+            this.groupBox_athletic_meter.Size = new System.Drawing.Size(53, 49);
             this.groupBox_athletic_meter.TabIndex = 25;
             this.groupBox_athletic_meter.TabStop = false;
             this.groupBox_athletic_meter.Visible = false;
@@ -2117,7 +2118,7 @@
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(64, 20);
             this.label50.TabIndex = 25;
-            this.label50.Text = "/  2000";
+            this.label50.Text = "/  5000";
             // 
             // textBox_checklist_text_length
             // 
