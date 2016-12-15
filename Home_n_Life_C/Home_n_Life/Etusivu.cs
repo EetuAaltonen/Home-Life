@@ -404,6 +404,7 @@ namespace Home_n_Life
                                     dateTimePicker_event_search_datetime.Value = DateTime.Now;
                                     break;
                                 case "athletic_meter":
+                                    textBox_athletic_year.Text = Convert.ToString(DateTime.Now.Year);
                                     readAthleticMeter();
                                     break;
                                 case "checklist":
@@ -717,8 +718,6 @@ namespace Home_n_Life
                         cmd = new MySqlCommand(deleteTableQuery, conn);
                         cmd.ExecuteNonQuery();
                         conn.Close();
-                        change = "Taloudesta poistettu " + Convert.ToString(comboBox_economic_type.SelectedItem).ToLower() + " " + textBox_economic_name.Text;
-                        addChangeTracking(change);
                         textBox_economic_name.Text = "";
                         textBox_economic_amount.Text = "";
                         comboBox_economic_type.SelectedIndex = -1;
@@ -1069,7 +1068,7 @@ namespace Home_n_Life
                         cmd = new MySqlCommand(deleteTableQuery, conn);
                         cmd.ExecuteNonQuery();
                         conn.Close();
-                        change = "Siivouksesta poistettu " + textBox_cleaning_shift_work.Text;
+                        change = "Siivousvuoroista poistettu " + textBox_cleaning_shift_work.Text;
                         addChangeTracking(change);
                         textBox_cleaning_shift_worker.Text = "";
                         textBox_cleaning_shift_work.Text = "";
@@ -1215,32 +1214,39 @@ namespace Home_n_Life
 
         private void button_list_delete_Click(object sender, EventArgs e)
         {
-            dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen Kauppalappun?", "Poista", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            if (comboBox_shopping_lists.SelectedItem != null)
             {
-                deleteTableQuery = @"DELETE FROM shoppinglist WHERE family_key='" + user.family_key +
-                                "' AND listname='" + textBox_list_name.Text + "' ;";
-                try
+                dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen kauppalapun?", "Poista", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
                 {
-                    conn.Open();
-                    cmd = new MySqlCommand(deleteTableQuery, conn);
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    MessageBox.Show("Kauppalappu on poistettu", "Poista");
-                    change = "Kauppalappu " + textBox_list_name.Text + " poistettu";
-                    addChangeTracking(change);
-                    textBox_list_name.Text = "";
-                    richTextBox_shopping_list.Text = "";
-                    comboBox_shopping_lists.SelectedItem = null;
-                    comboBox_amount_type.SelectedItem = null;
-                    textBox_item_name.Text = "";
-                    textBox_item_amount.Text = "";
-                    readShoppingLists();
+                    deleteTableQuery = @"DELETE FROM shoppinglist WHERE family_key='" + user.family_key +
+                                    "' AND listname='" + textBox_list_name.Text + "' ;";
+                    try
+                    {
+                        conn.Open();
+                        cmd = new MySqlCommand(deleteTableQuery, conn);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        MessageBox.Show("Kauppalappu on poistettu", "Poista");
+                        change = "Kauppalappu " + textBox_list_name.Text + " poistettu";
+                        addChangeTracking(change);
+                        textBox_list_name.Text = "";
+                        richTextBox_shopping_list.Text = "";
+                        comboBox_shopping_lists.SelectedItem = null;
+                        comboBox_amount_type.SelectedItem = null;
+                        textBox_item_name.Text = "";
+                        textBox_item_amount.Text = "";
+                        readShoppingLists();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(Convert.ToString(ex));
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(Convert.ToString(ex));
-                }
+            }
+            else
+            {
+                MessageBox.Show("Et ole valinnut poistettavaa kauppalappua", "Poista");
             }
         }
 
@@ -1437,8 +1443,6 @@ namespace Home_n_Life
                                     conn.Close();
                                     MessageBox.Show("Uusi tapahtuma lisätty", "Lisää");
                                     formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("d/M/yyyy");
-                                    change = "Tapahtuma " + textBox_event_name.Text + " lisätty kalenteriin päivään " + formatDateTimeForMySql;
-                                    addChangeTracking(change);
                                     readCalendarLists();
                                 }
                                 catch (Exception ex)
@@ -1496,8 +1500,7 @@ namespace Home_n_Life
                     cmd.ExecuteNonQuery();
                     conn.Close();
                     MessageBox.Show("Menneet tapahtumat on poistettu", "Poista");
-                    change = "Kalenterista poistettu " + DateTime.Now.ToString("d/M/yyyy") + " jälkeiset tapahtumat";
-                    addChangeTracking(change);
+
                     readCalendarLists();
                 }
                 catch (Exception ex)
@@ -1529,8 +1532,6 @@ namespace Home_n_Life
                         conn.Close();
                         MessageBox.Show("Tapahtuma on poistettu", "Poista");
                         formatDateTimeForMySql = dateTimePicker_event_datetime.Value.ToString("d/M/yyyy");
-                        change = "Tapahtuma " + textBox_event_name.Text + " poistettu kalenterista päivältä " + formatDateTimeForMySql;
-                        addChangeTracking(change);
                         textBox_event_name.Text = "";
                         textBox_event_location.Text = "";
                         dateTimePicker_event_datetime.Value = DateTime.Now;
@@ -1640,6 +1641,7 @@ namespace Home_n_Life
             textBox_athletic_year.Text = textBox_athletic_year.Text.Replace(" ", "");
             if (textBox_athletic_year.Text.Length > 0)
             {
+
                 year = textBox_athletic_year.Text;
             }
             else
@@ -1833,8 +1835,6 @@ namespace Home_n_Life
                 conn.Close();
                 readAthleticMeter();
                 MessageBox.Show("Kilometrit lisätty", "Lisää");
-                change = "Liikuntamittariin lisätty kilometrejä: " + textBox_athletic_add_kilometers.Text;
-                addChangeTracking(change);
                 textBox_athletic_add_kilometers.Text = "";
             }
             catch (Exception ex)
@@ -1954,8 +1954,6 @@ namespace Home_n_Life
                     comboBox_checklists.SelectedItem = textBox_checklist_name.Text;
                     checklist_progressing = false;
                     MessageBox.Show("Muistilista tallennettu", "Tallenna");
-                    change = "Muistilista " + textBox_checklist_name.Text + " tallennettu";
-                    addChangeTracking(change);
                 }
                 catch (Exception ex)
                 {
@@ -1964,7 +1962,7 @@ namespace Home_n_Life
             }
             else
             {
-                MessageBox.Show("Kauppalappun nimi on virheellinen", "Tallenna");
+                MessageBox.Show("Muistilistan nimi on virheellinen", "Tallenna");
             }
         }
 
@@ -1982,8 +1980,6 @@ namespace Home_n_Life
                     cmd.ExecuteNonQuery();
                     conn.Close();                    
                     MessageBox.Show("Muistilista on poistettu", "Poista");
-                    change = "Muistilista " + textBox_checklist_name.Text + " poistettu";
-                    addChangeTracking(change);
                     textBox_checklist_name.Text = "";
                     textBox_checklist.Text = "";
                     comboBox_checklists.SelectedItem = null;

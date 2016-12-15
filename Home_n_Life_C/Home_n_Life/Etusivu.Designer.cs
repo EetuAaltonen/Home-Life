@@ -1138,9 +1138,9 @@
             this.groupBox_calendar.Controls.Add(this.label22);
             this.groupBox_calendar.Controls.Add(this.listView_events);
             this.groupBox_calendar.Enabled = false;
-            this.groupBox_calendar.Location = new System.Drawing.Point(144, 199);
+            this.groupBox_calendar.Location = new System.Drawing.Point(80, 360);
             this.groupBox_calendar.Name = "groupBox_calendar";
-            this.groupBox_calendar.Size = new System.Drawing.Size(767, 458);
+            this.groupBox_calendar.Size = new System.Drawing.Size(52, 45);
             this.groupBox_calendar.TabIndex = 6;
             this.groupBox_calendar.TabStop = false;
             this.groupBox_calendar.Visible = false;
@@ -1785,7 +1785,7 @@
             this.groupBox_athletic_meter.Enabled = false;
             this.groupBox_athletic_meter.Location = new System.Drawing.Point(15, 356);
             this.groupBox_athletic_meter.Name = "groupBox_athletic_meter";
-            this.groupBox_athletic_meter.Size = new System.Drawing.Size(53, 50);
+            this.groupBox_athletic_meter.Size = new System.Drawing.Size(964, 322);
             this.groupBox_athletic_meter.TabIndex = 25;
             this.groupBox_athletic_meter.TabStop = false;
             this.groupBox_athletic_meter.Visible = false;
