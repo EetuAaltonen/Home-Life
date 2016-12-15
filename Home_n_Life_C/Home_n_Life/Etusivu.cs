@@ -56,7 +56,7 @@ namespace Home_n_Life
         bool menu_progressing = false;
         int index;
         //---Shopping-List-----------
-        string added_item;
+        string added_item, previous_shopping_list;
         bool list_progressing = false;
         //---Calendar----------------
         bool same_event = true;
@@ -70,6 +70,7 @@ namespace Home_n_Life
         double current_kilometers;
         //---Checklist---------------
         bool checklist_progressing = false;
+        string previous_checklist;
         //---Change_tracking---------
         string change;
         bool draw_once;
@@ -732,7 +733,7 @@ namespace Home_n_Life
             }
             else
             {
-                MessageBox.Show("Valitse yksi tulo tai meno", "Poista");
+                MessageBox.Show("Et ole valinnut poistettavaa tuloa tai menoa", "Poista");
             }
         }
 //----- Menu --------------------------------------------------------------------------------------
@@ -818,36 +819,50 @@ namespace Home_n_Life
 
         private void button_menu_add_Click(object sender, EventArgs e)
         {
-            if (!user.full_permissions)
+            if (textBox_menu_food.Text.Length > 0)
             {
-                textBox_menu_description.Text += " (ehdotettu)";
+                if (!user.full_permissions)
+                {
+                    textBox_menu_description.Text += " (ehdotettu)";
+                }
+                item = new ListViewItem(new string[]
+                {
+                        textBox_menu_food.Text,
+                        textBox_menu_description.Text
+                });
+                textBox_menu_description.Text = textBox_menu_description.Text.Replace(" (ehdotettu)", "");
+                listView_menu.Items.Add(item);
+                listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                MessageBox.Show("Uusi ruoka lisätty ruokalistaan", "Lisää");
             }
-            item = new ListViewItem(new string[]
+            else
             {
-                    textBox_menu_food.Text,
-                    textBox_menu_description.Text
-            });
-            textBox_menu_description.Text = textBox_menu_description.Text.Replace(" (ehdotettu)","");
-            listView_menu.Items.Add(item);
-            listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-            MessageBox.Show("Uusi ruoka lisätty ruokalistaan", "Lisää");
+                MessageBox.Show("Syötä ruuan nimi", "Lisää");
+            }
         }
 
         private void button_menu_remove_Click(object sender, EventArgs e)
         {
-            menu_progressing = true;
-            dialogResult = MessageBox.Show("Haluatko varmasti poistaa tämän ruuan?", "Poista", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            if (listView_menu.SelectedIndices.Count > 0)
             {
-                listView_menu.Items.Remove(listView_menu.SelectedItems[0]);
-                textBox_menu_food.Text = "";
-                textBox_menu_description.Text = "";
-                listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-                listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                MessageBox.Show("Ruoka on poistettu ruokalistalta", "Poista");
+                menu_progressing = true;
+                dialogResult = MessageBox.Show("Haluatko varmasti poistaa tämän ruuan?", "Poista", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    listView_menu.Items.Remove(listView_menu.SelectedItems[0]);
+                    textBox_menu_food.Text = "";
+                    textBox_menu_description.Text = "";
+                    listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+                    listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+                    MessageBox.Show("Ruoka on poistettu ruokalistalta", "Poista");
+                }
+                menu_progressing = false;
             }
-            menu_progressing = false;
+            else
+            {
+                MessageBox.Show("Et ole valinnut poistettavaa ruokaa", "Poista");
+            }
         }
 
         private void button_menu_save_Click(object sender, EventArgs e)
@@ -898,31 +913,38 @@ namespace Home_n_Life
 
         private void button_menu_delete_Click(object sender, EventArgs e)
         {
-            dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen ruokalistan?", "Poista", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            if (comboBox_menus.SelectedItem != null)
             {
-                deleteTableQuery = @"DELETE FROM menu " +
-                                    "WHERE menu_name='" + textBox_menu_name.Text + "' AND family_key='" + user.family_key + "' ;";
-                try
+                dialogResult = MessageBox.Show("Haluatko varmasti poistaa nykyisen ruokalistan?", "Poista", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
                 {
-                    conn.Open();
-                    cmd = new MySqlCommand(deleteTableQuery, conn);
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    readMenus();
-                    comboBox_menus.SelectedItem = null;
-                    listView_menu.Items.Clear();
-                    textBox_menu_name.Text = "";
-                    textBox_menu_food.Text = "";
-                    textBox_menu_description.Text = "";
-                    MessageBox.Show("Ruokalista poistettu", "Poista");
-                    change = "Ruokalista " + textBox_menu_name.Text + " poistettu";
-                    addChangeTracking(change);
+                    deleteTableQuery = @"DELETE FROM menu " +
+                                        "WHERE menu_name='" + textBox_menu_name.Text + "' AND family_key='" + user.family_key + "' ;";
+                    try
+                    {
+                        conn.Open();
+                        cmd = new MySqlCommand(deleteTableQuery, conn);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        readMenus();
+                        comboBox_menus.SelectedItem = null;
+                        listView_menu.Items.Clear();
+                        textBox_menu_name.Text = "";
+                        textBox_menu_food.Text = "";
+                        textBox_menu_description.Text = "";
+                        MessageBox.Show("Ruokalista poistettu", "Poista");
+                        change = "Ruokalista " + textBox_menu_name.Text + " poistettu";
+                        addChangeTracking(change);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(Convert.ToString(ex));
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(Convert.ToString(ex));
-                }
+            }
+            else
+            {
+                MessageBox.Show("Et ole valinnut poistettavaa ruokalistaa", "Poista");
             }
         }
 
@@ -1111,6 +1133,7 @@ namespace Home_n_Life
                 }
                 dataReader.Close();
                 conn.Close();
+                previous_shopping_list = "";
             }
             catch (Exception ex)
             {
@@ -1129,7 +1152,14 @@ namespace Home_n_Life
                     added_item += " (" + user.user_name + " ehdottama)";
                 }
                 added_item += System.Environment.NewLine;
-                richTextBox_shopping_list.Text += added_item;
+                if ((Int32.Parse(textBox_text_length.Text) + added_item.Length) < 1000)
+                {
+                    richTextBox_shopping_list.Text += added_item;
+                }
+                else
+                {
+                    MessageBox.Show("Et voi lisätä enempää tuotteita listalle", "Lisää");
+                }
             }
             else
             {
@@ -1140,6 +1170,16 @@ namespace Home_n_Life
         private void richTextBox_shopping_list_TextChanged(object sender, EventArgs e)
         {
             textBox_text_length.Text = Convert.ToString(richTextBox_shopping_list.Text.Length);
+            if (Int32.Parse(textBox_text_length.Text) > 1000)
+            {
+                MessageBox.Show("Et voi lisätä enempää tuotteita listalle", "Lisää");
+                if (previous_shopping_list != "")
+                {
+                    richTextBox_shopping_list.Text = previous_shopping_list;
+                    textBox_text_length.Text = Convert.ToString(richTextBox_shopping_list.Text.Length);
+                }
+            }
+            previous_shopping_list = richTextBox_shopping_list.Text;
         }
 
         private void comboBox_shopping_lists_SelectedIndexChanged(object sender, EventArgs e)
@@ -1163,6 +1203,7 @@ namespace Home_n_Life
                     }
                     dataReader.Close();
                     conn.Close();
+                    previous_shopping_list = "";
                 }
                 catch (Exception ex)
                 {
@@ -1884,6 +1925,7 @@ namespace Home_n_Life
                 }
                 dataReader.Close();
                 conn.Close();
+                previous_checklist = "";
             }
             catch (Exception ex)
             {
@@ -1912,6 +1954,7 @@ namespace Home_n_Life
                     }
                     dataReader.Close();
                     conn.Close();
+                    previous_checklist = "";
                 }
                 catch (Exception ex)
                 {
@@ -1990,6 +2033,21 @@ namespace Home_n_Life
                     MessageBox.Show(Convert.ToString(ex));
                 }
             }
+        }
+
+        private void textBox_checklist_TextChanged(object sender, EventArgs e)
+        {
+            textBox_checklist_text_length.Text = Convert.ToString(textBox_checklist.Text.Length);
+            if (Int32.Parse(textBox_checklist_text_length.Text) > 2000)
+            {
+                MessageBox.Show("Et voi lisätä enempää tektiä muistilistalle", "Lisää");
+                if (previous_checklist != "")
+                {
+                    textBox_checklist.Text = previous_checklist;
+                    textBox_checklist_text_length.Text = Convert.ToString(textBox_checklist.Text.Length);
+                }
+            }
+            previous_checklist = textBox_checklist.Text;
         }
 //----- Change tracking --------------------------------------------------------------------------------------
         private void readChangeTrackingLists()

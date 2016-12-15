@@ -176,6 +176,9 @@
             this.listView_cleaning_shift_list = new System.Windows.Forms.ListView();
             this.listView_cleaning_shift_family_members = new System.Windows.Forms.ListView();
             this.label45 = new System.Windows.Forms.Label();
+            this.label50 = new System.Windows.Forms.Label();
+            this.textBox_checklist_text_length = new System.Windows.Forms.TextBox();
+            this.label53 = new System.Windows.Forms.Label();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_user.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
@@ -484,7 +487,7 @@
             this.groupBox_shopping_list.Enabled = false;
             this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 240);
             this.groupBox_shopping_list.Name = "groupBox_shopping_list";
-            this.groupBox_shopping_list.Size = new System.Drawing.Size(53, 42);
+            this.groupBox_shopping_list.Size = new System.Drawing.Size(49, 39);
             this.groupBox_shopping_list.TabIndex = 2;
             this.groupBox_shopping_list.TabStop = false;
             this.groupBox_shopping_list.Visible = false;
@@ -867,7 +870,7 @@
             this.groupBox_economic.Enabled = false;
             this.groupBox_economic.Location = new System.Drawing.Point(12, 285);
             this.groupBox_economic.Name = "groupBox_economic";
-            this.groupBox_economic.Size = new System.Drawing.Size(53, 63);
+            this.groupBox_economic.Size = new System.Drawing.Size(56, 58);
             this.groupBox_economic.TabIndex = 5;
             this.groupBox_economic.TabStop = false;
             this.groupBox_economic.Visible = false;
@@ -1455,6 +1458,9 @@
             // groupBox_checklist
             // 
             this.groupBox_checklist.BackColor = System.Drawing.Color.Black;
+            this.groupBox_checklist.Controls.Add(this.label50);
+            this.groupBox_checklist.Controls.Add(this.textBox_checklist_text_length);
+            this.groupBox_checklist.Controls.Add(this.label53);
             this.groupBox_checklist.Controls.Add(this.label33);
             this.groupBox_checklist.Controls.Add(this.textBox_checklist_name);
             this.groupBox_checklist.Controls.Add(this.label35);
@@ -1466,7 +1472,7 @@
             this.groupBox_checklist.Enabled = false;
             this.groupBox_checklist.Location = new System.Drawing.Point(67, 240);
             this.groupBox_checklist.Name = "groupBox_checklist";
-            this.groupBox_checklist.Size = new System.Drawing.Size(53, 39);
+            this.groupBox_checklist.Size = new System.Drawing.Size(956, 461);
             this.groupBox_checklist.TabIndex = 24;
             this.groupBox_checklist.TabStop = false;
             this.groupBox_checklist.Visible = false;
@@ -1539,6 +1545,7 @@
             this.textBox_checklist.Name = "textBox_checklist";
             this.textBox_checklist.Size = new System.Drawing.Size(665, 456);
             this.textBox_checklist.TabIndex = 13;
+            this.textBox_checklist.TextChanged += new System.EventHandler(this.textBox_checklist_TextChanged);
             // 
             // comboBox_checklists
             // 
@@ -1583,7 +1590,7 @@
             this.groupBox_menu.Enabled = false;
             this.groupBox_menu.Location = new System.Drawing.Point(74, 285);
             this.groupBox_menu.Name = "groupBox_menu";
-            this.groupBox_menu.Size = new System.Drawing.Size(59, 63);
+            this.groupBox_menu.Size = new System.Drawing.Size(53, 63);
             this.groupBox_menu.TabIndex = 24;
             this.groupBox_menu.TabStop = false;
             this.groupBox_menu.Visible = false;
@@ -1785,7 +1792,7 @@
             this.groupBox_athletic_meter.Enabled = false;
             this.groupBox_athletic_meter.Location = new System.Drawing.Point(15, 356);
             this.groupBox_athletic_meter.Name = "groupBox_athletic_meter";
-            this.groupBox_athletic_meter.Size = new System.Drawing.Size(964, 322);
+            this.groupBox_athletic_meter.Size = new System.Drawing.Size(49, 49);
             this.groupBox_athletic_meter.TabIndex = 25;
             this.groupBox_athletic_meter.TabStop = false;
             this.groupBox_athletic_meter.Visible = false;
@@ -2100,6 +2107,39 @@
             this.label45.TabIndex = 21;
             this.label45.Text = "Perheenjäsenet";
             // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label50.ForeColor = System.Drawing.Color.White;
+            this.label50.Location = new System.Drawing.Point(845, 285);
+            this.label50.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(64, 20);
+            this.label50.TabIndex = 25;
+            this.label50.Text = "/  2000";
+            // 
+            // textBox_checklist_text_length
+            // 
+            this.textBox_checklist_text_length.Enabled = false;
+            this.textBox_checklist_text_length.Location = new System.Drawing.Point(782, 285);
+            this.textBox_checklist_text_length.Name = "textBox_checklist_text_length";
+            this.textBox_checklist_text_length.Size = new System.Drawing.Size(57, 20);
+            this.textBox_checklist_text_length.TabIndex = 24;
+            this.textBox_checklist_text_length.Text = "0";
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label53.ForeColor = System.Drawing.Color.White;
+            this.label53.Location = new System.Drawing.Point(695, 283);
+            this.label53.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(81, 20);
+            this.label53.TabIndex = 23;
+            this.label53.Text = "Merkkejä";
+            // 
             // Etusivu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2298,5 +2338,8 @@
         public System.Windows.Forms.Button button_checklist;
         public System.Windows.Forms.Button button_change_tracking;
         public System.Windows.Forms.Button button_logo;
+        private System.Windows.Forms.Label label50;
+        private System.Windows.Forms.TextBox textBox_checklist_text_length;
+        private System.Windows.Forms.Label label53;
     }
 }
