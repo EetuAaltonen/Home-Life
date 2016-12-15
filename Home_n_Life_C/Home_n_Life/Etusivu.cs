@@ -1105,7 +1105,7 @@ namespace Home_n_Life
             }
             else
             {
-                MessageBox.Show("Valitse askare listalta", "Poista");
+                MessageBox.Show("Et ole valinnut poistettavaa askaretta", "Poista");
             }
         }
 //----- Shopping list --------------------------------------------------------------------------------------
@@ -1508,7 +1508,7 @@ namespace Home_n_Life
                 }
                 else
                 {
-                    MessageBox.Show("Et ole syöttänyt tapahtuman kuvausta", "Lisää");
+                    MessageBox.Show("Et ole syöttänyt tapahtuman nimeä tai kuvausta", "Lisää");
                 }
             }
             else
@@ -1553,7 +1553,7 @@ namespace Home_n_Life
 
         private void button_event_delete_Click(object sender, EventArgs e)
         {
-            if (listView_events.SelectedIndices.Count == 1)
+            if (listView_events.SelectedIndices.Count > 0)
             {
                 DateTime dateValue = dateTimePicker_event_datetime.Value;
                 // "2000-01-12 20:10:00Z"    
@@ -1583,6 +1583,10 @@ namespace Home_n_Life
                         MessageBox.Show(Convert.ToString(ex));
                     }
                 }
+            }
+            else
+            {
+                MessageBox.Show("Et ole valinnut poistettavaa tapahtumaa", "Poista");
             }
         }
 
@@ -1850,37 +1854,53 @@ namespace Home_n_Life
 
         private void button_athletic_add_kilometers_Click(object sender, EventArgs e)
         {
-            current_kilometers = 0;
-            if ((double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text)) >= 0)
+            if (textBox_athletic_add_kilometers.Text.Length > 0)
             {
-                current_kilometers = (double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text));
+                textBox_athletic_add_kilometers.Text = textBox_athletic_add_kilometers.Text.Replace(".", ",");
+                isNumeric = double.TryParse(textBox_athletic_add_kilometers.Text, out n_euro);
+                if (isNumeric)
+                {
+                    current_kilometers = 0;
+                    if ((double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text)) >= 0)
+                    {
+                        current_kilometers = (double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text));
+                    }
+                    textBox_athletic_year.Text = "";
+                    month = DateTime.Now.ToString(" M ");
+                    year = DateTime.Now.ToString(" yyyy ");
+                    insertTableQuery = @"INSERT INTO athletic_meter (id, username, month, year, amount) " +
+                                        "SELECT * FROM(SELECT -1, '" + user.user_name + "', '" + months[Int32.Parse(month)] + "', " + Int32.Parse(year) + ", " + (double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text)).ToString().Replace(",", ".") + ") AS tmp " +
+                                        "WHERE NOT EXISTS( " +
+                                        "SELECT username, month, year FROM athletic_meter WHERE username='" + user.user_name + "' AND month='" + months[Int32.Parse(month)] + "' AND year=" + Int32.Parse(year) +
+                                        ") LIMIT 2 ;";
+                    updateTableQuery = @"UPDATE athletic_meter " +
+                                         "SET amount='" + (double.Parse(textBox_athletic_kilometers.Text) + double.Parse(textBox_athletic_add_kilometers.Text)).ToString().Replace(",", ".") + "' " +
+                                         "WHERE username='" + user.user_name + "' AND month='" + months[Int32.Parse(month)] + "' AND year=" + Int32.Parse(year) + " ;";
+                    try
+                    {
+                        conn.Open();
+                        cmd = new MySqlCommand(insertTableQuery, conn);
+                        cmd.ExecuteNonQuery();
+                        cmd = new MySqlCommand(updateTableQuery, conn);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                        readAthleticMeter();
+                        MessageBox.Show("Kilometrit lisätty", "Lisää");
+                        textBox_athletic_add_kilometers.Text = "";
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(Convert.ToString(ex));
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Syötä kilometrimäärä numeroina", "Lisää");
+                }
             }
-            textBox_athletic_year.Text = "";
-            month = DateTime.Now.ToString(" M ");
-            year = DateTime.Now.ToString(" yyyy ");
-            insertTableQuery = @"INSERT INTO athletic_meter (id, username, month, year, amount) " +
-                                "SELECT * FROM(SELECT -1, '" + user.user_name + "', '" + months[Int32.Parse(month)] + "', " + Int32.Parse(year) + ", " + Convert.ToString(current_kilometers) +  ") AS tmp " +
-                                "WHERE NOT EXISTS( " +
-                                "SELECT username, month, year FROM athletic_meter WHERE username='" + user.user_name + "' AND month='" + months[Int32.Parse(month)] + "' AND year=" + Int32.Parse(year) +
-                                ") LIMIT 2 ;";
-            updateTableQuery = @"UPDATE athletic_meter " +
-                                 "SET amount='" + Convert.ToString(current_kilometers) + "' " +
-                                 "WHERE username='" + user.user_name + "' AND month='" + months[Int32.Parse(month)] + "' AND year="+ Int32.Parse(year) + " ;";
-            try
+            else
             {
-                conn.Open();
-                cmd = new MySqlCommand(insertTableQuery, conn);
-                cmd.ExecuteNonQuery();
-                cmd = new MySqlCommand(updateTableQuery, conn);
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                readAthleticMeter();
-                MessageBox.Show("Kilometrit lisätty", "Lisää");
-                textBox_athletic_add_kilometers.Text = "";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(Convert.ToString(ex));
+                MessageBox.Show("Syötä kilometrimäärä", "Lisää");
             }
         }
 
