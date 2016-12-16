@@ -337,6 +337,32 @@ namespace Home_n_Life
                                     searchFamilyMembers();
                                     searchThisMonthEvents();
                                     break;
+                                case "economic":
+                                    listView_income.Clear();
+                                    listView_income.View = View.Details;
+                                    listView_income.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
+                                    listView_income.Columns.Add("Summa", 20, HorizontalAlignment.Left);
+                                    listView_income.Columns.Add("Type", 20, HorizontalAlignment.Left);
+                                    listView_income.GridLines = true;
+                                    listView_income.FullRowSelect = true;
+
+                                    listView_outlay.Clear();
+                                    listView_outlay.View = View.Details;
+                                    listView_outlay.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
+                                    listView_outlay.Columns.Add("Summa", 20, HorizontalAlignment.Left);
+                                    listView_outlay.Columns.Add("Type", 20, HorizontalAlignment.Left);
+                                    listView_outlay.GridLines = true;
+                                    listView_outlay.FullRowSelect = true;
+
+                                    textBox_economic_name.Text = "";
+                                    textBox_economic_amount.Text = "";
+                                    comboBox_economic_type.SelectedIndex = -1;
+                                    textBox_all_income.Text = "";
+                                    textBox_all_outlay.Text = "";
+                                    textBox_balance.Text = "";
+                                    textBox_economic_name.Select();
+                                    readEconomicLists();
+                                    break;
                                 case "menu":
                                     listView_menu.Clear();
                                     listView_menu.View = View.Details;
@@ -360,6 +386,7 @@ namespace Home_n_Life
                                         button_menu_save.Visible = false;
                                         button_menu_save.Enabled = false;
                                     }
+                                    comboBox_menus.Select();
                                     readMenus();
                                     listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
                                     listView_menu.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
@@ -386,6 +413,7 @@ namespace Home_n_Life
                                     listView_cleaning_shift_list.Columns.Add("Askare", 20, HorizontalAlignment.Left);
                                     listView_cleaning_shift_list.Columns.Add("Perheenjäsen", 20, HorizontalAlignment.Left);
 
+                                    textBox_cleaning_shift_work.Select();
                                     readCleaning();
 
                                     listView_cleaning_shift_family_members.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
@@ -393,32 +421,6 @@ namespace Home_n_Life
 
                                     listView_cleaning_shift_list.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
                                     listView_cleaning_shift_list.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-                                    break;
-                                case "economic":
-                                    listView_income.Clear();
-                                    listView_income.View = View.Details;
-                                    listView_income.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
-                                    listView_income.Columns.Add("Summa", 20, HorizontalAlignment.Left);
-                                    listView_income.Columns.Add("Type", 20, HorizontalAlignment.Left);
-                                    listView_income.GridLines = true;
-                                    listView_income.FullRowSelect = true;
-
-                                    listView_outlay.Clear();
-                                    listView_outlay.View = View.Details;
-                                    listView_outlay.Columns.Add("Kuvaus", 20, HorizontalAlignment.Left);
-                                    listView_outlay.Columns.Add("Summa", 20, HorizontalAlignment.Left);
-                                    listView_outlay.Columns.Add("Type", 20, HorizontalAlignment.Left);
-                                    listView_outlay.GridLines = true;
-                                    listView_outlay.FullRowSelect = true;
-
-                                    textBox_economic_name.Text = "";
-                                    textBox_economic_amount.Text = "";
-                                    comboBox_economic_type.SelectedIndex = -1;
-                                    textBox_all_income.Text = "";
-                                    textBox_all_outlay.Text = "";
-                                    textBox_balance.Text = "";
-
-                                    readEconomicLists();
                                     break;
                                 case "shopping_list":
                                     textBox_list_name.Text = "";
@@ -440,6 +442,7 @@ namespace Home_n_Life
                                         button_shopping_list_save_as_file.Visible = false;
                                         button_shopping_list_save_as_file.Enabled = false;
                                     }
+                                    comboBox_shopping_lists.Select();
                                     readShoppingLists();
                                     break;
                                 case "calendar":
@@ -458,14 +461,17 @@ namespace Home_n_Life
                                     comboBox_event_search_month.SelectedItem = "Koko vuosi";
                                     textBox_event_search_year.Text = "";
                                     dateTimePicker_event_search_datetime.Value = DateTime.Now;
+                                    textBox_event_name.Select();
                                     break;
                                 case "athletic_meter":
                                     textBox_athletic_year.Text = Convert.ToString(DateTime.Now.Year);
+                                    textBox_athletic_add_kilometers.Select();
                                     readAthleticMeter();
                                     break;
                                 case "checklist":
                                     textBox_checklist_name.Text = "";
                                     textBox_checklist.Text = "";
+                                    comboBox_checklists.Select();
                                     readChecklists();
                                     break;
                                 case "change_tracking":
@@ -475,6 +481,7 @@ namespace Home_n_Life
                                     listView_change_tracking.Columns.Add("Käyttäjänimi", 20, HorizontalAlignment.Left);
                                     listView_change_tracking.Columns.Add("Päivä", 20, HorizontalAlignment.Left);
                                     listView_change_tracking.Columns.Add("Muutos", 20, HorizontalAlignment.Left);
+                                    listView_change_tracking.Select();
                                     readChangeTrackingLists();
                                     break;
                             }

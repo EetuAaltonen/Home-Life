@@ -489,9 +489,9 @@
             this.groupBox_shopping_list.Controls.Add(this.textBox_item_name);
             this.groupBox_shopping_list.Controls.Add(this.button_add_item);
             this.groupBox_shopping_list.Enabled = false;
-            this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 240);
+            this.groupBox_shopping_list.Location = new System.Drawing.Point(12, 405);
             this.groupBox_shopping_list.Name = "groupBox_shopping_list";
-            this.groupBox_shopping_list.Size = new System.Drawing.Size(56, 42);
+            this.groupBox_shopping_list.Size = new System.Drawing.Size(49, 49);
             this.groupBox_shopping_list.TabIndex = 2;
             this.groupBox_shopping_list.TabStop = false;
             this.groupBox_shopping_list.Visible = false;
@@ -513,7 +513,7 @@
             this.button_shopping_list_save_as_file.Location = new System.Drawing.Point(834, 195);
             this.button_shopping_list_save_as_file.Name = "button_shopping_list_save_as_file";
             this.button_shopping_list_save_as_file.Size = new System.Drawing.Size(124, 62);
-            this.button_shopping_list_save_as_file.TabIndex = 24;
+            this.button_shopping_list_save_as_file.TabIndex = 7;
             this.button_shopping_list_save_as_file.Text = "Tallenna\r\ntiedostona";
             this.button_shopping_list_save_as_file.UseVisualStyleBackColor = false;
             this.button_shopping_list_save_as_file.Click += new System.EventHandler(this.button_shopping_list_save_as_file_Click);
@@ -540,7 +540,7 @@
             this.comboBox_amount_type.Location = new System.Drawing.Point(216, 184);
             this.comboBox_amount_type.Name = "comboBox_amount_type";
             this.comboBox_amount_type.Size = new System.Drawing.Size(66, 26);
-            this.comboBox_amount_type.TabIndex = 23;
+            this.comboBox_amount_type.TabIndex = 3;
             // 
             // label9
             // 
@@ -607,7 +607,7 @@
             this.textBox_list_name.MaxLength = 30;
             this.textBox_list_name.Name = "textBox_list_name";
             this.textBox_list_name.Size = new System.Drawing.Size(260, 26);
-            this.textBox_list_name.TabIndex = 17;
+            this.textBox_list_name.TabIndex = 5;
             this.textBox_list_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label5
@@ -630,7 +630,7 @@
             this.button_list_delete.Location = new System.Drawing.Point(699, 229);
             this.button_list_delete.Name = "button_list_delete";
             this.button_list_delete.Size = new System.Drawing.Size(132, 28);
-            this.button_list_delete.TabIndex = 15;
+            this.button_list_delete.TabIndex = 8;
             this.button_list_delete.Text = "Poista";
             this.button_list_delete.UseVisualStyleBackColor = false;
             this.button_list_delete.Click += new System.EventHandler(this.button_list_delete_Click);
@@ -643,7 +643,7 @@
             this.button_list_save.Location = new System.Drawing.Point(699, 195);
             this.button_list_save.Name = "button_list_save";
             this.button_list_save.Size = new System.Drawing.Size(132, 28);
-            this.button_list_save.TabIndex = 14;
+            this.button_list_save.TabIndex = 6;
             this.button_list_save.Text = "Tallenna";
             this.button_list_save.UseVisualStyleBackColor = false;
             this.button_list_save.Click += new System.EventHandler(this.button_list_save_Click);
@@ -656,7 +656,7 @@
             this.textBox_item_amount.MaxLength = 10;
             this.textBox_item_amount.Name = "textBox_item_amount";
             this.textBox_item_amount.Size = new System.Drawing.Size(200, 26);
-            this.textBox_item_amount.TabIndex = 12;
+            this.textBox_item_amount.TabIndex = 2;
             this.textBox_item_amount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label4
@@ -690,7 +690,7 @@
             this.comboBox_shopping_lists.Location = new System.Drawing.Point(699, 72);
             this.comboBox_shopping_lists.Name = "comboBox_shopping_lists";
             this.comboBox_shopping_lists.Size = new System.Drawing.Size(257, 21);
-            this.comboBox_shopping_lists.TabIndex = 1;
+            this.comboBox_shopping_lists.TabIndex = 0;
             this.comboBox_shopping_lists.SelectedIndexChanged += new System.EventHandler(this.comboBox_shopping_lists_SelectedIndexChanged);
             // 
             // label2
@@ -713,7 +713,7 @@
             this.textBox_item_name.MaxLength = 25;
             this.textBox_item_name.Name = "textBox_item_name";
             this.textBox_item_name.Size = new System.Drawing.Size(272, 26);
-            this.textBox_item_name.TabIndex = 8;
+            this.textBox_item_name.TabIndex = 1;
             this.textBox_item_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // button_add_item
@@ -724,7 +724,7 @@
             this.button_add_item.Location = new System.Drawing.Point(10, 229);
             this.button_add_item.Name = "button_add_item";
             this.button_add_item.Size = new System.Drawing.Size(200, 28);
-            this.button_add_item.TabIndex = 9;
+            this.button_add_item.TabIndex = 4;
             this.button_add_item.Text = "Lisää tuote";
             this.button_add_item.UseVisualStyleBackColor = false;
             this.button_add_item.Click += new System.EventHandler(this.button_add_item_Click);
@@ -743,7 +743,7 @@
             this.groupBox_home.Enabled = false;
             this.groupBox_home.Location = new System.Drawing.Point(12, 176);
             this.groupBox_home.Name = "groupBox_home";
-            this.groupBox_home.Size = new System.Drawing.Size(49, 46);
+            this.groupBox_home.Size = new System.Drawing.Size(49, 48);
             this.groupBox_home.TabIndex = 3;
             this.groupBox_home.TabStop = false;
             this.groupBox_home.Visible = false;
@@ -840,9 +840,9 @@
             this.groupBox_change_tracking.Controls.Add(this.button_clear_change_tracking);
             this.groupBox_change_tracking.Controls.Add(this.listView_change_tracking);
             this.groupBox_change_tracking.Enabled = false;
-            this.groupBox_change_tracking.Location = new System.Drawing.Point(15, 412);
+            this.groupBox_change_tracking.Location = new System.Drawing.Point(12, 629);
             this.groupBox_change_tracking.Name = "groupBox_change_tracking";
-            this.groupBox_change_tracking.Size = new System.Drawing.Size(50, 36);
+            this.groupBox_change_tracking.Size = new System.Drawing.Size(49, 43);
             this.groupBox_change_tracking.TabIndex = 4;
             this.groupBox_change_tracking.TabStop = false;
             this.groupBox_change_tracking.Visible = false;
@@ -856,7 +856,7 @@
             this.button_clear_change_tracking.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_clear_change_tracking.Name = "button_clear_change_tracking";
             this.button_clear_change_tracking.Size = new System.Drawing.Size(93, 30);
-            this.button_clear_change_tracking.TabIndex = 13;
+            this.button_clear_change_tracking.TabIndex = 0;
             this.button_clear_change_tracking.Text = "Tyhjennä";
             this.button_clear_change_tracking.UseVisualStyleBackColor = false;
             this.button_clear_change_tracking.Click += new System.EventHandler(this.button_clear_change_tracking_Click);
@@ -893,9 +893,9 @@
             this.groupBox_economic.Controls.Add(this.listView_outlay);
             this.groupBox_economic.Controls.Add(this.textBox_economic_name);
             this.groupBox_economic.Enabled = false;
-            this.groupBox_economic.Location = new System.Drawing.Point(12, 285);
+            this.groupBox_economic.Location = new System.Drawing.Point(12, 230);
             this.groupBox_economic.Name = "groupBox_economic";
-            this.groupBox_economic.Size = new System.Drawing.Size(56, 63);
+            this.groupBox_economic.Size = new System.Drawing.Size(49, 55);
             this.groupBox_economic.TabIndex = 5;
             this.groupBox_economic.TabStop = false;
             this.groupBox_economic.Visible = false;
@@ -1004,7 +1004,7 @@
             this.textBox_economic_amount.MaxLength = 20;
             this.textBox_economic_amount.Name = "textBox_economic_amount";
             this.textBox_economic_amount.Size = new System.Drawing.Size(270, 26);
-            this.textBox_economic_amount.TabIndex = 28;
+            this.textBox_economic_amount.TabIndex = 1;
             // 
             // label16
             // 
@@ -1051,7 +1051,7 @@
             this.button_economic_remove.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_economic_remove.Name = "button_economic_remove";
             this.button_economic_remove.Size = new System.Drawing.Size(120, 30);
-            this.button_economic_remove.TabIndex = 23;
+            this.button_economic_remove.TabIndex = 4;
             this.button_economic_remove.Text = "Poista";
             this.button_economic_remove.UseVisualStyleBackColor = false;
             this.button_economic_remove.Click += new System.EventHandler(this.button_economic_remove_Click);
@@ -1065,7 +1065,7 @@
             this.button_economic_add.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_economic_add.Name = "button_economic_add";
             this.button_economic_add.Size = new System.Drawing.Size(120, 30);
-            this.button_economic_add.TabIndex = 22;
+            this.button_economic_add.TabIndex = 3;
             this.button_economic_add.Text = "Lisää";
             this.button_economic_add.UseVisualStyleBackColor = false;
             this.button_economic_add.Click += new System.EventHandler(this.button_economic_add_Click);
@@ -1081,7 +1081,7 @@
             this.comboBox_economic_type.Location = new System.Drawing.Point(22, 249);
             this.comboBox_economic_type.Name = "comboBox_economic_type";
             this.comboBox_economic_type.Size = new System.Drawing.Size(151, 28);
-            this.comboBox_economic_type.TabIndex = 21;
+            this.comboBox_economic_type.TabIndex = 2;
             // 
             // label13
             // 
@@ -1135,7 +1135,7 @@
             this.textBox_economic_name.MaxLength = 20;
             this.textBox_economic_name.Name = "textBox_economic_name";
             this.textBox_economic_name.Size = new System.Drawing.Size(270, 26);
-            this.textBox_economic_name.TabIndex = 15;
+            this.textBox_economic_name.TabIndex = 0;
             // 
             // groupBox_calendar
             // 
@@ -1166,9 +1166,9 @@
             this.groupBox_calendar.Controls.Add(this.label22);
             this.groupBox_calendar.Controls.Add(this.listView_events);
             this.groupBox_calendar.Enabled = false;
-            this.groupBox_calendar.Location = new System.Drawing.Point(80, 360);
+            this.groupBox_calendar.Location = new System.Drawing.Point(12, 460);
             this.groupBox_calendar.Name = "groupBox_calendar";
-            this.groupBox_calendar.Size = new System.Drawing.Size(52, 45);
+            this.groupBox_calendar.Size = new System.Drawing.Size(49, 52);
             this.groupBox_calendar.TabIndex = 6;
             this.groupBox_calendar.TabStop = false;
             this.groupBox_calendar.Visible = false;
@@ -1182,7 +1182,7 @@
             this.button_event_delete_past.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_event_delete_past.Name = "button_event_delete_past";
             this.button_event_delete_past.Size = new System.Drawing.Size(188, 30);
-            this.button_event_delete_past.TabIndex = 43;
+            this.button_event_delete_past.TabIndex = 6;
             this.button_event_delete_past.Text = "Poista menneet tapahtumat";
             this.button_event_delete_past.UseVisualStyleBackColor = false;
             this.button_event_delete_past.Click += new System.EventHandler(this.button_event_delete_past_Click);
@@ -1195,7 +1195,7 @@
             this.button_event_set_today.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_event_set_today.Name = "button_event_set_today";
             this.button_event_set_today.Size = new System.Drawing.Size(53, 30);
-            this.button_event_set_today.TabIndex = 42;
+            this.button_event_set_today.TabIndex = 5;
             this.button_event_set_today.Text = "Tänään";
             this.button_event_set_today.UseVisualStyleBackColor = false;
             this.button_event_set_today.Click += new System.EventHandler(this.button_event_set_today_Click);
@@ -1208,7 +1208,7 @@
             this.checkBox_event_show_past.Location = new System.Drawing.Point(22, 233);
             this.checkBox_event_show_past.Name = "checkBox_event_show_past";
             this.checkBox_event_show_past.Size = new System.Drawing.Size(149, 24);
-            this.checkBox_event_show_past.TabIndex = 41;
+            this.checkBox_event_show_past.TabIndex = 9;
             this.checkBox_event_show_past.Text = "Näytä menneet";
             this.checkBox_event_show_past.UseVisualStyleBackColor = true;
             // 
@@ -1220,7 +1220,7 @@
             this.button_event_search_set_today.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_event_search_set_today.Name = "button_event_search_set_today";
             this.button_event_search_set_today.Size = new System.Drawing.Size(53, 30);
-            this.button_event_search_set_today.TabIndex = 40;
+            this.button_event_search_set_today.TabIndex = 14;
             this.button_event_search_set_today.Text = "Tänään";
             this.button_event_search_set_today.UseVisualStyleBackColor = false;
             this.button_event_search_set_today.Click += new System.EventHandler(this.button_event_search_set_today_Click);
@@ -1234,7 +1234,7 @@
             this.button_event_clear_search_settings.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_event_clear_search_settings.Name = "button_event_clear_search_settings";
             this.button_event_clear_search_settings.Size = new System.Drawing.Size(102, 30);
-            this.button_event_clear_search_settings.TabIndex = 39;
+            this.button_event_clear_search_settings.TabIndex = 11;
             this.button_event_clear_search_settings.Text = "Tyhjennä";
             this.button_event_clear_search_settings.UseVisualStyleBackColor = false;
             this.button_event_clear_search_settings.Click += new System.EventHandler(this.button_clear_search_settings_Click);
@@ -1248,7 +1248,7 @@
             this.button_event_search_1.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_event_search_1.Name = "button_event_search_1";
             this.button_event_search_1.Size = new System.Drawing.Size(80, 30);
-            this.button_event_search_1.TabIndex = 38;
+            this.button_event_search_1.TabIndex = 10;
             this.button_event_search_1.Text = "Hae";
             this.button_event_search_1.UseVisualStyleBackColor = false;
             this.button_event_search_1.Click += new System.EventHandler(this.button_event_search_1_Click);
@@ -1270,7 +1270,7 @@
             this.dateTimePicker_event_search_datetime.Location = new System.Drawing.Point(22, 358);
             this.dateTimePicker_event_search_datetime.Name = "dateTimePicker_event_search_datetime";
             this.dateTimePicker_event_search_datetime.Size = new System.Drawing.Size(188, 20);
-            this.dateTimePicker_event_search_datetime.TabIndex = 36;
+            this.dateTimePicker_event_search_datetime.TabIndex = 12;
             // 
             // label29
             // 
@@ -1293,7 +1293,7 @@
             this.button_event_search_2.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_event_search_2.Name = "button_event_search_2";
             this.button_event_search_2.Size = new System.Drawing.Size(86, 30);
-            this.button_event_search_2.TabIndex = 34;
+            this.button_event_search_2.TabIndex = 13;
             this.button_event_search_2.Text = "Hae";
             this.button_event_search_2.UseVisualStyleBackColor = false;
             this.button_event_search_2.Click += new System.EventHandler(this.button_event_search_2_Click);
@@ -1307,7 +1307,7 @@
             this.button_event_add.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_event_add.Name = "button_event_add";
             this.button_event_add.Size = new System.Drawing.Size(86, 30);
-            this.button_event_add.TabIndex = 33;
+            this.button_event_add.TabIndex = 3;
             this.button_event_add.Text = "Lisää";
             this.button_event_add.UseVisualStyleBackColor = false;
             this.button_event_add.Click += new System.EventHandler(this.button_event_add_Click);
@@ -1321,7 +1321,7 @@
             this.button_event_delete.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_event_delete.Name = "button_event_delete";
             this.button_event_delete.Size = new System.Drawing.Size(86, 30);
-            this.button_event_delete.TabIndex = 32;
+            this.button_event_delete.TabIndex = 4;
             this.button_event_delete.Text = "Poista";
             this.button_event_delete.UseVisualStyleBackColor = false;
             this.button_event_delete.Click += new System.EventHandler(this.button_event_delete_Click);
@@ -1334,7 +1334,7 @@
             this.textBox_event_search_year.MaxLength = 20;
             this.textBox_event_search_year.Name = "textBox_event_search_year";
             this.textBox_event_search_year.Size = new System.Drawing.Size(188, 26);
-            this.textBox_event_search_year.TabIndex = 31;
+            this.textBox_event_search_year.TabIndex = 8;
             // 
             // label28
             // 
@@ -1356,7 +1356,7 @@
             this.textBox_event_location.MaxLength = 20;
             this.textBox_event_location.Name = "textBox_event_location";
             this.textBox_event_location.Size = new System.Drawing.Size(188, 26);
-            this.textBox_event_location.TabIndex = 29;
+            this.textBox_event_location.TabIndex = 1;
             // 
             // label27
             // 
@@ -1375,7 +1375,7 @@
             this.dateTimePicker_event_datetime.Location = new System.Drawing.Point(317, 261);
             this.dateTimePicker_event_datetime.Name = "dateTimePicker_event_datetime";
             this.dateTimePicker_event_datetime.Size = new System.Drawing.Size(188, 20);
-            this.dateTimePicker_event_datetime.TabIndex = 27;
+            this.dateTimePicker_event_datetime.TabIndex = 2;
             // 
             // label26
             // 
@@ -1409,7 +1409,7 @@
             this.textBox_event_name.MaxLength = 20;
             this.textBox_event_name.Name = "textBox_event_name";
             this.textBox_event_name.Size = new System.Drawing.Size(188, 26);
-            this.textBox_event_name.TabIndex = 23;
+            this.textBox_event_name.TabIndex = 0;
             // 
             // label24
             // 
@@ -1444,7 +1444,7 @@
             this.comboBox_event_search_month.Location = new System.Drawing.Point(22, 121);
             this.comboBox_event_search_month.Name = "comboBox_event_search_month";
             this.comboBox_event_search_month.Size = new System.Drawing.Size(188, 21);
-            this.comboBox_event_search_month.TabIndex = 21;
+            this.comboBox_event_search_month.TabIndex = 7;
             // 
             // label23
             // 
@@ -1476,7 +1476,7 @@
             this.listView_events.MultiSelect = false;
             this.listView_events.Name = "listView_events";
             this.listView_events.Size = new System.Drawing.Size(329, 434);
-            this.listView_events.TabIndex = 0;
+            this.listView_events.TabIndex = 15;
             this.listView_events.UseCompatibleStateImageBehavior = false;
             this.listView_events.Click += new System.EventHandler(this.listView_events_Click);
             // 
@@ -1495,9 +1495,9 @@
             this.groupBox_checklist.Controls.Add(this.comboBox_checklists);
             this.groupBox_checklist.Controls.Add(this.label38);
             this.groupBox_checklist.Enabled = false;
-            this.groupBox_checklist.Location = new System.Drawing.Point(74, 240);
+            this.groupBox_checklist.Location = new System.Drawing.Point(12, 572);
             this.groupBox_checklist.Name = "groupBox_checklist";
-            this.groupBox_checklist.Size = new System.Drawing.Size(53, 39);
+            this.groupBox_checklist.Size = new System.Drawing.Size(49, 51);
             this.groupBox_checklist.TabIndex = 24;
             this.groupBox_checklist.TabStop = false;
             this.groupBox_checklist.Visible = false;
@@ -1555,7 +1555,7 @@
             this.textBox_checklist_name.MaxLength = 30;
             this.textBox_checklist_name.Name = "textBox_checklist_name";
             this.textBox_checklist_name.Size = new System.Drawing.Size(260, 26);
-            this.textBox_checklist_name.TabIndex = 17;
+            this.textBox_checklist_name.TabIndex = 2;
             this.textBox_checklist_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label35
@@ -1578,7 +1578,7 @@
             this.button_checklist_delete.Location = new System.Drawing.Point(699, 229);
             this.button_checklist_delete.Name = "button_checklist_delete";
             this.button_checklist_delete.Size = new System.Drawing.Size(132, 28);
-            this.button_checklist_delete.TabIndex = 15;
+            this.button_checklist_delete.TabIndex = 4;
             this.button_checklist_delete.Text = "Poista";
             this.button_checklist_delete.UseVisualStyleBackColor = false;
             this.button_checklist_delete.Click += new System.EventHandler(this.button_checklist_delete_Click);
@@ -1591,7 +1591,7 @@
             this.button_checklist_save.Location = new System.Drawing.Point(699, 195);
             this.button_checklist_save.Name = "button_checklist_save";
             this.button_checklist_save.Size = new System.Drawing.Size(132, 28);
-            this.button_checklist_save.TabIndex = 14;
+            this.button_checklist_save.TabIndex = 3;
             this.button_checklist_save.Text = "Tallenna";
             this.button_checklist_save.UseVisualStyleBackColor = false;
             this.button_checklist_save.Click += new System.EventHandler(this.button_checklist_save_Click);
@@ -1603,7 +1603,7 @@
             this.textBox_checklist.Name = "textBox_checklist";
             this.textBox_checklist.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox_checklist.Size = new System.Drawing.Size(665, 456);
-            this.textBox_checklist.TabIndex = 13;
+            this.textBox_checklist.TabIndex = 1;
             this.textBox_checklist.TextChanged += new System.EventHandler(this.textBox_checklist_TextChanged);
             // 
             // comboBox_checklists
@@ -1613,7 +1613,7 @@
             this.comboBox_checklists.Location = new System.Drawing.Point(699, 72);
             this.comboBox_checklists.Name = "comboBox_checklists";
             this.comboBox_checklists.Size = new System.Drawing.Size(257, 21);
-            this.comboBox_checklists.TabIndex = 1;
+            this.comboBox_checklists.TabIndex = 0;
             this.comboBox_checklists.SelectedIndexChanged += new System.EventHandler(this.comboBox_checklists_SelectedIndexChanged);
             // 
             // label38
@@ -1647,9 +1647,9 @@
             this.groupBox_menu.Controls.Add(this.textBox_menu_food);
             this.groupBox_menu.Controls.Add(this.button_menu_add);
             this.groupBox_menu.Enabled = false;
-            this.groupBox_menu.Location = new System.Drawing.Point(74, 285);
+            this.groupBox_menu.Location = new System.Drawing.Point(12, 291);
             this.groupBox_menu.Name = "groupBox_menu";
-            this.groupBox_menu.Size = new System.Drawing.Size(58, 63);
+            this.groupBox_menu.Size = new System.Drawing.Size(49, 53);
             this.groupBox_menu.TabIndex = 24;
             this.groupBox_menu.TabStop = false;
             this.groupBox_menu.Visible = false;
@@ -1662,7 +1662,7 @@
             this.button_menu_remove.Location = new System.Drawing.Point(190, 219);
             this.button_menu_remove.Name = "button_menu_remove";
             this.button_menu_remove.Size = new System.Drawing.Size(92, 28);
-            this.button_menu_remove.TabIndex = 31;
+            this.button_menu_remove.TabIndex = 4;
             this.button_menu_remove.Text = "Poista";
             this.button_menu_remove.UseVisualStyleBackColor = false;
             this.button_menu_remove.Click += new System.EventHandler(this.button_menu_remove_Click);
@@ -1675,7 +1675,7 @@
             this.textBox_menu_description.MaxLength = 25;
             this.textBox_menu_description.Name = "textBox_menu_description";
             this.textBox_menu_description.Size = new System.Drawing.Size(272, 26);
-            this.textBox_menu_description.TabIndex = 27;
+            this.textBox_menu_description.TabIndex = 2;
             this.textBox_menu_description.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label31
@@ -1733,7 +1733,7 @@
             this.textBox_menu_name.MaxLength = 30;
             this.textBox_menu_name.Name = "textBox_menu_name";
             this.textBox_menu_name.Size = new System.Drawing.Size(260, 26);
-            this.textBox_menu_name.TabIndex = 17;
+            this.textBox_menu_name.TabIndex = 5;
             this.textBox_menu_name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label37
@@ -1756,7 +1756,7 @@
             this.button_menu_delete.Location = new System.Drawing.Point(699, 229);
             this.button_menu_delete.Name = "button_menu_delete";
             this.button_menu_delete.Size = new System.Drawing.Size(132, 28);
-            this.button_menu_delete.TabIndex = 15;
+            this.button_menu_delete.TabIndex = 7;
             this.button_menu_delete.Text = "Poista";
             this.button_menu_delete.UseVisualStyleBackColor = false;
             this.button_menu_delete.Click += new System.EventHandler(this.button_menu_delete_Click);
@@ -1769,7 +1769,7 @@
             this.button_menu_save.Location = new System.Drawing.Point(699, 195);
             this.button_menu_save.Name = "button_menu_save";
             this.button_menu_save.Size = new System.Drawing.Size(132, 28);
-            this.button_menu_save.TabIndex = 14;
+            this.button_menu_save.TabIndex = 6;
             this.button_menu_save.Text = "Tallenna";
             this.button_menu_save.UseVisualStyleBackColor = false;
             this.button_menu_save.Click += new System.EventHandler(this.button_menu_save_Click);
@@ -1793,7 +1793,7 @@
             this.comboBox_menus.Location = new System.Drawing.Point(699, 72);
             this.comboBox_menus.Name = "comboBox_menus";
             this.comboBox_menus.Size = new System.Drawing.Size(257, 21);
-            this.comboBox_menus.TabIndex = 1;
+            this.comboBox_menus.TabIndex = 0;
             this.comboBox_menus.SelectedIndexChanged += new System.EventHandler(this.comboBox_menus_SelectedIndexChanged);
             // 
             // label41
@@ -1816,7 +1816,7 @@
             this.textBox_menu_food.MaxLength = 25;
             this.textBox_menu_food.Name = "textBox_menu_food";
             this.textBox_menu_food.Size = new System.Drawing.Size(272, 26);
-            this.textBox_menu_food.TabIndex = 8;
+            this.textBox_menu_food.TabIndex = 1;
             this.textBox_menu_food.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // button_menu_add
@@ -1827,7 +1827,7 @@
             this.button_menu_add.Location = new System.Drawing.Point(10, 219);
             this.button_menu_add.Name = "button_menu_add";
             this.button_menu_add.Size = new System.Drawing.Size(174, 28);
-            this.button_menu_add.TabIndex = 9;
+            this.button_menu_add.TabIndex = 3;
             this.button_menu_add.Text = "Lisää ruokalistalle";
             this.button_menu_add.UseVisualStyleBackColor = false;
             this.button_menu_add.Click += new System.EventHandler(this.button_menu_add_Click);
@@ -1849,9 +1849,9 @@
             this.groupBox_athletic_meter.Controls.Add(this.label42);
             this.groupBox_athletic_meter.Controls.Add(this.panel_athletic_statistics);
             this.groupBox_athletic_meter.Enabled = false;
-            this.groupBox_athletic_meter.Location = new System.Drawing.Point(15, 356);
+            this.groupBox_athletic_meter.Location = new System.Drawing.Point(12, 518);
             this.groupBox_athletic_meter.Name = "groupBox_athletic_meter";
-            this.groupBox_athletic_meter.Size = new System.Drawing.Size(53, 49);
+            this.groupBox_athletic_meter.Size = new System.Drawing.Size(49, 51);
             this.groupBox_athletic_meter.TabIndex = 25;
             this.groupBox_athletic_meter.TabStop = false;
             this.groupBox_athletic_meter.Visible = false;
@@ -1926,7 +1926,7 @@
             this.button_athletic_add_kilometers.Location = new System.Drawing.Point(10, 140);
             this.button_athletic_add_kilometers.Name = "button_athletic_add_kilometers";
             this.button_athletic_add_kilometers.Size = new System.Drawing.Size(107, 28);
-            this.button_athletic_add_kilometers.TabIndex = 26;
+            this.button_athletic_add_kilometers.TabIndex = 1;
             this.button_athletic_add_kilometers.Text = "Lisää";
             this.button_athletic_add_kilometers.UseVisualStyleBackColor = false;
             this.button_athletic_add_kilometers.Click += new System.EventHandler(this.button_athletic_add_kilometers_Click);
@@ -1951,7 +1951,7 @@
             this.textBox_athletic_year.MaxLength = 25;
             this.textBox_athletic_year.Name = "textBox_athletic_year";
             this.textBox_athletic_year.Size = new System.Drawing.Size(183, 26);
-            this.textBox_athletic_year.TabIndex = 23;
+            this.textBox_athletic_year.TabIndex = 2;
             this.textBox_athletic_year.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // button_athletic_search
@@ -1962,7 +1962,7 @@
             this.button_athletic_search.Location = new System.Drawing.Point(737, 109);
             this.button_athletic_search.Name = "button_athletic_search";
             this.button_athletic_search.Size = new System.Drawing.Size(107, 28);
-            this.button_athletic_search.TabIndex = 22;
+            this.button_athletic_search.TabIndex = 3;
             this.button_athletic_search.Text = "Hae";
             this.button_athletic_search.UseVisualStyleBackColor = false;
             this.button_athletic_search.Click += new System.EventHandler(this.button_athletic_search_Click);
@@ -1975,7 +1975,7 @@
             this.textBox_athletic_add_kilometers.MaxLength = 25;
             this.textBox_athletic_add_kilometers.Name = "textBox_athletic_add_kilometers";
             this.textBox_athletic_add_kilometers.Size = new System.Drawing.Size(171, 26);
-            this.textBox_athletic_add_kilometers.TabIndex = 21;
+            this.textBox_athletic_add_kilometers.TabIndex = 0;
             this.textBox_athletic_add_kilometers.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label43
@@ -2026,9 +2026,9 @@
             this.groupBox_cleaning_shift.Controls.Add(this.listView_cleaning_shift_family_members);
             this.groupBox_cleaning_shift.Controls.Add(this.label45);
             this.groupBox_cleaning_shift.Enabled = false;
-            this.groupBox_cleaning_shift.Location = new System.Drawing.Point(67, 175);
+            this.groupBox_cleaning_shift.Location = new System.Drawing.Point(12, 350);
             this.groupBox_cleaning_shift.Name = "groupBox_cleaning_shift";
-            this.groupBox_cleaning_shift.Size = new System.Drawing.Size(53, 49);
+            this.groupBox_cleaning_shift.Size = new System.Drawing.Size(49, 49);
             this.groupBox_cleaning_shift.TabIndex = 26;
             this.groupBox_cleaning_shift.TabStop = false;
             this.groupBox_cleaning_shift.Visible = false;
@@ -2042,7 +2042,7 @@
             this.button_cleaning_shift_remove.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_cleaning_shift_remove.Name = "button_cleaning_shift_remove";
             this.button_cleaning_shift_remove.Size = new System.Drawing.Size(110, 30);
-            this.button_cleaning_shift_remove.TabIndex = 33;
+            this.button_cleaning_shift_remove.TabIndex = 2;
             this.button_cleaning_shift_remove.Text = "Poista";
             this.button_cleaning_shift_remove.UseVisualStyleBackColor = false;
             this.button_cleaning_shift_remove.Click += new System.EventHandler(this.button_cleaning_shift_remove_Click);
@@ -2056,7 +2056,7 @@
             this.button_cleaning_shift_add.Margin = new System.Windows.Forms.Padding(3, 8, 3, 3);
             this.button_cleaning_shift_add.Name = "button_cleaning_shift_add";
             this.button_cleaning_shift_add.Size = new System.Drawing.Size(110, 30);
-            this.button_cleaning_shift_add.TabIndex = 32;
+            this.button_cleaning_shift_add.TabIndex = 1;
             this.button_cleaning_shift_add.Text = "Lisää";
             this.button_cleaning_shift_add.UseVisualStyleBackColor = false;
             this.button_cleaning_shift_add.Click += new System.EventHandler(this.button_cleaning_shift_add_Click);
@@ -2069,7 +2069,7 @@
             this.textBox_cleaning_shift_work.MaxLength = 25;
             this.textBox_cleaning_shift_work.Name = "textBox_cleaning_shift_work";
             this.textBox_cleaning_shift_work.Size = new System.Drawing.Size(232, 26);
-            this.textBox_cleaning_shift_work.TabIndex = 31;
+            this.textBox_cleaning_shift_work.TabIndex = 0;
             this.textBox_cleaning_shift_work.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label52
