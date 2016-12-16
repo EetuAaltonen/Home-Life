@@ -40,6 +40,8 @@ namespace Home_n_Life
         //---Dialog------------------
         DialogResult dialogResult;
         string user_info;
+        //---Seach-------------------
+        bool result_found;
         //---listView-Added-Items----
         ListViewItem item;
         //---Check-If-Numeric--------
@@ -85,13 +87,6 @@ namespace Home_n_Life
             months[3] = "Maaliskuu"; months[7] = "Heinäkuu"; months[11] = "Marraskuu";
             months[4] = "Huhtikuu"; months[8] = "Elokuu"; months[12] = "Joulukuu";
 
-            comboBox_search.Items.AddRange(new string[]
-            {
-                "Etusivu", "Talous", "Ruokalista", "Siivousvuorot", "Kauppalappu",
-                "Kalenteri", "Liikuntamittari", "Muistilistat", "Muutosseuranta",
-
-            });
-            
             comboBox_search.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBox_search.AutoCompleteSource = AutoCompleteSource.ListItems;
         }
@@ -319,6 +314,26 @@ namespace Home_n_Life
                                     treeView_home_permissions.Nodes[0].Nodes.Add(new TreeNode("Liikuntamittari"));
                                     treeView_home_permissions.Nodes[0].Nodes.Add(new TreeNode("Muistilistat"));
                                     treeView_home_permissions.ExpandAll();
+
+                                    comboBox_search.Items.Clear();
+                                    if (user.full_permissions)
+                                    {
+                                        comboBox_search.Items.AddRange(new string[]
+                                        {
+                                            "Etusivu", "Talous", "Ruokalista", "Siivousvuorot", "Kauppalappu",
+                                            "Kalenteri", "Liikuntamittari", "Muistilistat", "Muutosseuranta"
+
+                                        });
+                                    }
+                                    else
+                                    {
+                                        comboBox_search.Items.AddRange(new string[]
+                                        {
+                                            "Etusivu", "Ruokalista", "Siivousvuorot", "Kauppalappu",
+                                            "Kalenteri", "Liikuntamittari", "Muistilistat"
+
+                                        });
+                                    }
                                     searchFamilyMembers();
                                     searchThisMonthEvents();
                                     break;
@@ -478,10 +493,56 @@ namespace Home_n_Life
             comboBox_search.Text = comboBox_search.Text.Replace(" ", "");
             if (Regex.IsMatch(comboBox_search.Text, @"^[a-zA-Z]+$"))
             {
-                if (comboBox_search.Text.Contains("Kala"))
+                result_found = false;
+                foreach (string result in comboBox_search.Items)
                 {
-                    view_change = "home";
-                    viewChange(groupBox_home, button_logo, view_change);
+                    if (result == comboBox_search.Text)
+                    {
+                        result_found = true;
+                    }
+                }
+                if (result_found)
+                {
+                    switch (comboBox_search.Text)
+                    {
+                        case "Etusivu":view_change = "home";viewChange(groupBox_home, button_logo, view_change);
+                            break;
+                        case "Talous":
+                            view_change = "economic";viewChange(groupBox_economic, button_economic, view_change);
+                            break;
+                        case "Ruokalista":
+                            view_change = "menu";
+                            viewChange(groupBox_menu, button_menu, view_change);
+                            break;
+                        case "Siivousvuorot":
+                            view_change = "cleaning_shift";
+                            viewChange(groupBox_cleaning_shift, button_cleaning_shift, view_change);
+                            break;
+                        case "Kauppalappu":
+                            view_change = "shopping_list";
+                            viewChange(groupBox_shopping_list, button_shopping_list, view_change);
+                            break;
+                        case "Kalenteri":
+                            view_change = "calendar";
+                            viewChange(groupBox_calendar, button_calendar, view_change);
+                            break;
+                        case "Liikuntamittari":
+                            view_change = "athletic_meter";
+                            viewChange(groupBox_athletic_meter, button_athletic_meter, view_change);
+                            break;
+                        case "Muistilistat":
+                            view_change = "checklist";
+                            viewChange(groupBox_checklist, button_checklist, view_change);
+                            break;
+                        case "Muutosseuranta":
+                            view_change = "change_tracking";
+                            viewChange(groupBox_change_tracking, button_change_tracking, view_change);
+                            break;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Syöttämälläsi hakusanalla ei löytynyt tuloksia", "Haku");
                 }
             }
             else

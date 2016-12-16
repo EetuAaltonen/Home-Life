@@ -743,7 +743,7 @@
             this.groupBox_home.Enabled = false;
             this.groupBox_home.Location = new System.Drawing.Point(12, 176);
             this.groupBox_home.Name = "groupBox_home";
-            this.groupBox_home.Size = new System.Drawing.Size(971, 514);
+            this.groupBox_home.Size = new System.Drawing.Size(49, 46);
             this.groupBox_home.TabIndex = 3;
             this.groupBox_home.TabStop = false;
             this.groupBox_home.Visible = false;
@@ -751,7 +751,7 @@
             // treeView_home_permissions
             // 
             this.treeView_home_permissions.FullRowSelect = true;
-            this.treeView_home_permissions.Location = new System.Drawing.Point(55, 289);
+            this.treeView_home_permissions.Location = new System.Drawing.Point(40, 288);
             this.treeView_home_permissions.Name = "treeView_home_permissions";
             this.treeView_home_permissions.Size = new System.Drawing.Size(577, 208);
             this.treeView_home_permissions.TabIndex = 27;
@@ -761,7 +761,7 @@
             this.label54.AutoSize = true;
             this.label54.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label54.ForeColor = System.Drawing.Color.White;
-            this.label54.Location = new System.Drawing.Point(51, 258);
+            this.label54.Location = new System.Drawing.Point(36, 262);
             this.label54.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label54.Name = "label54";
             this.label54.Size = new System.Drawing.Size(81, 20);
@@ -771,7 +771,7 @@
             // listView_this_month_events
             // 
             this.listView_this_month_events.Enabled = false;
-            this.listView_this_month_events.Location = new System.Drawing.Point(650, 289);
+            this.listView_this_month_events.Location = new System.Drawing.Point(650, 288);
             this.listView_this_month_events.Name = "listView_this_month_events";
             this.listView_this_month_events.Size = new System.Drawing.Size(273, 208);
             this.listView_this_month_events.TabIndex = 25;
@@ -815,7 +815,7 @@
             this.label_welcome_description.AutoSize = true;
             this.label_welcome_description.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_welcome_description.ForeColor = System.Drawing.Color.White;
-            this.label_welcome_description.Location = new System.Drawing.Point(51, 73);
+            this.label_welcome_description.Location = new System.Drawing.Point(36, 76);
             this.label_welcome_description.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label_welcome_description.Name = "label_welcome_description";
             this.label_welcome_description.Size = new System.Drawing.Size(560, 160);
@@ -827,7 +827,7 @@
             this.label_welcome.AutoSize = true;
             this.label_welcome.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_welcome.ForeColor = System.Drawing.Color.White;
-            this.label_welcome.Location = new System.Drawing.Point(45, 24);
+            this.label_welcome.Location = new System.Drawing.Point(33, 24);
             this.label_welcome.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label_welcome.Name = "label_welcome";
             this.label_welcome.Size = new System.Drawing.Size(187, 37);
