@@ -117,4 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label_welcome_description.Text" xml:space="preserve">
+    <value>'Home and Life' on elämäsi seurannan ja suunnittelun työkalu,
+jonka avulla helpotat huomattavasti arkeasi. 
+Voit esimerkiksi luoda viikon ruokalistan yhdessä kotisi asukkaiden
+kanssa ja kauppalapun, jonka saat tulostettua helposti
+tekstitiedostona. Pystyt helposti seuraamaan talouttasi kuukausittain
+tulo/meno-laskurilla ja liikuntamääriä liikuntamittarin avulla.
+Näkymät ovat yksinkertaisia ja käyttäjäystävällisiä. Suuri kontrastiset
+värit helpottavat tekstien lukemista myös vanhuusiässä.</value>
+  </data>
 </root>

@@ -39,6 +39,7 @@ namespace Home_n_Life
         string dropTableQuery, createTableQuery, insertTableQuery, selectTableQuery, updateTableQuery, deleteTableQuery;
         //---Dialog------------------
         DialogResult dialogResult;
+        string user_info;
         //---listView-Added-Items----
         ListViewItem item;
         //---Check-If-Numeric--------
@@ -84,11 +85,15 @@ namespace Home_n_Life
             months[3] = "Maaliskuu"; months[7] = "Heinäkuu"; months[11] = "Marraskuu";
             months[4] = "Huhtikuu"; months[8] = "Elokuu"; months[12] = "Joulukuu";
 
+            comboBox_search.Items.AddRange(new string[]
+            {
+                "Etusivu", "Talous", "Ruokalista", "Siivousvuorot", "Kauppalappu",
+                "Kalenteri", "Liikuntamittari", "Muistilistat", "Muutosseuranta",
+
+            });
+            
             comboBox_search.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBox_search.AutoCompleteSource = AutoCompleteSource.ListItems;
-            
-            view_change = "home";
-            viewChange(groupBox_home, button_logo, view_change);
         }
 
         public void initializeUserData(string user_name)
@@ -122,6 +127,9 @@ namespace Home_n_Life
                 }
                 dataReader.Close();
                 conn.Close();
+
+                view_change = "home";
+                viewChange(groupBox_home, button_logo, view_change);
             }
             catch (Exception ex)
             {
@@ -289,6 +297,28 @@ namespace Home_n_Life
                             switch (current_view)
                             {
                                 case "home":
+                                    label_welcome.Text = "Tevetuloa " + user.user_name + " !";
+                                    treeView_home_permissions.Nodes.Clear();
+                                    treeView_home_permissions.Nodes.Add(new TreeNode("Näkymät ja hallinta"));
+                                    treeView_home_permissions.Nodes.Add(new TreeNode("Toiminnot"));
+                                    treeView_home_permissions.Nodes[1].Nodes.Add(new TreeNode("Henkilökohtaisten listojen ja tietojen luominen, muokkaaminen, poistaminen"));
+                                    if (user.full_permissions)
+                                    {
+                                        treeView_home_permissions.Nodes[0].Nodes.Add(new TreeNode("Talous"));
+                                        treeView_home_permissions.Nodes[0].Nodes.Add(new TreeNode("Muutosseuranta"));
+                                        treeView_home_permissions.Nodes[1].Nodes.Add(new TreeNode("Yhteisten listojen ja tietojen luominen, muokkaaminen, poistaminen"));
+                                    }
+                                    else
+                                    {
+                                        treeView_home_permissions.Nodes[1].Nodes.Add(new TreeNode("Yhteisten listojen ja tietojen ehdottaminen"));
+                                    }
+                                    treeView_home_permissions.Nodes[0].Nodes.Add(new TreeNode("Ruokalista"));
+                                    treeView_home_permissions.Nodes[0].Nodes.Add(new TreeNode("Siivousvuorot"));
+                                    treeView_home_permissions.Nodes[0].Nodes.Add(new TreeNode("Kauppalappu"));
+                                    treeView_home_permissions.Nodes[0].Nodes.Add(new TreeNode("Kalenteri"));
+                                    treeView_home_permissions.Nodes[0].Nodes.Add(new TreeNode("Liikuntamittari"));
+                                    treeView_home_permissions.Nodes[0].Nodes.Add(new TreeNode("Muistilistat"));
+                                    treeView_home_permissions.ExpandAll();
                                     searchFamilyMembers();
                                     searchThisMonthEvents();
                                     break;
@@ -464,6 +494,21 @@ namespace Home_n_Life
         {
             view_change = "home";
             viewChange(groupBox_home, button_logo, view_change);
+        }
+
+        private void linkLabel_user_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            user_info = "Käyttäjänimi: " + user.user_name;
+            if (user.full_permissions)
+            {
+                user_info += "\nKäyttäjätyyppi: Vanhempi/Isäntä";
+            }
+            else
+            {
+                user_info += "\nKäyttäjätyyppi: Lapsi/Asukas";
+            }
+            user_info += "\nPerheavain: " + user.family_key;
+            MessageBox.Show(user_info,"Käyttäjätiedot");
         }
 
         private void button_economic_Click(object sender, EventArgs e)
@@ -1964,6 +2009,7 @@ namespace Home_n_Life
         {
             readAthleticMeter();
         }
+
 //----- Checklist --------------------------------------------------------------------------------------
         private void readChecklists()
         {

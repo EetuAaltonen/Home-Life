@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Etusivu));
             this.groupBox_top_banner = new System.Windows.Forms.GroupBox();
             this.button_logo = new System.Windows.Forms.Button();
             this.flowLayoutPanel_user = new System.Windows.Forms.FlowLayoutPanel();
@@ -69,12 +70,14 @@
             this.textBox_item_name = new System.Windows.Forms.TextBox();
             this.button_add_item = new System.Windows.Forms.Button();
             this.groupBox_home = new System.Windows.Forms.GroupBox();
+            this.treeView_home_permissions = new System.Windows.Forms.TreeView();
+            this.label54 = new System.Windows.Forms.Label();
             this.listView_this_month_events = new System.Windows.Forms.ListView();
             this.label32 = new System.Windows.Forms.Label();
             this.listView_family_members = new System.Windows.Forms.ListView();
             this.label39 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
+            this.label_welcome_description = new System.Windows.Forms.Label();
+            this.label_welcome = new System.Windows.Forms.Label();
             this.groupBox_change_tracking = new System.Windows.Forms.GroupBox();
             this.button_clear_change_tracking = new System.Windows.Forms.Button();
             this.listView_change_tracking = new System.Windows.Forms.ListView();
@@ -126,6 +129,9 @@
             this.label22 = new System.Windows.Forms.Label();
             this.listView_events = new System.Windows.Forms.ListView();
             this.groupBox_checklist = new System.Windows.Forms.GroupBox();
+            this.label50 = new System.Windows.Forms.Label();
+            this.textBox_checklist_text_length = new System.Windows.Forms.TextBox();
+            this.label53 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
             this.textBox_checklist_name = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
@@ -176,9 +182,6 @@
             this.listView_cleaning_shift_list = new System.Windows.Forms.ListView();
             this.listView_cleaning_shift_family_members = new System.Windows.Forms.ListView();
             this.label45 = new System.Windows.Forms.Label();
-            this.label50 = new System.Windows.Forms.Label();
-            this.textBox_checklist_text_length = new System.Windows.Forms.TextBox();
-            this.label53 = new System.Windows.Forms.Label();
             this.groupBox_top_banner.SuspendLayout();
             this.flowLayoutPanel_user.SuspendLayout();
             this.groupBox_navigation.SuspendLayout();
@@ -273,14 +276,15 @@
             this.linkLabel_user.TabStop = true;
             this.linkLabel_user.Text = "User_name";
             this.linkLabel_user.VisitedLinkColor = System.Drawing.Color.White;
+            this.linkLabel_user.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_user_LinkClicked);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(407, 12);
-            this.label1.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label1.Location = new System.Drawing.Point(410, 12);
+            this.label1.Margin = new System.Windows.Forms.Padding(3, 12, 0, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(70, 20);
             this.label1.TabIndex = 2;
@@ -301,7 +305,7 @@
             "Liikuntamittari",
             "Muistilistat",
             "Muutosseuranta"});
-            this.comboBox_search.Location = new System.Drawing.Point(239, 12);
+            this.comboBox_search.Location = new System.Drawing.Point(242, 12);
             this.comboBox_search.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
             this.comboBox_search.Name = "comboBox_search";
             this.comboBox_search.Size = new System.Drawing.Size(162, 24);
@@ -312,7 +316,7 @@
             this.button_search.BackColor = System.Drawing.Color.DodgerBlue;
             this.button_search.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_search.ForeColor = System.Drawing.Color.White;
-            this.button_search.Location = new System.Drawing.Point(176, 11);
+            this.button_search.Location = new System.Drawing.Point(179, 11);
             this.button_search.Margin = new System.Windows.Forms.Padding(3, 11, 3, 3);
             this.button_search.Name = "button_search";
             this.button_search.Size = new System.Drawing.Size(57, 26);
@@ -324,7 +328,7 @@
             // progressBar_database_connection
             // 
             this.progressBar_database_connection.ForeColor = System.Drawing.Color.DodgerBlue;
-            this.progressBar_database_connection.Location = new System.Drawing.Point(121, 12);
+            this.progressBar_database_connection.Location = new System.Drawing.Point(124, 12);
             this.progressBar_database_connection.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
             this.progressBar_database_connection.Maximum = 2;
             this.progressBar_database_connection.Name = "progressBar_database_connection";
@@ -445,7 +449,7 @@
             this.button_checklist.Name = "button_checklist";
             this.button_checklist.Size = new System.Drawing.Size(105, 46);
             this.button_checklist.TabIndex = 6;
-            this.button_checklist.Text = "Muistilistat";
+            this.button_checklist.Text = "Muistilista";
             this.button_checklist.UseVisualStyleBackColor = false;
             this.button_checklist.Click += new System.EventHandler(this.button_checklist_Click);
             // 
@@ -728,26 +732,48 @@
             // groupBox_home
             // 
             this.groupBox_home.BackColor = System.Drawing.Color.Black;
+            this.groupBox_home.Controls.Add(this.treeView_home_permissions);
+            this.groupBox_home.Controls.Add(this.label54);
             this.groupBox_home.Controls.Add(this.listView_this_month_events);
             this.groupBox_home.Controls.Add(this.label32);
             this.groupBox_home.Controls.Add(this.listView_family_members);
             this.groupBox_home.Controls.Add(this.label39);
-            this.groupBox_home.Controls.Add(this.label11);
-            this.groupBox_home.Controls.Add(this.label10);
+            this.groupBox_home.Controls.Add(this.label_welcome_description);
+            this.groupBox_home.Controls.Add(this.label_welcome);
             this.groupBox_home.Enabled = false;
             this.groupBox_home.Location = new System.Drawing.Point(12, 176);
             this.groupBox_home.Name = "groupBox_home";
-            this.groupBox_home.Size = new System.Drawing.Size(52, 48);
+            this.groupBox_home.Size = new System.Drawing.Size(971, 514);
             this.groupBox_home.TabIndex = 3;
             this.groupBox_home.TabStop = false;
             this.groupBox_home.Visible = false;
             // 
+            // treeView_home_permissions
+            // 
+            this.treeView_home_permissions.FullRowSelect = true;
+            this.treeView_home_permissions.Location = new System.Drawing.Point(55, 289);
+            this.treeView_home_permissions.Name = "treeView_home_permissions";
+            this.treeView_home_permissions.Size = new System.Drawing.Size(577, 208);
+            this.treeView_home_permissions.TabIndex = 27;
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label54.ForeColor = System.Drawing.Color.White;
+            this.label54.Location = new System.Drawing.Point(51, 258);
+            this.label54.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(81, 20);
+            this.label54.TabIndex = 26;
+            this.label54.Text = "Oikeudet";
+            // 
             // listView_this_month_events
             // 
             this.listView_this_month_events.Enabled = false;
-            this.listView_this_month_events.Location = new System.Drawing.Point(651, 269);
+            this.listView_this_month_events.Location = new System.Drawing.Point(650, 289);
             this.listView_this_month_events.Name = "listView_this_month_events";
-            this.listView_this_month_events.Size = new System.Drawing.Size(279, 141);
+            this.listView_this_month_events.Size = new System.Drawing.Size(273, 208);
             this.listView_this_month_events.TabIndex = 25;
             this.listView_this_month_events.UseCompatibleStateImageBehavior = false;
             // 
@@ -756,7 +782,7 @@
             this.label32.AutoSize = true;
             this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label32.ForeColor = System.Drawing.Color.White;
-            this.label32.Location = new System.Drawing.Point(646, 237);
+            this.label32.Location = new System.Drawing.Point(646, 258);
             this.label32.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(265, 20);
@@ -766,9 +792,9 @@
             // listView_family_members
             // 
             this.listView_family_members.Enabled = false;
-            this.listView_family_members.Location = new System.Drawing.Point(650, 66);
+            this.listView_family_members.Location = new System.Drawing.Point(650, 69);
             this.listView_family_members.Name = "listView_family_members";
-            this.listView_family_members.Size = new System.Drawing.Size(279, 141);
+            this.listView_family_members.Size = new System.Drawing.Size(273, 169);
             this.listView_family_members.TabIndex = 23;
             this.listView_family_members.UseCompatibleStateImageBehavior = false;
             // 
@@ -777,37 +803,36 @@
             this.label39.AutoSize = true;
             this.label39.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label39.ForeColor = System.Drawing.Color.White;
-            this.label39.Location = new System.Drawing.Point(646, 35);
+            this.label39.Location = new System.Drawing.Point(646, 37);
             this.label39.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(135, 20);
             this.label39.TabIndex = 22;
             this.label39.Text = "Perheenjäsenet";
             // 
-            // label11
+            // label_welcome_description
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(48, 86);
-            this.label11.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(481, 40);
-            this.label11.TabIndex = 21;
-            this.label11.Text = "\'Home and Life\' on elämäsi seuranta ja suunnittelu työkalu,\r\njonka avulla helpota" +
-    "t huomattavasti arkeasi.";
+            this.label_welcome_description.AutoSize = true;
+            this.label_welcome_description.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_welcome_description.ForeColor = System.Drawing.Color.White;
+            this.label_welcome_description.Location = new System.Drawing.Point(51, 73);
+            this.label_welcome_description.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label_welcome_description.Name = "label_welcome_description";
+            this.label_welcome_description.Size = new System.Drawing.Size(560, 160);
+            this.label_welcome_description.TabIndex = 21;
+            this.label_welcome_description.Text = resources.GetString("label_welcome_description.Text");
             // 
-            // label10
+            // label_welcome
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(45, 35);
-            this.label10.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(187, 37);
-            this.label10.TabIndex = 20;
-            this.label10.Text = "Tervetuloa!\r\n";
+            this.label_welcome.AutoSize = true;
+            this.label_welcome.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_welcome.ForeColor = System.Drawing.Color.White;
+            this.label_welcome.Location = new System.Drawing.Point(45, 24);
+            this.label_welcome.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label_welcome.Name = "label_welcome";
+            this.label_welcome.Size = new System.Drawing.Size(187, 37);
+            this.label_welcome.TabIndex = 20;
+            this.label_welcome.Text = "Tervetuloa!\r\n";
             // 
             // groupBox_change_tracking
             // 
@@ -1477,6 +1502,39 @@
             this.groupBox_checklist.TabStop = false;
             this.groupBox_checklist.Visible = false;
             // 
+            // label50
+            // 
+            this.label50.AutoSize = true;
+            this.label50.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label50.ForeColor = System.Drawing.Color.White;
+            this.label50.Location = new System.Drawing.Point(845, 285);
+            this.label50.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label50.Name = "label50";
+            this.label50.Size = new System.Drawing.Size(64, 20);
+            this.label50.TabIndex = 25;
+            this.label50.Text = "/  5000";
+            // 
+            // textBox_checklist_text_length
+            // 
+            this.textBox_checklist_text_length.Enabled = false;
+            this.textBox_checklist_text_length.Location = new System.Drawing.Point(782, 285);
+            this.textBox_checklist_text_length.Name = "textBox_checklist_text_length";
+            this.textBox_checklist_text_length.Size = new System.Drawing.Size(57, 20);
+            this.textBox_checklist_text_length.TabIndex = 24;
+            this.textBox_checklist_text_length.Text = "0";
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label53.ForeColor = System.Drawing.Color.White;
+            this.label53.Location = new System.Drawing.Point(695, 283);
+            this.label53.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(81, 20);
+            this.label53.TabIndex = 23;
+            this.label53.Text = "Merkkejä";
+            // 
             // label33
             // 
             this.label33.AutoSize = true;
@@ -1591,7 +1649,7 @@
             this.groupBox_menu.Enabled = false;
             this.groupBox_menu.Location = new System.Drawing.Point(74, 285);
             this.groupBox_menu.Name = "groupBox_menu";
-            this.groupBox_menu.Size = new System.Drawing.Size(922, 373);
+            this.groupBox_menu.Size = new System.Drawing.Size(58, 63);
             this.groupBox_menu.TabIndex = 24;
             this.groupBox_menu.TabStop = false;
             this.groupBox_menu.Visible = false;
@@ -2108,39 +2166,6 @@
             this.label45.TabIndex = 21;
             this.label45.Text = "Perheenjäsenet";
             // 
-            // label50
-            // 
-            this.label50.AutoSize = true;
-            this.label50.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label50.ForeColor = System.Drawing.Color.White;
-            this.label50.Location = new System.Drawing.Point(845, 285);
-            this.label50.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(64, 20);
-            this.label50.TabIndex = 25;
-            this.label50.Text = "/  5000";
-            // 
-            // textBox_checklist_text_length
-            // 
-            this.textBox_checklist_text_length.Enabled = false;
-            this.textBox_checklist_text_length.Location = new System.Drawing.Point(782, 285);
-            this.textBox_checklist_text_length.Name = "textBox_checklist_text_length";
-            this.textBox_checklist_text_length.Size = new System.Drawing.Size(57, 20);
-            this.textBox_checklist_text_length.TabIndex = 24;
-            this.textBox_checklist_text_length.Text = "0";
-            // 
-            // label53
-            // 
-            this.label53.AutoSize = true;
-            this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label53.ForeColor = System.Drawing.Color.White;
-            this.label53.Location = new System.Drawing.Point(695, 283);
-            this.label53.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(81, 20);
-            this.label53.TabIndex = 23;
-            this.label53.Text = "Merkkejä";
-            // 
             // Etusivu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2220,8 +2245,8 @@
         private System.Windows.Forms.TextBox textBox_text_length;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox comboBox_amount_type;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label_welcome;
+        private System.Windows.Forms.Label label_welcome_description;
         private System.Windows.Forms.GroupBox groupBox_change_tracking;
         private System.Windows.Forms.ListView listView_change_tracking;
         private System.Windows.Forms.GroupBox groupBox_economic;
@@ -2342,5 +2367,7 @@
         private System.Windows.Forms.Label label50;
         private System.Windows.Forms.TextBox textBox_checklist_text_length;
         private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.TreeView treeView_home_permissions;
+        private System.Windows.Forms.Label label54;
     }
 }
