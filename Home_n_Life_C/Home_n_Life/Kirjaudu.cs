@@ -18,33 +18,46 @@ namespace Home_n_Life
         {
             InitializeComponent();
         }
+        //Tietokantayhteyden osoite
         string connetionString = "server=localhost;database=home&life;uid=root;pwd=;";
+        //Käyttäjätietojen muuttujat (tiedot haetaan tietokannasta)
         string query_password;
         List<string> query_users;
         List<string> query_family_keys;
+        //Tietokantayhteyden tila (päällä=true/katkennut=false)
         bool MySqlConnectionOn;
+        //MySql syntaksit
         MySqlConnection conn;
         MySqlCommand cmd;
         MySqlDataReader dataReader;
+        //YES/NO - dialogi
         DialogResult dialogResult;
+        //Tietokantaan tehtävien komentojen muuttujat
         string createDatabase, createTableQuery, insertTableQuery, selectTableQuery;
 //----- Database --------------------------------------------------------------------------------------
         private void checkDatabaseConnection()
         {
-            MySqlConnectionOn = false;
-            progressBar_database_connection.Value = 1;
-            progressBar_database_connection.ForeColor = Color.Yellow;
+            //Tarkistetaan yhteys tietokantaan
+            MySqlConnectionOn = false; //Yhteyden tilaksi asetetaan katkaistu
+            progressBar_database_connection.Value = 1; //Yhteys-mittari asetetaan puoliväliin (ikkunan ylälaita)
+            progressBar_database_connection.ForeColor = Color.Yellow; //Yhteys-mittarin väri muutetaan keltaiseksi
             try
             {
-                conn = new MySqlConnection(connetionString);
+                //Avataan yhteys tietokantaan
+                conn = new MySqlConnection(connetionString); 
                 conn.Open();
+                //Yhteys-mittari asetetaan vihreäksi ja valmis-tilaan
                 progressBar_database_connection.Value = 2;
                 progressBar_database_connection.ForeColor = Color.LimeGreen;
+                //Yhteyden tilaksi asetetaan: päällä
                 MySqlConnectionOn = true;
+                //Suljetaan yhteys
                 conn.Close();
             }
             catch
             {
+                //Jos ei saada yhteyttä
+                //Yhteys-mittari asetetaan punaiselle ja error-tilaan
                 progressBar_database_connection.Value = 1;
                 progressBar_database_connection.ForeColor = Color.Red;
             }
@@ -54,17 +67,20 @@ namespace Home_n_Life
         {
             try
             {
+                //Avataan yhteys tietokantaan ja tarkistetaan, onko tietokantaa olemassa
                 conn = new MySqlConnection(connetionString);
                 conn.Open();
                 conn.Close();
             }
             catch
             {
-                conn = new MySqlConnection("server=localhost;uid=root;pwd=;");
-                createDatabase = "CREATE DATABASE IF NOT EXISTS `home&life`;";
+                //Jos tietokantaa ei ole, ohjelma luo uuden
+                conn = new MySqlConnection("server=localhost;uid=root;pwd=;"); //Osoite uutta tietokantaa varten
+                createDatabase = "CREATE DATABASE IF NOT EXISTS `home&life`;"; //Komento
                 MySqlCommand cmd = new MySqlCommand(createDatabase, conn);
                 try
                 {
+                    //Avataan yhteys tietokantaan
                     conn.Open();
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("Et vielä omistanut tietokantaa nimeltä 'home&life'\nSe on nyt luotu puolestasi", "Tietokanta");
@@ -74,19 +90,23 @@ namespace Home_n_Life
                     MessageBox.Show(Convert.ToString(ex));
                 }
             }
+            //Tarkistetaan yhteys tietokantaan
             checkDatabaseConnection();
             if (MySqlConnectionOn)
             {
+                //Näkymäksi astetaan Kirjautuminen
                 groupBox_login.Location = new Point(13, 65);
                 groupBox_login.Size = new Size(478, 337);
                 groupBox_login.Enabled = true;
                 groupBox_login.Visible = true;
+                //Piilotetaan Rekisteröityminen
                 groupBox_registration.Enabled = false;
                 groupBox_registration.Visible = false;
                 textBox_username.Select();
             }
             else
             {
+                //Jos tietokantaan ei saada yhteyttä, ohjelma suljetaan
                 MessageBox.Show("Tietokantaan ei saatu yhteyttä\nYritä korjata yhteytesi, jotta voit jatkaa\nTarkista, että sinulla on XAMPP yhteys päällä\nOhjelma joudutaan sulkemaan", "Tietokanta");
                 Application.Exit();
             }
@@ -94,16 +114,19 @@ namespace Home_n_Life
 
         private void button_minimize_Click(object sender, EventArgs e)
         {
+            //Pienentää ikkunan
             this.WindowState = FormWindowState.Minimized;
         }
 
         private void button_exit_Click(object sender, EventArgs e)
         {
+            //Sulkee ohjelman
             Application.Exit();
         }
 
         private void button_show_password_Click(object sender, EventArgs e)
         {
+            //Muuttaa salasanan kirjautuessa näkyväksi tai piilottaa sen
             if (textBox_password.PasswordChar == '*')
             {
                 textBox_password.PasswordChar = '\0';
@@ -116,21 +139,25 @@ namespace Home_n_Life
 
         private void button_login_Click(object sender, EventArgs e)
         {
+            //Tarkistaa yhteyden tietokantaan
             checkDatabaseConnection();
             if (MySqlConnectionOn)
             {
                 conn = new MySqlConnection(connetionString);
+                //Tarkistaa, ettei käyttäjänimi ole tyhjä
                 if (textBox_username.Text.Length > 0)
                 {
-
+                    //Tarkistaa, ettei salasana ole tyhjä
                     if (textBox_password.Text.Length > 0)
                     {
+                        //Luodaan uusi taulukko, jos sitä ei ole olemassa
                         createTableQuery = @"CREATE TABLE IF NOT EXISTS users (
                                                     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                                     username VARCHAR(30) NOT NULL,
                                                     password VARCHAR(30) NOT NULL,
                                                     family_key VARCHAR(30) NOT NULL,
                                                     permissions VARCHAR(30) NOT NULL);";
+                        //Valitaan tiedot taulukosta
                         selectTableQuery = @"SELECT id, username, password, family_key, permissions " +
                                             "FROM users " +
                                             "WHERE username='" + textBox_username.Text + "' ;";
@@ -141,6 +168,7 @@ namespace Home_n_Life
                             cmd.ExecuteNonQuery();
                             cmd = new MySqlCommand(selectTableQuery, conn);
                             dataReader = cmd.ExecuteReader();
+                            //Luetaan käyttäjät tietokannasta
                             query_users = new List<string>();
                             while (dataReader.Read())
                             {
@@ -156,6 +184,7 @@ namespace Home_n_Life
                         {
                             MessageBox.Show(Convert.ToString(ex));
                         }
+                        //Jos syötetty käyttäjänimi on olemassa
                         if (query_users.Contains(textBox_username.Text))
                         {
                             query_password = "";
@@ -169,6 +198,7 @@ namespace Home_n_Life
                                 cmd.ExecuteNonQuery();
                                 cmd = new MySqlCommand(selectTableQuery, conn);
                                 dataReader = cmd.ExecuteReader();
+                                //Luetaan käyttäjät tietokannasta
                                 while (dataReader.Read())
                                 {
                                     if (Convert.ToString(dataReader["password"]) == textBox_password.Text)
@@ -183,15 +213,17 @@ namespace Home_n_Life
                             {
                                 MessageBox.Show(Convert.ToString(ex));
                             }
+                            //Jos syötetty salasana on olemassa
                             if (query_password == textBox_password.Text)
                             {
+                                //Siirrytään Etusivulle ja alustetaan käyttäjätiedot
                                 Etusivu etusivu = new Etusivu();
                                 etusivu.Show();
                                 etusivu.button_economic.Select();
-                                etusivu.initializeUserData(textBox_username.Text);
-                                etusivu.searchFamilyMembers();
-                                etusivu.searchThisMonthEvents();
-                                this.Hide();
+                                etusivu.initializeUserData(textBox_username.Text); //Tiedot alustetaan
+                                etusivu.searchFamilyMembers(); //Hakee perheenjäsenet Etusivum taulukkoon
+                                etusivu.searchThisMonthEvents(); //Hakee tapahtumat Etusivum taulukkoon
+                                this.Hide(); //Piilottaa Kirjautumis-ikkunan
                             }
                             else
                             {
@@ -222,12 +254,15 @@ namespace Home_n_Life
 
         private void button_registration_Click(object sender, EventArgs e)
         {
+            //Näkymäksi astetaan Rekisteröityminen
             groupBox_registration.Location = new Point(13, 65);
             groupBox_registration.Size = new Size(478, 337);
             groupBox_registration.Enabled = true;
             groupBox_registration.Visible = true;
+            //Piilotetaan Kirjautuminen       
             groupBox_login.Enabled = false;
             groupBox_login.Visible = false;
+            //Tyhjennetään lomake
             textBox_account_name.Select();
             textBox_account_name.Text = "";
             textBox_account_password.Text = "";
@@ -239,32 +274,43 @@ namespace Home_n_Life
 
         private void button_create_account_Click(object sender, EventArgs e)
         {
+            //Luodaan uusi käyttäjä
+            //Tarkistaa yhteyden tietokantaan
             checkDatabaseConnection();
             if (MySqlConnectionOn)
             {
                 conn = new MySqlConnection(connetionString);
-                textBox_account_name.Text = textBox_account_name.Text.Replace(" ", "");
-                textBox_family_key.Text = textBox_family_key.Text.Replace(" ", "");
+                textBox_account_name.Text = textBox_account_name.Text.Replace(" ", ""); //Poistaa syötetystä käyttäjänimestä välit
+                textBox_family_key.Text = textBox_family_key.Text.Replace(" ", ""); //Poistaa syötetystä perheavaimesta välit
+                //Tarkistaa, ettei käyttäjänimi ole liian lyhyt
                 if (textBox_account_name.Text.Length >= 4)
                 {
+                    //Tarkistaa, ettei käyttäjänimi sisällä erikoismerkkejä
                     if (Regex.IsMatch(textBox_account_name.Text, @"^[a-zA-Z0-9_]+$"))
                     {
+                        // Tarkistaa, ettei salasana ole liian lyhyt
                         if (textBox_account_password.Text.Length >= 4)
                         {
+                            // Tarkistaa, ettei perheavain ole liian lyhyt
                             if (textBox_family_key.Text.Length >= 4)
                             {
+                                //Tarkistaa, ettei perheavain sisällä erikoismerkkejä
                                 if (Regex.IsMatch(textBox_family_key.Text, @"^[a-zA-Z0-9_]+$"))
                                 {
+                                    //Tarkistaa, että oikeudet on valittu
                                     if (comboBox_account_permissions.SelectedItem != null)
                                     {
+                                        //Luo uuden taulun, jos sitä ei ole olemassa
                                         createTableQuery = @"CREATE TABLE IF NOT EXISTS users (
                                                             id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
                                                             username VARCHAR(30) NOT NULL,
                                                             password VARCHAR(30) NOT NULL,
                                                             family_key VARCHAR(30) NOT NULL,
                                                             permissions VARCHAR(30) NOT NULL);";
+                                        //Valitaan tiedot taulukosta
                                         selectTableQuery = @"SELECT id, username, password, family_key, permissions " +
                                                             " FROM users ;";
+                                        //Lisätään uusi käyttäjä
                                         insertTableQuery = @"INSERT INTO users (id, username, password, family_key, permissions) " +
                                                             "VALUES('null', '" + textBox_account_name.Text + "', '" + textBox_account_password.Text + "', '" + textBox_family_key.Text + "', '" + Convert.ToString(comboBox_account_permissions.SelectedItem) + "');";
                                         try
@@ -274,6 +320,7 @@ namespace Home_n_Life
                                             cmd.ExecuteNonQuery();
                                             cmd = new MySqlCommand(selectTableQuery, conn);
                                             dataReader = cmd.ExecuteReader();
+                                            //Luetaan käyttäjät tietokannasta
                                             query_users = new List<string>();
                                             while (dataReader.Read())
                                             {
@@ -283,10 +330,12 @@ namespace Home_n_Life
                                                 }
                                             }
                                             dataReader.Close();
+                                            //Tarkistaa, ettei käyttäjänimeä ole vielä olemassa
                                             if (!query_users.Contains(textBox_account_name.Text))
                                             {
                                                 query_family_keys = new List<string>();
                                                 dataReader = cmd.ExecuteReader();
+                                                //Luetaan perheavaimet tietokannasta
                                                 while (dataReader.Read())
                                                 {
                                                     if (dataReader["family_key"] != null)
@@ -295,11 +344,14 @@ namespace Home_n_Life
                                                     }
                                                 }
                                                 dataReader.Close();
+                                                //Tarkistaa, onko perheavainta jo olemassa
                                                 if (query_family_keys.Contains(textBox_family_key.Text))
                                                 {
+                                                    //Ehdottaa perheeseen liittymistä
                                                     dialogResult = MessageBox.Show("Tämä perheavain on jo olemassa.\nHaluatko liittyä perheeseen " + textBox_family_key.Text + "?", "Rekisteröityminen", MessageBoxButtons.YesNo);
                                                     if (dialogResult == DialogResult.Yes)
                                                     {
+                                                        //Käyttäjä rekisteröidään ja siirrytään takaisin Kirjautumiseen
                                                         cmd = new MySqlCommand(insertTableQuery, conn);
                                                         cmd.ExecuteNonQuery();
                                                         MessageBox.Show("Uusi " + comboBox_account_permissions.SelectedItem + " " + textBox_account_name.Text + " lisätty perheeseen " + textBox_family_key.Text, "Rekisteröityminen");
@@ -313,9 +365,11 @@ namespace Home_n_Life
                                                 }
                                                 else
                                                 {
+                                                    //Ehdottaa uuden luomista
                                                     dialogResult = MessageBox.Show("Tätä perheavainta ei vielä ole olemassa.\nHaluatko luoda uuden " + textBox_family_key.Text + "?", "Rekisteröityminen", MessageBoxButtons.YesNo);
                                                     if (dialogResult == DialogResult.Yes)
                                                     {
+                                                        //Käyttäjä rekisteröidään ja siirrytään takaisin Kirjautumiseen
                                                         cmd = new MySqlCommand(insertTableQuery, conn);
                                                         cmd.ExecuteNonQuery();
                                                         MessageBox.Show("Uusi " + comboBox_account_permissions.SelectedItem + " " + textBox_account_name.Text + " lisätty perheeseen " + textBox_family_key.Text, "Rekisteröityminen");
@@ -377,10 +431,12 @@ namespace Home_n_Life
 
         private void button_return_Click(object sender, EventArgs e)
         {
+            //Näkymäksi astetaan Kirjautuminen
             groupBox_login.Location = new Point(13, 65);
             groupBox_login.Size = new Size(478, 337);
             groupBox_login.Enabled = true;
             groupBox_login.Visible = true;
+            //Piilotetaan Rekisteröityminen
             groupBox_registration.Enabled = false;
             groupBox_registration.Visible = false;
             textBox_username.Select();
