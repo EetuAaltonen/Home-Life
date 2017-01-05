@@ -1034,7 +1034,7 @@ namespace Home_n_Life
                 //Valitaan tiedot taulukosta
                 selectTableQuery = @"SELECT id, family_key, menu_name, food, description " +
                                     " FROM menu " +
-                                    " WHERE family_key='" + user.family_key + "' ;";
+                                    " WHERE family_key='" + user.family_key + "' AND menu_name='" + textBox_menu_name.Text + "' ;";
                 try
                 {
                     conn.Open();
